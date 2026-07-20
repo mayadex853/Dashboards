@@ -151,6 +151,34 @@
   .dt-note { font-size: 12px; color: var(--muted); line-height: 1.6; margin: 16px 0 0; max-width: 620px; }
   .dt-note b { color: var(--ink-2); font-weight: 600; }
 
+  /* ---- Spend vs earned comparison ---- */
+  .compare {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; margin-top: 24px;
+  }
+  .cmp-head { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  .cmp-head h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .cmp-sub { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+  .seg { display: inline-flex; margin-left: auto; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: var(--ink-2);
+    font-family: inherit; font-size: 12.5px; font-weight: 500; padding: 6px 15px; border-radius: 999px; cursor: pointer;
+  }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .cmp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin: 20px 0 6px; }
+  .stat { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .s-lab { font-size: 11.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .s-val { font-size: 21px; font-weight: 650; letter-spacing: -.3px; font-variant-numeric: tabular-nums; }
+  .s-val.up { color: var(--good); }
+  .s-val.down { color: var(--bad); }
+  .dotc { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .cmp-chart { margin-top: 14px; }
+  .cmp-svg { display: block; width: 100%; height: auto; }
+  .cmp-svg .ax { fill: var(--muted); font-size: 10px; font-family: var(--font); font-variant-numeric: tabular-nums; }
+  .legend { display: flex; gap: 18px; margin-top: 10px; font-size: 12px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .cmp-empty { font-size: 13px; color: var(--muted); padding: 28px 4px; text-align: center; }
+
   footer { margin-top: 48px; font-size: 11.5px; color: var(--muted); text-align: center; }
 
   @media (max-width: 560px) {
@@ -176,6 +204,8 @@
   </div>
 
   <section class="grid" id="cards"></section>
+
+  <section class="compare" id="compare" hidden></section>
 
   <section class="panel">
     <h3 id="formTitle"></h3>
@@ -239,7 +269,11 @@
         { key: "followerGrowth", label: "Follower Growth",    source: "all platforms" },
         { key: "pdfPageVisits",  label: "PDF Page Visits",    source: "Kajabi" },
         { key: "pdfSales",       label: "PDF Sales",          source: "" },
+        { key: "spend",          label: "Money Spent",        source: "per week", money: true },
+        { key: "revenue",        label: "Money Earned",       source: "per week", money: true },
       ],
+      // projects with money metrics get a spend-vs-earned comparison view
+      compare: { spendKey: "spend", revenueKey: "revenue" },
     },
   };
 
@@ -284,6 +318,32 @@
   function fmt(n) {
     if (n === null || n === undefined || n === "") return "—";
     return Number(n).toLocaleString();
+  }
+  function money(n) {
+    if (n === null || n === undefined || n === "") return "—";
+    return "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 });
+  }
+  function fmtMetric(m, n) { return m && m.money ? money(n) : fmt(n); }
+  // ISO week (YYYY-Www) -> the Monday Date of that week
+  function weekToDate(week) {
+    const m = /^(\d{4})-W(\d{2})$/.exec(week);
+    if (!m) return null;
+    const year = +m[1], wk = +m[2];
+    const jan4 = new Date(Date.UTC(year, 0, 4));
+    const dow = jan4.getUTCDay() || 7;
+    const monday = new Date(jan4);
+    monday.setUTCDate(jan4.getUTCDate() - (dow - 1) + (wk - 1) * 7);
+    return monday;
+  }
+  function monthKey(week) {
+    const d = weekToDate(week);
+    return d ? d.getUTCFullYear() + "-" + String(d.getUTCMonth() + 1).padStart(2, "0") : week;
+  }
+  function monthLabel(key) {
+    const m = /^(\d{4})-(\d{2})$/.exec(key);
+    if (!m) return key;
+    const names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return names[+m[2] - 1] + " " + m[1];
   }
 
   /* ---------- Sparkline ---------- */
@@ -357,7 +417,7 @@
       }
 
       const valHtml = latest !== null
-        ? `<div class="value">${fmt(latest)}</div>`
+        ? `<div class="value">${fmtMetric(m, latest)}</div>`
         : `<div class="value empty">No data</div>`;
 
       const card = document.createElement("div");
@@ -380,7 +440,7 @@
           idx = Math.max(0, Math.min(series.length - 1, idx));
           dots.forEach((d, i) => d.style.opacity = i === idx ? "1" : "0");
           const dot = dots[idx].getBoundingClientRect();
-          tip.innerHTML = `<span class="tw">${weekLabel(series[idx].week)}</span><b>${fmt(series[idx].v)}</b> · ${m.label}`;
+          tip.innerHTML = `<span class="tw">${weekLabel(series[idx].week)}</span><b>${fmtMetric(m, series[idx].v)}</b> · ${m.label}`;
           tip.style.left = (dot.left + dot.width / 2) + "px";
           tip.style.top = dot.top + "px";
           tip.style.opacity = "1";
@@ -392,8 +452,138 @@
       }
     });
 
+    buildCompare(weeks);
     buildForm();
     buildHistory();
+  }
+
+  /* ---------- Spend vs earned comparison ---------- */
+  let compareMode = "week"; // "week" | "month"
+  function buildCompare(weeks) {
+    const proj = PROJECTS[current];
+    const host = document.getElementById("compare");
+    if (!proj.compare) { host.hidden = true; host.innerHTML = ""; return; }
+    host.hidden = false;
+    const sK = proj.compare.spendKey, rK = proj.compare.revenueKey;
+
+    // build period buckets (weekly or monthly), summing spend & revenue
+    const buckets = new Map();
+    weeks.forEach(w => {
+      const key = compareMode === "month" ? monthKey(w.week) : w.week;
+      const b = buckets.get(key) || { key, spend: 0, rev: 0, has: false };
+      const s = w.values[sK], r = w.values[rK];
+      if (s !== undefined && s !== "") { b.spend += Number(s); b.has = true; }
+      if (r !== undefined && r !== "") { b.rev += Number(r); b.has = true; }
+      buckets.set(key, b);
+    });
+    const rows = Array.from(buckets.values()).filter(b => b.has)
+      .sort((a, b) => a.key < b.key ? -1 : 1);
+
+    const totalSpend = rows.reduce((a, b) => a + b.spend, 0);
+    const totalRev = rows.reduce((a, b) => a + b.rev, 0);
+    const net = totalRev - totalSpend;
+    const roi = totalSpend > 0 ? (net / totalSpend) * 100 : null;
+    const netCls = net > 0 ? "up" : net < 0 ? "down" : "flat";
+    const periodLabel = compareMode === "month" ? "month" : "week";
+
+    const SPEND_C = "#d95926", REV_C = "#199e70";
+    const labelFn = compareMode === "month" ? monthLabel : weekLabel;
+
+    host.innerHTML =
+      `<div class="cmp-head">
+        <div>
+          <h3>Spend vs. Earned</h3>
+          <p class="cmp-sub">History Engine &middot; money in vs. money out, per ${periodLabel}</p>
+        </div>
+        <div class="seg" role="tablist">
+          <button data-mode="week" class="${compareMode === "week" ? "on" : ""}">Weekly</button>
+          <button data-mode="month" class="${compareMode === "month" ? "on" : ""}">Monthly</button>
+        </div>
+      </div>
+      <div class="cmp-stats">
+        <div class="stat"><span class="s-lab"><i class="dotc" style="background:${REV_C}"></i>Earned</span><span class="s-val">${money(totalRev)}</span></div>
+        <div class="stat"><span class="s-lab"><i class="dotc" style="background:${SPEND_C}"></i>Spent</span><span class="s-val">${money(totalSpend)}</span></div>
+        <div class="stat"><span class="s-lab">Net profit</span><span class="s-val ${netCls}">${net < 0 ? "−" + money(Math.abs(net)) : money(net)}</span></div>
+        <div class="stat"><span class="s-lab">ROI</span><span class="s-val ${netCls}">${roi === null ? "—" : (roi >= 0 ? "+" : "−") + Math.abs(roi).toFixed(0) + "%"}</span></div>
+      </div>
+      <div class="cmp-chart" id="cmpChart"></div>`;
+
+    // wire the weekly/monthly toggle
+    host.querySelectorAll(".seg button").forEach(b => {
+      b.addEventListener("click", () => { compareMode = b.dataset.mode; render(); });
+    });
+
+    drawCompareChart(rows, SPEND_C, REV_C, labelFn);
+  }
+
+  function drawCompareChart(rows, SPEND_C, REV_C, labelFn) {
+    const host = document.getElementById("cmpChart");
+    if (!rows.length) { host.innerHTML = `<div class="cmp-empty">No spend or revenue logged yet — add “Money Spent” and “Money Earned” below.</div>`; return; }
+
+    const W = 720, H = 220, padL = 52, padR = 16, padT = 16, padB = 34;
+    const spends = rows.map(r => r.spend), revs = rows.map(r => r.rev);
+    const maxV = Math.max(1, ...spends, ...revs);
+    const n = rows.length;
+    const x = i => n === 1 ? (padL + (W - padL - padR) / 2) : padL + i * (W - padL - padR) / (n - 1);
+    const y = v => H - padB - (v / maxV) * (H - padT - padB);
+
+    const gridVals = [0, 0.25, 0.5, 0.75, 1].map(f => f * maxV);
+    const grid = gridVals.map(v =>
+      `<line x1="${padL}" y1="${y(v).toFixed(1)}" x2="${W - padR}" y2="${y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"></line>
+       <text x="${padL - 8}" y="${(y(v) + 3.5).toFixed(1)}" text-anchor="end" class="ax">${money(Math.round(v))}</text>`
+    ).join("");
+
+    function path(vals) {
+      if (n === 1) return "";
+      return vals.map((v, i) => (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1)).join(" ");
+    }
+    function dots(vals, color) {
+      return vals.map((v, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3" fill="${color}" stroke="var(--surface)" stroke-width="1.5"></circle>`).join("");
+    }
+
+    // x labels: show a reasonable subset to avoid crowding
+    const step = Math.ceil(n / 8);
+    const xlabels = rows.map((r, i) =>
+      (i % step === 0 || i === n - 1)
+        ? `<text x="${x(i).toFixed(1)}" y="${H - 12}" text-anchor="middle" class="ax">${labelFn(r.key).replace(/^\d{4} · /, "")}</text>` : ""
+    ).join("");
+
+    host.innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" class="cmp-svg">
+        ${grid}
+        <path d="${path(spends)}" fill="none" stroke="${SPEND_C}" stroke-width="2" stroke-linejoin="round"></path>
+        <path d="${path(revs)}" fill="none" stroke="${REV_C}" stroke-width="2" stroke-linejoin="round"></path>
+        ${dots(spends, SPEND_C)}
+        ${dots(revs, REV_C)}
+        <rect id="cmpHit" x="${padL}" y="${padT}" width="${W - padL - padR}" height="${H - padT - padB}" fill="transparent"></rect>
+        <line id="cmpCross" x1="0" y1="${padT}" x2="0" y2="${H - padB}" stroke="var(--baseline)" stroke-width="1" opacity="0"></line>
+      </svg>
+      <div class="legend">
+        <span><i class="dotc" style="background:${REV_C}"></i>Earned</span>
+        <span><i class="dotc" style="background:${SPEND_C}"></i>Spent</span>
+      </div>`;
+
+    // hover crosshair + tooltip
+    const svg = host.querySelector(".cmp-svg");
+    const cross = svg.querySelector("#cmpCross");
+    const hit = svg.querySelector("#cmpHit");
+    hit.addEventListener("mousemove", (e) => {
+      const rect = svg.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width * W;
+      let idx = Math.round((relX - padL) / ((W - padL - padR) / Math.max(1, n - 1)));
+      idx = Math.max(0, Math.min(n - 1, idx));
+      const r = rows[idx];
+      const cx = x(idx);
+      cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); cross.setAttribute("opacity", "1");
+      tip.innerHTML = `<span class="tw">${labelFn(r.key)}</span>` +
+        `<b style="color:${REV_C}">${money(r.rev)}</b> earned<br>` +
+        `<b style="color:${SPEND_C}">${money(r.spend)}</b> spent · net ${money(r.rev - r.spend)}`;
+      const px = rect.left + (cx / W) * rect.width;
+      tip.style.left = px + "px";
+      tip.style.top = (rect.top + 10) + "px";
+      tip.style.opacity = "1";
+    });
+    hit.addEventListener("mouseleave", () => { cross.setAttribute("opacity", "0"); tip.style.opacity = "0"; });
   }
 
   /* ---------- Entry form ---------- */
@@ -461,7 +651,7 @@
     } else {
       weeks.forEach(w => {
         body += "<tr><td>" + weekLabel(w.week) + "</td>" +
-          proj.metrics.map(m => `<td>${w.values[m.key] !== undefined && w.values[m.key] !== "" ? fmt(w.values[m.key]) : "—"}</td>`).join("") +
+          proj.metrics.map(m => `<td>${w.values[m.key] !== undefined && w.values[m.key] !== "" ? fmtMetric(m, w.values[m.key]) : "—"}</td>`).join("") +
           `<td><button class="del" data-week="${w.week}" title="Delete week">✕</button></td></tr>`;
       });
     }
@@ -484,7 +674,7 @@
     d[current] = { weeks: [] };
     const base = {
       "wreck-the-room": { vslViews: 420, quizCompletions: 78, callBookings: 22, callsHeld: 16, conversions: 4 },
-      "history-engine": { videoOutput: 5, totalViews: 12000, followerGrowth: 340, pdfPageVisits: 210, pdfSales: 9 },
+      "history-engine": { videoOutput: 5, totalViews: 12000, followerGrowth: 340, pdfPageVisits: 210, pdfSales: 9, spend: 600, revenue: 900 },
     }[current];
     const start = new Date();
     for (let i = 7; i >= 0; i--) {

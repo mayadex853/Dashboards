@@ -33,6 +33,12 @@ That's it — everything runs client-side.
 - Follower Growth (all platforms)
 - PDF Page Visits (Kajabi)
 - PDF Sales
+- Money Spent (per week)
+- Money Earned (per week)
+
+History Engine also shows a **Spend vs. Earned** panel below the cards: both
+money lines on one chart with total earned, total spent, net profit, and ROI,
+plus a **Weekly / Monthly** toggle (monthly sums each calendar month).
 
 ## Export & backup
 

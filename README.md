@@ -51,6 +51,51 @@ Three tools live under **Export & backup** at the bottom of the panel:
   is already there; matching weeks are overwritten. Accepts both the wrapped backup
   file and a raw data export.
 
+## Cloud Sync (share live between devices & people)
+
+By default the dashboard is local to one browser. Turn on **Cloud Sync** (in the
+panel, under Export & backup) and it becomes a shared, live dashboard: you and
+anyone with the same login see and edit the same numbers from any device —
+desktop, laptop, or phone. Changes save to the cloud and appear everywhere.
+
+It runs on a **free Firebase project** (Google). The dashboard talks to Firebase
+directly over HTTPS, so **use it from the GitHub Pages URL**
+(`https://mayadex853.github.io/Dashboards/`), not the Claude artifact link (Claude
+artifacts block outside network calls).
+
+### One-time setup (~10 minutes)
+
+1. Go to <https://console.firebase.google.com> → **Add project** (name it anything;
+   you can skip Google Analytics). No credit card required.
+2. **Create the database:** left menu → **Build → Realtime Database → Create
+   Database**. Pick a location, start in **locked mode**. Copy the database URL
+   shown at the top (looks like `https://your-app-default-rtdb.firebaseio.com`).
+3. **Set the rules** so only logged-in people can read/write: open the **Rules**
+   tab and paste, then **Publish**:
+   ```json
+   { "rules": { "store": { ".read": "auth != null", ".write": "auth != null" } } }
+   ```
+4. **Turn on login:** **Build → Authentication → Get started → Email/Password →
+   Enable → Save**. Then **Users → Add user** and create one shared login (an
+   email + password you and your son will both use). *(Prefer separate logins?
+   Add one user each — any of them works.)*
+5. **Get the Web API key:** gear icon → **Project settings → General**. Under
+   *Your apps*, click the **web** icon (`</>`) to register a web app (any
+   nickname). In the config shown, copy the **`apiKey`** value (starts with
+   `AIza…`).
+6. In the dashboard, open **Cloud Sync**, paste the **API key**, the **Database
+   URL**, and the **shared email + password**, then **Connect & sync**.
+
+Do step 6 once on each device (yours and your son's) using the same login. After
+that, every change syncs automatically. The header shows a live status dot
+(grey = local only, green = synced, blue = syncing, red = error). Sync is
+best-effort and offline-safe: edits always save locally first and push to the
+cloud when the connection is back.
+
+**Security note:** the API key and database URL are not secrets — they only
+identify your project. Access is controlled by the login and the rule above, so
+keep the email/password private and don't loosen the rules to `true`.
+
 ## Data storage & moving to a new computer
 
 Data is saved in your browser's **localStorage** under the key

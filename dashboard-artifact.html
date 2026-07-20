@@ -179,6 +179,28 @@
   .legend span { display: inline-flex; align-items: center; gap: 7px; }
   .cmp-empty { font-size: 13px; color: var(--muted); padding: 28px 4px; text-align: center; }
 
+  /* ---- Cloud sync ---- */
+  .sync-pill {
+    display: inline-flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border);
+    color: var(--ink-2); border-radius: 999px; padding: 7px 13px; font-family: inherit; font-size: 12px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+  }
+  .sync-pill:hover { color: var(--ink); }
+  .sp-led { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+  .sp-led.synced { background: var(--good); }
+  .sp-led.syncing { background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+  .sp-led.error { background: var(--bad); }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) { .sp-led.syncing { animation: none; } }
+  .cloud-badge {
+    font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; padding: 2px 8px;
+    border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); vertical-align: middle;
+  }
+  .cloud-badge.on { background: rgba(12,163,12,.14); color: var(--good); border-color: rgba(12,163,12,.3); }
+  .cloud-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px 16px; margin-top: 14px; }
+  .cloud-status { font-size: 12px; color: var(--muted); margin: 12px 0 0; min-height: 16px; }
+  .cloud-status.err { color: var(--bad); }
+
   footer { margin-top: 48px; font-size: 11.5px; color: var(--muted); text-align: center; }
 
   @media (max-width: 560px) {
@@ -186,6 +208,7 @@
     .toggle { margin-left: 0; width: 100%; }
     .toggle button { flex: 1; }
     header { gap: 14px; }
+    .sync-pill { order: 3; }
   }
 </style>
 <div class="wrap">
@@ -194,6 +217,9 @@
       <h1>Analytics Dashboard</h1>
       <span class="sub">Manual entry &middot; weekly metrics</span>
     </div>
+    <button class="sync-pill" id="syncPill" type="button" title="Cloud sync status">
+      <span class="sp-led" id="spLed"></span><span id="spText">Local only</span>
+    </button>
     <nav class="toggle" id="toggle"></nav>
   </header>
 
@@ -234,7 +260,24 @@
         <button type="button" class="btn ghost" id="importJson">Restore from backup…</button>
         <input type="file" id="importFile" accept="application/json,.json" hidden>
       </div>
-      <p class="dt-note">Getting a new Mac? Your history lives only in this browser and does <b>not</b> transfer between computers. Download the <b>JSON backup</b> here, move the file to the new machine, then open this dashboard there and use <b>Restore from backup</b>.</p>
+      <p class="dt-note">Getting a new Mac? Your history lives only in this browser and does <b>not</b> transfer between computers. Download the <b>JSON backup</b> here, move the file to the new machine, then open this dashboard there and use <b>Restore from backup</b>. For live sharing across devices, turn on <b>Cloud Sync</b> below.</p>
+
+      <div class="dt-head" style="margin-top:26px">Cloud sync <span id="cloudBadge" class="cloud-badge">off</span></div>
+      <p class="dt-note" style="margin-top:0">Turn this on and the dashboard is shared live — you and anyone with the same login see and edit the same numbers from any device. Uses a free Firebase project (setup steps are in the README). Nothing here is required for local use.</p>
+
+      <div id="cloudForm" class="cloud-grid">
+        <div class="field"><label for="cfgApiKey">Firebase Web API key</label><input type="text" id="cfgApiKey" placeholder="AIza…" autocomplete="off"></div>
+        <div class="field"><label for="cfgDbUrl">Realtime Database URL</label><input type="text" id="cfgDbUrl" placeholder="https://your-app-default-rtdb.firebaseio.com" autocomplete="off"></div>
+        <div class="field"><label for="cfgEmail">Shared login email</label><input type="email" id="cfgEmail" placeholder="you@example.com" autocomplete="off"></div>
+        <div class="field"><label for="cfgPass">Password</label><input type="password" id="cfgPass" placeholder="••••••••" autocomplete="off"></div>
+      </div>
+      <div class="dt-row" style="margin-top:16px">
+        <button type="button" class="btn primary" id="cloudConnect">Connect &amp; sync</button>
+        <button type="button" class="btn ghost" id="cloudSyncNow" hidden>Sync now</button>
+        <button type="button" class="btn ghost" id="cloudDisconnect" hidden>Disconnect</button>
+        <span class="save-msg" id="cloudMsg">Connected</span>
+      </div>
+      <p class="cloud-status" id="cloudStatus"></p>
     </div>
   </section>
 
@@ -278,31 +321,219 @@
   };
 
   const STORE_KEY = "analytics-dashboard-v1";
+  const CLOUD_KEY = "analytics-cloud-v1";
   let current = "wreck-the-room";
 
-  /* ---------- Storage ---------- */
-  function load() {
+  /* ---------- Local cache (source of truth for rendering) ---------- */
+  function localLoad() {
     try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
     catch (e) { return {}; }
   }
-  function save(data) { localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+  function localSave(d) { try { localStorage.setItem(STORE_KEY, JSON.stringify(d)); } catch (e) {} }
+
+  let CACHE = localLoad();
+  function load() { return CACHE; }
+  function commit(d) { CACHE = d; localSave(d); }
+
   function getWeeks(proj) {
-    const d = load();
-    const list = (d[proj] && d[proj].weeks) || [];
+    const list = (CACHE[proj] && CACHE[proj].weeks) || [];
     return list.slice().sort((a, b) => a.week < b.week ? -1 : a.week > b.week ? 1 : 0);
   }
   function upsertWeek(proj, week, values) {
-    const d = load();
+    const d = CACHE;
     if (!d[proj]) d[proj] = { weeks: [] };
     const idx = d[proj].weeks.findIndex(w => w.week === week);
-    if (idx >= 0) d[proj].weeks[idx] = { week, values: { ...d[proj].weeks[idx].values, ...values } };
-    else d[proj].weeks.push({ week, values });
-    save(d);
+    let merged;
+    if (idx >= 0) { merged = { ...d[proj].weeks[idx].values, ...values }; d[proj].weeks[idx] = { week, values: merged }; }
+    else { merged = { ...values }; d[proj].weeks.push({ week, values: merged }); }
+    commit(d);
+    Cloud.pushWeek(proj, week, merged);
   }
   function deleteWeek(proj, week) {
-    const d = load();
-    if (d[proj]) { d[proj].weeks = d[proj].weeks.filter(w => w.week !== week); save(d); }
+    const d = CACHE;
+    if (d[proj]) { d[proj].weeks = d[proj].weeks.filter(w => w.week !== week); commit(d); }
+    Cloud.deleteWeek(proj, week);
   }
+
+  /* ---------- Cloud sync (Firebase Realtime Database over REST) ----------
+     Keeps a shared copy so any device / either person sees the same data.
+     Local cache always updates first (optimistic); cloud writes are queued
+     and retried, and a poll + on-focus refresh pulls others' changes. */
+  const Cloud = (function () {
+    let cfg = null;                 // { apiKey, dbUrl }
+    let tok = null;                 // { idToken, refreshToken, expiresAt }
+    let email = null;
+    let pending = [];               // queued writes: { type:'set'|'del', proj, week, values }
+    let status = "off";             // off | connecting | synced | syncing | error
+    let detail = "";
+    let poll = null;
+
+    function persist() {
+      try { localStorage.setItem(CLOUD_KEY, JSON.stringify({ cfg, tok, email, pending })); } catch (e) {}
+    }
+    function restore() {
+      try {
+        const s = JSON.parse(localStorage.getItem(CLOUD_KEY));
+        if (s) { cfg = s.cfg || null; tok = s.tok || null; email = s.email || null; pending = s.pending || []; }
+      } catch (e) {}
+    }
+    function setStatus(s, d) { status = s; detail = d || ""; updateSyncUI(); }
+
+    const AUTH_BASE = () => (cfg && cfg._authBase) || "https://identitytoolkit.googleapis.com";
+    const TOKEN_BASE = () => (cfg && cfg._tokenBase) || "https://securetoken.googleapis.com";
+    const dbBase = () => cfg.dbUrl.replace(/\/+$/, "");
+
+    async function signIn(pass) {
+      const r = await fetch(`${AUTH_BASE()}/v1/accounts:signInWithPassword?key=${encodeURIComponent(cfg.apiKey)}`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: pass, returnSecureToken: true }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(friendly((j.error && j.error.message) || "Sign-in failed"));
+      tok = { idToken: j.idToken, refreshToken: j.refreshToken, expiresAt: Date.now() + (Number(j.expiresIn || 3600) - 60) * 1000 };
+      persist();
+    }
+    async function refresh() {
+      const r = await fetch(`${TOKEN_BASE()}/v1/token?key=${encodeURIComponent(cfg.apiKey)}`, {
+        method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "grant_type=refresh_token&refresh_token=" + encodeURIComponent(tok.refreshToken),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error("Session expired — reconnect in Cloud Sync");
+      tok = { idToken: j.id_token, refreshToken: j.refresh_token, expiresAt: Date.now() + (Number(j.expires_in || 3600) - 60) * 1000 };
+      persist();
+    }
+    async function idToken() {
+      if (!tok) throw new Error("Not signed in");
+      if (Date.now() >= tok.expiresAt) await refresh();
+      return tok.idToken;
+    }
+    async function req(method, path, body) {
+      const t = await idToken();
+      const url = `${dbBase()}/${path}.json?auth=${encodeURIComponent(t)}`;
+      const r = await fetch(url, {
+        method,
+        headers: body !== undefined ? { "Content-Type": "application/json" } : undefined,
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+      });
+      if (!r.ok) { const txt = await r.text().catch(() => ""); throw new Error(`${method} ${r.status} ${txt.slice(0, 120)}`); }
+      if (r.status === 204) return null;
+      return r.json().catch(() => null);
+    }
+    function friendly(code) {
+      const map = {
+        EMAIL_NOT_FOUND: "No account for that email", INVALID_PASSWORD: "Wrong password",
+        INVALID_EMAIL: "That email isn't valid", INVALID_LOGIN_CREDENTIALS: "Email or password is wrong",
+        USER_DISABLED: "That account is disabled",
+      };
+      return map[code] || code;
+    }
+
+    // cloud map { proj: { week: {metric:val} } } -> { proj:{ weeks:[{week,values}] } }
+    function fromCloud(obj) {
+      const out = {};
+      if (obj && typeof obj === "object") {
+        for (const proj of Object.keys(obj)) {
+          const wk = obj[proj] || {};
+          out[proj] = { weeks: Object.keys(wk).map(week => ({ week, values: wk[week] || {} })) };
+        }
+      }
+      return out;
+    }
+
+    async function flush() {
+      if (!cfg || !tok || !pending.length) return;
+      setStatus("syncing");
+      try {
+        while (pending.length) {
+          const op = pending[0];
+          if (op.type === "set") await req("PATCH", `store/${op.proj}/${op.week}`, op.values);
+          else if (op.type === "del") await req("DELETE", `store/${op.proj}/${op.week}`);
+          pending.shift(); persist();
+        }
+        await pull(true);
+      } catch (e) { setStatus("error", e.message); }
+    }
+
+    async function pull(quiet) {
+      if (!cfg || !tok) return;
+      if (pending.length) return flush();
+      if (!quiet) setStatus("syncing");
+      try {
+        const cloud = fromCloud(await req("GET", "store"));
+        commit(cloud);
+        render();
+        setStatus("synced");
+      } catch (e) { setStatus("error", e.message); }
+    }
+
+    function startPoll() {
+      if (poll) clearInterval(poll);
+      poll = setInterval(() => { if (status !== "off" && document.visibilityState === "visible") pull(true); }, 20000);
+    }
+
+    return {
+      init() {
+        restore();
+        if (cfg && tok) {
+          setStatus("synced");
+          startPoll();
+          // push anything queued from a previous offline session, then reconcile
+          (pending.length ? flush() : pull(true));
+          window.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") pull(true); });
+          window.addEventListener("focus", () => pull(true));
+        } else {
+          setStatus("off");
+        }
+      },
+      isOn() { return status !== "off"; },
+      info() { return { status, detail, email }; },
+      async connect(newCfg, mail, pass) {
+        cfg = { apiKey: newCfg.apiKey.trim(), dbUrl: newCfg.dbUrl.trim(), _authBase: newCfg._authBase, _tokenBase: newCfg._tokenBase };
+        email = (mail || "").trim();
+        setStatus("connecting");
+        try {
+          await signIn(pass);
+          // migrate any local-only weeks up, then adopt cloud as source of truth
+          const cloud = fromCloud(await req("GET", "store"));
+          for (const proj of Object.keys(CACHE)) {
+            const cw = (cloud[proj] && cloud[proj].weeks) || [];
+            for (const w of (CACHE[proj].weeks || [])) {
+              if (!cw.find(x => x.week === w.week)) pending.push({ type: "set", proj, week: w.week, values: w.values });
+            }
+          }
+          persist();
+          await flush();     // pushes migrations then pulls authoritative
+          if (!pending.length) await pull(true);
+          startPoll();
+          window.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") pull(true); });
+          window.addEventListener("focus", () => pull(true));
+          return true;
+        } catch (e) { setStatus("error", e.message); cfg = null; tok = null; persist(); throw e; }
+      },
+      disconnect() {
+        if (poll) clearInterval(poll);
+        tok = null; cfg = null; email = null; pending = [];
+        persist(); setStatus("off");
+      },
+      syncNow() { return pull(); },
+      pushWeek(proj, week, values) {
+        if (!this.isOn()) return;
+        pending.push({ type: "set", proj, week, values }); persist(); flush();
+      },
+      deleteWeek(proj, week) {
+        if (!this.isOn()) return;
+        pending = pending.filter(o => !(o.proj === proj && o.week === week && o.type === "set"));
+        pending.push({ type: "del", proj, week }); persist(); flush();
+      },
+      pushAll() {
+        if (!this.isOn()) return;
+        for (const proj of Object.keys(CACHE)) for (const w of (CACHE[proj].weeks || []))
+          pending.push({ type: "set", proj, week: w.week, values: w.values });
+        persist(); flush();
+      },
+    };
+  })();
 
   /* ---------- Week helpers (ISO week) ---------- */
   function isoWeek(date) {
@@ -671,6 +902,8 @@
   document.getElementById("fillDemo").addEventListener("click", () => {
     if (!confirm("Load 8 weeks of sample data for " + PROJECTS[current].name + "? This is just for previewing the layout.")) return;
     const d = load();
+    // delete existing cloud weeks for this project so the sample fully replaces it
+    if (Cloud.isOn() && d[current]) d[current].weeks.forEach(w => Cloud.deleteWeek(current, w.week));
     d[current] = { weeks: [] };
     const base = {
       "wreck-the-room": { vslViews: 420, quizCompletions: 78, callBookings: 22, callsHeld: 16, conversions: 4 },
@@ -688,7 +921,8 @@
       });
       d[current].weeks.push({ week, values });
     }
-    save(d);
+    commit(d);
+    if (Cloud.isOn()) d[current].weeks.forEach(w => Cloud.pushWeek(current, w.week, w.values));
     render();
     flash("Sample data loaded");
   });
@@ -771,6 +1005,68 @@
     reader.readAsText(file);
   });
 
+  /* ---------- Cloud sync UI ---------- */
+  function updateSyncUI() {
+    const info = Cloud.info();
+    const led = document.getElementById("spLed");
+    const txt = document.getElementById("spText");
+    const badge = document.getElementById("cloudBadge");
+    const statusEl = document.getElementById("cloudStatus");
+    const connectBtn = document.getElementById("cloudConnect");
+    const syncBtn = document.getElementById("cloudSyncNow");
+    const disBtn = document.getElementById("cloudDisconnect");
+    const formEl = document.getElementById("cloudForm");
+    if (!led) return;
+
+    led.className = "sp-led" + (info.status === "off" ? "" : " " + info.status);
+    const labels = { off: "Local only", connecting: "Connecting…", syncing: "Syncing…", synced: "Synced", error: "Sync error" };
+    txt.textContent = labels[info.status] || "Local only";
+
+    const on = info.status !== "off";
+    badge.textContent = on ? "on" : "off";
+    badge.classList.toggle("on", on);
+    connectBtn.textContent = on ? "Reconnect" : "Connect & sync";
+    syncBtn.hidden = !on;
+    disBtn.hidden = !on;
+    if (formEl) formEl.style.display = on ? "none" : "";
+
+    statusEl.classList.toggle("err", info.status === "error");
+    if (info.status === "synced") statusEl.textContent = "Live sync on" + (info.email ? " · signed in as " + info.email : "") + ". Changes save to the cloud and appear on every device.";
+    else if (info.status === "error") statusEl.textContent = "Couldn't sync: " + info.detail + ". Your data is still saved locally.";
+    else if (info.status === "connecting") statusEl.textContent = "Connecting…";
+    else if (info.status === "syncing") statusEl.textContent = "Syncing…";
+    else statusEl.textContent = "";
+  }
+
+  document.getElementById("cloudConnect").addEventListener("click", async () => {
+    const apiKey = document.getElementById("cfgApiKey").value.trim();
+    const dbUrl = document.getElementById("cfgDbUrl").value.trim();
+    const email = document.getElementById("cfgEmail").value.trim();
+    const pass = document.getElementById("cfgPass").value;
+    const statusEl = document.getElementById("cloudStatus");
+    if (!apiKey || !dbUrl || !email || !pass) {
+      statusEl.classList.add("err"); statusEl.textContent = "Fill in all four fields to connect."; return;
+    }
+    if (!/^https?:\/\//.test(dbUrl)) {
+      statusEl.classList.add("err"); statusEl.textContent = "Database URL should start with https://"; return;
+    }
+    try {
+      await Cloud.connect({ apiKey, dbUrl }, email, pass);
+      document.getElementById("cfgPass").value = "";
+      render();
+      const m = document.getElementById("cloudMsg"); m.textContent = "Connected & synced"; m.classList.add("show");
+      setTimeout(() => m.classList.remove("show"), 2500);
+    } catch (e) { /* status shown via updateSyncUI */ }
+  });
+  document.getElementById("cloudSyncNow").addEventListener("click", () => Cloud.syncNow());
+  document.getElementById("cloudDisconnect").addEventListener("click", () => {
+    if (confirm("Turn off cloud sync on this device? Your data stays saved locally; the shared cloud copy is untouched.")) Cloud.disconnect();
+  });
+  document.getElementById("syncPill").addEventListener("click", () => {
+    if (Cloud.isOn()) { Cloud.syncNow(); }
+    else { document.getElementById("cfgApiKey").scrollIntoView({ behavior: "smooth", block: "center" }); document.getElementById("cfgApiKey").focus(); }
+  });
+
   /* ---------- Toggle ---------- */
   function buildToggle() {
     const nav = document.getElementById("toggle");
@@ -791,5 +1087,7 @@
 
   buildToggle();
   render();
+  Cloud.init();
+  updateSyncUI();
 })();
 </script>

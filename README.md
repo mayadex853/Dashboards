@@ -34,12 +34,31 @@ That's it — everything runs client-side.
 - PDF Page Visits (Kajabi)
 - PDF Sales
 
-## Data storage
+## Export & backup
+
+Three tools live under **Export & backup** at the bottom of the panel:
+
+- **Export this project (CSV)** — downloads the current project's weeks as a CSV
+  (Week + one column per metric), ready for Excel / Google Sheets.
+- **Download full backup (JSON)** — a single snapshot of *both* projects.
+- **Restore from backup…** — imports a JSON backup. Weeks are merged into whatever
+  is already there; matching weeks are overwritten. Accepts both the wrapped backup
+  file and a raw data export.
+
+## Data storage & moving to a new computer
 
 Data is saved in your browser's **localStorage** under the key
-`analytics-dashboard-v1`. Nothing is uploaded anywhere. Because it's local to the
-browser profile, use the same browser to keep your history, and note that clearing
-site data will erase it.
+`analytics-dashboard-v1`. Nothing is uploaded anywhere.
+
+Because localStorage is tied to a specific browser on a specific machine, **your
+history does not follow you to a new Mac/PC automatically** (Migration Assistant and
+iCloud don't reliably carry it either). To move it:
+
+1. On the old machine: **Download full backup (JSON)**.
+2. Copy the `.json` file to the new machine (AirDrop, cloud drive, email…).
+3. On the new machine: open `index.html` and **Restore from backup…**, pick the file.
+
+Clearing browser site data also erases it — keep a periodic JSON backup.
 
 ## Connecting APIs later
 

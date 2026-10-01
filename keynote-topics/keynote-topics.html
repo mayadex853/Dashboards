@@ -1,0 +1,335 @@
+<!--
+  Wreck the Room™ — Keynote Topics section
+  Paste this whole file into the Kajabi "Custom Code" block on the Keynote / Speaker Topics section.
+  To edit a talk: find its <div class="wtr-c"> block below and change the text.
+  To add a talk: copy one whole <div class="wtr-c" ...> ... </div> block and edit it.
+  data-t controls which filter shows it: ai, signature, growth, leadership (keep "all" on every card).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&amp;display=swap" rel="stylesheet">
+
+<style>
+  html,body{min-height:100%}
+  body{margin:0;background:transparent}
+  .wtr-wrap *,.wtr-wrap *::before,.wtr-wrap *::after{box-sizing:border-box;margin:0;padding:0}
+  .wtr-wrap{--blue:#a30101;--card-w:720px;font-family:'DM Sans',sans-serif;color:#fff;overflow-x:hidden;background:transparent}
+  .wtr-header{text-align:center;padding:56px 24px 12px}
+  .wtr-eyebrow{font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+  .wtr-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);letter-spacing:.06em;line-height:1;color:#fff;text-transform:uppercase}
+  .wtr-header h2 span{color:var(--blue)}
+  .wtr-subhead{margin:16px auto 0;font-size:17px;color:#fff;font-weight:300;font-style:italic;max-width:640px;line-height:1.8;text-align:center;padding:0 24px 32px}
+  .wtr-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 24px 36px}
+  .wtr-fb{background:transparent;border:1px solid rgba(163,1,1,.4);color:#fff;font:500 13px 'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:9px 18px;border-radius:2px;cursor:pointer;transition:background-color .2s,border-color .2s}
+  .wtr-fb:hover{border-color:var(--blue)}
+  .wtr-fb.on{background:var(--blue);border-color:var(--blue);font-weight:600}
+  .wtr-outer{position:relative;padding:0 0 48px;overflow:hidden}
+  .wtr-tw{overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y;padding:8px 0 24px}
+  .wtr-tw.drag{cursor:grabbing}
+  .wtr-t{display:flex;gap:20px;align-items:flex-start;padding:0 max(16px,calc(50% - var(--card-w)/2));will-change:transform}
+  .wtr-c{flex:0 0 var(--card-w);max-width:92vw;background:rgba(8,8,8,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(163,1,1,.2);border-radius:3px;overflow:hidden;transition:opacity .45s,transform .45s,border-color .45s;opacity:.38;transform:scale(.96);cursor:pointer}
+  .wtr-c:not(.on):hover{opacity:.55}
+  .wtr-c.on{opacity:1;transform:scale(1);border-color:rgba(163,1,1,.55);cursor:default}
+  .wtr-ca{height:3px;background:var(--blue)}
+  .wtr-ci{padding:30px 36px 34px;text-align:left}
+  .wtr-ct{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+  .wtr-ct::before{content:'';display:block;width:18px;height:1px;background:currentColor}
+  .wtr-cn{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,4vw,44px);letter-spacing:.05em;line-height:1;color:#fff;margin-bottom:8px;text-transform:uppercase}
+  .wtr-cs{font-size:16px;font-weight:300;font-style:italic;color:#fff;line-height:1.55}
+  .wtr-readmore{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(163,1,1,.85);margin-top:16px}
+  .wtr-readmore svg{width:12px;height:12px}
+  /* Expanded body: height is set to its real content height by the script, so nothing gets cut off */
+  .wtr-expanded{max-height:0;overflow:hidden;opacity:0;visibility:hidden;margin-top:0;transition:max-height .5s cubic-bezier(.25,1,.5,1),opacity .4s ease,margin-top .4s ease,visibility 0s linear .5s}
+  .wtr-c.on .wtr-expanded{opacity:1;visibility:visible;margin-top:20px;transition:max-height .5s cubic-bezier(.25,1,.5,1),opacity .4s ease,margin-top .4s ease,visibility 0s}
+  .wtr-c.on .wtr-readmore{display:none}
+  .wtr-div{height:1px;background:rgba(163,1,1,.2);margin-bottom:20px}
+  .wtr-sl{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:7px}
+  .wtr-au{font-size:16px;color:#fff;margin-bottom:18px;line-height:1.55}
+  .wtr-de{font-size:16.5px;font-weight:300;color:#fff;line-height:1.75;margin-bottom:22px}
+  .wtr-ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+  .wtr-ul li{font-size:15.5px;color:#fff;padding-left:20px;position:relative;line-height:1.55}
+  .wtr-ul li::before{content:'→';position:absolute;left:0;color:var(--blue);font-size:16px}
+  .wtr-note{font-size:13px;font-style:italic;color:rgba(255,255,255,.7);margin-bottom:22px;line-height:1.5}
+  .wtr-lnk{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--blue);text-decoration:none;padding:13px 22px;border-radius:2px;transition:gap .2s,background-color .2s}
+  .wtr-lnk:hover{background:#c00202;gap:12px}
+  .wtr-lnk svg{width:14px;height:14px}
+  .wtr-nav{display:flex;align-items:center;justify-content:center;gap:20px;padding:0 24px 24px}
+  .wtr-nb{width:44px;height:44px;background:transparent;border:1px solid rgba(163,1,1,.35);border-radius:50%;color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s,opacity .2s;flex-shrink:0}
+  .wtr-nb:hover{border-color:var(--blue);color:var(--blue)}
+  .wtr-nb:disabled{opacity:.2;pointer-events:none}
+  .wtr-nb svg{width:16px;height:16px}
+  .wtr-dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;max-width:240px}
+  .wtr-dot{width:20px;height:20px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .wtr-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);transition:background-color .25s,transform .25s}
+  .wtr-dot.on::before{background:var(--blue);transform:scale(1.4)}
+  .wtr-num{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.1em;color:rgba(255,255,255,.85);min-width:52px;text-align:center}
+  .wtr-swipe-hint{text-align:center;font-size:14px;font-style:italic;font-weight:300;color:rgba(255,255,255,.8);padding:4px 24px 16px}
+  .wtr-c.wtr-hide{display:none}
+  .wtr-wrap button:focus-visible,.wtr-wrap a:focus-visible{outline:2px solid #fff;outline-offset:3px}
+  @media(max-width:680px){.wtr-wrap{--card-w:90vw}.wtr-ci{padding:24px 22px 28px}.wtr-nav{gap:12px}}
+  @media(prefers-reduced-motion:reduce){.wtr-wrap *{transition:none!important}}
+</style>
+
+<div class="wtr-wrap">
+  <div class="wtr-header">
+    <div class="wtr-eyebrow">Wreck the Room™ &nbsp;·&nbsp; Jody Friedman</div>
+    <h2>KEYNOTE <span>TOPICS</span></h2>
+  </div>
+  <div class="wtr-subhead">Whether you're filling a stadium of 20,000 or bringing together an intimate founder mastermind, every talk is tailored to your event.</div>
+
+  <div class="wtr-filters" id="wtrF" role="group" aria-label="Filter talks">
+    <button class="wtr-fb on" data-f="all" aria-pressed="true">All Talks</button>
+    <button class="wtr-fb" data-f="ai" aria-pressed="false">AI &amp; Future</button>
+    <button class="wtr-fb" data-f="signature" aria-pressed="false">Signature</button>
+    <button class="wtr-fb" data-f="growth" aria-pressed="false">Growth</button>
+    <button class="wtr-fb" data-f="leadership" aria-pressed="false">Leadership</button>
+  </div>
+
+  <div class="wtr-swipe-hint">Swipe to explore — then let's find your fit.</div>
+  <div class="wtr-nav">
+    <button class="wtr-nb" id="wtrP" aria-label="Previous talk"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg></button>
+    <div class="wtr-dots" id="wtrD"></div>
+    <div class="wtr-num" id="wtrN" aria-live="polite">1 / 4</div>
+    <button class="wtr-nb" id="wtrNx" aria-label="Next talk"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg></button>
+  </div>
+
+  <div class="wtr-outer">
+    <div class="wtr-tw" id="wtrTW">
+      <div class="wtr-t" id="wtrT">
+
+        <div class="wtr-c on" data-t="ai all">
+          <div class="wtr-ca"></div>
+          <div class="wtr-ci">
+            <div class="wtr-ct">AI &amp; Future of Work</div>
+            <div class="wtr-cn">The Human Advantage in the Age of AI</div>
+            <div class="wtr-cs">The Skills That Can't Be Automated - And How to Build Them Now</div>
+            <div class="wtr-readmore">Read more <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l5 5 5-5"/></svg></div>
+            <div class="wtr-expanded">
+              <div class="wtr-div"></div>
+              <div class="wtr-sl">Ideal For</div>
+              <div class="wtr-au">Entrepreneur Events, Tech-Forward Masterminds, and Innovation Conferences</div>
+              <div class="wtr-sl">The Talk</div>
+              <div class="wtr-de">Every entrepreneur in your audience is navigating AI right now. The tools are evolving fast. The pressure to adapt is real. But the founders who will win aren't the ones with access to the best tools - they're the ones with the strongest internal operating system running underneath them.<br><br>In this keynote, Jody reveals why AI disruption is exposing something most entrepreneurs have never addressed - the outdated identity patterns quietly creating resistance, fear, and stagnation in the face of rapid change. Through behavioral science and two decades of high-stakes creative leadership, attendees walk away with a clear framework to strengthen the human skills no algorithm can replicate and lead with clarity in a world that isn't slowing down.<br><br>Your audience won't just understand AI better. They'll understand themselves better - and that's the real competitive advantage.</div>
+              <div class="wtr-sl">Learning Objectives</div>
+              <ul class="wtr-ul">
+                <li>Understand why AI disruption is exposing outdated internal patterns - and why the founders who adapt fastest have the strongest internal operating system</li>
+                <li>Identify the resistance, fear, or stagnation showing up in their business as a result of rapid technological change</li>
+                <li>Apply the Wreck the Room™ framework to strengthen adaptability, ownership, and human performance in AI-driven environments</li>
+                <li>Build the mindset and internal capacity required to lead, decide, and thrive when everything around them keeps changing</li>
+              </ul>
+              <div class="wtr-note">The title, examples, and audience framing of this keynote are tailored for each engagement.</div>
+              <a class="wtr-lnk" href="mailto:jody@jodyfriedman.com?subject=Speaking%20Inquiry%20%E2%80%94%20Human%20Advantage%20in%20the%20Age%20of%20AI">Inquire About This Talk <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="wtr-c" data-t="signature all">
+          <div class="wtr-ca"></div>
+          <div class="wtr-ci">
+            <div class="wtr-ct">Signature Keynote</div>
+            <div class="wtr-cn">Wreck the Room™</div>
+            <div class="wtr-cs">Break Free From What’s Holding You Back &amp; Rebuild With Purpose</div>
+            <div class="wtr-readmore">Read more <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l5 5 5-5"/></svg></div>
+            <div class="wtr-expanded">
+              <div class="wtr-div"></div>
+              <div class="wtr-sl">Ideal For</div>
+              <div class="wtr-au">Entrepreneur Events, Masterminds, and Founder Conferences</div>
+              <div class="wtr-sl">The Talk</div>
+              <div class="wtr-de">Every entrepreneur in your audience has hit a wall they can't explain. The strategy is right. The team is in place. The work ethic is there. And still - something keeps pulling them back to the same ceiling.<br><br>In this keynote, Jody reveals why the real barrier isn't external. It's the identity your audience built to survive - and is still running their business from today. Through raw personal storytelling and behavioral science drawn from two decades working with Netflix, HBO, Disney, Marvel, and Warner Bros., attendees leave with a clear three-step framework to identify what's actually holding them back, tear it down, and rebuild from who they've actually become.<br><br>Your audience won't just leave inspired. They'll leave knowing exactly what room they've been operating from - and what to do about it starting Monday morning.</div>
+              <div class="wtr-sl">Learning Objectives</div>
+              <ul class="wtr-ul">
+                <li>Identify the psychological and identity-based “rooms” — the unconscious patterns, beliefs, and roles — that quietly cap performance, leadership, and fulfillment</li>
+                <li>Recognize the difference between renovating an old identity and truly wrecking it — and why most change efforts fail because they never address the root</li>
+                <li>Apply the Wreck the Room™ three-step framework — Wreck-ognize It, Wreck It, Wrock It — to disrupt cycles, dismantle limiting roles, and rebuild from alignment rather than survival</li>
+                <li>Use practical tools to move from performance mode, stagnation, or burnout into clarity, ownership, and intentional forward momentum</li>
+              </ul>
+              <div class="wtr-note">The title, examples, and audience framing of this keynote are tailored for each engagement.</div>
+              <a class="wtr-lnk" href="mailto:jody@jodyfriedman.com?subject=Speaking%20Inquiry%20%E2%80%94%20Wreck%20the%20Room%20(Signature)">Inquire About This Talk <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="wtr-c" data-t="growth all">
+          <div class="wtr-ca"></div>
+          <div class="wtr-ci">
+            <div class="wtr-ct">Founder Growth</div>
+            <div class="wtr-cn">Break the Hidden Ceiling</div>
+            <div class="wtr-cs">The Identity Framework Holding Your Revenue Back</div>
+            <div class="wtr-readmore">Read more <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l5 5 5-5"/></svg></div>
+            <div class="wtr-expanded">
+              <div class="wtr-div"></div>
+              <div class="wtr-sl">Ideal For</div>
+              <div class="wtr-au">Entrepreneur Events, Masterminds, and Founder Conferences</div>
+              <div class="wtr-sl">The Talk</div>
+              <div class="wtr-de">You've invested in the right strategies, hired the right people, and put in the work. The numbers are moving. And still - you keep hitting the same wall. The ceiling isn't external. It's the identity you've been operating from since before you built any of this.<br><br>In this keynote, Jody reveals why most founders plateau not because of market conditions or team performance - but because of the unconscious rooms they're still running their business from. Through real-world storytelling and behavioral science drawn from two decades of high-stakes creative and business leadership, attendees walk away with a clear, actionable framework to identify what's actually capping their growth and build the foundation their next level actually requires.<br><br>Your audience won't just gain insight. They'll gain a mirror - and a methodology to break through the ceiling they've been renovating around instead of wrecking.</div>
+              <div class="wtr-sl">Learning Objectives</div>
+              <ul class="wtr-ul">
+                <li>Explain why most leadership and performance investments fall short - and identify the missing factor that determines whether growth actually sticks</li>
+                <li>Identify the "rooms" they're operating from - the unseen patterns and assumptions quietly limiting revenue, execution, and leadership</li>
+                <li>Apply the Wreck the Room™ framework to create real accountability, ownership, and next-level behavior change</li>
+                <li>Move from burnout or plateau into clarity, conviction, and aligned performance</li>
+              </ul>
+              <div class="wtr-note">The title, examples, and audience framing of this keynote are tailored for each engagement.</div>
+              <a class="wtr-lnk" href="mailto:jody@jodyfriedman.com?subject=Speaking%20Inquiry%20%E2%80%94%20Break%20the%20Hidden%20Ceiling">Inquire About This Talk <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="wtr-c" data-t="leadership all">
+          <div class="wtr-ca"></div>
+          <div class="wtr-ci">
+            <div class="wtr-ct">Leadership Summit</div>
+            <div class="wtr-cn">What Every Next-Level Leader Must Change First</div>
+            <div class="wtr-cs">The Internal Shift Behind Every Breakthrough</div>
+            <div class="wtr-readmore">Read more <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l5 5 5-5"/></svg></div>
+            <div class="wtr-expanded">
+              <div class="wtr-div"></div>
+              <div class="wtr-sl">Ideal For</div>
+              <div class="wtr-au">Entrepreneur Events, Leadership Masterminds, and Founder Conferences</div>
+              <div class="wtr-sl">The Talk</div>
+              <div class="wtr-de">Most entrepreneurs master their craft, build the business, and develop real leadership skills - and still hit a ceiling they can't explain. The missing piece is almost never strategy or execution. It's the internal operating system they're leading from.<br><br>In this keynote, Jody reveals why the highest-performing founders are often the most unconsciously trapped - running their business from identity patterns built long before they had a team, a board, or a seven-figure P&amp;L. Through behavioral science and two decades of high-stakes creative and business leadership, attendees walk away knowing exactly what needs to shift internally to unlock the next level of growth, influence, and impact.<br><br>Your audience won't just learn how to lead better. They'll understand why they've been leading from the wrong room - and how to change that starting immediately.</div>
+              <div class="wtr-sl">Learning Objectives</div>
+              <ul class="wtr-ul">
+                <li>Understand how identity determines the ceiling of a leader's impact - and why the highest performers are often the most unconsciously trapped</li>
+                <li>Diagnose the invisible patterns limiting influence, decision-making, and leadership authority</li>
+                <li>Apply the Wreck the Room™ framework to accelerate growth into the next version of themselves as a leader</li>
+                <li>Build the internal capacity required to lead consistently at the highest level - especially under pressure</li>
+              </ul>
+              <div class="wtr-note">The title, examples, and audience framing of this keynote are tailored for each engagement.</div>
+              <a class="wtr-lnk" href="mailto:jody@jodyfriedman.com?subject=Speaking%20Inquiry%20%E2%80%94%20Next-Level%20Leader">Inquire About This Talk <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var W=document.querySelector('.wtr-wrap'),T=document.getElementById('wtrT'),TW=document.getElementById('wtrTW'),D=document.getElementById('wtrD'),N=document.getElementById('wtrN'),P=document.getElementById('wtrP'),NX=document.getElementById('wtrNx'),F=document.getElementById('wtrF');
+  var EASE='transform .45s cubic-bezier(.25,1,.5,1)';
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Signature talk always leads
+  var signature=T.querySelector('.wtr-c[data-t~="signature"]');
+  if(signature)T.insertBefore(signature,T.firstElementChild);
+
+  var cur=0,vis=[],base=0,inView=true;
+  var down=false,axis=null,moved=false,sx=0,sy=0,dx=0,dy=0;
+
+  function cards(){return Array.prototype.slice.call(T.querySelectorAll('.wtr-c'))}
+  function upd(){vis=cards().filter(function(c){return!c.classList.contains('wtr-hide')})}
+  function setX(x,animate){
+    T.style.transition=(animate&&!reduce)?EASE:'none';
+    T.style.transform='translateX('+x+'px)';
+  }
+  // Center the active card inside whatever width Kajabi gives the section
+  function pad(){
+    if(!vis.length)return;
+    var p=Math.max(0,(TW.clientWidth-vis[0].offsetWidth)/2);
+    T.style.paddingLeft=T.style.paddingRight=p+'px';
+  }
+  function go(i,animate){
+    if(animate===undefined)animate=true;
+    if(!vis.length)return;
+    cur=Math.max(0,Math.min(i,vis.length-1));
+    cards().forEach(function(c){
+      var on=c===vis[cur],ex=c.querySelector('.wtr-expanded');
+      c.classList.toggle('on',on);
+      if(ex)ex.style.maxHeight=on?ex.scrollHeight+'px':'';
+    });
+    pad();
+    // offsetLeft ignores the scale() on inactive cards, so the math stays exact
+    base=-(vis[cur].offsetLeft-vis[0].offsetLeft);
+    setX(base,animate);
+    Array.prototype.forEach.call(D.children,function(d,j){
+      d.classList.toggle('on',j===cur);
+      if(j===cur)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current');
+    });
+    N.textContent=(cur+1)+' / '+vis.length;
+    P.disabled=cur===0;NX.disabled=cur===vis.length-1;
+  }
+  function dots(){
+    D.innerHTML='';
+    vis.forEach(function(c,i){
+      var d=document.createElement('button'),name=c.querySelector('.wtr-cn');
+      d.className='wtr-dot';
+      d.setAttribute('aria-label','View talk '+(i+1)+(name?': '+name.textContent:''));
+      d.onclick=function(){go(i)};
+      D.appendChild(d);
+    });
+  }
+  function filter(f){
+    cards().forEach(function(c){
+      var tags=' '+(c.getAttribute('data-t')||'')+' ';
+      c.classList.toggle('wtr-hide',!(f==='all'||tags.indexOf(' '+f+' ')!==-1));
+    });
+    upd();dots();go(0,false);
+  }
+
+  F.querySelectorAll('.wtr-fb').forEach(function(b){
+    b.onclick=function(){
+      F.querySelectorAll('.wtr-fb').forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});
+      b.classList.add('on');b.setAttribute('aria-pressed','true');
+      filter(b.getAttribute('data-f'));
+    };
+  });
+  P.onclick=function(){go(cur-1)};
+  NX.onclick=function(){go(cur+1)};
+
+  // Arrow keys only when the section is on screen and the visitor isn't typing somewhere
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){inView=es[0].isIntersecting},{threshold:.3}).observe(TW);
+  }
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+    if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
+    var t=e.target,tag=t&&t.tagName;
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
+    if(!inView&&!W.contains(document.activeElement))return;
+    go(e.key==='ArrowLeft'?cur-1:cur+1);
+  });
+
+  // Drag / swipe: track follows the finger, horizontal only, vertical scrolling left alone
+  function start(x,y){down=true;axis=null;moved=false;sx=x;sy=y;dx=dy=0}
+  function move(x,y){
+    if(!down)return;
+    dx=x-sx;dy=y-sy;
+    if(!axis&&(Math.abs(dx)>6||Math.abs(dy)>6))axis=Math.abs(dx)>Math.abs(dy)?'x':'y';
+    if(axis!=='x')return;
+    moved=true;TW.classList.add('drag');
+    var atEdge=(cur===0&&dx>0)||(cur===vis.length-1&&dx<0);
+    setX(base+(atEdge?dx/3:dx),false);
+  }
+  function end(){
+    if(!down)return;
+    down=false;TW.classList.remove('drag');
+    if(axis==='x'&&dx<-50)go(cur+1);else if(axis==='x'&&dx>50)go(cur-1);else if(axis==='x')go(cur);
+    setTimeout(function(){moved=false},0);
+  }
+  TW.addEventListener('mousedown',function(e){if(e.button===0)start(e.clientX,e.clientY)});
+  window.addEventListener('mousemove',function(e){move(e.clientX,e.clientY)});
+  window.addEventListener('mouseup',end);
+  TW.addEventListener('dragstart',function(e){e.preventDefault()});
+  TW.addEventListener('touchstart',function(e){start(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
+  TW.addEventListener('touchmove',function(e){move(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
+  TW.addEventListener('touchend',end);
+  TW.addEventListener('touchcancel',end);
+  // A drag that ends on a card or link shouldn't also count as a click
+  TW.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation()}},true);
+
+  T.addEventListener('click',function(e){
+    if(e.target.closest('a'))return;
+    var c=e.target.closest('.wtr-c');
+    if(!c||c.classList.contains('on'))return;
+    var i=vis.indexOf(c);if(i!==-1)go(i);
+  });
+
+  window.addEventListener('resize',function(){go(cur,false)});
+  // Fonts change text height once loaded; re-measure so the open card isn't clipped
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){go(cur,false)});
+
+  upd();dots();go(0,false);
+})();
+</script>

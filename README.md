@@ -117,3 +117,15 @@ The app is structured so metrics come from a single per-project data model
 (`PROJECTS` config + a storage layer in `index.html`). When you're ready to wire up
 Vimeo, ScoreApp, Calendly, Kajabi, etc., you can replace the manual `upsertWeek`
 calls with fetched values while keeping the same card/sparkline rendering.
+
+## Keynote Topics section (Kajabi)
+
+`keynote-topics/keynote-topics.html` is the master copy of the swipeable
+**Keynote Topics** carousel on the Kajabi speaker page.
+
+- **Edit:** change the text inside the talk's `<div class="wtr-c">` block. Each
+  card has notes at the top of the file explaining the filter tags.
+- **Preview:** open `keynote-topics/preview.html` in a browser (it adds the dark
+  background the section sits on in Kajabi).
+- **Go live:** copy the entire contents of `keynote-topics.html` and paste it over
+  the existing code in the Kajabi Custom Code block for that section, then save.

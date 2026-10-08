@@ -78,6 +78,10 @@
     font-variant-numeric: tabular-nums; margin-top: 2px;
   }
   .card .value.empty { color: var(--muted); font-size: 20px; font-weight: 500; }
+  .card .value.profit-pos { color: var(--good); }
+  .card .value.profit-neg { color: var(--bad); }
+  .card-profit { border-color: var(--accent); background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent); }
+  .card-profit .source { text-transform: none; letter-spacing: 0; font-size: 10px; }
   .card .delta { font-size: 12px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
   .card .delta.up { color: var(--good); }
   .card .delta.down { color: var(--bad); }
@@ -326,9 +330,12 @@
         { key: "pdfSales",       label: "PDF Sales",          source: "" },
         { key: "spend",          label: "Money Spent",        source: "per week", money: true },
         { key: "revenue",        label: "Money Earned",       source: "per week", money: true },
+        { key: "monthlyFixedCosts", label: "Monthly Fixed Costs", source: "enter once a month", money: true, formOnly: true },
       ],
       // projects with money metrics get a spend-vs-earned comparison view
       compare: { spendKey: "spend", revenueKey: "revenue" },
+      // estimated profit = revenue − spend − (latest monthlyFixedCosts ÷ weeksPerMonth)
+      profit: { revenueKey: "revenue", spendKey: "spend", fixedKey: "monthlyFixedCosts", weeksPerMonth: 4.33 },
     },
   };
 
@@ -567,6 +574,11 @@
     return "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 });
   }
   function fmtMetric(m, n) { return m && m.money ? money(n) : fmt(n); }
+  function signedMoney(n) {
+    if (n === null || n === undefined || n === "") return "—";
+    const v = Math.round(Number(n));
+    return (v < 0 ? "−$" : "$") + Math.abs(v).toLocaleString();
+  }
   // ISO week (YYYY-Www) -> the Monday Date of that week
   function weekToDate(week) {
     const m = /^(\d{4})-W(\d{2})$/.exec(week);
@@ -640,6 +652,7 @@
     const cards = document.getElementById("cards");
     cards.innerHTML = "";
     proj.metrics.forEach(m => {
+      if (m.formOnly) return; // entered in the form but not shown as a card
       const series = weeks
         .map(w => ({ week: w.week, v: w.values[m.key] }))
         .filter(o => o.v !== null && o.v !== undefined && o.v !== "");
@@ -695,9 +708,83 @@
       }
     });
 
+    renderProfitCard(weeks, proj, cards);
     buildCompare(weeks);
     buildForm();
     buildHistory();
+  }
+
+  /* ---------- Estimated profit (revenue − spend − amortized fixed costs) ---------- */
+  function renderProfitCard(weeks, proj, cards) {
+    const cfg = proj.profit;
+    if (!cfg) return;
+
+    // most recently entered monthly fixed costs (run-rate); 0 if never entered
+    let latestFixed = 0;
+    weeks.forEach(w => {
+      const v = w.values[cfg.fixedKey];
+      if (v !== undefined && v !== "" && !isNaN(Number(v))) latestFixed = Number(v);
+    });
+    const weeklyShare = latestFixed / cfg.weeksPerMonth;
+
+    // profit for each week that has revenue or spend logged
+    const series = weeks
+      .filter(w => {
+        const r = w.values[cfg.revenueKey], s = w.values[cfg.spendKey];
+        return (r !== undefined && r !== "") || (s !== undefined && s !== "");
+      })
+      .map(w => ({
+        week: w.week,
+        v: Number(w.values[cfg.revenueKey] || 0) - Number(w.values[cfg.spendKey] || 0) - weeklyShare,
+      }));
+    const nums = series.map(o => o.v);
+    const latest = nums.length ? nums[nums.length - 1] : null;
+    const prev = nums.length > 1 ? nums[nums.length - 2] : null;
+
+    let deltaHtml = "";
+    if (latest !== null && prev !== null) {
+      const diff = latest - prev;
+      const cls = diff > 0 ? "up" : diff < 0 ? "down" : "flat";
+      const arrow = diff > 0 ? "▲" : diff < 0 ? "▼" : "—";
+      deltaHtml = `<span class="delta ${cls}">${arrow} ${signedMoney(Math.abs(diff))} <span style="color:var(--muted);font-weight:400">vs prev wk</span></span>`;
+    } else {
+      deltaHtml = `<span class="delta flat">&nbsp;</span>`;
+    }
+
+    const valCls = latest === null ? "value empty" : (latest >= 0 ? "value profit-pos" : "value profit-neg");
+    const valHtml = latest !== null ? `<div class="${valCls}">${signedMoney(latest)}</div>` : `<div class="value empty">No data</div>`;
+    const note = "revenue − spend − fixed costs ÷ " + cfg.weeksPerMonth +
+      " (" + signedMoney(latestFixed) + "/mo ≈ " + signedMoney(weeklyShare) + "/wk)";
+
+    const card = document.createElement("div");
+    card.className = "card card-profit";
+    card.innerHTML =
+      `<div class="label">Est. Profit This Week</div>` +
+      `<div class="source">${note}</div>` +
+      valHtml + deltaHtml +
+      `<div class="spark">${sparkline(nums, proj.accent)}</div>`;
+    cards.appendChild(card);
+
+    const svg = card.querySelector(".spark svg");
+    if (svg && series.length > 1) {
+      const dots = svg.querySelectorAll(".sp-dot");
+      svg.addEventListener("mousemove", (e) => {
+        const rect = svg.getBoundingClientRect();
+        const rel = (e.clientX - rect.left) / rect.width;
+        let idx = Math.round(rel * (series.length - 1));
+        idx = Math.max(0, Math.min(series.length - 1, idx));
+        dots.forEach((d, i) => d.style.opacity = i === idx ? "1" : "0");
+        const dot = dots[idx].getBoundingClientRect();
+        tip.innerHTML = `<span class="tw">${weekLabel(series[idx].week)}</span><b>${signedMoney(series[idx].v)}</b> · Est. profit`;
+        tip.style.left = (dot.left + dot.width / 2) + "px";
+        tip.style.top = dot.top + "px";
+        tip.style.opacity = "1";
+      });
+      svg.addEventListener("mouseleave", () => {
+        dots.forEach(d => d.style.opacity = "0");
+        tip.style.opacity = "0";
+      });
+    }
   }
 
   /* ---------- Spend vs earned comparison ---------- */
@@ -929,7 +1016,7 @@
     d[current] = { weeks: [] };
     const base = {
       "wreck-the-room": { vslViews: 420, quizCompletions: 78, callBookings: 22, callsHeld: 16, conversions: 4 },
-      "history-engine": { videoOutput: 5, totalViews: 12000, followerGrowth: 340, pdfPageVisits: 210, pdfSales: 9, spend: 600, revenue: 900 },
+      "history-engine": { videoOutput: 5, totalViews: 12000, followerGrowth: 340, pdfPageVisits: 210, pdfSales: 9, spend: 600, revenue: 900, monthlyFixedCosts: 85 },
     }[current];
     const start = new Date();
     for (let i = 7; i >= 0; i--) {

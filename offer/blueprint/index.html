@@ -55,7 +55,7 @@ section{position:relative;padding:120px 0}
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.01em;text-decoration:none;background:var(--blue);color:#05101C;padding:18px 30px;border:0;border-radius:2px;cursor:pointer;transition:transform .15s ease,background .15s ease,box-shadow .15s ease;box-shadow:0 0 0 0 rgba(74,167,255,.0)}
 .btn:hover{background:var(--blue-hi);transform:translateY(-2px);box-shadow:0 10px 30px -10px rgba(74,167,255,.6)}
-.btn:focus-visible,.toggle:focus-within{outline:2px solid var(--white);outline-offset:3px}
+.btn:focus-visible{outline:2px solid var(--white);outline-offset:3px}
 .btn .arrow{transition:transform .15s}
 .btn:hover .arrow{transform:translateX(4px)}
 .btn-ghost{background:transparent;color:var(--white);box-shadow:inset 0 0 0 1.5px #3a3d45}
@@ -205,11 +205,9 @@ nav.top .btn{padding:11px 18px;font-size:14px}
    ========================================================= */
 .architects{background:var(--black-2);border-top:1px solid var(--line)}
 .architects .label{color:var(--blue)}
-.arch-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px;align-items:center}
-@media(max-width:900px){.arch-grid{grid-template-columns:1fr;gap:40px}}
-.arch-mark{aspect-ratio:1;max-width:420px;width:100%;border:1px solid var(--line);background:#0E1015;display:grid;place-items:center;position:relative}
-.arch-mark img{width:72%;height:72%;object-fit:contain}
-.arch-mark::after{content:"";position:absolute;inset:14px;border:1px dashed #2a2d34;pointer-events:none}
+.arch-banner{position:relative;margin-bottom:64px;border:1px solid var(--line);aspect-ratio:2000/739;background:#0E1015;overflow:hidden}
+.arch-banner img{width:100%;height:100%;object-fit:cover}
+.arch-copy{max-width:760px}
 .occupant{display:flex;align-items:center;gap:16px;margin:30px 0;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,34px);flex-wrap:wrap}
 .occupant s{color:var(--dim);text-decoration-thickness:3px;text-decoration-color:var(--red)}
 .occupant .to{font-family:var(--mono);font-size:14px;color:var(--dim)}
@@ -277,20 +275,13 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .card ul.inc li{break-inside:avoid;padding:6px 0 6px 22px;position:relative;font-size:15px}
 .card ul.inc li::before{content:"";position:absolute;left:0;top:15px;width:10px;height:2px;background:var(--blue)}
 
-/* the order bump: one toggle, gold */
-.toggle{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin:26px 36px 0;padding:20px;border:1.5px solid rgba(212,178,106,.45);background:linear-gradient(135deg,rgba(212,178,106,.08),rgba(212,178,106,.02));cursor:pointer;transition:border-color .2s,background .2s}
-@media(max-width:560px){.toggle{margin:22px 22px 0;grid-template-columns:auto 1fr}.toggle .addprice{grid-column:2}}
-.toggle:hover{border-color:var(--gold)}
-.toggle input{position:absolute;opacity:0;pointer-events:none}
-.switch{width:46px;height:26px;border-radius:26px;background:#2a2b30;position:relative;transition:background .2s;margin-top:2px;flex-shrink:0}
-.switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#8b8e96;transition:transform .2s,background .2s}
-.toggle input:checked~.switch{background:var(--gold-lo)}
-.toggle input:checked~.switch::after{transform:translateX(20px);background:#1a1407}
-.toggle.on{border-color:var(--gold);background:linear-gradient(135deg,rgba(212,178,106,.16),rgba(212,178,106,.04))}
-.toggle .t-title{font-weight:600;color:var(--white)}
-.toggle .t-title em{font-style:normal;color:var(--gold)}
-.toggle .t-desc{font-size:14px;color:var(--muted);margin-top:4px}
-.toggle .addprice{font-family:var(--display);font-weight:800;color:var(--gold);white-space:nowrap}
+/* add-on callout: chosen at Kajabi checkout (order bump), gold */
+.addon{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;margin:26px 36px 0;padding:20px 22px;border:1.5px solid rgba(212,178,106,.55);background:linear-gradient(135deg,rgba(212,178,106,.10),rgba(212,178,106,.02))}
+@media(max-width:560px){.addon{margin:22px 22px 0;grid-template-columns:1fr}}
+.addon .a-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.addon .a-title{font-weight:600;color:var(--white)}
+.addon .a-desc{font-size:14px;color:var(--muted);margin-top:4px}
+.addon .addprice{font-family:var(--display);font-weight:800;font-size:20px;color:var(--gold);white-space:nowrap}
 .card .buy{padding:26px 36px 30px}
 .card .buy .btn{width:100%;font-size:19px;padding:20px}
 .card .buy .total{display:flex;justify-content:space-between;font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:14px;letter-spacing:.04em}
@@ -463,7 +454,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="spec-row"><dt>Community</dt><dd>Access to the Architects community on Kajabi</dd></div>
         <div class="spec-row"><dt>Access</dt><dd>Lifetime access to all material</dd></div>
         <div class="spec-row"><dt>Format</dt><dd>Fully self-guided. Work at your own pace.</dd></div>
-        <div class="spec-row"><dt>Live calls</dt><dd>None in the base price. Optional checkpoint calls at checkout.</dd></div>
+        <div class="spec-row"><dt>Live calls</dt><dd>None in the base price. Optional 1:1 alignment coaching sessions at checkout.</dd></div>
       </dl>
       <div class="titleblock">
         <div>Project<b>Wreck the Room: Blueprint</b></div>
@@ -477,13 +468,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <!-- ======================= 04 ARCHITECTS ======================= -->
 <section class="architects" id="architects">
-  <div class="wrap arch-grid">
-    <div class="arch-mark imgslot reveal">
-      <!-- Using the plain "A" mark only. The community graphics with the retired wordmark baked in are NOT used here. -->
-      <img src="assets/AA%20Logo%20copy.jpg" alt="Architects mark" loading="lazy">
-      <div class="missing">assets/AA Logo copy.jpg</div>
-    </div>
-    <div class="reveal">
+  <div class="wrap">
+    <figure class="arch-banner imgslot reveal">
+      <img src="assets/Architects%20Wide.jpg" alt="Architects. Wreck what's not working. Build what does." loading="lazy">
+      <div class="missing">assets/Architects Wide.jpg</div>
+    </figure>
+    <div class="arch-copy reveal">
       <div class="label">04 &middot; The Architects</div>
       <h2>Who you become on the other side</h2>
       <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Architect</b></div>
@@ -580,24 +570,23 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <li>Lifetime access</li>
       </ul>
 
-      <label class="toggle" id="bumpWrap">
-        <input type="checkbox" id="bump" aria-describedby="bumpDesc">
-        <span class="switch" aria-hidden="true"></span>
-        <span>
-          <span class="t-title">Add <em>three checkpoint calls</em> with Jody</span>
-          <span class="t-desc" id="bumpDesc" style="display:block">One at the beginning, one in the middle, one at the end of the process.</span>
-        </span>
-        <span class="addprice">+$2,000</span>
-      </label>
+      <div class="addon">
+        <div>
+          <div class="a-kicker">Optional at checkout</div>
+          <div class="a-title">Three 1:1 alignment coaching sessions with Jody</div>
+          <div class="a-desc">One at the beginning, one in the middle, one at the end of the process. Tick the box on the checkout page to add them.</div>
+        </div>
+        <div class="addprice">+$2,000</div>
+      </div>
 
       <div class="buy">
-        <div class="total"><span>Total today</span><b id="total">$5,000</b></div>
+        <div class="total"><span>Blueprint</span><b>$5,000</b></div>
         <a class="btn" id="buyBtn" href="#">Enroll in Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       </div>
 
       <div class="terms">
         <h4>Refund policy</h4>
-        <p>Blueprint is non-refundable. All sales are final, including the checkpoint call add-on. You get lifetime access to the entire system the moment you enroll. Read the &ldquo;Not for&rdquo; list above before you buy. If it describes you, choose a different tier.</p>
+        <p>Blueprint is non-refundable. All sales are final, including the coaching add-on. You get lifetime access to the entire system the moment you enroll. Read the &ldquo;Not for&rdquo; list above before you buy. If it describes you, choose a different tier.</p>
       </div>
     </div>
   </div>
@@ -622,38 +611,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <script>
 /* ======================= CONFIG =======================
-   Paste your real checkout links here before launch.
-   If Kajabi's native order bump is used, set both to the
-   same checkout URL and the toggle just previews the total. */
+   The $2K coaching add-on is a Kajabi order bump on the
+   Blueprint checkout, so there is one checkout link. */
 const CONFIG = {
-  basePrice: 5000,
-  addonPrice: 2000,
-  checkoutBase: "",        // Kajabi checkout: Blueprint only
-  checkoutWithCalls: "",   // Kajabi checkout: Blueprint + 3 checkpoint calls
-  councilUrl: ""           // Council offer page (linked from the "Not for" list)
+  checkoutUrl: "https://www.wrecktheroom.com/offers/FCikqT8z/checkout",
+  councilUrl: "https://www.wrecktheroom.com/council"
 };
 
 (function(){
-  const fmt = n => n.toLocaleString("en-US");
-  const bump = document.getElementById("bump");
-  const wrap = document.getElementById("bumpWrap");
-  const price = document.getElementById("price");
-  const total = document.getElementById("total");
-  const buy = document.getElementById("buyBtn");
-
-  function sync(){
-    const on = bump.checked;
-    const sum = CONFIG.basePrice + (on ? CONFIG.addonPrice : 0);
-    price.textContent = fmt(sum);
-    price.style.color = on ? "var(--gold)" : "";
-    total.textContent = "$" + fmt(sum);
-    wrap.classList.toggle("on", on);
-    const url = on ? CONFIG.checkoutWithCalls : CONFIG.checkoutBase;
-    buy.href = url || "#enroll";
-  }
-  bump.addEventListener("change", sync);
-  sync();
-
+  document.getElementById("buyBtn").href = CONFIG.checkoutUrl || "#enroll";
   document.querySelectorAll('[data-link="council"]').forEach(a => { a.href = CONFIG.councilUrl || "#fit"; });
 
   // Missing image -> labeled frame instead of a broken icon
@@ -667,7 +633,7 @@ const CONFIG = {
   const issues = [];
   const ph = document.querySelectorAll("[data-placeholder]").length;
   if (ph) issues.push(ph + " testimonial placeholder" + (ph > 1 ? "s" : ""));
-  if (!CONFIG.checkoutBase || !CONFIG.checkoutWithCalls) issues.push("checkout URLs not set");
+  if (!CONFIG.checkoutUrl) issues.push("checkout URL not set");
   if (!CONFIG.councilUrl) issues.push("Council link not set");
   if (issues.length){
     const g = document.getElementById("guard");

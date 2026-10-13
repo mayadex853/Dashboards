@@ -4,7 +4,7 @@ Drop these files here using the exact filenames. Missing files show a labeled fr
 
 | File | Used in | Status |
 |---|---|---|
-| `AA Logo copy.jpg` | Nav mark, Architects section | Safe as-is |
+| `AA Logo copy.jpg` | Nav mark | Safe as-is |
 | `Drifting Final.png` | "The room you're in" strip | Safe as-is |
 | `Stalling.png` | "The room you're in" strip | Safe as-is |
 | `Renovating.png` | "The room you're in" strip | Safe as-is |
@@ -13,5 +13,9 @@ Drop these files here using the exact filenames. Missing files show a labeled fr
 ## Deliberately NOT used
 
 - `Blueprint.png`: has "128 lessons" baked in. Wrong for this tier (27 / 78 / 105). Needs a regenerated version.
-- `Activated Architects*.png`: retired wordmark baked in. The wide version would make a strong hero once regenerated with "ARCHITECTS".
+- `Activated Architects*.png`: retired wordmark baked in. Replaced by `Architects Wide.jpg`.
 - `Foundation.png`: not needed on this page.
+
+## Added
+
+- `Architects Wide.jpg`: Architects community banner (current "ARCHITECTS" wordmark). Used in the Architects section.

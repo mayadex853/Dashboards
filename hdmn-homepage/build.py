@@ -2,12 +2,16 @@
 
 Outputs:
   preview.html       standalone page for local review (posters loaded from ./posters)
-  kajabi-embed.html  paste into a single Kajabi Code block (posters loaded from jsDelivr)
+  kajabi-embed.html  full embed, can be pasted into a single Kajabi Code block (posters loaded from jsDelivr)
+  hdmn.js            the same embed as a script; the Kajabi Code block loads it with:
+                       <div id="hdmn-mount"></div>
+                       <script src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@<commit>/hdmn-homepage/hdmn.js"></script>
 
 Usage: python3 build.py [CDN_REF]   (CDN_REF = git branch or commit, default: the working branch)
 """
 import html
-import random
+import json
+import re
 import sys
 from pathlib import Path
 
@@ -89,20 +93,16 @@ SUBPUBS = ["HDMN Royalty Music UK", "BMG", "Sonoton", "ViMusica", "Moodoofind", 
 e = html.escape
 
 
+def _min(css):
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    return re.sub(r"\s*\n\s*", "", css).strip()
+
+
 def poster_src(slug, base):
     return f"{base}{slug}.jpg"
 
 
 def build(base):
-    rnd = random.Random(7)
-    rows = []
-    for r in range(4):
-        picks = POSTERS[:]
-        rnd.shuffle(picks)
-        picks = picks[:12]
-        imgs = "".join(f'<img src="{poster_src(p[1], base)}" alt="">' for p in picks * 2)
-        rows.append(f'<div class="hd-wall-row{" rev" if r % 2 else ""}" style="animation-duration:{90 + r * 20}s">{imgs}</div>')
-
     ticker = "".join(f"<span>{e(c)}</span><i></i>" for c in CLIENTS) * 2
 
     cards = "".join(
@@ -122,8 +122,9 @@ def build(base):
     subpubs = " <i>&middot;</i> ".join(e(s) for s in SUBPUBS)
 
     return TEMPLATE.format(
-        css=CSS, wall="".join(rows), ticker=ticker, cards=cards, roll=roll, labels=labels,
-        subpubs=subpubs, catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, js=JS)
+        css=_min(CSS), wall="", ticker=ticker, cards=cards, roll=roll, labels=labels,
+        subpubs=subpubs, catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL,
+        js=JS.replace("__BASE__", base).replace("__SLUGS__", ",".join(p[1] for p in POSTERS)))
 
 
 CSS = r"""
@@ -360,6 +361,13 @@ CSS = r"""
 JS = r"""
 (function(){
   var root=document.getElementById('hdmn');if(!root)return;
+  // poster wall (decorative)
+  var base='__BASE__',slugs='__SLUGS__'.split(','),wall=root.querySelector('.hd-wall');
+  function shuffled(seed){var a=slugs.slice(),s=seed;for(var i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;var j=Math.floor(s/233280*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a.slice(0,12);}
+  for(var r=0;r<4;r++){var row=document.createElement('div');row.className='hd-wall-row'+(r%2?' rev':'');row.style.animationDuration=(90+r*20)+'s';
+    var pick=shuffled(r+3),h='';for(var k=0;k<2;k++)pick.forEach(function(sl){h+='<img src="'+base+sl+'.jpg" alt="">';});row.innerHTML=h;wall.appendChild(row);}
+  // seamless credits roll
+  var rin=root.querySelector('.hd-roll-in');if(rin){var cl=rin.firstElementChild.cloneNode(true);cl.setAttribute('aria-hidden','true');rin.appendChild(cl);}
   // nav goes solid on scroll
   var nav=root.querySelector('.hd-nav');
   function onScroll(){nav.classList.toggle('solid',window.scrollY>60);}
@@ -471,7 +479,7 @@ TEMPLATE = """<style>{css}</style>
   </div>
   <div class="hd-roll-wrap hd-reveal">
     <div class="hd-roll-k">THE FULL CREDITS</div>
-    <div class="hd-roll"><div class="hd-roll-in"><div>{roll}</div><div aria-hidden="true">{roll}</div></div></div>
+    <div class="hd-roll"><div class="hd-roll-in"><div>{roll}</div></div></div>
   </div>
 </section>
 
@@ -527,9 +535,18 @@ TEMPLATE = """<style>{css}</style>
 """
 
 
+def loader_js(embed):
+    """Wrap the embed as a script that mounts into <div id="hdmn-mount"> (scripts in innerHTML don't run)."""
+    markup, script = embed.split("<script>", 1)
+    script = script.rsplit("</script>", 1)[0]
+    return ("(function(){var m=document.getElementById('hdmn-mount');if(!m)return;m.innerHTML="
+            + json.dumps(markup) + ";\n" + script + "\n})();\n")
+
+
 def main():
     embed = build(CDN_BASE)
     (HERE / "kajabi-embed.html").write_text(embed)
+    (HERE / "hdmn.js").write_text(loader_js(embed))
     preview = build("posters/")
     (HERE / "preview.html").write_text(
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'

@@ -1,116 +1,175 @@
 "use client";
-// Modal to draw or type a signature/initials. Returns a transparent PNG data URL.
+// DocuSign-style "Adopt Your Signature": one dialog captures both signature and initials,
+// either by picking a typed style or drawing. Returns transparent PNG data URLs.
 import { useEffect, useRef, useState } from "react";
 
-const FONTS = ["Dancing Script", "Great Vibes", "Caveat"];
+const FONTS = ["Dancing Script", "Great Vibes", "Homemade Apple", "Caveat"];
 
-export default function SignaturePad({ kind = "signature", defaultName = "", onDone, onCancel }) {
-  const [mode, setMode] = useState("type");
-  const [text, setText] = useState(kind === "initials" ? initialsOf(defaultName) : defaultName);
+export const initialsOf = (name = "") =>
+  name.split(/\s+/).filter(Boolean).map((p) => p[0].toUpperCase()).join("").slice(0, 4);
+
+/**
+ * @param {{defaultName?: string, actionLabel?: string, onDone: (r:{signature:string, initials:string, name:string}) => void|Promise<void>, onCancel: () => void}} props
+ */
+export default function SignaturePad({ defaultName = "", actionLabel = "Adopt and Sign", onDone, onCancel }) {
+  const [name, setName] = useState(defaultName);
+  const [ini, setIni] = useState(initialsOf(defaultName));
+  const [mode, setMode] = useState("style");
   const [font, setFont] = useState(FONTS[0]);
-  const canvasRef = useRef(null);
-  const drawing = useRef(false);
-  const hasInk = useRef(false);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const sigCanvas = useRef(null);
+  const iniCanvas = useRef(null);
 
   useEffect(() => {
-    if (mode !== "draw") return;
-    const c = canvasRef.current;
-    const dpr = window.devicePixelRatio || 1;
-    c.width = c.clientWidth * dpr;
-    c.height = c.clientHeight * dpr;
-    const ctx = c.getContext("2d");
-    ctx.scale(dpr, dpr);
-    ctx.lineWidth = 2.4;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = "#111a40";
-    hasInk.current = false;
+    if (mode === "draw") [sigCanvas.current, iniCanvas.current].forEach(prepCanvas);
   }, [mode]);
 
-  const pos = (e) => {
-    const r = canvasRef.current.getBoundingClientRect();
-    return [e.clientX - r.left, e.clientY - r.top];
-  };
-  const down = (e) => {
-    drawing.current = true;
-    canvasRef.current.setPointerCapture(e.pointerId);
-    const ctx = canvasRef.current.getContext("2d");
-    ctx.beginPath();
-    ctx.moveTo(...pos(e));
-  };
-  const move = (e) => {
-    if (!drawing.current) return;
-    const ctx = canvasRef.current.getContext("2d");
-    ctx.lineTo(...pos(e));
-    ctx.stroke();
-    hasInk.current = true;
-  };
-  const clear = () => {
-    const c = canvasRef.current;
-    c.getContext("2d").clearRect(0, 0, c.width, c.height);
-    hasInk.current = false;
-  };
-
-  const done = async () => {
-    if (mode === "draw") {
-      if (!hasInk.current) return;
-      onDone(trim(canvasRef.current));
-    } else {
-      if (!text.trim()) return;
-      await document.fonts.load(`64px "${font}"`);
-      const c = document.createElement("canvas");
-      const ctx = c.getContext("2d");
-      ctx.font = `64px "${font}"`;
-      const w = Math.ceil(ctx.measureText(text).width) + 40;
-      c.width = w;
-      c.height = 110;
-      ctx.font = `64px "${font}"`;
-      ctx.fillStyle = "#111a40";
-      ctx.textBaseline = "middle";
-      ctx.fillText(text, 20, 58);
-      onDone(trim(c));
+  const adopt = async () => {
+    setErr("");
+    try {
+      let signature, initials;
+      if (mode === "style") {
+        if (!name.trim()) throw new Error("Enter your full name");
+        if (!ini.trim()) throw new Error("Enter your initials");
+        await document.fonts.load(`64px "${font}"`).catch(() => {});
+        signature = textToPng(name.trim(), font);
+        initials = textToPng(ini.trim(), font);
+      } else {
+        if (!sigCanvas.current._ink) throw new Error("Draw your signature");
+        if (!iniCanvas.current._ink) throw new Error("Draw your initials");
+        signature = trim(sigCanvas.current);
+        initials = trim(iniCanvas.current);
+      }
+      setBusy(true);
+      await onDone({ signature, initials, name: name.trim() });
+    } catch (e) {
+      setErr(e.message || String(e));
+      setBusy(false);
     }
   };
 
   return (
     <div className="modal-bg" onClick={onCancel}>
-      <div className="modal light" onClick={(e) => e.stopPropagation()}>
-        <h3>{kind === "initials" ? "Your initials" : "Your signature"}</h3>
-        <div className="tabs">
-          <button className={mode === "type" ? "on" : ""} onClick={() => setMode("type")}>Type</button>
-          <button className={mode === "draw" ? "on" : ""} onClick={() => setMode("draw")}>Draw</button>
+      <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Adopt your signature">
+        <div className="mhead">
+          <h3>Adopt Your Signature</h3>
+          <p>Confirm your name, initials and signature.</p>
         </div>
-        {mode === "type" ? (
-          <>
-            <input autoFocus value={text} onChange={(e) => setText(e.target.value)} placeholder={kind === "initials" ? "Initials" : "Full name"} />
-            <div className="font-choices">
+        <div className="mbody">
+          <div className="row" style={{ alignItems: "flex-end" }}>
+            <div style={{ flex: 3, minWidth: 200 }}>
+              <label>Full name *</label>
+              <input value={name} autoFocus onChange={(e) => { setName(e.target.value); setIni(initialsOf(e.target.value)); }} />
+            </div>
+            <div style={{ flex: 1, minWidth: 90 }}>
+              <label>Initials *</label>
+              <input value={ini} maxLength={5} onChange={(e) => setIni(e.target.value)} />
+            </div>
+          </div>
+
+          <div className="tabs" style={{ marginTop: 16 }}>
+            <button className={mode === "style" ? "on" : ""} onClick={() => setMode("style")}>Select style</button>
+            <button className={mode === "draw" ? "on" : ""} onClick={() => setMode("draw")}>Draw</button>
+          </div>
+
+          {mode === "style" ? (
+            <div className="style-list">
               {FONTS.map((f) => (
-                <button key={f} className={font === f ? "on" : ""} style={{ fontFamily: `"${f}", cursive` }} onClick={() => setFont(f)}>
-                  {text || "Signature"}
+                <button key={f} type="button" className={`style-opt ${font === f ? "on" : ""}`} onClick={() => setFont(f)}>
+                  <input type="radio" readOnly checked={font === f} />
+                  <span className="sig" style={{ fontFamily: `"${f}", cursive` }}>{name || "Your Name"}</span>
+                  <span className="ini" style={{ fontFamily: `"${f}", cursive` }}>{ini || "YN"}</span>
                 </button>
               ))}
             </div>
-          </>
-        ) : (
-          <>
-            <canvas ref={canvasRef} className="sig-canvas" onPointerDown={down} onPointerMove={move} onPointerUp={() => (drawing.current = false)} />
-            <button className="link" onClick={clear}>Clear</button>
-          </>
-        )}
-        <div className="row end">
+          ) : (
+            <div className="draw-grid">
+              <div>
+                <label>Draw your signature</label>
+                <DrawBox canvasRef={sigCanvas} />
+              </div>
+              <div>
+                <label>Draw your initials</label>
+                <DrawBox canvasRef={iniCanvas} />
+              </div>
+            </div>
+          )}
+          <p className="legal">
+            By selecting Adopt and Sign, I agree that the signature and initials will be the electronic representation of my signature and
+            initials for all purposes when I use them on documents, just the same as a pen-and-paper signature.
+          </p>
+          {err && <div className="error">{err}</div>}
+        </div>
+        <div className="mfoot">
           <button className="btn ghost" onClick={onCancel}>Cancel</button>
-          <button className="btn" onClick={done}>Adopt {kind}</button>
+          <button className="btn yellow" disabled={busy} onClick={adopt}>{busy ? "Saving…" : actionLabel}</button>
         </div>
       </div>
     </div>
   );
 }
 
-function initialsOf(name) {
-  return name.split(/\s+/).filter(Boolean).map((p) => p[0].toUpperCase()).join("");
+function DrawBox({ canvasRef }) {
+  const drawing = useRef(false);
+  const pos = (e) => {
+    const r = canvasRef.current.getBoundingClientRect();
+    return [e.clientX - r.left, e.clientY - r.top];
+  };
+  return (
+    <>
+      <canvas
+        ref={canvasRef}
+        className="sig-canvas"
+        onPointerDown={(e) => {
+          drawing.current = true;
+          canvasRef.current.setPointerCapture(e.pointerId);
+          const ctx = canvasRef.current.getContext("2d");
+          ctx.beginPath();
+          ctx.moveTo(...pos(e));
+        }}
+        onPointerMove={(e) => {
+          if (!drawing.current) return;
+          const ctx = canvasRef.current.getContext("2d");
+          ctx.lineTo(...pos(e));
+          ctx.stroke();
+          canvasRef.current._ink = true;
+        }}
+        onPointerUp={() => (drawing.current = false)}
+      />
+      <button type="button" className="link small" onClick={() => prepCanvas(canvasRef.current)}>Clear</button>
+    </>
+  );
 }
 
-/** Crop transparent margins from a canvas and return a PNG data URL. */
+function prepCanvas(c) {
+  if (!c) return;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.lineWidth = 2.4;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = "#111a40";
+  c._ink = false;
+}
+
+function textToPng(text, font) {
+  const c = document.createElement("canvas");
+  const ctx = c.getContext("2d");
+  ctx.font = `64px "${font}", cursive`;
+  c.width = Math.ceil(ctx.measureText(text).width) + 40;
+  c.height = 120;
+  ctx.font = `64px "${font}", cursive`;
+  ctx.fillStyle = "#111a40";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, 20, 62);
+  return trim(c);
+}
+
+/** Crop transparent margins and return a PNG data URL. */
 function trim(canvas) {
   const ctx = canvas.getContext("2d");
   const { width, height } = canvas;

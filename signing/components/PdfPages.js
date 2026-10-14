@@ -26,7 +26,7 @@ export default function PdfPages({ src, overlay, onPageClick, onLoaded }) {
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setWidth(Math.min(el.clientWidth, 1000)));
+    const ro = new ResizeObserver(() => setWidth(Math.max(200, Math.min(el.clientWidth - 36, 1000))));
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
@@ -84,6 +84,7 @@ export default function PdfPages({ src, overlay, onPageClick, onLoaded }) {
         <div
           key={i}
           className="pdf-page"
+          data-page={i}
           style={{ width: size.width, height: size.height }}
           onClick={(e) => {
             if (!onPageClick || e.target !== e.currentTarget.querySelector(".pdf-hit")) return;

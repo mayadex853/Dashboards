@@ -1,62 +1,99 @@
 "use client";
-import { useEffect, useState } from "react";
+// Your saved info and signature. Everything autosaves.
+import { useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
 import { PROFILE_FIELDS } from "@/lib/fields";
 import SignaturePad from "@/components/SignaturePad";
+import { toast } from "@/components/Toast";
 
 export default function Profile() {
   const [p, setP] = useState(null);
   const [extra, setExtra] = useState([]);
-  const [pad, setPad] = useState(null);
-  const [msg, setMsg] = useState("");
+  const [pad, setPad] = useState(false);
+  const [status, setStatus] = useState({ state: "idle" });
+  const timer = useRef(null);
+  const latest = useRef(null);
 
   useEffect(() => {
-    api("/api/profile").then((prof) => {
-      setP(prof);
-      const known = new Set(PROFILE_FIELDS.map((f) => f.key));
-      setExtra(Object.entries(prof.data || {}).filter(([k]) => !known.has(k)).map(([k, v]) => ({ k, v })));
-    });
+    api("/api/profile")
+      .then((prof) => {
+        setP(prof);
+        const known = new Set(PROFILE_FIELDS.map((f) => f.key));
+        setExtra(Object.entries(prof.data || {}).filter(([k]) => !known.has(k)).map(([k, v]) => ({ k, v })));
+      })
+      .catch((e) => toast(e.message, true));
   }, []);
+
+  const buildData = (prof, rows) => {
+    const data = {};
+    for (const f of PROFILE_FIELDS) if (prof.data?.[f.key]) data[f.key] = prof.data[f.key];
+    for (const { k, v } of rows) if (k.trim() && v) data[k.trim().toLowerCase().replace(/\s+/g, "_")] = v;
+    return data;
+  };
+
+  const save = async (body) => {
+    setStatus({ state: "saving" });
+    try {
+      await api("/api/profile", { method: "PUT", body });
+      setStatus({ state: "saved" });
+    } catch (e) {
+      setStatus({ state: "error", msg: e.message });
+      toast(`Couldn't save: ${e.message}`, true);
+      throw e;
+    }
+  };
+
+  // Debounced autosave for typed details
+  const queue = (prof, rows) => {
+    latest.current = { prof, rows };
+    setStatus({ state: "pending" });
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      const { prof: pp, rows: rr } = latest.current;
+      save({ data: buildData(pp, rr) }).catch(() => {});
+    }, 700);
+  };
+  useEffect(() => () => clearTimeout(timer.current), []);
+
   if (!p) return <div className="muted">Loading…</div>;
 
-  const setField = (k, v) => setP({ ...p, data: { ...p.data, [k]: v } });
-  const save = async (patch = {}) => {
-    const data = { ...p.data };
-    for (const k of Object.keys(data)) if (!PROFILE_FIELDS.some((f) => f.key === k)) delete data[k];
-    for (const { k, v } of extra) if (k.trim()) data[k.trim().toLowerCase().replace(/\s+/g, "_")] = v;
-    const saved = await api("/api/profile", { method: "PUT", body: { data, signature: p.signature, initials: p.initials, ...patch } });
-    setP(saved);
-    setMsg("Saved");
-    setTimeout(() => setMsg(""), 2000);
+  const setField = (k, v) => {
+    const next = { ...p, data: { ...p.data, [k]: v } };
+    setP(next);
+    queue(next, extra);
+  };
+  const setRows = (rows) => {
+    setExtra(rows);
+    queue(p, rows);
   };
 
   return (
     <>
       <div className="page-head">
         <div>
-          <h1>My info & signature</h1>
-          <div className="muted">Used to auto-fill forms and contracts with one click.</div>
+          <h1>My signature & info</h1>
+          <div className="muted">Used to fill forms and contracts with one click. Changes save automatically.</div>
         </div>
         <div className="actions">
-          {msg && <span className="muted">{msg}</span>}
-          <button className="btn" onClick={() => save()}>Save</button>
+          <SaveStatus status={status} />
         </div>
       </div>
 
       <div className="stack">
         <div className="card">
-          <h2>Signature & initials</h2>
+          <div className="row" style={{ justifyContent: "space-between", marginBottom: 12 }}>
+            <h2 style={{ margin: 0 }}>Signature & initials</h2>
+            <button className="btn yellow sm" onClick={() => setPad(true)}>{p.signature ? "Change" : "Create signature"}</button>
+          </div>
           <div className="form-grid">
-            {["signature", "initials"].map((kind) => (
-              <div key={kind}>
-                <label>{kind === "signature" ? "Signature" : "Initials"}</label>
-                <div className="sig-preview">{p[kind] ? <img src={p[kind]} alt={kind} /> : <span style={{ color: "#999" }}>Not set</span>}</div>
-                <div className="row" style={{ marginTop: 8 }}>
-                  <button className="btn sm ghost" onClick={() => setPad(kind)}>{p[kind] ? "Change" : "Create"}</button>
-                  {p[kind] && <button className="btn sm danger" onClick={() => save({ [kind]: null })}>Remove</button>}
-                </div>
-              </div>
-            ))}
+            <div>
+              <label>Signature</label>
+              <div className="sig-preview">{p.signature ? <img src={p.signature} alt="signature" /> : <span className="muted">Not set</span>}</div>
+            </div>
+            <div>
+              <label>Initials</label>
+              <div className="sig-preview">{p.initials ? <img src={p.initials} alt="initials" /> : <span className="muted">Not set</span>}</div>
+            </div>
           </div>
         </div>
 
@@ -74,12 +111,12 @@ export default function Profile() {
 
         <div className="card">
           <h2>Other saved values</h2>
-          <p className="muted small" style={{ marginTop: -6 }}>Anything else you type often: EIN (last 4), bank name, SoundExchange ID, business license #…</p>
+          <p className="muted small" style={{ marginTop: -6 }}>Anything else you type often: SoundExchange ID, business license #, bank name…</p>
           {extra.map((row, i) => (
             <div className="row" key={i} style={{ marginBottom: 8 }}>
-              <input style={{ flex: 1 }} placeholder="Label" value={row.k} onChange={(e) => setExtra(extra.map((r, j) => (j === i ? { ...r, k: e.target.value } : r)))} />
-              <input style={{ flex: 2 }} placeholder="Value" value={row.v} onChange={(e) => setExtra(extra.map((r, j) => (j === i ? { ...r, v: e.target.value } : r)))} />
-              <button className="btn sm ghost" onClick={() => setExtra(extra.filter((_, j) => j !== i))}>✕</button>
+              <input style={{ flex: 1 }} placeholder="Label" value={row.k} onChange={(e) => setRows(extra.map((r, j) => (j === i ? { ...r, k: e.target.value } : r)))} />
+              <input style={{ flex: 2 }} placeholder="Value" value={row.v} onChange={(e) => setRows(extra.map((r, j) => (j === i ? { ...r, v: e.target.value } : r)))} />
+              <button className="btn sm ghost" onClick={() => setRows(extra.filter((_, j) => j !== i))}>Remove</button>
             </div>
           ))}
           <button className="btn sm ghost" onClick={() => setExtra([...extra, { k: "", v: "" }])}>+ Add value</button>
@@ -88,16 +125,25 @@ export default function Profile() {
 
       {pad && (
         <SignaturePad
-          kind={pad}
           defaultName={p.data?.full_name || ""}
-          onCancel={() => setPad(null)}
-          onDone={(png) => {
-            setPad(null);
-            setP({ ...p, [pad]: png });
-            save({ [pad]: png });
+          actionLabel="Adopt"
+          onCancel={() => setPad(false)}
+          onDone={async ({ signature, initials, name }) => {
+            const data = buildData({ ...p, data: { ...p.data, full_name: p.data?.full_name || name } }, extra);
+            await save({ signature, initials, data });
+            setP({ ...p, signature, initials, data: { ...p.data, full_name: data.full_name } });
+            setPad(false);
+            toast("Signature adopted");
           }}
         />
       )}
     </>
   );
+}
+
+function SaveStatus({ status }) {
+  if (status.state === "saving" || status.state === "pending") return <span className="saved-pill">Saving…</span>;
+  if (status.state === "saved") return <span className="saved-pill ok">All changes saved</span>;
+  if (status.state === "error") return <span className="saved-pill err">Not saved: {status.msg}</span>;
+  return null;
 }

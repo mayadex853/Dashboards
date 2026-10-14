@@ -1,20 +1,25 @@
 "use client";
+// Signer experience, modeled on DocuSign: review banner → Continue → guided "Start/Next" tags → Finish.
 import { use, useEffect, useMemo, useState } from "react";
 import PdfPages from "@/components/PdfPages";
 import FieldBox from "@/components/FieldBox";
 import SignaturePad from "@/components/SignaturePad";
 import { today } from "@/lib/fields";
 
+const isSig = (f) => f.type === "signature" || f.type === "initials";
+
 export default function SignerPage({ params }) {
   const { token } = use(params);
   const [info, setInfo] = useState(null);
   const [err, setErr] = useState("");
   const [values, setValues] = useState({});
-  const [consent, setConsent] = useState(false);
-  const [adopted, setAdopted] = useState({ signature: null, initials: null });
-  const [pad, setPad] = useState(null); // field awaiting signature
+  const [agree, setAgree] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [adopted, setAdopted] = useState(null); // {signature, initials}
+  const [pad, setPad] = useState(null); // field waiting for a signature
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(null);
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     fetch(`/api/public/sign/${token}`)
@@ -23,38 +28,49 @@ export default function SignerPage({ params }) {
         if (!r.ok) throw new Error(j.error);
         setInfo(j);
         const init = {};
-        for (const f of j.fields) if (f.value && f.type === "text") init[f.id] = f.value;
+        for (const f of j.fields) {
+          if (f.type === "name") init[f.id] = f.value || j.signer.name;
+          else if (f.type === "email") init[f.id] = f.value || j.signer.email;
+          else if (f.value && !isSig(f) && f.type !== "checkbox") init[f.id] = f.value;
+        }
         setValues(init);
-        if (j.saved) setAdopted({ signature: j.saved.signature, initials: j.saved.initials });
+        if (j.saved?.signature) setAdopted({ signature: j.saved.signature, initials: j.saved.initials });
       })
       .catch((e) => setErr(e.message));
   }, [token]);
 
-  const fields = info?.fields || [];
+  const fields = useMemo(() => (info?.fields || []).slice().sort((a, b) => a.page - b.page || a.y - b.y || a.x - b.x), [info]);
   const isFilled = (f) => f.type === "date" || f.type === "checkbox" || !!values[f.id];
-  const remaining = useMemo(() => fields.filter((f) => f.required !== false && !isFilled(f)), [fields, values]); // eslint-disable-line react-hooks/exhaustive-deps
+  const remaining = fields.filter((f) => f.required !== false && !isFilled(f));
+  const next = remaining[0];
 
-  const clickSig = (f) => {
-    if (!consent) return;
-    if (values[f.id]) return setPad(f);
-    if (adopted[f.type]) setValues((v) => ({ ...v, [f.id]: adopted[f.type] }));
-    else setPad(f);
+  const scrollTo = (f) => document.querySelector(`[data-fid="${f.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const act = (f) => {
+    if (!started) return;
+    if (isSig(f)) {
+      const img = adopted?.[f.type];
+      if (img && !values[f.id]) setValues((v) => ({ ...v, [f.id]: img }));
+      else setPad(f);
+    } else if (f.type === "checkbox") {
+      setValues((v) => ({ ...v, [f.id]: !v[f.id] }));
+    } else {
+      document.querySelector(`[data-fid="${f.id}"] input`)?.focus();
+    }
   };
-
   const goNext = () => {
-    const f = remaining[0];
-    if (!f) return;
-    document.querySelector(`[data-fid="${f.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (!next) return;
+    scrollTo(next);
+    setTimeout(() => act(next), 350);
   };
 
-  const finish = async (action = "sign", reason) => {
+  const submit = async (action = "sign", reason) => {
     setErr("");
     setBusy(true);
     try {
       const r = await fetch(`/api/public/sign/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, consent, values, reason, localDate: today() }),
+        body: JSON.stringify({ action, consent: agree, values, reason, localDate: today() }),
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error);
@@ -65,111 +81,130 @@ export default function SignerPage({ params }) {
     setBusy(false);
   };
 
-  if (done)
-    return (
-      <div className="public">
-        <div className="center-box">
-          <div className="card narrow">
-            <h1>{done === "sign" ? "You're done!" : "Declined"}</h1>
-            <p className="muted">
-              {done === "sign" ? "Thanks for signing. You'll get a copy by email once everyone has signed." : `We've let ${info.sender} know.`}
-            </p>
-          </div>
+  const Brand = () => (
+    <div className="row" style={{ gap: 8, fontWeight: 700, fontSize: 16 }}>
+      <span style={{ width: 24, height: 24, borderRadius: 6, background: "var(--primary)", color: "#fff", display: "grid", placeItems: "center", fontSize: 13 }}>T</span>
+      TakaSign
+    </div>
+  );
+  const Message = ({ title, children }) => (
+    <div className="public">
+      <div className="topbar"><Brand /></div>
+      <div className="center-box">
+        <div className="card narrow" style={{ padding: 32 }}>
+          <h1>{title}</h1>
+          <p className="muted" style={{ marginBottom: 0 }}>{children}</p>
         </div>
       </div>
-    );
-  if (err && !info)
-    return (
-      <div className="public">
-        <div className="center-box"><div className="card narrow"><h2>Unable to open document</h2><p className="muted">{err}</p></div></div>
-      </div>
-    );
-  if (!info) return <div className="public"><div className="center-box muted">Loading…</div></div>;
-  if (info.signer.status === "signed")
-    return <div className="public"><div className="center-box"><div className="card narrow"><h2>Already signed</h2><p className="muted">You've already signed this document.</p></div></div></div>;
-  if (!info.turn)
-    return <div className="public"><div className="center-box"><div className="card narrow"><h2>Not your turn yet</h2><p className="muted">Someone earlier in the signing order still needs to sign. We'll email you when it's ready.</p></div></div></div>;
+    </div>
+  );
+
+  if (done === "sign") return <Message title="You're done signing">Thanks for signing. You'll receive a copy by email once everyone has signed.</Message>;
+  if (done === "decline") return <Message title="You declined to sign">We've let {info.sender} know.</Message>;
+  if (err && !info) return <Message title="Unable to open document">{err}</Message>;
+  if (!info) return <div className="public"><div className="center-box muted">Loading document…</div></div>;
+  if (info.signer.status === "signed") return <Message title="Already signed">You've already signed this document.</Message>;
+  if (!info.turn) return <Message title="Not your turn yet">Someone earlier in the signing order still needs to sign. We'll email you when it's ready for you.</Message>;
 
   return (
     <div className="public">
       <div className="topbar">
-        <div>
-          <b>{info.title}</b>
+        <Brand />
+        <div style={{ minWidth: 0 }}>
+          <b style={{ display: "block", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{info.title}</b>
           <div className="who">From {info.sender} · Signing as {info.signer.name}</div>
         </div>
         <div className="grow" />
-        {consent && remaining.length > 0 && <button className="btn ghost" style={{ color: "#333" }} onClick={goNext}>Next field ({remaining.length})</button>}
-        <button className="btn" disabled={!consent || remaining.length > 0 || busy} onClick={() => finish("sign")}>
-          {busy ? "Finishing…" : "Finish"}
-        </button>
+        {started && (
+          <button className="btn yellow" disabled={remaining.length > 0 || busy} onClick={() => submit("sign")} title={remaining.length ? `${remaining.length} required field(s) left` : ""}>
+            {busy ? "Finishing…" : "Finish"}
+          </button>
+        )}
+        <div style={{ position: "relative" }}>
+          <button className="btn ghost" onClick={() => setMenu(!menu)}>Other actions ▾</button>
+          {menu && (
+            <div className="card" style={{ position: "absolute", right: 0, top: 44, padding: 6, minWidth: 180, zIndex: 30 }}>
+              <button className="link" style={{ display: "block", padding: "8px 10px", color: "var(--ink)" }} onClick={() => { setMenu(false); window.open(`/api/public/sign/${token}/pdf`, "_blank"); }}>Download document</button>
+              <button className="link" style={{ display: "block", padding: "8px 10px", color: "var(--bad)" }} onClick={() => { setMenu(false); const reason = prompt("Why are you declining to sign? (optional)"); if (reason !== null) submit("decline", reason); }}>Decline to sign</button>
+            </div>
+          )}
+        </div>
       </div>
+
+      {!started ? (
+        <div className="banner">
+          <div style={{ flex: 1, minWidth: 260 }}>
+            <div style={{ fontWeight: 600, marginBottom: 6 }}>Please review and act on these documents.</div>
+            <label className="consent">
+              <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
+              <span>I agree to use electronic records and signatures, and that my electronic signature is the legal equivalent of my handwritten signature.</span>
+            </label>
+          </div>
+          <button className="btn yellow" disabled={!agree} onClick={() => { setStarted(true); setTimeout(() => fields[0] && scrollTo(remaining[0] || fields[0]), 100); }}>Continue</button>
+        </div>
+      ) : (
+        <div className="banner" style={{ background: remaining.length ? "#26262f" : "#14532d" }}>
+          <div style={{ flex: 1 }}>
+            {remaining.length
+              ? `${remaining.length} required field${remaining.length === 1 ? "" : "s"} left. Use the yellow tags to go field by field.`
+              : "All required fields are complete. Select Finish to sign."}
+          </div>
+          {remaining.length > 0 && <button className="btn yellow sm" onClick={goNext}>Next field</button>}
+        </div>
+      )}
+
       <div className="content">
         {info.message && <div className="card" style={{ marginBottom: 14 }}>{info.message}</div>}
-        <div className="card" style={{ marginBottom: 18 }}>
-          <label className="consent">
-            <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
-            <span>
-              I agree to use electronic records and signatures, and that my electronic signature is the legal equivalent of my handwritten signature on this document.
-            </span>
-          </label>
-          <div className="row" style={{ marginTop: 10, justifyContent: "space-between" }}>
-            <span className="muted small">{consent ? "Click each highlighted field to complete it." : "Check the box to start signing."}</span>
-            <button className="link small" onClick={() => { const reason = prompt("Reason for declining (optional):"); if (reason !== null) finish("decline", reason); }}>Decline to sign</button>
-          </div>
-        </div>
         {err && <div className="error">{err}</div>}
-
         <PdfPages
           src={`/api/public/sign/${token}/pdf`}
-          overlay={(page, size) =>
-            fields
-              .filter((f) => f.page === page)
-              .map((f) => {
-                const val = values[f.id];
-                const need = consent && f.required !== false && !isFilled(f);
-                return (
-                  <FieldBox key={f.id} field={f} size={size} color="#d97706" className={`${val || f.type === "date" ? "filled" : ""} ${need ? "need" : ""}`} onSelect={() => (f.type === "signature" || f.type === "initials" ? clickSig(f) : null)}>
-                      {f.type === "signature" || f.type === "initials" ? (
-                        val ? <img src={val} alt="" /> : <span className="lbl">{f.type === "signature" ? "Sign here" : "Initial"}</span>
+          overlay={(page, size) => (
+            <>
+              {started && next && next.page === page && (
+                <button className="start-arrow" style={{ top: (next.y + next.h / 2) * size.height }} onClick={goNext}>
+                  {remaining.length === fields.filter((f) => f.required !== false).length ? "START" : "NEXT"}
+                </button>
+              )}
+              {fields
+                .filter((f) => f.page === page)
+                .map((f) => {
+                  const val = values[f.id];
+                  const need = started && f.required !== false && !isFilled(f);
+                  const fontSize = Math.min(f.h * size.height * 0.7, 13);
+                  return (
+                    <FieldBox key={f.id} field={f} size={size} className={`sign-tag ${val || f.type === "date" ? "filled" : ""} ${need ? "need" : ""}`} onSelect={() => act(f)}>
+                      {isSig(f) ? (
+                        val ? <img src={val} alt="" /> : <span className="lbl">{f.type === "signature" ? "Sign ⬇" : "Initial ⬇"}</span>
                       ) : f.type === "date" ? (
-                        <span className="val" style={{ fontSize: Math.min(f.h * size.height * 0.7, 13) }}>{today()}</span>
+                        <span className="val" style={{ fontSize }}>{today()}</span>
                       ) : f.type === "checkbox" ? (
-                        <span
-                          style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "#111a40" }}
-                          onClick={() => consent && setValues((v) => ({ ...v, [f.id]: !v[f.id] }))}
-                        >
-                          {val ? "X" : ""}
-                        </span>
+                        <span style={{ margin: "auto", fontWeight: 700, color: "#111a40" }}>{val ? "✕" : ""}</span>
                       ) : (
                         <input
                           className="inline"
-                          disabled={!consent}
+                          disabled={!started}
                           placeholder={f.label}
-                          style={{ fontSize: Math.min(f.h * size.height * 0.7, 13) }}
+                          style={{ fontSize }}
                           value={val || ""}
                           onPointerDown={(e) => e.stopPropagation()}
                           onChange={(e) => setValues((v) => ({ ...v, [f.id]: e.target.value }))}
                         />
                       )}
                     </FieldBox>
-                );
-              })
-          }
+                  );
+                })}
+            </>
+          )}
         />
       </div>
+
       {pad && (
         <SignaturePad
-          kind={pad.type}
           defaultName={info.signer.name}
           onCancel={() => setPad(null)}
-          onDone={(png) => {
-            setAdopted((a) => ({ ...a, [pad.type]: png }));
-            // apply to every empty field of the same kind at once
-            setValues((v) => {
-              const n = { ...v, [pad.id]: png };
-              for (const f of fields) if (f.type === pad.type && !n[f.id]) n[f.id] = png;
-              return n;
-            });
+          onDone={({ signature, initials }) => {
+            setAdopted({ signature, initials });
+            setValues((v) => ({ ...v, [pad.id]: pad.type === "signature" ? signature : initials }));
             setPad(null);
           }}
         />

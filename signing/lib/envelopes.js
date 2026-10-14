@@ -153,7 +153,11 @@ export async function submitSignature(env, r, values, { ip, user_agent, localDat
   // Use the signer's local date if it's plausible (avoids UTC rollover in the evening)
   const ld = Date.parse(localDate);
   const signDate = ld && Math.abs(ld - Date.now()) < 36 * 3600 * 1000 ? String(localDate).slice(0, 40) : today();
-  const filled = mine.map((f) => ({ ...f, value: f.type === "date" ? signDate : values[f.id] ?? f.value }));
+  const fallback = (f) => (f.type === "name" ? r.name : f.type === "email" ? r.email : undefined);
+  const filled = mine.map((f) => ({
+    ...f,
+    value: f.type === "date" ? signDate : values[f.id] ?? f.value ?? fallback(f),
+  }));
   const missing = filled.filter((f) => f.required !== false && f.type !== "checkbox" && !f.value);
   if (missing.length) throw new Error(`Please complete: ${missing.map((f) => f.label || f.type).join(", ")}`);
 

@@ -2,7 +2,7 @@
 // A positioned field box on a PDF page. In edit mode it can be dragged and resized.
 import { useRef } from "react";
 
-export const ROLE_COLORS = ["#3987e5", "#d97706", "#199e70", "#a855f7", "#e66767", "#0891b2"];
+export const ROLE_COLORS = ["#d99a00", "#2f80ed", "#1e9e5a", "#9b51e0", "#e0504a", "#0e9f9e"];
 
 export default function FieldBox({ field, size, editable, selected, onChange, onSelect, children, color, className = "" }) {
   const drag = useRef(null);

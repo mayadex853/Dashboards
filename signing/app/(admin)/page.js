@@ -26,19 +26,19 @@ export default async function Dashboard() {
     <>
       <div className="page-head">
         <div>
-          <h1>Dashboard</h1>
+          <h1>Home</h1>
           <div className="muted">Contracts, intake and signatures in one place</div>
         </div>
       </div>
 
       <div className="quick">
-        <Link href="/quick-sign"><b>Quick Sign</b><span>Someone sent you a form? Upload, auto-fill your info, sign.</span></Link>
+        <Link href="/quick-sign"><b>Sign a document</b><span>Someone sent you a form? Upload it, drag in your info and signature, send it back.</span></Link>
         <Link href="/intake"><b>New signing intake</b><span>Send an artist, writer or catalog owner an intake form → contract.</span></Link>
         <Link href="/send"><b>Send for signature</b><span>Pick a template or upload a PDF and route it in signing order.</span></Link>
       </div>
 
       <div className="stats">
-        <div className="card stat"><div className="n" style={{ color: myTurn.length ? "#f0a640" : undefined }}>{myTurn.length}</div><div className="l">Waiting on you</div></div>
+        <div className="card stat"><div className="n" style={{ color: myTurn.length ? "var(--warn)" : undefined }}>{myTurn.length}</div><div className="l">Waiting on you</div></div>
         <div className="card stat"><div className="n">{awaiting.length}</div><div className="l">Waiting on others</div></div>
         <div className="card stat"><div className="n">{intakeReady.length}</div><div className="l">Intakes ready for contract</div></div>
         <div className="card stat"><div className="n">{completedMonth.length}</div><div className="l">Completed this month</div></div>
@@ -65,7 +65,7 @@ export default async function Dashboard() {
       <div className="card">
         <h2>Documents</h2>
         {!rows.length ? (
-          <p className="muted">Nothing yet. Start with Quick Sign, an intake, or Send for signature.</p>
+          <p className="muted">Nothing yet. Start by signing a document, sending an intake, or sending a contract for signature.</p>
         ) : (
           <table>
             <thead>
@@ -80,7 +80,7 @@ export default async function Dashboard() {
                   </td>
                   <td className="small">
                     {e.recs.map((r) => (
-                      <span key={r.id} style={{ marginRight: 10, color: r.status === "signed" ? "#43c443" : e.waitingOn.includes(r) ? "#f0a640" : "var(--muted)" }}>
+                      <span key={r.id} style={{ marginRight: 10, color: r.status === "signed" ? "var(--good)" : e.waitingOn.includes(r) ? "var(--warn)" : "var(--muted)" }}>
                         {r.routing_order}. {r.is_me ? "You" : r.name} {r.status === "signed" ? "✓" : ""}
                       </span>
                     ))}

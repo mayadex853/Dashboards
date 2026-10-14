@@ -127,9 +127,16 @@ export function resolveKey(key, ctx) {
 }
 
 export const FIELD_TYPES = [
-  { type: "signature", label: "Signature", w: 0.26, h: 0.05 },
-  { type: "initials", label: "Initials", w: 0.09, h: 0.04 },
-  { type: "date", label: "Date signed", w: 0.18, h: 0.025 },
-  { type: "text", label: "Text", w: 0.26, h: 0.025 },
-  { type: "checkbox", label: "Checkbox", w: 0.025, h: 0.02 },
+  { type: "signature", label: "Signature", icon: "✍", w: 0.24, h: 0.05 },
+  { type: "initials", label: "Initial", icon: "AB", w: 0.08, h: 0.04 },
+  { type: "date", label: "Date Signed", icon: "📅", w: 0.16, h: 0.025 },
+  { type: "name", label: "Name", icon: "👤", w: 0.24, h: 0.025 },
+  { type: "email", label: "Email", icon: "@", w: 0.26, h: 0.025 },
+  { type: "company", label: "Company", icon: "🏢", w: 0.24, h: 0.025 },
+  { type: "title", label: "Title", icon: "T", w: 0.2, h: 0.025 },
+  { type: "text", label: "Text", icon: "Aa", w: 0.24, h: 0.025 },
+  { type: "checkbox", label: "Checkbox", icon: "☑", w: 0.022, h: 0.017 },
 ];
+
+/** Field types that hold typed text (stamped with the text renderer). */
+export const TEXTLIKE = new Set(["text", "name", "email", "company", "title", "date"]);

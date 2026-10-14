@@ -107,9 +107,10 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .cracks path:nth-child(5){animation-delay:1.1s}.cracks path:nth-child(6){animation-delay:1.25s}.cracks path:nth-child(7){animation-delay:1.4s}.cracks path:nth-child(8){animation-delay:1.5s}
 @keyframes crack{to{stroke-dashoffset:0}}
 .hero .wrap{z-index:2}
-.hero .kicker{font-family:var(--caps);font-size:15px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
+.hero .kicker{font-family:var(--caps);font-size:15px;letter-spacing:.2em;max-width:760px;margin-left:auto!important;margin-right:auto!important;line-height:1.5;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
 .hero h1{font-size:clamp(44px,7.4vw,98px);max-width:1000px;margin:0 auto 30px;color:var(--white)}
 .hero h1 .r{color:var(--red-hi)}
+.hero-q{font-family:var(--caps);font-size:clamp(18px,2.2vw,24px);letter-spacing:.06em;color:var(--white);margin:-6px auto 26px;max-width:760px}
 .hero .lede{margin:0 auto 36px;color:#D7D8DB}
 .hero-cta{display:flex;flex-direction:column;gap:14px;align-items:center}
 .hero-meta{font-family:var(--caps);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -131,6 +132,12 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .forces span{color:#D2C9C9}
 @media(max-width:520px){.forces li{grid-template-columns:1fr;gap:2px}}
 .pullquote{margin-top:44px;padding-left:22px;border-left:4px solid var(--red);font-family:var(--display);font-size:clamp(26px,3vw,36px);line-height:1.12;text-transform:uppercase}
+.cost{margin-top:96px;padding:40px 44px;border:2px solid var(--red);background:rgba(194,31,31,.07)}
+.cost .label{color:var(--red-hi);margin-bottom:18px}
+.cost ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:18px 48px}
+.cost li{font-family:var(--display);font-size:clamp(22px,2.3vw,28px);line-height:1.15;text-transform:uppercase;padding-left:30px;position:relative}
+.cost li::before{content:"";position:absolute;left:0;top:.42em;width:16px;height:3px;background:var(--red-hi)}
+@media(max-width:760px){.cost{padding:28px 22px}.cost ul{grid-template-columns:1fr}}
 .rooms{margin-top:96px}
 .rooms-head p{font-family:var(--display);font-size:clamp(26px,3vw,36px);line-height:1.1;text-transform:uppercase;max-width:640px;margin-bottom:26px}
 .rooms-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -442,9 +449,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </svg>
 
   <div class="wrap">
-    <div class="kicker">Blueprint &middot; The Self-Guided Experience</div>
-    <h1 class="worn">Did I design this life, <span class="r">or did I just move into it?</span></h1>
-    <p class="lede">Most high achievers never ask that question out loud. They build the company, hit the number, and still feel the walls. Blueprint is the full Wreck the Room&trade; system for people ready to answer it on their own, in writing, at their own pace.</p>
+    <div class="kicker">For founders and leaders who built the success and still feel like a guest in their own life</div>
+    <h1 class="worn">Become the architect of a life that <span class="r">finally feels like yours.</span></h1>
+    <p class="hero-q">&ldquo;Did I design this life, or did I just move into it?&rdquo;</p>
+    <p class="lede">You built the company and hit the number, and it still feels like someone else's life. Nothing is technically wrong, so you keep going. That's how a life you never designed becomes the one you're stuck with. Blueprint is the full Wreck the Room&trade; system, self-guided, so you can answer that question on your own schedule, in writing, at your own pace.</p>
     <div class="hero-cta">
       <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <div class="hero-meta"><b>$5,000</b> or 2 &times; $2,650 &middot; 105 learning experiences &middot; Lifetime access</div>
@@ -471,13 +479,23 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="reveal">
         <p style="color:var(--muted);margin-bottom:18px">The force behind it has a name: <strong style="color:var(--white)">inherited design.</strong> It doesn't announce itself. It shows up as</p>
         <ul class="forces">
-          <li><strong class="worn">Conformity</strong><span>Doing it the way it's done because that's how it's done.</span></li>
-          <li><strong class="worn">Performance</strong><span>Being the version of you that gets approved.</span></li>
-          <li><strong class="worn">Silence</strong><span>Not saying the true thing, for years.</span></li>
-          <li><strong class="worn">Comfort</strong><span>Picking the room you know over the one you want.</span></li>
-          <li><strong class="worn">Smallness</strong><span>Capping yourself before anyone else has to.</span></li>
+          <li><strong class="worn">Conformity</strong><span>Building the business the way businesses are supposed to be built, even when it doesn't fit you.</span></li>
+          <li><strong class="worn">Performance</strong><span>Being the version of you that gets approved. Clients, team, family. Every room gets a different you.</span></li>
+          <li><strong class="worn">Silence</strong><span>Not saying the true thing for so long you forget what it was.</span></li>
+          <li><strong class="worn">Comfort</strong><span>Staying in the room you know because it pays the bills.</span></li>
+          <li><strong class="worn">Smallness</strong><span>Capping yourself before anyone else gets the chance.</span></li>
         </ul>
       </div>
+    </div>
+
+    <div class="cost reveal">
+      <div class="label">The cost of staying put</div>
+      <ul>
+        <li>Another year of growth that doesn't feel like yours.</li>
+        <li>Another coach or another framework, and the same pattern showing up in a new setting.</li>
+        <li>The people closest to you getting the edited version of you.</li>
+        <li>More distance between who you are and how you live, while from the outside it looks like you're winning.</li>
+      </ul>
     </div>
 
     <div class="rooms reveal">
@@ -526,7 +544,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="reveal">
       <div class="label">02 &middot; The framework</div>
       <h2>How the rebuild works</h2>
-      <p class="lede">Blueprint covers the entire Wreck the Room framework, start to finish. You work through it in order, because each phase depends on the one before it.</p>
+      <p class="lede">Most change doesn't stick because it skips straight to rebuilding. Wreck the Room runs in order: see the structure, take it apart, then build. Blueprint gives you the whole sequence, start to finish.</p>
     </div>
     <div class="phases reveal">
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
@@ -534,21 +552,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>Wreck-ognize It</h3>
         <div class="verb">reveal</div>
         <ol><li>Reveal the room</li><li>Name the identity</li><li>Expose the lie</li><li>Design the new room</li></ol>
-        <p>You can't redesign a structure you can't see. This phase makes it visible.</p>
+        <p>Most people have never seen their own floor plan. They only feel where it pinches. This phase puts it on paper so you can see what you've been living inside.</p>
       </article>
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <div class="num">Phase 02</div>
         <h3>Wreck It</h3>
         <div class="verb">dismantle</div>
         <ol><li>Disrupt the cycle</li><li>Dismantle the role</li><li>Reclaim your power</li></ol>
-        <p>The old walls come down here. The patterns you've been working around get taken apart.</p>
+        <p>Here you stop managing the pattern and remove it. The roles that kept you safe and small get taken apart, deliberately, one at a time.</p>
       </article>
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <div class="num">Phase 03</div>
         <h3>Wrock It</h3>
         <div class="verb">rebuild</div>
         <ol><li>Rebuild with intention</li><li>Activate the architect</li><li>Anchor the new identity</li></ol>
-        <p>You build the room you'd actually choose, then make it the one you live in.</p>
+        <p>Insight that never makes it into your days fades within a month. This phase turns what you uncovered into the identity you lead from, and anchors it so it holds.</p>
       </article>
     </div>
   </div>
@@ -559,7 +577,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="reveal">
       <div class="label">03 &middot; What changes</div>
       <h2>Three shifts. Where they meet is the Activated Architect.</h2>
-      <p class="lede">Each phase moves something specific. Most people work on one of these at a time. Blueprint works on all three, because the change only holds where they overlap.</p>
+      <p class="lede">Fix one of these alone and the other two pull you back. A new identity with no power behind it stays theory. Power without a plan burns out. A plan built on the old identity runs the old life faster. The change holds where all three overlap.</p>
     </div>
 
     <figure class="venn reveal" aria-label="Venn diagram: Rebuilt Identity, Reclaimed Power and Designed Life overlap at Activated Architect">
@@ -702,7 +720,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="reveal">
       <div class="label">04 &middot; What's included</div>
       <h2>The plans, in full</h2>
-      <p class="lede">Everything in the Wreck the Room system across all three phases, priced out line by line. Yours to keep.</p>
+      <p class="lede">Everything in the Wreck the Room system across all three phases, priced out line by line. Hold it up against another year spent inside a room you didn't design.</p>
     </div>
     <div class="sheet reveal" role="group" aria-label="Blueprint contents">
       <div class="dims">
@@ -756,8 +774,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="label">05 &middot; The Architects</div>
       <h2>Who you become on the other side</h2>
       <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Activated Architect</b></div>
-      <p class="lede">People who finish this work design the rooms they live in instead of accepting the ones they were handed. That end state has a name: the Activated Architect.</p>
-      <p style="color:var(--ink-soft);margin-top:18px">On the way there, you're one of the Architects: the community of people going through the program. Blueprint includes access to the Architects community on Kajabi, so you're doing the work alongside other people who are rebuilding too, even though the program itself is self-guided.</p>
+      <p class="lede">An Activated Architect makes decisions from a self they chose. They say the true thing in the room. Their calendar follows a plan they drew. The success they already had finally feels like theirs.</p>
+      <p style="color:var(--ink-soft);margin-top:18px">Blueprint is self-guided, and you still don't do it alone. On the way there you're one of the Architects, the community of people going through the program, with access to the Architects community on Kajabi. Same work, same walls, other people taking them down too.</p>
     </div>
   </div>
 </section>
@@ -827,6 +845,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="price-head reveal">
       <div class="label">08 &middot; Enroll</div>
       <h2>One price. Everything included.</h2>
+      <p class="lede" style="margin:0 auto">Put $5,000 next to another year of living inside a room you didn't design, and decide which one costs more.</p>
     </div>
     <div class="card reveal">
       <div class="card-top">
@@ -883,7 +902,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="ornament" aria-hidden="true"><i class="s"></i><i></i><i class="s"></i></div>
     <h2 class="worn"><span class="line"><span class="w">Wreck</span> what's not working.</span><span class="line"><span class="b">Build</span> what does.</span></h2>
-    <p class="lede">The question at the top of this page is still sitting there. Blueprint is how you answer it.</p>
+    <p class="lede">The question at the top of this page doesn't go away when you close the tab. It waits, and the room gets a little more permanent. Blueprint is how you answer it.</p>
     <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
     <p class="final-q">Did I design this life, or did I just move into it?</p>
   </div>

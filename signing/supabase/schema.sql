@@ -1,4 +1,4 @@
--- HD Sign database schema. Paste into Supabase > SQL Editor and run once.
+-- TakaSign database schema. Paste into Supabase > SQL Editor (TakaSign project) and run once.
 -- All access goes through the server using the service role key; RLS is enabled
 -- with no policies so the public anon key can read nothing.
 

@@ -273,8 +273,8 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 /* ---------- scroll-drawn story (CAD sketch) ---------- */
 .scrolly{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:start;margin-top:40px}
 .scrolly .steps{padding:4vh 0 10vh}
-.scrolly .step{min-height:72vh;display:flex;flex-direction:column;justify-content:center;opacity:.35;transition:opacity .4s ease}
-.scrolly .step.is-active{opacity:1}
+.scrolly .step{min-height:72vh;display:flex;flex-direction:column;justify-content:center;opacity:.45;transition:opacity .4s ease}
+.scrolly .step.is-past{opacity:1}
 .scrolly .step p{font-size:clamp(18px,1.8vw,21px);max-width:520px}
 .scrolly .step .big{font-family:var(--display);font-size:clamp(28px,3vw,40px);line-height:1.08;text-transform:uppercase;margin-bottom:14px}
 .scrolly .fig{position:sticky;top:10vh;height:80vh;display:flex;align-items:center}
@@ -628,14 +628,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <g class="on-1"><g class="grnd"><path class="draw" pathLength="1" d="M50 430 H550"/>
 <path class="hatch" d="M60 430 l-10 12 M74 430 l-10 12 M88 430 l-10 12 M102 430 l-10 12 M116 430 l-10 12 M130 430 l-10 12 M144 430 l-10 12 M158 430 l-10 12 M172 430 l-10 12 M186 430 l-10 12 M200 430 l-10 12 M214 430 l-10 12 M228 430 l-10 12 M242 430 l-10 12 M256 430 l-10 12 M270 430 l-10 12 M284 430 l-10 12 M298 430 l-10 12 M312 430 l-10 12 M326 430 l-10 12 M340 430 l-10 12 M354 430 l-10 12 M368 430 l-10 12 M382 430 l-10 12 M396 430 l-10 12 M410 430 l-10 12 M424 430 l-10 12 M438 430 l-10 12 M452 430 l-10 12 M466 430 l-10 12 M480 430 l-10 12 M494 430 l-10 12 M508 430 l-10 12 M522 430 l-10 12 M536 430 l-10 12 M550 430 l-10 12"/></g></g>
-<g class="on-1 off-4"><g class="child">
-<circle cx="300" cy="320" r="12" class="draw" pathLength="1"/>
-<path class="draw" pathLength="1" d="M300 332 V382 M300 346 L284 364 M300 346 L318 362 M300 382 L289 430 M300 382 L311 430"/>
-</g>
-<g class="dimv"><path d="M246 430 V308 M240 430 H252 M240 308 H252"/><text x="236" y="374" class="hand" transform="rotate(-90 236 374)">3'-6"</text></g>
-<text x="300" y="296" class="hand c">you, age 6</text>
-</g>
-<g class="on-2 off-4"><rect x="318" y="356" width="16" height="9" class="brick-hand"/></g>
+<g class="on-1 off-2"><circle cx="300" cy="344.6" r="10.6" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M300 355.20000000000005 V384.9 M300 363.8 L285.6 380.1 M300 363.8 L315.4 378.2 M300 384.9 L290.4 430 M300 384.9 L309.6 430"/>
+<text x="300" y="320" class="hand c">you, as a young child</text></g>
+<g class="on-2 off-3"><circle cx="300" cy="325.0" r="13.0" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M300 338.0 V374.5 M300 348.6 L282.3 368.7 M300 348.6 L318.9 366.3 M300 374.5 L288.2 430 M300 374.5 L311.8 430"/>
+<rect x="316.9" y="361.3" width="16" height="9" class="brick-hand"/>
+<text x="300" y="298" class="hand c">you, as a young child</text></g>
+<g class="on-3 off-4"><circle cx="300" cy="296.5" r="16.5" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M300 313.0 V359.5 M300 326.5 L277.5 352.0 M300 326.5 L324.0 349.0 M300 359.5 L285.0 430 M300 359.5 L315.0 430"/>
+<text x="300" y="268" class="hand c">you, growing up</text></g>
 <g class="on-2"><rect class="brick" x="170" y="414" width="30" height="16" style="transition-delay:0ms"/>
 <rect class="brick" x="200" y="414" width="30" height="16" style="transition-delay:45ms"/>
 <rect class="brick" x="170" y="398" width="15" height="16" style="transition-delay:90ms"/>
@@ -1395,13 +1397,19 @@ const CONFIG = {
   // Scroll-drawn story: each .step sets the scene on its .story-fig (classes s1..sN are cumulative)
   document.querySelectorAll(".scrolly").forEach(sc => {
     const fig = sc.querySelector(".story-fig"); const steps = [...sc.querySelectorAll(".step")];
-    const set = n => { for (let i = 1; i <= 6; i++) fig.classList.toggle("s" + i, i <= n);
-      steps.forEach(st => st.classList.toggle("is-active", +st.dataset.step === n)); };
-    set(1);
-    if ("IntersectionObserver" in window){
-      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(+e.target.dataset.step); }), {rootMargin:"-45% 0px -45% 0px"});
-      steps.forEach(st => io.observe(st));
-    } else { set(steps.length); }
+    let cur = 0;
+    const set = n => { if (n === cur) return; cur = n;
+      for (let i = 1; i <= 6; i++) fig.classList.toggle("s" + i, i <= n);
+      steps.forEach(st => st.classList.toggle("is-past", +st.dataset.step <= n)); };
+    // A step becomes active once its top passes a line low on the screen (lower on phones, where the drawing covers the top),
+    // so text is fully readable before the drawing moves on, and text already read never fades.
+    const check = () => {
+      const line = innerHeight * (innerWidth < 900 ? 0.58 : 0.62);
+      let n = 1; steps.forEach(st => { if (st.getBoundingClientRect().top < line) n = Math.max(n, +st.dataset.step); });
+      set(n);
+    };
+    let raf = 0; addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; check(); }); }, {passive:true});
+    addEventListener("resize", check); check();
   });
 
   document.getElementById("yr").textContent = new Date().getFullYear();

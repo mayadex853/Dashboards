@@ -270,8 +270,11 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .amount .cur{font-size:30px;color:var(--muted)}
 .amount .val{font-size:clamp(64px,10vw,88px);letter-spacing:-.04em;line-height:1;transition:color .25s}
 .amount .note{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.06em}
+.plan{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:10px;letter-spacing:.03em}
+.plan b{color:var(--white);font-weight:600}
 .card ul.inc{list-style:none;padding:24px 36px;border-bottom:1px solid var(--line);columns:2;column-gap:28px}
-@media(max-width:560px){.card ul.inc{columns:1}.card-top,.card ul.inc,.card .buy,.card .terms{padding-left:22px!important;padding-right:22px!important}}
+@media(max-width:560px){
+.card ul.inc{columns:1}.card-top,.card ul.inc,.card .buy,.card .terms{padding-left:22px!important;padding-right:22px!important}}
 .card ul.inc li{break-inside:avoid;padding:6px 0 6px 22px;position:relative;font-size:15px}
 .card ul.inc li::before{content:"";position:absolute;left:0;top:15px;width:10px;height:2px;background:var(--blue)}
 
@@ -342,7 +345,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <p class="lede">Most high achievers never ask that question out loud. They build the company, hit the number, and still feel the walls. Blueprint is the full Wreck the Room system for people ready to answer it on their own, in writing, at their own pace.</p>
     <div class="hero-cta">
       <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
-      <div class="hero-meta"><b>$5,000</b> &middot; 105 learning experiences &middot; Lifetime access</div>
+      <div class="hero-meta"><b>$5,000</b> or 2 &times; $2,650 &middot; 105 learning experiences &middot; Lifetime access</div>
     </div>
   </div>
 </header>
@@ -558,7 +561,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="tier">Self-guided experience</div>
         <h3>Wreck the Room: Blueprint</h3>
         <div class="fmt">The complete system. No live calls in the base price.</div>
-        <div class="amount"><span class="cur">$</span><span class="val" id="price">5,000</span><span class="note">one time</span></div>
+        <div class="amount"><span class="cur">$</span><span class="val" id="price">5,000</span><span class="note">paid in full</span></div>
+        <div class="plan">or <b>2 monthly payments of $2,650</b></div>
       </div>
       <ul class="inc">
         <li>27 video lessons</li>
@@ -580,7 +584,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
 
       <div class="buy">
-        <div class="total"><span>Blueprint</span><b>$5,000</b></div>
+        <div class="total"><span>Choose pay-in-full or the payment plan at checkout</span></div>
         <a class="btn" id="buyBtn" href="#">Enroll in Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       </div>
 

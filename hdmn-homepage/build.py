@@ -199,6 +199,12 @@ CSS = r"""
   background:linear-gradient(var(--vio2),transparent);animation:hd-pulse 2s ease-in-out infinite;}
 @keyframes hd-pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
+/* rotating pain line */
+.hd-pain-line{display:grid;min-height:1.2em;}
+.hd-pl{grid-area:1/1;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease;}
+.hd-pl.on{opacity:1;transform:none;}
+@media(max-width:640px){.hd-pain-line{min-height:2.6em;align-items:end;}}
+
 /* TICKER */
 .hd-ticker{background:#000;padding:34px 0;border-bottom:1px solid rgba(255,255,255,.06);}
 .hd-ticker-k{text-align:center;font-size:11px;font-weight:700;letter-spacing:.42em;color:#6b7382;margin-bottom:14px;}
@@ -213,7 +219,7 @@ CSS = r"""
 /* PROBLEM */
 .hd-problem{background:radial-gradient(ellipse 60% 50% at 100% 0%,rgba(99,19,133,.25),transparent 70%),var(--bg);}
 .hd-problem-head{max-width:900px;margin-bottom:70px;}
-.hd-pains{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.hd-pains{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
 .hd-pain{position:relative;padding:44px 34px 38px;background:linear-gradient(180deg,#0e111a,#08090e);border:1px solid #1c2230;
   border-radius:4px;overflow:hidden;transition:transform .4s ease,border-color .4s,box-shadow .4s;}
 .hd-pain:hover{transform:translateY(-10px);border-color:var(--vio);box-shadow:0 30px 80px rgba(177,75,244,.25);}
@@ -420,6 +426,11 @@ JS = r"""
     root.querySelectorAll('.hd-panel').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-panel')===i);});
     var box=root.querySelector('.hd-panels');if(box)box.scrollTop=0;});
   // nav goes solid on scroll
+  // cycle the hero pain line
+  var pls=root.querySelectorAll('.hd-pl');
+  if(pls.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){var pi=0;
+    setInterval(function(){pls[pi].classList.remove('on');pi=(pi+1)%pls.length;pls[pi].classList.add('on');},3400);}
+
   // retry any poster that fails on the primary host from the fallback host
   var fb='__FALLBACK__';
   if(fb){root.addEventListener('error',function(ev){var im=ev.target;if(im.tagName!=='IMG'||im.dataset.fb)return;
@@ -511,9 +522,9 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-wall" aria-hidden="true"></div>
   <div class="hd-shade"></div><div class="hd-glow"></div><div class="hd-beam"></div>
   <div class="hd-hero-in">
-    <span class="hd-eb hd-up">In a world where the deadline was yesterday&hellip;</span>
-    <h1 class="hd-grad hd-up" style="animation-delay:.2s">Find it.<br>Clear it.<br>Cut to picture.</h1>
-    <p class="hd-sub hd-up" style="animation-delay:.45s">Music, trailer cues and 500,000+ sound effects, from a team that's sat in the music supervisor's chair for over two decades.</p>
+    <span class="hd-eb hd-up hd-pain-line" aria-live="polite"><span class="hd-pl on">The director loves the temp. The budget doesn&rsquo;t.</span><span class="hd-pl">Locked cut. Uncleared song. Mix is Friday.</span><span class="hd-pl">47 libraries. 3 million tracks. Nothing fits.</span><span class="hd-pl">In a world where the deadline was yesterday&hellip;</span></span>
+    <h1 class="hd-grad hd-up" style="animation-delay:.2s">Kill the temp.<br>Keep the feeling.</h1>
+    <p class="hd-sub hd-up" style="animation-delay:.45s">Music that hits like your temp, fits your budget and clears before your deadline. A music supervisor's ear on every request, not library roulette.</p>
     <div class="hd-ctas hd-up" style="animation-delay:.7s">
       <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search the Catalog</a>
       <a class="hd-btn o" href="{contact}">Send Us a Brief</a>
@@ -532,12 +543,13 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-wrap">
     <div class="hd-problem-head hd-reveal">
       <span class="hd-eb">The Problem</span>
-      <h2 class="hd-h2">Every supervisor has <span class="hd-grad">seen this movie.</span></h2>
+      <h2 class="hd-h2">Every production has <span class="hd-grad">seen this movie.</span></h2>
     </div>
     <div class="hd-pains">
-      <div class="hd-pain hd-reveal"><span class="hd-pain-n">01</span><h3>The Deadline</h3><p>The cut changed. The temp is loved. Air date doesn't move. You need real options today, not after another week of digging.</p></div>
-      <div class="hd-pain hd-reveal" style="transition-delay:.15s"><span class="hd-pain-n">02</span><h3>The Clearance</h3><p>The perfect song dies at the last minute over split ownership, a slow publisher or a surprise fee.</p></div>
-      <div class="hd-pain hd-reveal" style="transition-delay:.3s"><span class="hd-pain-n">03</span><h3>The Impossible Brief</h3><p>Period-authentic vintage. A regional folk recording. The karaoke version of a hit. The exact door creak. Most libraries just don't have it.</p></div>
+      <div class="hd-pain hd-reveal"><span class="hd-pain-n">01</span><h3>Temp Love</h3><p>The director's married to the temp track. The licensing quote just came back at three times your music budget. You need something that hits the same way, and fast.</p></div>
+      <div class="hd-pain hd-reveal" style="transition-delay:.1s"><span class="hd-pain-n">02</span><h3>The Deadline</h3><p>The cut changed. The mix is Friday. Air date doesn't move. You need real options today, not after another week of digging.</p></div>
+      <div class="hd-pain hd-reveal" style="transition-delay:.2s"><span class="hd-pain-n">03</span><h3>The Clearance</h3><p>The perfect song dies at the last minute over split ownership, a slow publisher or a surprise fee, after the cut is locked.</p></div>
+      <div class="hd-pain hd-reveal" style="transition-delay:.3s"><span class="hd-pain-n">04</span><h3>Library Roulette</h3><p>Dozens of libraries, millions of tracks, and nothing that fits. Period-authentic vintage, a regional folk recording, the exact door creak: most libraries just don't have it.</p></div>
     </div>
   </div>
 </section>

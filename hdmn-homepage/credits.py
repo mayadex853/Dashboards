@@ -137,11 +137,47 @@ CATEGORIES = [("TV", TV), ("Film", FILM), ("Trailers", TRAILERS), ("Ads & Campai
 BRANDS = ["Kmart", "Chevrolet", "ASICS", "McAfee", "DirecTV", "Cricket Wireless", "LendingTree",
           "Bergdorf Goodman", "Viasat", "Jura"]
 
-SPEAKING = ["Guild of Music Supervisors Conference", "Production Music Conference", "Sync Summit",
-            "East Coast Music Awards", "Chapman University Dodge College of Film", "Saddleback College"]
+# (event, role)
+STAGE = [
+    ("Guild of Music Supervisors Awards", "Nominee"),
+    ("Hollywood Independent Music Awards", "Presenter"),
+    ("Guild of Music Supervisors: State of Music & Media", "3x Panelist"),
+    ("Production Music Conference", "3x Panelist"),
+    ("Catch the Moon Music Event", "Panelist"),
+    ("Sync Summit", "Speaker"),
+    ("East Coast Music Awards (Canada)", "Speaker"),
+    ("Chapman University, Dodge College of Film", "Guest Lecturer"),
+    ("Saddleback College", "Guest Lecturer"),
+]
 
-PRESS = ["Music Biz Weekly", "The Music Industry Blueprint", "Songwriter Trysts", "When Life Gives You Lennons",
-         "Banking On Music", "Radio Crystal Blue", "KX 93.5 Laguna Beach"]
+# (show, note)
+PRESS = [
+    ("License Your Music Podcast", "Host"),
+    ("Music Biz Weekly", "Guest"),
+    ("The Music Industry Blueprint with Rick Barker", "Guest"),
+    ("Modern Musician", "Guest"),
+    ("The Profitable Musician", "Guest"),
+    ("Behind Their Music", "Guest"),
+    ("The Mindy Peterson Podcast", "Guest"),
+    ("The Career Musician", "Guest"),
+    ("The Creator's Playbook (Kajabi)", "Guest"),
+    ("Songwriter Trysts", "Guest"),
+    ("When Life Gives You Lennons", "Guest"),
+    ("Banking On Music with JD Webb", "Guest"),
+    ("Sonic Inducers (AdRev)", "Guest"),
+    ("Radio Crystal Blue with Dan Herman", "Radio"),
+    ("KX 93.5 Laguna Beach", "Radio"),
+]
+
+# (publication, note)
+FEATURES = [
+    ("American Songwriter", "Contributor"),
+    ("BroadwayWorld", "Feature"),
+    ("Hypebot", "Feature"),
+    ("Voyage LA", "Interview"),
+    ("CanvasRebel", "Interview"),
+    ("Broadjam", "Pro Reviewer"),
+]
 
 # Music supervision / clearance / coordination credits (from IMDb, supplied by Jody).
 # (title, role, year, type)

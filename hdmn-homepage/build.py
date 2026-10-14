@@ -17,13 +17,16 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 CDN_REF = sys.argv[1] if len(sys.argv) > 1 else "claude/hd-music-now-homepage-tt724m"
-CDN_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/hdmn-homepage/posters/"
+# Posters are served from raw.githubusercontent.com (reliable, correct image MIME type); jsDelivr is the
+# automatic fallback if an image fails. jsDelivr intermittently 404s on cold-cache GitHub fetches.
+CDN_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/hdmn-homepage/posters/"
+FALLBACK_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/hdmn-homepage/posters/"
 
 CATALOG_URL = "https://hdmusicnow.sourceaudio.com/#!label?l=1222458&page=albums"
 CONTACT_ANCHOR = "#section-1792000000008"
 IMDB_URL = "https://www.imdb.com/name/nm3112237/"
 
-from credits import BRANDS, CATEGORIES, PRESS, SPEAKING, SUPERVISION  # noqa: E402
+from credits import BRANDS, CATEGORIES, FEATURES, PRESS, STAGE, SUPERVISION  # noqa: E402
 
 # Poster manifest written by the poster fetch step: [{title, slug, kind, net, group}]
 # group is "placement" (music licensed into the project) or "supervision" (Jody's supervision/clearance credit).
@@ -110,16 +113,17 @@ def build(base):
         for k, name, desc, cta, url in LABELS)
 
     subpubs = " <i>&middot;</i> ".join(e(s) for s in SUBPUBS)
-    speaking = "".join(f"<li>{e(s)}</li>" for s in SPEAKING)
-    press = "".join(f"<li>{e(s)}</li>" for s in PRESS)
+    def li(items):
+        return "".join(f"<li><span>{e(name)}</span><em>{e(note)}</em></li>" for name, note in items)
+    speaking, press, features = li(STAGE), li(PRESS), li(FEATURES)
     all_slugs = ",".join(p["slug"] for p in MANIFEST)
 
     return TEMPLATE.format(
         css=_min(CSS), ticker=_marquee(CLIENTS), brands=_marquee(BRANDS), cards=cards, sup_cards=sup_cards,
-        tabs=tabs, panels=panels, total=f"{total_placements // 50 * 50}+", total_n=total_placements // 50 * 50, sup_rows=sup_rows,
-        sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press,
+        tabs=tabs, panels=panels, total="10,000+", total_n=10000, sup_rows=sup_rows,
+        sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press, features=features,
         catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL,
-        js=JS.replace("__BASE__", base).replace("__SLUGS__", all_slugs))
+        js=JS.replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
 CSS = r"""
@@ -179,7 +183,7 @@ CSS = r"""
   background:linear-gradient(transparent,rgba(255,255,255,.55),transparent);box-shadow:0 0 140px 50px rgba(177,75,244,.22);
   animation:hd-beam 9s ease-in-out infinite alternate;}
 @keyframes hd-beam{from{left:58%;opacity:.6}to{left:70%;opacity:1}}
-.hd-hero-in{position:relative;z-index:2;text-align:center;padding:150px 24px 90px;max-width:1180px;}
+.hd-hero-in{position:relative;z-index:2;text-align:center;padding:110px 24px 90px;max-width:1180px;}
 .hd-hero h1{font-size:clamp(72px,11.5vw,184px) !important;line-height:.82 !important;margin-bottom:30px;
   filter:drop-shadow(0 8px 40px rgba(0,0,0,.85));}
 .hd-hero .hd-sub{font-size:21px;color:#e7ebf1;max-width:720px;margin:0 auto 42px;text-shadow:0 2px 20px #000;}
@@ -296,10 +300,12 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 
 /* SPEAKING & PRESS */
 .hd-voice{background:#000;padding:110px 0;}
-.hd-voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;}
+.hd-voice-grid{display:grid;grid-template-columns:1.15fr 1.15fr .8fr;gap:50px;}
 .hd-voice h3{font-size:44px !important;margin-bottom:26px;}
 .hd-voice ul{list-style:none;margin:0;padding:0;}
-.hd-voice li{font-size:17px;color:#d5dae3;padding:14px 0;border-bottom:1px solid #1c2230;display:flex;align-items:center;gap:14px;}
+.hd-voice li{font-size:16px;color:#d5dae3;padding:13px 0;border-bottom:1px solid #1c2230;display:flex;align-items:center;gap:12px;}
+.hd-voice li span{flex:1;}
+.hd-voice li em{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--vio2);white-space:nowrap;}
 .hd-voice li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--vio);box-shadow:0 0 10px var(--vio);flex:none;}
 
 /* ROSTER */
@@ -411,9 +417,10 @@ JS = r"""
     panels.forEach(function(p){p.classList.toggle('on',p.getAttribute('data-panel')===i);});
     var box=root.querySelector('.hd-panels');if(box)box.scrollTop=0;});});
   // nav goes solid on scroll
-  var nav=root.querySelector('.hd-nav');
-  function onScroll(){nav.classList.toggle('solid',window.scrollY>60);}
-  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  // retry any poster that fails on the primary host from the fallback host
+  var fb='__FALLBACK__';
+  if(fb){root.addEventListener('error',function(ev){var im=ev.target;if(im.tagName!=='IMG'||im.dataset.fb)return;
+    var i=im.src.indexOf('/posters/');if(i<0)return;im.dataset.fb='1';im.src=fb+im.src.slice(i+9);},true);}
   // reveal on scroll
   var els=root.querySelectorAll('.hd-reveal');
   if('IntersectionObserver' in window){
@@ -424,7 +431,7 @@ JS = r"""
   root.querySelectorAll('[data-count]').forEach(function(el){
     var end=parseFloat(el.getAttribute('data-count')),suf=el.getAttribute('data-suffix')||'',done=false;
     var o=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!done){done=true;var t0=null;
-      function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1600,1),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=v+suf;if(p<1)requestAnimationFrame(f);}
+      function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1600,1),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=v.toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(f);}
       requestAnimationFrame(f);}},{threshold:.5});o.observe(el);
   });
   // poster carousels
@@ -447,14 +454,6 @@ JS = r"""
 
 TEMPLATE = """<style>{css}</style>
 <div class="hd" id="hdmn">
-
-<nav class="hd-nav">
-  <a class="hd-logo" href="#hdmn">HD MUSIC <b>NOW</b></a>
-  <div class="hd-links">
-    <a href="#hd-credits">Credits</a><a href="#hd-roster">Catalogs</a><a href="#hd-sup">Supervision</a><a href="{contact}">Contact</a>
-    <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search</a>
-  </div>
-</nav>
 
 <header class="hd-hero">
   <div class="hd-wall" aria-hidden="true"></div>
@@ -509,7 +508,7 @@ TEMPLATE = """<style>{css}</style>
     <div class="hd-stats hd-reveal" style="transition-delay:.2s">
       <div class="hd-stat"><b data-count="20" data-suffix="+">20+</b><span>Years as a sync agent and as a music supervisor</span></div>
       <div class="hd-stat"><b data-count="500" data-suffix="K+">500K+</b><span>Sound effects from Sound Ideas, Hollywood Edge &amp; BOOM Library</span></div>
-      <div class="hd-stat"><b data-count="{total_n}" data-suffix="+">{total}</b><span>Placements across TV, film, trailers, ads &amp; games</span></div>
+      <div class="hd-stat"><b data-count="{total_n}" data-suffix="+">{total}</b><span>Placements worldwide across TV, film, trailers, ads &amp; games</span></div>
       <div class="hd-stat"><b data-count="{sup_total}" data-suffix="">{sup_total}</b><span>Projects worked on in music supervision, clearance &amp; coordination</span></div>
     </div>
   </div>
@@ -591,9 +590,13 @@ TEMPLATE = """<style>{css}</style>
 </section>
 
 <section class="hd-sec hd-voice">
-  <div class="hd-wrap hd-voice-grid">
-    <div class="hd-reveal"><span class="hd-eb">On Stage</span><h3>Speaking &amp; guest lectures</h3><ul>{speaking}</ul></div>
-    <div class="hd-reveal" style="transition-delay:.15s"><span class="hd-eb">On Air</span><h3>Podcasts, radio &amp; features</h3><ul>{press}</ul></div>
+  <div class="hd-wrap">
+    <div class="hd-reveal" style="margin-bottom:60px"><span class="hd-eb">Industry Voice</span><h2 class="hd-h2">On stage. <span class="hd-grad">On air.</span></h2></div>
+    <div class="hd-voice-grid">
+      <div class="hd-reveal"><span class="hd-eb">Awards &amp; Panels</span><ul>{speaking}</ul></div>
+      <div class="hd-reveal" style="transition-delay:.15s"><span class="hd-eb">Podcasts &amp; Radio</span><ul>{press}</ul></div>
+      <div class="hd-reveal" style="transition-delay:.3s"><span class="hd-eb">In Print &amp; Online</span><ul>{features}</ul></div>
+    </div>
   </div>
 </section>
 

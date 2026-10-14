@@ -513,6 +513,16 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 @media(max-width:600px){.sov-head,.sov-row,.sov-total,.sov-yours{padding-left:18px;padding-right:18px;gap:14px}.sov-note{padding-left:18px;padding-right:18px}.sov-total,.sov-yours{font-size:20px}.sov-yours .v{font-size:34px}}
 
 /* architects */
+.arch-sketch{margin-bottom:64px;border:1.5px solid var(--ink);outline:1px solid var(--ink-line);outline-offset:8px;background:rgba(11,13,17,.14);padding:6px}
+.arch-sketch svg{width:100%;height:auto;display:block}
+.arch-sketch path,.arch-sketch circle{fill:none;stroke:#F4F4F4;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arch-sketch .thin,.arch-sketch .dimh{stroke-width:1;stroke:rgba(244,244,244,.6)}
+.arch-sketch .hatch{stroke:rgba(244,244,244,.3);stroke-width:1}
+.arch-sketch text{font-family:var(--hand);font-size:22px;fill:rgba(244,244,244,.9);text-anchor:middle}
+.arch-sketch .ar-room{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.arch-sketch.in .ar-room{opacity:1;transform:none}
+@media(max-width:600px){.arch-sketch text{font-size:34px}}
+@media(prefers-reduced-motion:reduce){.arch-sketch .ar-room{opacity:1;transform:none}}
 .arch-banner{margin-bottom:64px;border:1.5px solid var(--ink);outline:1px solid var(--ink-line);outline-offset:8px;aspect-ratio:2000/739;background:var(--black);overflow:hidden}
 .arch-banner img{width:100%;height:100%;object-fit:cover}
 .arch-copy{max-width:780px}
@@ -1259,9 +1269,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <section class="architects bp" id="architects">
   <div class="wrap">
-    <figure class="arch-banner imgslot reveal">
-      <img src="assets/Architects%20Wide.jpg" alt="Architects community. Wreck what's not working. Build what does." loading="lazy">
-      <div class="missing">assets/Architects Wide.jpg</div>
+<figure class="arch-sketch reveal" aria-label="Sketch of five people standing tall in different rooms they each designed, connected side by side">
+      <div class="sheet-cap"><span>Elevation C-C</span><span>The Architects</span></div>
+      <svg viewBox="20 140 870 290">
+        <path class="grnd" d="M30 400 H880"/>
+        <path class="hatch" d="M40 400 l-10 12 M56 400 l-10 12 M72 400 l-10 12 M88 400 l-10 12 M104 400 l-10 12 M120 400 l-10 12 M136 400 l-10 12 M152 400 l-10 12 M168 400 l-10 12 M184 400 l-10 12 M200 400 l-10 12 M216 400 l-10 12 M232 400 l-10 12 M248 400 l-10 12 M264 400 l-10 12 M280 400 l-10 12 M296 400 l-10 12 M312 400 l-10 12 M328 400 l-10 12 M344 400 l-10 12 M360 400 l-10 12 M376 400 l-10 12 M392 400 l-10 12 M408 400 l-10 12 M424 400 l-10 12 M440 400 l-10 12 M456 400 l-10 12 M472 400 l-10 12 M488 400 l-10 12 M504 400 l-10 12 M520 400 l-10 12 M536 400 l-10 12 M552 400 l-10 12 M568 400 l-10 12 M584 400 l-10 12 M600 400 l-10 12 M616 400 l-10 12 M632 400 l-10 12 M648 400 l-10 12 M664 400 l-10 12 M680 400 l-10 12 M696 400 l-10 12 M712 400 l-10 12 M728 400 l-10 12 M744 400 l-10 12 M760 400 l-10 12 M776 400 l-10 12 M792 400 l-10 12 M808 400 l-10 12 M824 400 l-10 12 M840 400 l-10 12 M856 400 l-10 12 M872 400 l-10 12"/>
+        <g class="ar-room" style="transition-delay:0ms"><path d="M40 400 V210 H200 V330 M200 390 V400"/><path class="thin" d="M40 260 h10 v50 h-10"/><circle cx="120" cy="289" r="11"/><path d="M120 300 V358 M120 314 L104 288 M120 314 L136 288 M120 358 L109 400 M120 358 L131 400"/></g>
+        <g class="ar-room" style="transition-delay:180ms"><path d="M200 330 V250 L290 190 L380 250 V330 M380 390 V400"/><path class="thin" d="M325 275 h40 v40 h-40 z M345 275 v40"/><circle cx="290" cy="289" r="11"/><path d="M290 300 V358 M290 314 L275 340 M290 314 L308 290 M290 358 L279 400 M290 358 L301 400"/></g>
+        <g class="ar-room" style="transition-delay:360ms"><path d="M380 330 V170 H500 V330 M500 390 V400"/><path class="thin" d="M405 200 h70 v60 h-70 z"/><circle cx="440" cy="289" r="11"/><path d="M440 300 V358 M440 314 L426 328 L434 340 M440 314 L454 328 L446 340 M440 358 L429 400 M440 358 L451 400"/></g>
+        <g class="ar-room" style="transition-delay:540ms"><path d="M500 330 V230 H690 V330 M690 390 V400"/><path class="thin" d="M560 255 h70 M560 265 h70"/><circle cx="595" cy="289" r="11"/><path d="M595 300 V358 M595 314 L580 340 M595 314 L610 340 M595 358 L584 400 M595 358 L606 400"/></g>
+        <g class="ar-room" style="transition-delay:720ms"><path d="M690 330 V200 Q780 150 870 200 V400"/><path class="thin" d="M812 225 h40 v45 h-40 z"/><circle cx="780" cy="289" r="11"/><path d="M780 300 V358 M780 314 L765 340 M780 314 L806 310 M780 358 L769 400 M780 358 L791 400"/></g>
+        <text x="455" y="160" class="hand c">every room is different. same work, side by side.</text>
+      </svg>
     </figure>
     <div class="arch-copy reveal">
       <div class="label">05 &middot; The Architects</div>

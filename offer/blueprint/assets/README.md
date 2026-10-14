@@ -19,3 +19,4 @@ Drop these files here using the exact filenames. Missing files show a labeled fr
 ## Added
 
 - `Architects Wide.jpg`: Architects community banner (current "ARCHITECTS" wordmark). Used in the Architects section.
+- `Wreck the Room Logo.webp`: primary logo (hammer + wordmark). Used in the nav, hero and final call to action. Replaces `AA Logo copy.jpg` on this page.

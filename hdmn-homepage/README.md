@@ -4,7 +4,7 @@ Custom homepage for hdmusicnow.com, embedded in Kajabi as a single Code block:
 
 ```html
 <div id="hdmn-mount"></div>
-<script src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@<commit>/hdmn-homepage/hdmn.js"></script>
+<script src="https://mayadex853.github.io/Dashboards/hdmn-homepage/hdmn.js"></script>
 ```
 
 ## Updating credits (no code needed)
@@ -29,8 +29,8 @@ Rows appear on the site in sheet order; Google may take a few minutes to refresh
 ## Rebuilding (code changes only)
 
 ```bash
-python3 build.py <commit>   # writes preview.html, kajabi-embed.html, hdmn.js
+python3 build.py   # writes preview.html, kajabi-embed.html, hdmn.js
 ```
 
-Posters are served from raw.githubusercontent.com at a pinned commit, with jsDelivr as an automatic fallback.
-After pushing, update the commit in the Kajabi Code block's script `src`.
+Everything is served from GitHub Pages (the `main` branch), with raw.githubusercontent.com as an automatic
+poster fallback. Merge to `main` and the live page updates within ~10 minutes; the Kajabi Code block never changes.

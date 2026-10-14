@@ -228,7 +228,7 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .venn .t-core{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.04em;fill:var(--gold)}
 @media(max-width:600px){.venn{margin-left:-8px;margin-right:-8px}.venn .t-main{font-size:27px}.venn .t-sub,.venn .t-hand{display:none}.venn .t-ov{font-size:15px;letter-spacing:.06em}.venn .t-core{font-size:27px}}
 
-.evo{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center;padding:56px 0;border-top:1px dashed var(--ink-line)}
+.evo{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:56px 0;border-top:1px dashed var(--ink-line)}
 .evo.flip .evo-copy{order:2}
 @media(max-width:860px){.evo{grid-template-columns:1fr;gap:24px;padding:44px 0}.evo.flip .evo-copy{order:0}}
 .evo .sheet-no{font-family:var(--hand);font-size:17px;color:var(--ink-soft);margin-bottom:8px}
@@ -237,7 +237,14 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .fromto s{color:var(--ink-soft);text-decoration-color:var(--red-hi);text-decoration-thickness:2px}
 .fromto span{color:var(--ink-soft)}
 .fromto b{font-weight:600;color:var(--white);border-bottom:2px solid var(--blue)}
-.evo p{color:var(--ink-soft);max-width:420px}
+.evo-why{margin-top:6px;max-width:470px}
+.evo-why dt{font-family:var(--hand);font-size:17px;color:var(--ink);margin-top:16px;display:flex;align-items:center;gap:10px}
+.evo-why dt::before{content:"";width:22px;height:1px;background:var(--ink-soft)}
+.evo-why dt:first-child{margin-top:4px}
+.evo-why dt:first-child::before{background:var(--red-hi);height:2px}
+.evo-why dt:nth-of-type(2)::before{background:var(--blue-hi);height:2px}
+.evo-why dd{color:var(--ink-soft);font-size:16px;margin-top:4px}
+.evo-why dd:nth-of-type(2){color:var(--white)}
 .evo-art{width:100%;height:auto;overflow:visible}
 .evo-art path,.evo-art rect,.evo-art circle{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
 .evo-art .before :not(text){stroke:var(--ink-soft);stroke-width:1.4}
@@ -585,7 +592,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="sheet-no">Sheet E-01 &middot; Wreck-ognize It</div>
         <h3>Rebuilt Identity</h3>
         <div class="fromto"><s>Inherited</s> <span>&#8594;</span> <b>Chosen</b></div>
-        <p>The identity you were handed gets traced, examined and replaced with one you picked on purpose.</p>
+        <dl class="evo-why">
+          <dt>What staying put costs you</dt><dd>You're running a company on an identity you never chose. The roles you took on to stay safe, approved and useful are still making your decisions, so every win lands on someone you don't fully recognize.</dd>
+          <dt>Who you become</dt><dd>Someone whose choices come from who they decided to be. You know why you want what you want, and you stop borrowing other people's definition of enough.</dd>
+          <dt>Why Wreck the Room works</dt><dd>You can't change an identity you can't see. Wreck-ognize It puts the inherited one on paper, names it, and has you design the replacement before anything comes down.</dd>
+        </dl>
       </div>
       <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
         <g class="before">
@@ -616,7 +627,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="sheet-no">Sheet E-02 &middot; Wreck It</div>
         <h3>Reclaimed Power</h3>
         <div class="fromto"><s>Suppressed</s> <span>&#8594;</span> <b>Unleashed</b></div>
-        <p>The parts of you that learned to stay small get their height back. The ceiling you built to fit in comes out.</p>
+        <dl class="evo-why">
+          <dt>What staying put costs you</dt><dd>You've learned to edit yourself. Softer in the room, smaller in the pitch, quiet about what you actually think. It works well enough to keep you successful and capped at the same time.</dd>
+          <dt>Who you become</dt><dd>The person who says the true thing and leads at full strength, without checking first whether it's allowed.</dd>
+          <dt>Why Wreck the Room works</dt><dd>If you've done therapy or coaching and still hit the same wall, this is why. The pattern was built to protect you, so willpower loses to it. Wreck It goes after the role itself, and the old reflex runs out of work to do.</dd>
+        </dl>
       </div>
       <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
         <g class="before">
@@ -648,7 +663,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="sheet-no">Sheet E-03 &middot; Wrock It</div>
         <h3>Designed Life</h3>
         <div class="fromto"><s>Reactive</s> <span>&#8594;</span> <b>Proactive</b></div>
-        <p>Your days follow a plan you drew. Doors stop swinging open on their own, and there's a clear path to what you're building.</p>
+        <dl class="evo-why">
+          <dt>What staying put costs you</dt><dd>Your calendar belongs to everyone else. You built the business for freedom and ended up running it on reaction: other people's urgency, other people's priorities, the next fire.</dd>
+          <dt>Who you become</dt><dd>Someone living on a plan they drew. Your time and your work point the same direction, and you can feel it on an ordinary Tuesday.</dd>
+          <dt>Why Wreck the Room works</dt><dd>Tactics and productivity systems sit on top of the old structure, so they fade. Wrock It rebuilds the structure underneath, then anchors the new identity so it holds when things get busy.</dd>
+        </dl>
       </div>
       <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
         <g class="before">

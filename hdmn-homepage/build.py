@@ -5,9 +5,9 @@ Outputs:
   kajabi-embed.html  full embed, can be pasted into a single Kajabi Code block (posters loaded from jsDelivr)
   hdmn.js            the same embed as a script; the Kajabi Code block loads it with:
                        <div id="hdmn-mount"></div>
-                       <script src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@<commit>/hdmn-homepage/hdmn.js"></script>
+                       <script src="https://mayadex853.github.io/Dashboards/hdmn-homepage/hdmn.js"></script>
 
-Usage: python3 build.py [CDN_REF]   (CDN_REF = git branch or commit, default: the working branch)
+Usage: python3 build.py   (then merge to main; GitHub Pages serves main, so no Kajabi edit is needed)
 """
 import html
 import json
@@ -16,11 +16,11 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
-CDN_REF = sys.argv[1] if len(sys.argv) > 1 else "claude/hd-music-now-homepage-tt724m"
-# Posters are served from raw.githubusercontent.com (reliable, correct image MIME type); jsDelivr is the
-# automatic fallback if an image fails. jsDelivr intermittently 404s on cold-cache GitHub fetches.
-CDN_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/hdmn-homepage/posters/"
-FALLBACK_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/hdmn-homepage/posters/"
+CDN_REF = sys.argv[1] if len(sys.argv) > 1 else "main"
+# Posters are served from GitHub Pages (main branch); raw.githubusercontent.com is the automatic fallback
+# if an image fails.
+CDN_BASE = "https://mayadex853.github.io/Dashboards/hdmn-homepage/posters/"
+FALLBACK_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/hdmn-homepage/posters/"
 
 # Google Sheet Jody edits; the page reads it live (falls back to the built-in data if unreachable).
 SHEET_ID = "1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ"

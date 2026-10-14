@@ -134,10 +134,24 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .pullquote{margin-top:44px;padding-left:22px;border-left:4px solid var(--red);font-family:var(--display);font-size:clamp(26px,3vw,36px);line-height:1.12;text-transform:uppercase}
 .cost{margin-top:96px;padding:40px 44px;border:2px solid var(--red);background:rgba(194,31,31,.07)}
 .cost .label{color:var(--red-hi);margin-bottom:18px}
-.cost ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:18px 48px}
-.cost li{font-family:var(--display);font-size:clamp(22px,2.3vw,28px);line-height:1.15;text-transform:uppercase;padding-left:30px;position:relative}
+.cost-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px 56px}
+.cost h3{font-family:var(--display);font-weight:400;font-size:clamp(40px,4.4vw,56px);letter-spacing:.02em;color:var(--red-hi);margin-bottom:12px;line-height:1}
+.cost ul{list-style:none;display:grid;gap:16px}
+.cost li{font-family:var(--display);font-size:clamp(20px,2.1vw,26px);line-height:1.15;text-transform:uppercase;padding-left:30px;position:relative}
 .cost li::before{content:"";position:absolute;left:0;top:.42em;width:16px;height:3px;background:var(--red-hi)}
-@media(max-width:760px){.cost{padding:28px 22px}.cost ul{grid-template-columns:1fr}}
+.cost-last{margin-top:30px;padding-top:22px;border-top:1px solid #4a1a1a;font-size:19px;color:#E2DFDF}
+@media(max-width:760px){.cost{padding:28px 22px}.cost-cols{grid-template-columns:1fr}}
+.belief{margin-top:28px;color:#E2DFDF;font-size:18px;max-width:520px}
+.story{padding-top:20px}
+.story .label{color:var(--red-hi)}
+.story h2 .hl{color:var(--red-hi)}
+.story-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:center}
+@media(max-width:860px){.story-grid{grid-template-columns:1fr;gap:36px}}
+.story-photo{aspect-ratio:4/5;background:#151313;border:1px solid #2c1a1a;max-width:420px;width:100%}
+.story-slot{position:relative;border:2px dashed var(--red-hi);padding:30px 24px 22px;margin-top:6px}
+.story-slot .flag{position:absolute;top:-13px;left:18px;background:var(--red);color:#fff;font-family:var(--caps);font-weight:600;font-size:11.5px;letter-spacing:.18em;padding:4px 10px}
+.story-slot p{color:var(--muted)}
+.story-sign{font-family:var(--hand);font-size:30px;margin-top:18px;color:var(--white)}
 .rooms{margin-top:96px}
 .rooms-head p{font-family:var(--display);font-size:clamp(26px,3vw,36px);line-height:1.1;text-transform:uppercase;max-width:640px;margin-bottom:26px}
 .rooms-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -309,6 +323,21 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .titleblock b{display:block;font-family:var(--hand);font-weight:400;font-size:19px;letter-spacing:.02em;text-transform:none;color:var(--white);margin-top:2px}
 
 /* value stack as a schedule of values */
+.solves{border-left:3px solid var(--blue-hi);padding:6px 0 6px 22px;margin-bottom:56px;max-width:820px}
+.solves-k{font-family:var(--caps);font-weight:600;font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--blue-hi);margin-bottom:8px}
+.solves p{font-size:clamp(20px,2.2vw,25px);line-height:1.4;color:var(--white)}
+.midcta{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:56px;text-align:center}
+.midcta .meta{font-family:var(--hand);font-size:18px;color:var(--ink-soft)}
+.notes{list-style:none;counter-reset:n;margin-top:40px;border-top:1.5px solid var(--ink);max-width:880px}
+.notes li{counter-increment:n;border-bottom:1px dashed var(--ink-line)}
+.notes summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:44px 1fr 24px;gap:12px;align-items:baseline;padding:20px 4px;font-family:var(--caps);font-weight:500;font-size:19px;letter-spacing:.04em;color:var(--white)}
+.notes summary::-webkit-details-marker{display:none}
+.notes summary::before{content:counter(n,decimal-leading-zero)".";font-family:var(--hand);font-size:18px;color:var(--ink-soft)}
+.notes summary::after{content:"+";font-family:var(--hand);font-size:24px;color:var(--ink-soft);text-align:right}
+.notes details[open] summary::after{content:"\2212"}
+.notes details p{padding:0 30px 22px 60px;color:var(--ink-soft);max-width:760px}
+.notes a{color:var(--white);text-decoration-color:var(--blue-hi)}
+@media(max-width:600px){.notes summary{grid-template-columns:34px 1fr 20px;font-size:17px}.notes details p{padding:0 8px 20px 46px}}
 .sov{border-bottom:1.5px solid var(--ink)}
 .sov-head,.sov-row,.sov-total,.sov-yours{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding:16px 30px}
 .sov-head{font-family:var(--caps);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--ink);padding-top:14px;padding-bottom:10px}
@@ -475,6 +504,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h2 class="worn">Somebody else drew the <span class="hl">floor plan.</span></h2>
         <p class="lede">Rooms get built early. Childhood adds a wall. Survival adds another. Fear, culture, approval and performance finish the job. By the time you're running a business, you're living inside a structure you never signed off on, and it feels like your personality.</p>
         <p class="pullquote worn">It keeps you adjusting the furniture when the structure is the problem.</p>
+        <p class="belief">None of this is a character flaw, and more discipline won't fix it. You were handed a set of plans before you were old enough to read them, and you've been building on them ever since. Plans can be redrawn.</p>
       </div>
       <div class="reveal">
         <p style="color:var(--muted);margin-bottom:18px">The force behind it has a name: <strong style="color:var(--white)">inherited design.</strong> It doesn't announce itself. It shows up as</p>
@@ -490,12 +520,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
     <div class="cost reveal">
       <div class="label">The cost of staying put</div>
-      <ul>
-        <li>Another year of growth that doesn't feel like yours.</li>
-        <li>Another coach or another framework, and the same pattern showing up in a new setting.</li>
-        <li>The people closest to you getting the edited version of you.</li>
-        <li>More distance between who you are and how you live, while from the outside it looks like you're winning.</li>
-      </ul>
+      <div class="cost-cols">
+        <div>
+          <h3>Time</h3>
+          <ul>
+            <li>Another year of growth that doesn't feel like yours.</li>
+            <li>Hours every week spent reacting to other people's priorities.</li>
+            <li>Years cycling the same pattern through a new coach, a new framework, a new setting.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Money</h3>
+          <ul>
+            <li>Revenue held at the ceiling your old identity is comfortable with.</li>
+            <li>Money spent on coaching, courses and tactics that sit on top of the old structure and fade.</li>
+            <li>The bold calls you don't make because the safe one keeps you approved.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="cost-last">And the cost that never shows up on a spreadsheet: the people closest to you get the edited version of you.</p>
     </div>
 
     <div class="rooms reveal">
@@ -506,6 +549,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <figure class="roomcard imgslot"><img src="assets/Renovating.png" alt="The Renovating room" loading="lazy"><div class="missing">assets/Renovating.png</div><figcaption>Renovating</figcaption></figure>
         <figure class="roomcard imgslot"><img src="assets/Rebuilding.png" alt="The Rebuilding room" loading="lazy"><div class="missing">assets/Rebuilding.png</div><figcaption>Rebuilding</figcaption></figure>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <figure class="story-photo imgslot reveal" data-placeholder="founder-photo">
+      <div class="missing" style="display:grid">PHOTO OF JODY<br>replace before launch</div>
+    </figure>
+    <div class="reveal">
+      <div class="label">Why I built this</div>
+      <h2 class="worn">I lived in a room <span class="hl">I didn't design.</span></h2>
+      <!-- FOUNDER STORY: replace with Jody's real story, first person, 150 to 250 words.
+           Cover: the room you were living in, the moment you saw it, what it was costing you
+           (time, money, people), what you wrecked, what you built, why you made Blueprint. -->
+      <div class="story-slot" data-placeholder="founder-story">
+        <span class="flag">PLACEHOLDER &middot; JODY'S STORY</span>
+        <p>First person, 150 to 250 words. The room you were living in. The moment you saw it. What it was costing you in time, money and relationships. What you wrecked, what you built, and why you made Blueprint so others could do it too.</p>
+      </div>
+      <p class="story-sign">Jody</p>
     </div>
   </div>
 </section>
@@ -599,7 +662,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <text class="t-sub" x="480" y="456">Suppressed &#8594; Unleashed</text>
         <text class="t-ov" x="236" y="262">Magnetic</text><text class="t-ov" x="236" y="280">Positioning</text>
         <text class="t-ov" x="404" y="262">Authentic</text><text class="t-ov" x="404" y="280">Agency</text>
-        <text class="t-ov" x="320" y="452">Absolute</text><text class="t-ov" x="320" y="470">Control</text>
+        <text class="t-ov" x="320" y="414">Absolute</text><text class="t-ov" x="320" y="432">Control</text>
         <text class="t-core" x="320" y="306">Activated</text><text class="t-core" x="320" y="334">Architect</text>
       </svg>
     </figure>
@@ -712,6 +775,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <text class="t-label" x="341" y="240">Proactive</text>
       </svg>
     </article>
+    <div class="midcta reveal">
+      <a class="btn" href="#enroll">Become an Activated Architect <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <div class="meta">Start today. Lifetime access.</div>
+    </div>
   </div>
 </section>
 
@@ -719,6 +786,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div class="reveal">
       <div class="label">04 &middot; What's included</div>
+      <div class="solves">
+        <div class="solves-k">What Blueprint solves</div>
+        <p>You're running a successful life on an identity you never chose, and it's costing you time you don't get back and money you're leaving on the table. Blueprint gives you the complete system to find that identity, take it apart and build the one you'd actually choose.</p>
+      </div>
       <h2>The plans, in full</h2>
       <p class="lede">Everything in the Wreck the Room system across all three phases, priced out line by line. Hold it up against another year spent inside a room you didn't design.</p>
     </div>
@@ -761,6 +832,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div>Architect<b>You</b></div>
       </div>
     </div>
+    <div class="midcta reveal">
+      <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <div class="meta">$50,000 in value for $5,000, or 2 payments of $2,650</div>
+    </div>
   </div>
 </section>
 
@@ -774,7 +849,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="label">05 &middot; The Architects</div>
       <h2>Who you become on the other side</h2>
       <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Activated Architect</b></div>
-      <p class="lede">An Activated Architect makes decisions from a self they chose. They say the true thing in the room. Their calendar follows a plan they drew. The success they already had finally feels like theirs.</p>
+      <p class="lede">Picture a regular Monday a year from now. You make the hard call without running it past the old voices first. You say the true thing in the meeting. There's room in your calendar because you put it there, and the business is growing in the direction you chose. The success you already had finally feels like yours. That's an Activated Architect.</p>
       <p style="color:var(--ink-soft);margin-top:18px">Blueprint is self-guided, and you still don't do it alone. On the way there you're one of the Architects, the community of people going through the program, with access to the Architects community on Kajabi. Same work, same walls, other people taking them down too.</p>
     </div>
   </div>
@@ -845,7 +920,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="price-head reveal">
       <div class="label">08 &middot; Enroll</div>
       <h2>One price. Everything included.</h2>
-      <p class="lede" style="margin:0 auto">Put $5,000 next to another year of living inside a room you didn't design, and decide which one costs more.</p>
+      <p class="lede" style="margin:0 auto">Put $5,000 next to what staying put is already costing you: another year of your time, revenue held at the old ceiling, and money spent on fixes that fade. Then decide which one costs more.</p>
     </div>
     <div class="card reveal">
       <div class="card-top">
@@ -885,11 +960,29 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </section>
 
+<section class="faq bp" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="label">09 &middot; General notes</div>
+      <h2>Questions before you build</h2>
+    </div>
+    <ol class="notes reveal">
+      <li><details><summary>I've already done therapy and coaching. Why would this be different?</summary><p>Most of that work helps you understand a pattern or manage it. Wreck the Room goes after the identity the pattern protects, in a set order: see it, take it apart, rebuild. If you keep hitting the same wall, that order is usually what's been missing.</p></details></li>
+      <li><details><summary>I don't have much time. Can I actually do this?</summary><p>You set the pace. There are 27 video lessons and 78 guided exercises, and you have lifetime access, so you can work through it on your own schedule. Compare that with the time the current pattern already takes from you every week.</p></details></li>
+      <li><details><summary>What if I get stuck doing it on my own?</summary><p>You'll have the Architects community on Kajabi. You can also add three 1:1 alignment coaching sessions with Jody at checkout for $2,000: one at the beginning, one in the middle and one at the end.</p></details></li>
+      <li><details><summary>How is Blueprint different from Council and Inner Circle?</summary><p>Blueprint is the complete system, self-guided. Council adds group coaching with Jody. Inner Circle is private 1:1 coaching with Jody. If you know you need someone in the room with you, <a href="#" data-link="council">start with Council</a>.</p></details></li>
+      <li><details><summary>Is there a payment plan?</summary><p>Yes. Pay $5,000 in full, or 2 monthly payments of $2,650. You choose at checkout.</p></details></li>
+      <li><details><summary>Is this therapy?</summary><p>No. Wreck the Room is identity and personal development work. It isn't a substitute for therapy or for medical or mental health care. If you're in crisis or working through trauma, please work with a licensed professional.</p></details></li>
+      <li><details><summary>Can I get a refund?</summary><p>No. Blueprint is non-refundable and all sales are final, including the coaching add-on. Read the redlined list above before you buy.</p></details></li>
+    </ol>
+  </div>
+</section>
+
 <svg class="drafting-mark scalebar" viewBox="0 0 220 40" fill="none" stroke="#F4F4F4" stroke-width="1.2" aria-hidden="true">
   <path d="M10 22 H210"/><path d="M10 16 V28 M60 16 V28 M110 16 V28 M160 16 V28 M210 16 V28"/>
   <rect x="10" y="19" width="50" height="6" fill="#F4F4F4" fill-opacity=".8" stroke="none"/><rect x="110" y="19" width="50" height="6" fill="#F4F4F4" fill-opacity=".8" stroke="none"/>
   <text x="10" y="40" fill="#F4F4F4" stroke="none" font-family="Architects Daughter, cursive" font-size="11">0</text>
-  <text x="200" y="40" fill="#F4F4F4" stroke="none" font-family="Architects Daughter, cursive" font-size="11">SCALE</text>
+  <text x="210" y="40" text-anchor="end" fill="#F4F4F4" stroke="none" font-family="Architects Daughter, cursive" font-size="11">SCALE</text>
 </svg>
 </div>
 
@@ -902,7 +995,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="ornament" aria-hidden="true"><i class="s"></i><i></i><i class="s"></i></div>
     <h2 class="worn"><span class="line"><span class="w">Wreck</span> what's not working.</span><span class="line"><span class="b">Build</span> what does.</span></h2>
-    <p class="lede">The question at the top of this page doesn't go away when you close the tab. It waits, and the room gets a little more permanent. Blueprint is how you answer it.</p>
+    <p class="lede">The question at the top of this page doesn't go away when you close the tab. It waits, another year goes by, and the room gets a little more permanent. Blueprint is how you answer it.</p>
     <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
     <p class="final-q">Did I design this life, or did I just move into it?</p>
   </div>
@@ -939,7 +1032,7 @@ const CONFIG = {
   // Pre-launch guard: visible until placeholders and links are handled
   const issues = [];
   const ph = document.querySelectorAll("[data-placeholder]").length;
-  if (ph) issues.push(ph + " testimonial placeholder" + (ph > 1 ? "s" : ""));
+  if (ph) issues.push(ph + " placeholder" + (ph > 1 ? "s" : "") + " (testimonials, Jody's story/photo)");
   if (!CONFIG.checkoutUrl) issues.push("checkout URL not set");
   if (!CONFIG.councilUrl) issues.push("Council link not set");
   if (!CONFIG.valuesApproved) issues.push("value stack amounts not approved");

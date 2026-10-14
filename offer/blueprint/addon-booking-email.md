@@ -29,3 +29,15 @@ That's my recommendation, not a rule. If something comes up and you want to talk
 
 See you soon,
 Jody
+
+---
+
+## Step 2: notify Jody
+
+**Send an email → Manual recipients:** jody@jodyfriedman.com
+
+**Subject:** New Blueprint add-on buyer: {{ contact.name }}
+
+{{ contact.name }} ({{ contact.email }}) just bought the Blueprint add-on: 3 alignment coaching sessions.
+
+They've been sent the booking link. Expect bookings for "Blueprint Alignment Session with Jody" in Calendly.

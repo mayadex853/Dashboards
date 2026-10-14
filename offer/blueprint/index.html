@@ -97,7 +97,8 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 
 /* hero */
 .hero{min-height:100vh;min-height:100svh;padding:110px 0 110px;display:flex;align-items:center;overflow:hidden;text-align:center}
-.hero .logo{width:min(520px,84vw);margin:0 auto 6px;aspect-ratio:1536/1024;position:relative}
+.hero-logo{margin-top:56px}
+.hero .logo{width:min(400px,72vw);margin:0 auto 6px;aspect-ratio:1536/1024;position:relative}
 .hero .logo img{width:100%;height:100%;object-fit:contain}
 .cracks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .cracks path{fill:none;stroke:var(--red);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:crack 2.4s cubic-bezier(.6,0,.2,1) .4s forwards;opacity:.75}
@@ -106,7 +107,7 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .cracks path:nth-child(5){animation-delay:1.1s}.cracks path:nth-child(6){animation-delay:1.25s}.cracks path:nth-child(7){animation-delay:1.4s}.cracks path:nth-child(8){animation-delay:1.5s}
 @keyframes crack{to{stroke-dashoffset:0}}
 .hero .wrap{z-index:2}
-.hero .kicker{font-family:var(--caps);font-size:15px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin:22px 0 22px}
+.hero .kicker{font-family:var(--caps);font-size:15px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
 .hero h1{font-size:clamp(44px,7.4vw,98px);max-width:1000px;margin:0 auto 30px;color:var(--white)}
 .hero h1 .r{color:var(--red-hi)}
 .hero .lede{margin:0 auto 36px;color:#D7D8DB}
@@ -206,6 +207,62 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .phase ol li::before{content:"\2014\00a0";display:none}
 .phase p{color:var(--ink-soft);font-size:15.5px}
 
+/* what changes: venn + evolution drawings */
+.venn{margin:56px auto 40px;max-width:640px}
+.venn svg{width:100%;height:auto;overflow:visible}
+.venn .c{fill-opacity:0;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s cubic-bezier(.6,0,.2,1),fill-opacity 1s ease 1.4s}
+.venn .c-id{fill:var(--blue)}.venn .c-power{fill:var(--red)}.venn .c-life{fill:var(--white)}
+.venn .c-life{transition-delay:.25s,1.6s}.venn .c-power{transition-delay:.5s,1.8s}
+.venn.in .c{stroke-dashoffset:0;fill-opacity:.13}
+.venn.in .c-power{fill-opacity:.2}.venn.in .c-life{fill-opacity:.07}
+.venn .construct{fill:none;stroke:var(--ink-line);stroke-width:1}
+.venn .dl{stroke-dasharray:.02 .015;opacity:0;transition:opacity 1s ease 1.2s}
+.venn.in .dl{opacity:1}
+.venn .cross path{stroke:var(--ink-soft)}
+.venn text{text-anchor:middle;fill:var(--ink);opacity:0;transition:opacity .8s ease 1.6s}
+.venn.in text{opacity:1}
+.venn .t-main{font-family:var(--display);font-size:25px;text-transform:uppercase;letter-spacing:.02em;fill:var(--white)}
+.venn .t-sub{font-family:var(--hand);font-size:17px;fill:var(--ink-soft)}
+.venn .t-ov{font-family:var(--caps);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.venn .t-hand{font-family:var(--hand);font-size:13px;fill:var(--ink-soft);text-anchor:start}
+.venn .t-core{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.04em;fill:var(--gold)}
+@media(max-width:600px){.venn{margin-left:-8px;margin-right:-8px}.venn .t-main{font-size:27px}.venn .t-sub,.venn .t-hand{display:none}.venn .t-ov{font-size:15px;letter-spacing:.06em}.venn .t-core{font-size:27px}}
+
+.evo{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center;padding:56px 0;border-top:1px dashed var(--ink-line)}
+.evo.flip .evo-copy{order:2}
+@media(max-width:860px){.evo{grid-template-columns:1fr;gap:24px;padding:44px 0}.evo.flip .evo-copy{order:0}}
+.evo .sheet-no{font-family:var(--hand);font-size:17px;color:var(--ink-soft);margin-bottom:8px}
+.evo h3{font-family:var(--display);font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:.01em;color:var(--white);margin-bottom:10px}
+.fromto{font-family:var(--caps);font-size:18px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fromto s{color:var(--ink-soft);text-decoration-color:var(--red-hi);text-decoration-thickness:2px}
+.fromto span{color:var(--ink-soft)}
+.fromto b{font-weight:600;color:var(--white);border-bottom:2px solid var(--blue)}
+.evo p{color:var(--ink-soft);max-width:420px}
+.evo-art{width:100%;height:auto;overflow:visible}
+.evo-art path,.evo-art rect,.evo-art circle{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.evo-art .before :not(text){stroke:var(--ink-soft);stroke-width:1.4}
+.evo-art .before .dash{stroke:var(--ink-line)}
+.evo-art .after :not(text){stroke:var(--white);stroke-width:2}
+.evo-art .after .route{stroke:var(--blue-hi);stroke-width:2.6}
+.evo-art .arrow :not(text){stroke:var(--ink-soft);stroke-width:1.4}
+.evo-art .demo path{stroke:var(--red-hi);stroke-width:3}
+.evo-art text{stroke:none;fill:var(--ink-soft);text-anchor:middle;opacity:0;transition:opacity .6s ease}
+.evo-art .t-note{font-family:var(--hand);font-size:13px}
+.evo-art .t-label{font-family:var(--caps);font-size:14px;letter-spacing:.2em;text-transform:uppercase;fill:var(--ink)}
+.evo-art .t-demo{font-family:var(--caps);font-weight:600;font-size:13px;letter-spacing:.3em;fill:var(--red-hi)}
+.evo-art .after text{fill:var(--white)}
+/* sequence: before draws, gets demolished, arrow, after draws */
+.evo.in .before :not(text){stroke-dashoffset:0;transition:stroke-dashoffset .9s ease .1s}
+.evo.in .before text,.evo.in .t-label{opacity:1;transition-delay:.4s}
+.evo.in .demo path{stroke-dashoffset:0;transition:stroke-dashoffset .45s ease 1.1s}
+.evo.in .demo path+path{transition-delay:1.35s}
+.evo.in .demo text{opacity:1;transition-delay:1.5s}
+.evo.in .arrow :not(text){stroke-dashoffset:0;transition:stroke-dashoffset .4s ease 1.7s}
+.evo.in .after :not(text){stroke-dashoffset:0;transition:stroke-dashoffset 1.3s cubic-bezier(.6,0,.2,1) 2s}
+.evo.in .after .route{transition-duration:1.4s;transition-delay:2.9s}
+.evo.in .after text{opacity:1;transition-delay:3.1s}
+@media(prefers-reduced-motion:reduce){.evo-art *,.venn *{transition:none!important;stroke-dashoffset:0!important;opacity:1!important}}
+
 /* what's included: the drawing sheet */
 .included{}
 .sheet{margin-top:48px;border:2px solid var(--ink);outline:1px solid var(--ink-line);outline-offset:8px;background:rgba(11,13,17,.14);position:relative}
@@ -236,6 +293,21 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .titleblock div{padding:12px 18px;border-right:1px solid var(--ink-line);font-family:var(--caps);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
 .titleblock div:last-child{border-right:0}
 .titleblock b{display:block;font-family:var(--hand);font-weight:400;font-size:19px;letter-spacing:.02em;text-transform:none;color:var(--white);margin-top:2px}
+
+/* value stack as a schedule of values */
+.sov{border-bottom:1.5px solid var(--ink)}
+.sov-head,.sov-row,.sov-total,.sov-yours{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding:16px 30px}
+.sov-head{font-family:var(--caps);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--ink);padding-top:14px;padding-bottom:10px}
+.sov-row{border-bottom:1px dashed var(--ink-line)}
+.sov-row b{display:block;font-family:var(--caps);font-weight:500;font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.sov-row small{display:block;font-size:14.5px;color:var(--ink-soft);margin-top:2px;max-width:560px}
+.sov .v{font-family:var(--hand);font-size:22px;color:var(--white);white-space:nowrap}
+.sov-total{border-top:1.5px solid var(--ink);font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.sov-total .v{font-family:var(--display);font-size:34px;text-decoration:line-through;text-decoration-color:var(--red-hi);text-decoration-thickness:3px}
+.sov-yours{background:rgba(11,13,17,.28);font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.sov-yours .v{font-family:var(--display);font-size:44px;color:var(--blue-hi)}
+.sov-note{padding:12px 30px 18px;font-family:var(--hand);font-size:16px;color:var(--ink-soft)}
+@media(max-width:600px){.sov-head,.sov-row,.sov-total,.sov-yours{padding-left:18px;padding-right:18px;gap:14px}.sov-note{padding-left:18px;padding-right:18px}.sov-total,.sov-yours{font-size:20px}.sov-yours .v{font-size:34px}}
 
 /* architects */
 .arch-banner{margin-bottom:64px;border:1.5px solid var(--ink);outline:1px solid var(--ink-line);outline-offset:8px;aspect-ratio:2000/739;background:var(--black);overflow:hidden}
@@ -288,6 +360,8 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .card .tier{font-family:var(--hand);font-size:18px;color:#3A4A5E}
 .card h3{font-family:var(--display);font-weight:400;font-size:clamp(32px,4vw,40px);letter-spacing:.01em;margin:4px 0 4px;color:#0D0D0F}
 .card .fmt{color:#4A4E57;font-size:15px}
+.card .was{font-family:var(--caps);font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#4A4E57;margin-top:16px}
+.card .was s{text-decoration-color:var(--red-hi);text-decoration-thickness:2px;color:#14161B}
 .amount{display:flex;align-items:baseline;gap:10px;margin-top:20px}
 .amount .cur{font-family:var(--display);font-size:34px;color:#4A4E57}
 .amount .val{font-family:var(--display);font-size:clamp(72px,11vw,100px);line-height:1;color:#0D0D0F}
@@ -308,7 +382,7 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .terms{padding:22px 40px 32px;border-top:1px solid rgba(20,22,27,.3)}
 .terms h4{font-family:var(--caps);font-weight:600;font-size:13px;letter-spacing:.24em;text-transform:uppercase;margin-bottom:8px}
 .terms p{font-size:15px;color:#2C3038}
-@media(max-width:560px){.card-top,.card ul.inc,.card .buy,.terms{padding-left:24px;padding-right:24px}.card ul.inc{columns:1}.addon{margin:22px 24px 0;grid-template-columns:1fr}}
+@media(max-width:560px){.card .buy .btn{font-size:17px;letter-spacing:.08em;padding:18px 14px}.card-top,.card ul.inc,.card .buy,.terms{padding-left:24px;padding-right:24px}.card ul.inc{columns:1}.addon{margin:22px 24px 0;grid-template-columns:1fr}}
 
 /* =========================================================
    FINAL: back to the logo
@@ -361,17 +435,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </svg>
 
   <div class="wrap">
-    <div class="logo imgslot">
-      <img src="assets/Wreck%20the%20Room%20Logo.webp" alt="Wreck the Room. Wreck it. Rebuild it. Own it.">
-      <div class="missing">assets/Wreck the Room Logo.webp</div>
-    </div>
-    <div class="ornament" aria-hidden="true"><i class="s"></i><i></i><i class="s"></i></div>
     <div class="kicker">Blueprint &middot; The Self-Guided Experience</div>
     <h1 class="worn">Did I design this life, <span class="r">or did I just move into it?</span></h1>
     <p class="lede">Most high achievers never ask that question out loud. They build the company, hit the number, and still feel the walls. Blueprint is the full Wreck the Room&trade; system for people ready to answer it on their own, in writing, at their own pace.</p>
     <div class="hero-cta">
       <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <div class="hero-meta"><b>$5,000</b> or 2 &times; $2,650 &middot; 105 learning experiences &middot; Lifetime access</div>
+    </div>
+    <div class="hero-logo">
+    <div class="logo imgslot">
+      <img src="assets/Wreck%20the%20Room%20Logo.webp" alt="Wreck the Room. Wreck it. Rebuild it. Own it.">
+      <div class="missing">assets/Wreck the Room Logo.webp</div>
+    </div>
+    <div class="ornament" aria-hidden="true"><i class="s"></i><i></i><i class="s"></i></div>
     </div>
   </div>
 </header>
@@ -471,12 +547,143 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </section>
 
+<section class="shifts bp" id="shifts">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="label">03 &middot; What changes</div>
+      <h2>Three shifts. Where they meet is the Activated Architect.</h2>
+      <p class="lede">Each phase moves something specific. Most people work on one of these at a time. Blueprint works on all three, because the change only holds where they overlap.</p>
+    </div>
+
+    <figure class="venn reveal" aria-label="Venn diagram: Rebuilt Identity, Reclaimed Power and Designed Life overlap at Activated Architect">
+      <svg viewBox="0 0 640 560" role="img">
+        <g class="construct">
+          <path class="dl" pathLength="1" d="M320 200 L228 360 L412 360 Z"/>
+          <path class="dl" pathLength="1" d="M412 360 L559 296"/>
+          <g class="cross"><path d="M312 200h16M320 192v16"/><path d="M220 360h16M228 352v16"/><path d="M404 360h16M412 352v16"/></g>
+        </g>
+        <circle class="c c-id" pathLength="1" cx="320" cy="200" r="160"/>
+        <circle class="c c-life" pathLength="1" cx="228" cy="360" r="160"/>
+        <circle class="c c-power" pathLength="1" cx="412" cy="360" r="160"/>
+        <text class="t-hand" x="500" y="318" transform="rotate(-23 500 318)">R = 160</text>
+        <text class="t-main" x="320" y="102">Rebuilt Identity</text>
+        <text class="t-sub" x="320" y="128">Inherited &#8594; Chosen</text>
+        <text class="t-main" x="160" y="430">Designed Life</text>
+        <text class="t-sub" x="160" y="456">Reactive &#8594; Proactive</text>
+        <text class="t-main" x="480" y="430">Reclaimed Power</text>
+        <text class="t-sub" x="480" y="456">Suppressed &#8594; Unleashed</text>
+        <text class="t-ov" x="236" y="262">Magnetic</text><text class="t-ov" x="236" y="280">Positioning</text>
+        <text class="t-ov" x="404" y="262">Authentic</text><text class="t-ov" x="404" y="280">Agency</text>
+        <text class="t-ov" x="320" y="452">Absolute</text><text class="t-ov" x="320" y="470">Control</text>
+        <text class="t-core" x="320" y="306">Activated</text><text class="t-core" x="320" y="334">Architect</text>
+      </svg>
+    </figure>
+
+    <!-- E-01 -->
+    <article class="evo reveal">
+      <div class="evo-copy">
+        <div class="sheet-no">Sheet E-01 &middot; Wreck-ognize It</div>
+        <h3>Rebuilt Identity</h3>
+        <div class="fromto"><s>Inherited</s> <span>&#8594;</span> <b>Chosen</b></div>
+        <p>The identity you were handed gets traced, examined and replaced with one you picked on purpose.</p>
+      </div>
+      <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
+        <g class="before">
+          <rect pathLength="1" x="44" y="54" width="120" height="120" class="dash"/>
+          <rect pathLength="1" x="36" y="46" width="120" height="120" class="dash"/>
+          <rect pathLength="1" x="28" y="38" width="120" height="120"/>
+          <path pathLength="1" d="M28 98 H100 M100 38 V158"/>
+          <text class="t-note" x="88" y="194">copy of a copy</text>
+        </g>
+        <g class="demo"><path pathLength="1" d="M18 30 L176 182"/><path pathLength="1" d="M176 30 L18 182"/><text class="t-demo" x="97" y="24">DEMO</text></g>
+        <g class="arrow"><path pathLength="1" d="M196 110 H246"/><path pathLength="1" d="M236 100 L248 110 L236 120"/></g>
+        <g class="after">
+          <path pathLength="1" d="M268 36 H412 V176 H268 Z"/>
+          <path pathLength="1" d="M268 106 H318 M352 106 H412 M340 36 V80"/>
+          <path pathLength="1" d="M318 106 A34 34 0 0 1 352 106"/>
+          <path pathLength="1" d="M412 54 V92 M407 54 V92"/>
+          <path pathLength="1" d="M286 216 H394"/>
+          <text class="t-note" x="340" y="210">drawn by: you</text>
+        </g>
+        <text class="t-label" x="88" y="240">Inherited</text>
+        <text class="t-label" x="340" y="240">Chosen</text>
+      </svg>
+    </article>
+
+    <!-- E-02 -->
+    <article class="evo flip reveal">
+      <div class="evo-copy">
+        <div class="sheet-no">Sheet E-02 &middot; Wreck It</div>
+        <h3>Reclaimed Power</h3>
+        <div class="fromto"><s>Suppressed</s> <span>&#8594;</span> <b>Unleashed</b></div>
+        <p>The parts of you that learned to stay small get their height back. The ceiling you built to fit in comes out.</p>
+      </div>
+      <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
+        <g class="before">
+          <path pathLength="1" d="M20 196 H180 M34 196 V128 M166 196 V128"/>
+          <rect pathLength="1" x="26" y="114" width="148" height="16"/>
+          <path pathLength="1" d="M30 128 L46 114 M50 128 L66 114 M70 128 L86 114 M90 128 L106 114 M110 128 L126 114 M130 128 L146 114 M150 128 L166 114"/>
+          <path pathLength="1" d="M70 64 V102 M64 94 L70 104 L76 94 M130 64 V102 M124 94 L130 104 L136 94"/>
+          <path pathLength="1" d="M186 196 V130 M181 196 H191 M181 130 H191"/>
+          <text class="t-note" x="100" y="56">load from above</text>
+        </g>
+        <g class="demo"><path pathLength="1" d="M14 40 L186 206"/><path pathLength="1" d="M186 40 L14 206"/><text class="t-demo" x="100" y="30">DEMO</text></g>
+        <g class="arrow"><path pathLength="1" d="M200 130 H250"/><path pathLength="1" d="M240 120 L252 130 L240 140"/></g>
+        <g class="after">
+          <path pathLength="1" d="M262 196 H422 M276 196 V40 M408 196 V40"/>
+          <path pathLength="1" d="M276 40 H318 M366 40 H408"/>
+          <path pathLength="1" d="M318 40 L342 20 L366 40"/>
+          <path pathLength="1" d="M310 150 V78 M304 88 L310 76 L316 88 M372 150 V78 M366 88 L372 76 L378 88"/>
+          <path pathLength="1" d="M428 196 V40 M423 196 H433 M423 40 H433"/>
+          <text class="t-note" x="342" y="176">full height</text>
+        </g>
+        <text class="t-label" x="100" y="240">Suppressed</text>
+        <text class="t-label" x="342" y="240">Unleashed</text>
+      </svg>
+    </article>
+
+    <!-- E-03 -->
+    <article class="evo reveal">
+      <div class="evo-copy">
+        <div class="sheet-no">Sheet E-03 &middot; Wrock It</div>
+        <h3>Designed Life</h3>
+        <div class="fromto"><s>Reactive</s> <span>&#8594;</span> <b>Proactive</b></div>
+        <p>Your days follow a plan you drew. Doors stop swinging open on their own, and there's a clear path to what you're building.</p>
+      </div>
+      <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
+        <g class="before">
+          <rect pathLength="1" x="30" y="40" width="140" height="140"/>
+          <path pathLength="1" d="M60 40 A26 26 0 0 0 86 66 M86 40 V66"/>
+          <path pathLength="1" d="M170 74 A26 26 0 0 0 144 100 M170 100 H144"/>
+          <path pathLength="1" d="M120 180 A26 26 0 0 0 94 154 M94 180 V154"/>
+          <path pathLength="1" d="M30 130 A26 26 0 0 0 56 104 M30 104 H56"/>
+          <path pathLength="1" d="M10 70 L40 84 M190 150 L160 138 M100 10 L104 40 M14 170 L40 160"/>
+          <path pathLength="1" d="M70 120 L84 96 L98 132 L112 104 L126 126"/>
+          <text class="t-note" x="100" y="206">everything comes at you</text>
+        </g>
+        <g class="demo"><path pathLength="1" d="M20 32 L180 190"/><path pathLength="1" d="M180 32 L20 190"/><text class="t-demo" x="100" y="24">DEMO</text></g>
+        <g class="arrow"><path pathLength="1" d="M196 110 H246"/><path pathLength="1" d="M236 100 L248 110 L236 120"/></g>
+        <g class="after">
+          <rect pathLength="1" x="266" y="40" width="150" height="140"/>
+          <path pathLength="1" d="M266 110 H330 M330 40 V150 M370 110 H416"/>
+          <path pathLength="1" class="route" d="M280 180 V130 H350 V64 H398"/>
+          <path pathLength="1" d="M390 56 L400 64 L390 72"/>
+          <circle pathLength="1" cx="404" cy="64" r="7"/>
+          <text class="t-note" x="341" y="206">a route you chose</text>
+        </g>
+        <text class="t-label" x="100" y="240">Reactive</text>
+        <text class="t-label" x="341" y="240">Proactive</text>
+      </svg>
+    </article>
+  </div>
+</section>
+
 <section class="included bp" id="included">
   <div class="wrap">
     <div class="reveal">
-      <div class="label">03 &middot; What's included</div>
+      <div class="label">04 &middot; What's included</div>
       <h2>The plans, in full</h2>
-      <p class="lede">Everything in the Wreck the Room system across all three phases. Yours to keep.</p>
+      <p class="lede">Everything in the Wreck the Room system across all three phases, priced out line by line. Yours to keep.</p>
     </div>
     <div class="sheet reveal" role="group" aria-label="Blueprint contents">
       <div class="dims">
@@ -497,14 +704,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <div class="sum">27 + 78 = 105</div>
         </div>
       </div>
-      <dl class="spec">
-        <div class="spec-row"><dt>Modules</dt><dd>All three: Wreck-ognize It, Wreck It, Wrock It</dd></div>
-        <div class="spec-row"><dt>Workbooks</dt><dd>Companion workbooks for the full program</dd></div>
-        <div class="spec-row"><dt>Community</dt><dd>Access to the Architects community on Kajabi</dd></div>
-        <div class="spec-row"><dt>Access</dt><dd>Lifetime access to all material</dd></div>
-        <div class="spec-row"><dt>Format</dt><dd>Fully self-guided. Work at your own pace.</dd></div>
-        <div class="spec-row"><dt>Live calls</dt><dd>None in the base price. Optional 1:1 alignment coaching sessions at checkout.</dd></div>
-      </dl>
+      <!-- VALUE STACK: amounts are DRAFTS until Jody approves them. Set CONFIG.valuesApproved = true after sign-off. -->
+      <div class="sov" data-values>
+        <div class="sov-head"><span>Schedule of values</span><span>Value</span></div>
+        <div class="sov-row"><div><b>Module 01: Wreck-ognize It</b><small>Video lessons and guided exercises. Reveal the room, name the identity, expose the lie, design the new room.</small></div><span class="v">$12,500</span></div>
+        <div class="sov-row"><div><b>Module 02: Wreck It</b><small>Video lessons and guided exercises. Disrupt the cycle, dismantle the role, reclaim your power.</small></div><span class="v">$12,500</span></div>
+        <div class="sov-row"><div><b>Module 03: Wrock It</b><small>Video lessons and guided exercises. Rebuild with intention, activate the architect, anchor the new identity.</small></div><span class="v">$12,500</span></div>
+        <div class="sov-row"><div><b>Companion workbooks</b><small>For the full program, all three modules.</small></div><span class="v">$4,500</span></div>
+        <div class="sov-row"><div><b>Architects community on Kajabi</b><small>Do the work alongside other people going through the program.</small></div><span class="v">$5,000</span></div>
+        <div class="sov-row"><div><b>Lifetime access</b><small>Every lesson and exercise, for as long as you want them.</small></div><span class="v">$3,000</span></div>
+        <div class="sov-total"><span>Total value</span><span class="v">$50,000</span></div>
+        <div class="sov-yours"><span>Your investment</span><span class="v">$5,000</span></div>
+        <div class="sov-note">Fully self-guided. No live calls in the base price. Optional 1:1 alignment coaching sessions with Jody at checkout.</div>
+      </div>
       <div class="titleblock">
         <div>Project<b>Wreck the Room: Blueprint</b></div>
         <div>Sheet<b>A-01</b></div>
@@ -518,15 +730,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="architects bp" id="architects">
   <div class="wrap">
     <figure class="arch-banner imgslot reveal">
-      <img src="assets/Architects%20Wide.jpg" alt="Architects. Wreck what's not working. Build what does." loading="lazy">
+      <img src="assets/Architects%20Wide.jpg" alt="Architects community. Wreck what's not working. Build what does." loading="lazy">
       <div class="missing">assets/Architects Wide.jpg</div>
     </figure>
     <div class="arch-copy reveal">
-      <div class="label">04 &middot; The Architects</div>
+      <div class="label">05 &middot; The Architects</div>
       <h2>Who you become on the other side</h2>
-      <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Architect</b></div>
-      <p class="lede">People who do this work stop living in rooms they were handed. They design the ones they live in. We call them Architects.</p>
-      <p style="color:var(--ink-soft);margin-top:18px">Blueprint includes access to the Architects community on Kajabi, so you're doing the work alongside other people who are rebuilding too, even though the program itself is self-guided.</p>
+      <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Activated Architect</b></div>
+      <p class="lede">People who finish this work design the rooms they live in instead of accepting the ones they were handed. That end state has a name: the Activated Architect.</p>
+      <p style="color:var(--ink-soft);margin-top:18px">On the way there, you're one of the Architects: the community of people going through the program. Blueprint includes access to the Architects community on Kajabi, so you're doing the work alongside other people who are rebuilding too, even though the program itself is self-guided.</p>
     </div>
   </div>
 </section>
@@ -534,7 +746,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="fit bp" id="fit">
   <div class="wrap">
     <div class="reveal">
-      <div class="label">05 &middot; Fit</div>
+      <div class="label">06 &middot; Fit</div>
       <h2>Read this part twice</h2>
       <p class="lede">Blueprint works for a specific kind of person. Here's how to tell if that's you.</p>
     </div>
@@ -566,7 +778,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="proof bp" id="proof">
   <div class="wrap">
     <div class="reveal">
-      <div class="label">06 &middot; From Architects</div>
+      <div class="label">07 &middot; From Architects</div>
       <h2>In their words</h2>
     </div>
     <!-- Each .tslot is a placeholder. Replace with a real, approved testimonial and
@@ -594,7 +806,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="price bp" id="enroll">
   <div class="wrap">
     <div class="price-head reveal">
-      <div class="label">07 &middot; Enroll</div>
+      <div class="label">08 &middot; Enroll</div>
       <h2>One price. Everything included.</h2>
     </div>
     <div class="card reveal">
@@ -602,6 +814,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="tier">Self-guided experience</div>
         <h3>Wreck the Room: Blueprint</h3>
         <div class="fmt">The complete system. No live calls in the base price.</div>
+        <div class="was">Total value <s>$50,000</s></div>
         <div class="amount"><span class="cur">$</span><span class="val">5,000</span><span class="note">paid in full</span></div>
         <div class="plan">or <b>2 monthly payments of $2,650</b></div>
       </div>
@@ -670,7 +883,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    Blueprint checkout, so there is one checkout link. */
 const CONFIG = {
   checkoutUrl: "https://www.wrecktheroom.com/offers/FCikqT8z/checkout",
-  councilUrl: "https://www.wrecktheroom.com/council"
+  councilUrl: "https://www.wrecktheroom.com/council",
+  valuesApproved: false    // set true once Jody signs off on the value stack amounts
 };
 
 (function(){
@@ -690,6 +904,7 @@ const CONFIG = {
   if (ph) issues.push(ph + " testimonial placeholder" + (ph > 1 ? "s" : ""));
   if (!CONFIG.checkoutUrl) issues.push("checkout URL not set");
   if (!CONFIG.councilUrl) issues.push("Council link not set");
+  if (!CONFIG.valuesApproved) issues.push("value stack amounts not approved");
   if (issues.length){
     const g = document.getElementById("guard");
     g.textContent = "PRE-LAUNCH: " + issues.join(" · ") + ". Do not publish until cleared.";

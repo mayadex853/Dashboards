@@ -95,12 +95,15 @@ nav.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:
 nav.top .btn{padding:11px 18px;font-size:14px}
 
 /* hero */
-.hero{min-height:100vh;min-height:100svh;padding:96px 0 70px;display:flex;align-items:center;overflow:hidden;position:relative;background:var(--black)}
-.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:62% center}
-.hero-bg::after{content:"";position:absolute;inset:0;background:
-    linear-gradient(90deg,rgba(13,13,15,.95) 0%,rgba(13,13,15,.88) 40%,rgba(13,13,15,.55) 56%,rgba(13,13,15,.1) 70%,rgba(13,13,15,0) 78%),
-    linear-gradient(0deg,var(--black) 0%,rgba(13,13,15,0) 22%)}
+.hero-zone{position:relative}
+.hz-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hz-bg .stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.hz-bg img{width:100%;height:100%;object-fit:cover;object-position:62% center}
+.hz-bg .stick::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(13,13,15,.95) 0%,rgba(13,13,15,.86) 40%,rgba(13,13,15,.5) 56%,rgba(13,13,15,.08) 70%,rgba(13,13,15,0) 78%)}
+.hero{min-height:100vh;min-height:100svh;padding:96px 0 70px;display:flex;align-items:center;position:relative;z-index:1}
+.hero-zone .room{position:relative;z-index:1;background-color:transparent;
+  background-image:linear-gradient(180deg,rgba(13,13,15,0) 0,rgba(13,13,15,.84) 320px,rgba(13,13,15,.93) 900px,var(--black) 100%)}
 .hero .wrap{z-index:2;width:100%}
 .hero-copy{max-width:640px;text-align:left}
 .hero .hammer{width:92px;height:auto;margin:0 0 12px -6px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
@@ -113,12 +116,11 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .hero-meta{font-family:var(--caps);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 @media(max-height:800px) and (min-width:861px){.hero{padding-top:88px}.hero .hammer{width:70px;margin-bottom:8px}.hero h1{font-size:clamp(38px,4.3vw,60px)}.hero .kicker{margin-bottom:12px}}
 @media(max-width:860px){
-  .hero{display:block;min-height:0;padding:0 0 70px}
-  .hero-bg{position:relative;inset:auto;height:62vw;min-height:280px}
-  .hero-bg img{object-position:70% center}
-  .hero-bg::after{background:linear-gradient(0deg,var(--black) 0%,rgba(13,13,15,0) 40%)}
-  .hero-copy{margin-top:-60px;position:relative}
-  .hero .hammer{width:90px}
+  .hero{padding:92px 0 64px;align-items:flex-end}
+  .hz-bg img{object-position:66% center}
+  .hz-bg .stick::after{background:linear-gradient(180deg,rgba(13,13,15,.35) 0%,rgba(13,13,15,.7) 35%,rgba(13,13,15,.9) 70%,rgba(13,13,15,.95) 100%)}
+  .hero .hammer{width:80px}
+}
 }
 .hero-meta b{color:var(--white);font-weight:600}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1!important;transform:none!important}}
@@ -145,8 +147,22 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .cost ul{list-style:none;display:grid;gap:16px}
 .cost li{font-family:var(--display);font-size:clamp(20px,2.1vw,26px);line-height:1.15;text-transform:uppercase;padding-left:30px;position:relative}
 .cost li::before{content:"";position:absolute;left:0;top:.42em;width:16px;height:3px;background:var(--red-hi)}
+.cost h3{display:flex;align-items:center;gap:14px}
+.cost-ic{width:44px;height:48px;flex-shrink:0}
+.cost-ic path,.cost-ic ellipse{fill:none;stroke:var(--red-hi);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cost-ic .fill{fill:var(--red-hi);stroke:none}
+.cost-ic .slash{stroke:var(--white);stroke-width:2.5}
 .cost-last{margin-top:30px;padding-top:22px;border-top:1px solid #4a1a1a;font-size:19px;color:#E2DFDF}
 @media(max-width:760px){.cost{padding:28px 22px}.cost-cols{grid-template-columns:1fr}}
+.room-plan{width:100%;max-width:420px;height:auto;display:block;margin:0 0 26px}
+.room-plan .wall{fill:none;stroke:var(--red-hi);stroke-width:2.5}
+.room-plan .wall.thin{stroke-width:1;opacity:.55}
+.room-plan .dim{fill:none;stroke:var(--muted);stroke-width:1}
+.room-plan .ceil{fill:none;stroke:var(--red-hi);stroke-width:1.5;stroke-dasharray:6 5}
+.room-plan .lbl{font-family:var(--caps);font-size:14px;letter-spacing:.24em;text-transform:uppercase;fill:var(--white);text-anchor:middle}
+.room-plan .note{font-family:var(--hand);font-size:14px;fill:var(--muted);text-anchor:middle}
+.room-plan .note.big{font-size:17px;fill:var(--white)}
+.room-plan .dot{fill:var(--red-hi)}
 .belief{margin-top:28px;color:#E2DFDF;font-size:18px;max-width:520px}
 .story{padding-top:40px}
 .story .label{color:var(--red-hi)}
@@ -240,6 +256,9 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .sheet-card .tick{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;border-width:0}
 .sheet-card .tick.tl{top:-9px;left:-9px;border-top-width:1.5px;border-left-width:1.5px}
 .sheet-card .tick.br{bottom:-9px;right:-9px;border-bottom-width:1.5px;border-right-width:1.5px}
+.ph-ic{width:56px;height:56px;margin-bottom:14px;display:block}
+.ph-ic *{fill:none;stroke:var(--white);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ph-ic .d{stroke:var(--ink-soft);stroke-width:1.4}
 .phase .num{font-family:var(--hand);font-size:18px;color:var(--ink-soft);margin-bottom:12px}
 .phase h3{font-family:var(--display);font-weight:400;font-size:clamp(32px,3.2vw,40px);letter-spacing:.01em;margin-bottom:4px;color:var(--white)}
 .phase .verb{display:inline-block;font-family:var(--caps);font-weight:600;font-size:12px;letter-spacing:.26em;text-transform:uppercase;padding:5px 10px 4px;margin:8px 0 20px;background:var(--red);color:#fff}
@@ -387,6 +406,10 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .fit{}
 .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:48px}
 @media(max-width:860px){.fit-grid{grid-template-columns:1fr}}
+.deepwork{margin:40px 0 8px;padding:28px 32px;border-left:4px solid var(--red-hi);background:rgba(11,13,17,.3);max-width:900px}
+.deepwork h3{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.2vw,40px);line-height:1.08;letter-spacing:.01em;color:var(--white);text-transform:uppercase}
+.deepwork h3 span{color:var(--red-hi)}
+.deepwork p{margin-top:14px;font-size:18px;color:var(--ink-soft);max-width:700px}
 .fit-col{padding:34px 32px}
 .fit-col h3{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;font-family:var(--display);font-weight:400;font-size:34px;letter-spacing:.01em}
 .fit-col h3 .stamp{font-family:var(--caps);font-size:12px;font-weight:600;letter-spacing:.24em;padding:5px 9px;border:2px solid currentColor;transform:rotate(-3deg);display:inline-block}
@@ -477,6 +500,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <!-- ======================= DEMOLITION ZONE ======================= -->
 <div class="concrete">
 
+<div class="hero-zone">
+<div class="hz-bg" aria-hidden="true"><div class="stick"><img src="assets/hero-wreck-room.jpg" alt="" fetchpriority="high"></div></div>
+
 <header class="hero" id="top">
   <nav class="top" aria-label="Primary">
     <div class="wrap">
@@ -485,15 +511,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </nav>
 
-  <div class="hero-bg" aria-hidden="true"><img src="assets/hero-wreck-room.jpg" alt="" fetchpriority="high"></div>
-
   <div class="wrap">
    <div class="hero-copy">
     <img class="hammer" src="assets/hammer-mark.png" alt="" aria-hidden="true">
     <div class="kicker">For founders and leaders who built the success and still feel like a guest in their own life</div>
     <h1 class="worn">Become the architect of a life that <span class="r">finally feels like yours.</span></h1>
     <p class="hero-q">&ldquo;Did I design this life, or did I just move into it?&rdquo;</p>
-    <p class="lede">You built the company and hit the number, and it still feels like someone else's life. Nothing is technically wrong, so you keep going. That's how a life you never designed becomes the one you're stuck with. Blueprint is the full Wreck the Room&trade; system, self-guided, so you can answer that question on your own schedule, in writing, at your own pace.</p>
+    <p class="lede">You built the company and hit the number, and it still feels like someone else's life. That's how a life you never designed becomes the one you're stuck with. Blueprint is the full Wreck the Room&trade; system, self-guided, at your own pace.</p>
     <div class="hero-cta">
       <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <div class="hero-meta"><b>$5,000</b> or 2 &times; $2,650 &middot; 105 learning experiences &middot; Lifetime access</div>
@@ -513,6 +537,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <p class="belief">None of this is a character flaw, and more discipline won't fix it. You were handed a set of plans before you were old enough to read them, and you've been building on them ever since. Plans can be redrawn.</p>
       </div>
       <div class="reveal">
+        <svg class="room-plan" viewBox="0 0 380 270" aria-hidden="true">
+          <rect x="70" y="44" width="240" height="176" class="wall"/>
+          <rect x="78" y="52" width="224" height="160" class="wall thin"/>
+          <path d="M70 18 V6 M310 18 V6 M70 12 H310" class="dim"/>
+          <text x="190" y="36" class="lbl">Conformity</text>
+          <text x="190" y="246" class="lbl">Silence</text>
+          <text x="52" y="132" class="lbl" transform="rotate(-90 52 132)">Comfort</text>
+          <text x="330" y="132" class="lbl" transform="rotate(90 330 132)">Performance</text>
+          <path d="M110 92 H270" class="ceil"/>
+          <text x="190" y="84" class="note">ceiling: smallness</text>
+          <text x="190" y="150" class="note big">you are here</text>
+          <circle cx="190" cy="168" r="5" class="dot"/>
+          <text x="190" y="264" class="note">no door drawn</text>
+        </svg>
         <p style="color:var(--muted);margin-bottom:18px">The force behind it has a name: <strong style="color:var(--white)">inherited design.</strong> It doesn't announce itself. It shows up as</p>
         <ul class="forces">
           <li><strong class="worn">Conformity</strong><span>Building the business the way businesses are supposed to be built, even when it doesn't fit you.</span></li>
@@ -528,7 +566,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="label">The cost of staying put</div>
       <div class="cost-cols">
         <div>
-          <h3>Time</h3>
+          <h3><svg class="cost-ic" viewBox="0 0 44 48" aria-hidden="true"><path d="M8 3h28M8 45h28M11 3c0 13 22 15 22 21S11 32 11 45M33 3c0 13-22 15-22 21s22 8 22 21"/><path d="M15 41h14l-7-8z" class="fill"/></svg>Time</h3>
           <ul>
             <li>Another year of growth that doesn't feel like yours.</li>
             <li>Hours every week spent reacting to other people's priorities.</li>
@@ -536,7 +574,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           </ul>
         </div>
         <div>
-          <h3>Money</h3>
+          <h3><svg class="cost-ic" viewBox="0 0 44 48" aria-hidden="true"><ellipse cx="22" cy="10" rx="16" ry="6"/><path d="M6 10v8c0 3.3 7.2 6 16 6s16-2.7 16-6v-8M6 18v8c0 3.3 7.2 6 16 6s16-2.7 16-6v-8M6 26v8c0 3.3 7.2 6 16 6s16-2.7 16-6v-8"/><path d="M4 46 L40 2" class="slash"/></svg>Money</h3>
           <ul>
             <li>Revenue held at the ceiling your old identity is comfortable with.</li>
             <li>Money spent on coaching, courses and tactics that sit on top of the old structure and fade.</li>
@@ -558,6 +596,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </div>
 </section>
+</div>
 
 <section class="story" id="story">
   <div class="wrap story-grid">
@@ -684,6 +723,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="phases reveal">
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
+        <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="10" width="40" height="34" class="d"/><path d="M6 27h18M24 10v34" class="d"/><circle cx="38" cy="34" r="13"/><path d="M47 43l12 12"/></svg>
         <div class="num">Phase 01</div>
         <h3>Wreck-ognize It</h3>
         <div class="verb">reveal</div>
@@ -691,6 +731,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <p>Most people have never seen their own floor plan. They only feel where it pinches. This phase puts it on paper so you can see what you've been living inside.</p>
       </article>
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
+        <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 56L40 26"/><path d="M33 10l21 21-9 9-21-21z"/><path d="M8 30l6 2M12 22l5 5M20 16l2 6" class="d"/></svg>
         <div class="num">Phase 02</div>
         <h3>Wreck It</h3>
         <div class="verb">dismantle</div>
@@ -698,6 +739,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <p>Here you stop managing the pattern and remove it. The roles that kept you safe and small get taken apart, deliberately, one at a time.</p>
       </article>
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
+        <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="9" r="4"/><path d="M30 12L14 56M34 12l16 44"/><path d="M19 42a24 24 0 0 0 26 0" class="d"/><path d="M6 58h52" class="d"/></svg>
         <div class="num">Phase 03</div>
         <h3>Wrock It</h3>
         <div class="verb">rebuild</div>
@@ -936,14 +978,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>Read this part twice</h2>
       <p class="lede">Blueprint works for a specific kind of person. Here's how to tell if that's you.</p>
     </div>
+    <div class="deepwork reveal">
+      <h3>Done the retreats. Hired the mindset coach. Finished the training. <span>Nothing stuck.</span></h3>
+      <p>That was never about your effort. Lasting change takes deep transformation, and deep transformation takes deep work. Quick fixes never go that deep. Wreck the Room was built for the deep work.</p>
+    </div>
     <div class="fit-grid reveal">
       <div class="fit-col fit-for sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <h3>You, if <span class="stamp">Approved</span></h3>
         <ul>
           <li>You've built something real and still feel capped.</li>
           <li>You're successful by every outside measure and disconnected on the inside.</li>
-          <li>You've done therapy or coaching and keep running into the same patterns.</li>
-          <li>You want the full framework, not another tactic or quick fix.</li>
+          <li>You've hired mindset coaches, done the retreats and the trainings, and nothing has stuck.</li>
+          <li>You're tired of quick fixes and want change that lasts.</li>
           <li>You're self-directed. Nobody needs to check in on you for you to finish.</li>
         </ul>
       </div>
@@ -1041,7 +1087,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>Questions before you build</h2>
     </div>
     <ol class="notes reveal">
-      <li><details><summary>I've already done therapy and coaching. Why would this be different?</summary><p>Most of that work helps you understand a pattern or manage it. Wreck the Room goes after the identity the pattern protects, in a set order: see it, take it apart, rebuild. If you keep hitting the same wall, that order is usually what's been missing.</p></details></li>
+      <li><details><summary>I've already done coaching, retreats and mindset work. Why would this be different?</summary><p>Most of that work helps you understand a pattern or manage it. Wreck the Room goes after the identity the pattern protects, in a set order: see it, take it apart, rebuild. If you keep hitting the same wall, that order is usually what's been missing.</p></details></li>
       <li><details><summary>I don't have much time. Can I actually do this?</summary><p>You set the pace. There are 27 video lessons and 78 guided exercises, and you have lifetime access, so you can work through it on your own schedule. Compare that with the time the current pattern already takes from you every week.</p></details></li>
       <li><details><summary>What if I get stuck doing it on my own?</summary><p>You'll have the Architects community on Kajabi. You can also add three 1:1 alignment coaching sessions with Jody at checkout for $2,000: one at the beginning, one in the middle and one at the end.</p></details></li>
       <li><details><summary>How is Blueprint different from Council and Inner Circle?</summary><p>Blueprint is the complete system, self-guided. Council adds group coaching with Jody. Inner Circle is private 1:1 coaching with Jody. If you know you need someone in the room with you, <a href="#" data-link="council">start with Council</a>.</p></details></li>

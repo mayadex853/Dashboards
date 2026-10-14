@@ -1244,7 +1244,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <div class="sum">27 + 78 = 105</div>
         </div>
       </div>
-      <!-- VALUE STACK: amounts are DRAFTS until Jody approves them. Set CONFIG.valuesApproved = true after sign-off. -->
+      <!-- VALUE STACK: amounts approved by Jody. -->
       <div class="sov" data-values>
         <div class="sov-head"><span>Schedule of values</span><span>Value</span></div>
         <div class="sov-row"><div><b>Module 01: Wreck-ognize It</b><small>10 video lessons with guided exercises. See exactly what you've been living inside, and design what replaces it.</small></div><span class="v">$12,500</span></div>
@@ -1504,7 +1504,7 @@ const CONFIG = {
   councilUrl: "https://www.wrecktheroom.com/council",
   strategyCallUrl: "https://calendly.com/jody_friedman/45-minute-strategy-call",  // Inner Circle apply + FAQ
   councilApplyUrl: "https://calendly.com/jody_friedman/council-application-call-council",  // Council apply button
-  valuesApproved: false    // set true once Jody signs off on the value stack amounts
+  valuesApproved: true     // Jody signed off on the value stack amounts
 };
 
 (function(){

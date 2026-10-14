@@ -68,7 +68,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<
 
 /** Simple branded email layout with a button. */
 export function emailLayout({ heading, intro, buttonText, buttonUrl, note }) {
-  const from = esc(process.env.MAIL_FROM_NAME || "HD Music");
+  const from = esc(process.env.MAIL_FROM_NAME || "TakaSign");
   return `<!doctype html><html><body style="margin:0;background:#f4f4f2;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#1a1a19">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:32px 12px"><tr><td align="center">
   <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:12px;padding:32px">

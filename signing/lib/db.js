@@ -9,14 +9,44 @@ import crypto from "node:crypto";
 const BUCKET = "documents";
 export const isLocalMode = !process.env.SUPABASE_URL;
 
+/** Explains a misconfigured Supabase key in plain words (or returns null if it looks right). */
+export function keyProblem() {
+  const key = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
+  if (!key) return "SUPABASE_SERVICE_ROLE_KEY is not set in Vercel.";
+  if (key.startsWith("sb_publishable_")) return "SUPABASE_SERVICE_ROLE_KEY is the publishable key. Use the secret key (sb_secret_…) from Supabase > Project Settings > API Keys.";
+  if (key.startsWith("sb_secret_")) return null;
+  try {
+    const role = JSON.parse(Buffer.from(key.split(".")[1], "base64url").toString()).role;
+    if (role === "service_role") return null;
+    return `SUPABASE_SERVICE_ROLE_KEY is the "${role}" key. Use the service_role key from Supabase > Project Settings > API.`;
+  } catch {
+    return "SUPABASE_SERVICE_ROLE_KEY doesn't look like a Supabase key. Copy the service_role / secret key again.";
+  }
+}
+
 let _sb;
 function sb() {
   if (!_sb) {
-    _sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    const problem = keyProblem();
+    if (problem) throw new Error(problem);
+    _sb = createClient(process.env.SUPABASE_URL.trim(), process.env.SUPABASE_SERVICE_ROLE_KEY.trim(), {
       auth: { persistSession: false },
     });
   }
   return _sb;
+}
+
+/** Read-only check that the database and storage are reachable with full access. */
+export async function health() {
+  if (isLocalMode) return { ok: true, mode: "local" };
+  const problem = keyProblem();
+  if (problem) return { ok: false, problem };
+  const { error } = await sb().from("profile").select("id").limit(1);
+  if (error) return { ok: false, problem: `Database: ${error.message}` };
+  const { data: buckets, error: bErr } = await sb().storage.listBuckets();
+  if (bErr) return { ok: false, problem: `Storage: ${bErr.message}` };
+  if (!buckets.some((b) => b.id === BUCKET)) return { ok: false, problem: `Storage bucket "${BUCKET}" not found` };
+  return { ok: true, mode: "supabase" };
 }
 
 // ---------- local JSON store ----------

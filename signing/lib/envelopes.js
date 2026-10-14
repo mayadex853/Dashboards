@@ -108,7 +108,7 @@ export async function notifyRecipient(env, r, { reminder = false } = {}) {
     sent_at: new Date().toISOString(),
   });
   const link = `${appUrl()}/s/${token}`;
-  const sender = process.env.MAIL_FROM_NAME || "HD Music";
+  const sender = process.env.MAIL_FROM_NAME || "TakaSign";
   const mail = await sendEmail({
     to: r.email,
     subject: `${reminder ? "Reminder: " : ""}Please sign: ${env.title}`,

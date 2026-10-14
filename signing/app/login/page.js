@@ -14,7 +14,7 @@ export default function Login() {
   return (
     <div className="center-box">
       <form className="card" style={{ width: 340, textAlign: "left" }} onSubmit={submit}>
-        <h1>HD Sign</h1>
+        <h1>TakaSign</h1>
         <p className="muted" style={{ marginTop: 0 }}>Sign in to continue</p>
         <div className="field">
           <label>Password</label>

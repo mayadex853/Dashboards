@@ -1,6 +1,6 @@
 import "./globals.css";
 
-export const metadata = { title: "HD Sign", robots: { index: false, follow: false } };
+export const metadata = { title: "TakaSign", robots: { index: false, follow: false } };
 
 export default function RootLayout({ children }) {
   return (

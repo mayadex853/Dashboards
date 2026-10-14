@@ -31,7 +31,7 @@ export const GET = route(async (req, { token }) => {
     turn,
     fields: env.fields.filter((f) => Number(f.role) === r.role_index && !f.stamped),
     saved: profile ? { signature: profile.signature, initials: profile.initials } : null,
-    sender: process.env.MAIL_FROM_NAME || "HD Music",
+    sender: process.env.MAIL_FROM_NAME || "TakaSign",
   };
 });
 

@@ -1,4 +1,4 @@
-# HD Sign
+# TakaSign
 
 Your own internal e-signature system for signings and paperwork. It's built for internal use only, not for resale.
 
@@ -16,14 +16,14 @@ Your own internal e-signature system for signings and paperwork. It's built for 
 3. **Project Settings → API**: copy the **Project URL** and the **service_role** key. Keep the service_role key secret, because it has full access.
 
 ### 2. Microsoft 365 email (sends as jody@hdmusicnow.com)
-1. [Azure Portal](https://portal.azure.com) → **Microsoft Entra ID → App registrations → New registration**. Name it "HD Sign" and choose single tenant.
+1. [Azure Portal](https://portal.azure.com) → **Microsoft Entra ID → App registrations → New registration**. Name it "TakaSign" and choose single tenant.
 2. Copy the **Application (client) ID** and **Directory (tenant) ID**.
 3. **Certificates & secrets → New client secret**. Copy the secret's **Value**.
 4. **API permissions → Add → Microsoft Graph → Application permissions → `Mail.Send`**, then **Grant admin consent**.
 5. *(Recommended)* By default this permission can send as any mailbox in your tenant. To lock it to just your mailbox, run this in Exchange Online PowerShell:
    ```powershell
-   New-DistributionGroup -Name "HD Sign Senders" -Type Security -Members jody@hdmusicnow.com
-   New-ApplicationAccessPolicy -AppId <client-id> -PolicyScopeGroupId "HD Sign Senders" -AccessRight RestrictAccess -Description "HD Sign"
+   New-DistributionGroup -Name "TakaSign Senders" -Type Security -Members jody@hdmusicnow.com
+   New-ApplicationAccessPolicy -AppId <client-id> -PolicyScopeGroupId "TakaSign Senders" -AccessRight RestrictAccess -Description "TakaSign"
    ```
 
 You can skip this step at first. The app still works and shows each signing link for you to copy and send yourself.

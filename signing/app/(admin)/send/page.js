@@ -71,7 +71,7 @@ function Send() {
     setFields([]);
   };
 
-  const roles = template ? template.roles : signers.map((s, i) => ({ name: s.is_me ? "Me" : s.name || `Signer ${i + 1}` }));
+  const roles = template ? template.roles : signers.map((s, i) => ({ name: s.is_me ? "Me" : s.name || `Signer ${i + 1}`, kind: s.is_me ? "me" : "other" }));
 
   const submit = async (send) => {
     setErr("");

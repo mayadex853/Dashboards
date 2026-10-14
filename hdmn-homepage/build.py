@@ -170,7 +170,7 @@ CSS = r"""
 @keyframes hd-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes hd-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .hd-shade{position:absolute;inset:0;background:
-  radial-gradient(ellipse 55% 50% at 50% 50%,rgba(5,6,8,.86) 0%,rgba(5,6,8,.62) 60%,rgba(5,6,8,.35) 100%),
+  radial-gradient(ellipse 58% 55% at 50% 52%,rgba(5,6,8,.92) 0%,rgba(5,6,8,.72) 60%,rgba(5,6,8,.4) 100%),
   linear-gradient(180deg,rgba(5,6,8,.85) 0%,rgba(5,6,8,0) 25%,rgba(5,6,8,0) 70%,rgba(5,6,8,1) 100%);}
 .hd-glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background:
   radial-gradient(ellipse 40% 45% at 10% 5%,rgba(177,75,244,.55),transparent 60%),
@@ -230,6 +230,12 @@ CSS = r"""
 .hd-stat b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:84px;line-height:.9;
   background:linear-gradient(180deg,#fff,var(--vio2));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .hd-stat span{display:block;font-size:13px;line-height:1.5;color:var(--mute);margin-top:10px;}
+
+.hd-badges{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px;}
+.hd-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#d5dae3 !important;padding:10px 16px;border-radius:40px;
+  background:linear-gradient(#0d1018,#0d1018) padding-box,linear-gradient(120deg,var(--vio),var(--blu)) border-box;border:1px solid transparent;transition:box-shadow .3s;}
+.hd-badge b{color:#fff;font-weight:700;}.hd-badge i{color:var(--vio2);font-style:italic;}
+a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 
 /* NOW SHOWING */
 .hd-showing{background:#000;padding:130px 0 110px;}
@@ -397,7 +403,7 @@ JS = r"""
   var base='__BASE__',slugs='__SLUGS__'.split(','),wall=root.querySelector('.hd-wall');
   function shuffled(seed){var a=slugs.slice(),s=seed;for(var i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;var j=Math.floor(s/233280*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a.slice(0,12);}
   for(var r=0;r<4;r++){var row=document.createElement('div');row.className='hd-wall-row'+(r%2?' rev':'');row.style.animationDuration=(90+r*20)+'s';
-    var pick=shuffled(r+3),h='';for(var k=0;k<2;k++)pick.forEach(function(sl){h+='<img src="'+base+sl+'.jpg" alt="">';});row.innerHTML=h;wall.appendChild(row);}
+    var pick=shuffled(r+3),h='';for(var k=0;k<2;k++)pick.forEach(function(sl){h+='<img src="'+base+'thumb/'+sl+'.jpg" alt="">';});row.innerHTML=h;wall.appendChild(row);}
   // filmography tabs
   var tabs=root.querySelectorAll('.hd-tab'),panels=root.querySelectorAll('.hd-panel');
   tabs.forEach(function(t){t.addEventListener('click',function(){var i=t.getAttribute('data-tab');
@@ -461,7 +467,7 @@ TEMPLATE = """<style>{css}</style>
       <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search the Catalog</a>
       <a class="hd-btn o" href="{contact}">Send Us a Brief</a>
     </div>
-    <p class="hd-heard hd-up" style="animation-delay:1s">AS HEARD IN&nbsp; <b>BREAKING BAD &middot; AVENGERS: ENDGAME (TRAILER) &middot; DEXTER &middot; THE FALL GUY</b></p>
+    <p class="hd-heard hd-up" style="animation-delay:1s">AS HEARD IN&nbsp; <b>SATURDAY NIGHT LIVE &middot; BREAKING BAD &middot; NOPE &middot; AVENGERS: ENDGAME (TRAILER)</b></p>
   </div>
   <div class="hd-scroll"></div>
 </header>
@@ -492,7 +498,13 @@ TEMPLATE = """<style>{css}</style>
       <p class="hd-quote">I've sat in <em>both</em> chairs.</p>
       <p>For more than twenty years I've worked as a sync agent pitching music, and for more than twenty years as a music supervisor searching for it. From both sides I kept seeing the same problem: supervisors buried in music that doesn't fit, can't clear in time, or simply doesn't exist in the libraries they use.</p>
       <p>HD Music Now is my answer. Curated catalogs, hard-to-find specialty music, half a million sound effects, and a supervisor's ear on every request, so you get what the scene needs and get back to the edit.</p>
-      <div class="hd-sig"><div class="hd-sig-line"></div><div><div class="hd-sig-name">Jody Friedman</div><div class="hd-sig-role">FOUNDER &middot; MUSIC SUPERVISOR</div></div></div>
+      <p>I'm also a songwriter and producer. Songs I've written and produced have landed in <em>Law &amp; Order: Organized Crime</em>, <em>Murdaugh: Death in the Family</em>, CBS's <em>Evil</em> and Hulu's <em>The Handmaid's Tale</em> trailer campaign.</p>
+      <div class="hd-badges">
+        <span class="hd-badge"><b>Songwriter</b> &amp; Producer</span>
+        <span class="hd-badge"><b>#1 Best-Selling Author</b> of <i>The Sync Placement Formula</i></span>
+        <a class="hd-badge" href="https://www.wrecktheroom.com" target="_blank" rel="noopener"><b>Creator</b> of Wreck The Room&trade;</a>
+      </div>
+      <div class="hd-sig"><div class="hd-sig-line"></div><div><div class="hd-sig-name">Jody Friedman</div><div class="hd-sig-role">FOUNDER &middot; SONGWRITER &middot; PRODUCER</div></div></div>
     </div>
     <div class="hd-stats hd-reveal" style="transition-delay:.2s">
       <div class="hd-stat"><b data-count="20" data-suffix="+">20+</b><span>Years as a sync agent and as a music supervisor</span></div>

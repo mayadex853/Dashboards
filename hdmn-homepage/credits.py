@@ -43,6 +43,24 @@ TV = [
     ("Extreme Parking", "Travel Channel"), ("When Vacations Attack", "Travel Channel"),
     ("Tricked Out Trains", "Travel Channel"), ("Bad Dog", "Travel Channel"), ("Roam TV", "National Geographic"),
     ("Sci-Tech Academy", ""), ("NFL on FOX", "FOX"), ("MLB on FOX", "FOX"),
+    # From APM Music royalty statements (HD Music Now & Ocho Music Group catalogs)
+    ("Saturday Night Live", "NBC"), ("What We Do in the Shadows", "FX"), ("Hacks", "HBO Max"), ("Atlanta", "FX"),
+    ("Law & Order: Organized Crime", "NBC"), ("Law & Order Toronto: Criminal Intent", "Citytv"),
+    ("Resident Alien", "Syfy"), ("Interior Chinatown", "Hulu"), ("Somebody Somewhere", "HBO"), ("TODAY", "NBC"),
+    ("Hit-Monkey", "Hulu"), ("Tomb Raider: The Legend of Lara Croft", "Netflix"), ("Kim's Convenience", "CBC"),
+    ("How I Met Your Father", "Hulu"), ("Murdaugh: Death in the Family", "Lifetime"), ("Them", "Prime Video"),
+    ("Tuca & Bertie", "Adult Swim"), ("The Vince Staples Show", "Netflix"), ("Reginald the Vampire", "Syfy"),
+    ("Homicide: Life on the Street", "NBC"), ("Love Story: John F. Kennedy Jr. & Carolyn Bessette", "FX"),
+    ("Imperfect Women", "Apple TV+"), ("Widow's Bay", "Apple TV+"), ("Selling the OC", "Netflix"),
+    ("King of Collectibles: The Goldin Touch", "Netflix"), ("Trafficked with Mariana van Zeller", "Nat Geo"),
+    ("Chopped", "Food Network"), ("Diners, Drive-Ins and Dives", "Food Network"), ("Bobby's Triple Threat", "Food Network"),
+    ("Expedition Unknown", "Discovery"), ("Love After Lockup", "WE tv"), ("Love During Lockup", "WE tv"),
+    ("Inside the NFL", "The CW"), ("NFL Films Presents", "FOX"), ("NBC Sports", "NBC"),
+    ("Power Moves with Shaquille O'Neal", ""), ("AEW Collision", "TNT"), ("WWE", ""), ("Hoy Día", "Telemundo"),
+    ("Married to El Chapo", ""), ("Moonshine", "CBC"), ("Bitchin' Rides", "MotorTrend"),
+    ("Hustlers, Gamblers, Crooks", ""), ("Deadman's Curse", ""), ("The Good Stuff with Mary Berg", "CTV"),
+    ("etalk", "CTV"), ("Moveable Feast with Relish", "PBS"), ("La Semaine Verte", "ICI Radio-Canada"),
+    ("Discussions avec mes parents", "ICI Radio-Canada"), ("Groundswell", ""),
 ]
 
 FILM = [
@@ -70,6 +88,8 @@ FILM = [
     ("Fear Inc.", "Lone Suspect"), ("Don't Fade Away", "New Films"), ("Drunk Bus", ""), ("Change of Pace", ""),
     ("Norman", ""), ("Pearblossom Highway", ""), ("Young Folks", ""), ("Kissing Strangers", ""), ("Crutch", ""),
     ("Baby Steps", ""), ("Sisyphus' Supper", ""), ("Limerence", ""), ("We Happy Few", ""), ("Zaena", ""),
+    ("Nope", "Universal"), ("Are You There God? It's Me, Margaret.", "Lionsgate"), ("McVeigh", "Vertical"),
+    ("Maggie Moore(s)", "Screen Media"),
     ("ELEVATE", "Documentary"), ("It's What's Inside", "Netflix"), ("Sisters of Ukraine", ""), ("Lineage", ""),
     ("Idea of Progress", ""), ("An Expectation", ""), ("Mistress Dispeller", "Documentary"),
     ("Ferragamo", "Documentary"), ("Love and Treason", "Documentary"),

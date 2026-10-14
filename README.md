@@ -117,3 +117,9 @@ The app is structured so metrics come from a single per-project data model
 (`PROJECTS` config + a storage layer in `index.html`). When you're ready to wire up
 Vimeo, ScoreApp, Calendly, Kajabi, etc., you can replace the manual `upsertWeek`
 calls with fetched values while keeping the same card/sparkline rendering.
+
+---
+
+## HD Sign (e-signature system)
+
+The [`signing/`](signing/) folder is a separate app: your own internal DocuSign for signing intake, contract templates, signing order, and quick self-signing of forms. Setup and usage are in [`signing/README.md`](signing/README.md).

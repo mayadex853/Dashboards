@@ -96,26 +96,32 @@ nav.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:
 nav.top .btn{padding:11px 18px;font-size:14px}
 
 /* hero */
-.hero{min-height:100vh;min-height:100svh;padding:110px 0 110px;display:flex;align-items:center;overflow:hidden;text-align:center}
-.hero-logo{margin-top:56px}
-.hero .logo{width:min(400px,72vw);margin:0 auto 6px;aspect-ratio:1536/1024;position:relative}
-.hero .logo img{width:100%;height:100%;object-fit:contain}
-.cracks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
-.cracks path{fill:none;stroke:var(--red);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:crack 2.4s cubic-bezier(.6,0,.2,1) .4s forwards;opacity:.75}
-.cracks path.thin{stroke-width:.8;opacity:.45}
-.cracks path:nth-child(2){animation-delay:.6s}.cracks path:nth-child(3){animation-delay:.8s}.cracks path:nth-child(4){animation-delay:1s}
-.cracks path:nth-child(5){animation-delay:1.1s}.cracks path:nth-child(6){animation-delay:1.25s}.cracks path:nth-child(7){animation-delay:1.4s}.cracks path:nth-child(8){animation-delay:1.5s}
-@keyframes crack{to{stroke-dashoffset:0}}
-.hero .wrap{z-index:2}
-.hero .kicker{font-family:var(--caps);font-size:15px;letter-spacing:.2em;max-width:760px;margin-left:auto!important;margin-right:auto!important;line-height:1.5;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
-.hero h1{font-size:clamp(44px,7.4vw,98px);max-width:1000px;margin:0 auto 30px;color:var(--white)}
+.hero{min-height:100vh;min-height:100svh;padding:96px 0 70px;display:flex;align-items:center;overflow:hidden;position:relative;background:var(--black)}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(90deg,rgba(13,13,15,.95) 0%,rgba(13,13,15,.88) 40%,rgba(13,13,15,.55) 56%,rgba(13,13,15,.1) 70%,rgba(13,13,15,0) 78%),
+    linear-gradient(0deg,var(--black) 0%,rgba(13,13,15,0) 22%),
+    url("assets/hero-wreck-room.jpg") 62% center/cover no-repeat}
+.hero .wrap{z-index:2;width:100%}
+.hero-copy{max-width:640px;text-align:left}
+.hero .hammer{width:92px;height:auto;margin:0 0 12px -6px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
+.hero .kicker{font-family:var(--caps);font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);line-height:1.5;margin:0 0 18px;max-width:560px}
+.hero h1{font-size:clamp(40px,5vw,72px);margin:0 0 20px;color:var(--white)}
 .hero h1 .r{color:var(--red-hi)}
-.hero-q{font-family:var(--caps);font-size:clamp(18px,2.2vw,24px);letter-spacing:.06em;color:var(--white);margin:-6px auto 26px;max-width:760px}
-.hero .lede{margin:0 auto 36px;color:#D7D8DB}
-.hero-cta{display:flex;flex-direction:column;gap:14px;align-items:center}
-.hero-meta{font-family:var(--caps);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hero-q{font-family:var(--caps);font-size:clamp(17px,1.9vw,22px);letter-spacing:.05em;color:var(--white);margin:0 0 20px;border-left:3px solid var(--red);padding-left:14px}
+.hero .lede{margin:0 0 26px;color:#D7D8DB;font-size:clamp(17px,1.6vw,19px)}
+.hero-cta{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.hero-meta{font-family:var(--caps);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+@media(max-height:800px) and (min-width:861px){.hero{padding-top:88px}.hero .hammer{width:70px;margin-bottom:8px}.hero h1{font-size:clamp(38px,4.3vw,60px)}.hero .kicker{margin-bottom:12px}}
+@media(max-width:860px){
+  .hero{display:block;min-height:0;padding:0 0 70px}
+  .hero-bg{position:relative;inset:auto;height:62vw;min-height:280px;
+    background:linear-gradient(0deg,var(--black) 0%,rgba(13,13,15,0) 40%),url("assets/hero-wreck-room.jpg") 70% center/cover no-repeat}
+  .hero-copy{margin-top:-60px;position:relative}
+  .hero .hammer{width:90px}
+}
 .hero-meta b{color:var(--white);font-weight:600}
-@media(prefers-reduced-motion:reduce){.cracks path{animation:none;stroke-dashoffset:0}html{scroll-behavior:auto}.reveal{opacity:1!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1!important;transform:none!important}}
 
 /* the room */
 .room{padding-top:60px}
@@ -481,18 +487,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </nav>
 
-  <svg class="cracks" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <path d="M0 640 L90 610 L150 660 L240 630 L300 700 L380 690 L430 760 L520 770 L560 900"/>
-    <path d="M1440 220 L1350 260 L1310 340 L1230 370 L1200 470 L1120 520 L1100 610 L1030 660 L1010 760 L960 900"/>
-    <path class="thin" d="M150 660 L170 740 L120 820"/>
-    <path class="thin" d="M300 700 L260 790 L280 900"/>
-    <path class="thin" d="M1310 340 L1390 400 L1440 410"/>
-    <path class="thin" d="M1200 470 L1280 530 L1330 620 L1440 650"/>
-    <path class="thin" d="M1100 610 L1170 690 L1180 800"/>
-    <path class="thin" d="M1350 260 L1390 150 L1430 90"/>
-  </svg>
+  <div class="hero-bg" aria-hidden="true"></div>
 
   <div class="wrap">
+   <div class="hero-copy">
+    <img class="hammer" src="assets/hammer-mark.png" alt="" aria-hidden="true">
     <div class="kicker">For founders and leaders who built the success and still feel like a guest in their own life</div>
     <h1 class="worn">Become the architect of a life that <span class="r">finally feels like yours.</span></h1>
     <p class="hero-q">&ldquo;Did I design this life, or did I just move into it?&rdquo;</p>
@@ -501,13 +500,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <div class="hero-meta"><b>$5,000</b> or 2 &times; $2,650 &middot; 105 learning experiences &middot; Lifetime access</div>
     </div>
-    <div class="hero-logo">
-    <div class="logo imgslot">
-      <img src="assets/Wreck%20the%20Room%20Logo.webp" alt="Wreck the Room. Wreck it. Rebuild it. Own it.">
-      <div class="missing">assets/Wreck the Room Logo.webp</div>
-    </div>
-    <div class="ornament" aria-hidden="true"><i class="s"></i><i></i><i class="s"></i></div>
-    </div>
+   </div>
   </div>
 </header>
 
@@ -571,10 +564,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="story" id="story">
   <div class="wrap story-grid">
     <div class="story-side">
-      <figure class="story-photo imgslot reveal" data-placeholder="founder-photo">
-        <!-- Photo from wrecktheroom.com/about. Confirm it's the right one, then remove data-placeholder above. -->
-        <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2159583678/settings_images/e8ba8a4-6d5f-2425-ba53-75e70f44b2a_IMG_5381.jpeg" alt="Jody Friedman" loading="lazy">
-        <div class="missing">PHOTO OF JODY<br>confirm before launch</div>
+      <figure class="story-photo imgslot reveal">
+        <img src="assets/jody-portrait.jpg" alt="Jody Friedman" loading="lazy">
+        <div class="missing">assets/jody-portrait.jpg</div>
       </figure>
       <div class="creds reveal">
         <div class="creds-k">Before and after the rebuild</div>
@@ -1116,7 +1108,7 @@ const CONFIG = {
   // Pre-launch guard: visible until placeholders and links are handled
   const issues = [];
   const ph = document.querySelectorAll("[data-placeholder]").length;
-  if (ph) issues.push(ph + " placeholder" + (ph > 1 ? "s" : "") + " (testimonials, confirm Jody's photo)");
+  if (ph) issues.push(ph + " placeholder" + (ph > 1 ? "s" : "") + " (testimonials)");
   if (!CONFIG.checkoutUrl) issues.push("checkout URL not set");
   if (!CONFIG.councilUrl) issues.push("Council link not set");
   if (!CONFIG.valuesApproved) issues.push("value stack amounts not approved");

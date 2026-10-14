@@ -202,7 +202,7 @@ CSS = r"""
 /* rotating pain line */
 .hd-pain-line{display:grid;min-height:1.2em;}
 .hd-pl{grid-area:1/1;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease;}
-.hd-pl.on{opacity:1;transform:none;}
+.hd-pl.on{opacity:1;transform:none;transition-delay:.55s;}
 @media(max-width:640px){.hd-pain-line{min-height:2.6em;align-items:end;}}
 
 /* TICKER */
@@ -351,6 +351,18 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 .hd-deep-row small{display:block;font-size:11px;font-weight:700;letter-spacing:.32em;color:var(--vio2);margin-bottom:10px;}
 .hd-deep-row p{margin:0;}
 .hd-deep-cta{margin-top:50px;text-align:center;}
+
+/* also representing */
+.hd-more{margin-top:56px;}
+.hd-more-k{display:block;font-size:11px;font-weight:700;letter-spacing:.42em;color:#6b7382;text-transform:uppercase;margin-bottom:20px;}
+.hd-more-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.hd-more-item{padding:22px 20px;border:1px solid #1c2230;border-radius:4px;background:#0b0d14;transition:all .35s ease;}
+.hd-more-item:hover{border-color:var(--vio);box-shadow:0 18px 50px rgba(177,75,244,.22);transform:translateY(-4px);}
+.hd-more-item b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:28px;letter-spacing:.03em;color:#fff;line-height:1;margin-bottom:8px;}
+.hd-more-item span{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--vio2);}
+.hd-more-plus{background:linear-gradient(140deg,rgba(123,31,162,.35),rgba(56,189,248,.12));border-color:rgba(177,75,244,.45);}
+.hd-more-plus span{color:#d9cfe6;letter-spacing:.06em;text-transform:none;font-weight:500;font-size:13px;}
+@media(max-width:980px){.hd-more-grid{grid-template-columns:repeat(2,1fr);}}
 
 /* SUPERVISION */
 .hd-sup{background:linear-gradient(115deg,#3b0a59 0%,#14081f 48%,#05243b 100%);overflow:hidden;}
@@ -523,8 +535,8 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-shade"></div><div class="hd-glow"></div><div class="hd-beam"></div>
   <div class="hd-hero-in">
     <span class="hd-eb hd-up hd-pain-line" aria-live="polite"><span class="hd-pl on">The director loves the temp. The budget doesn&rsquo;t.</span><span class="hd-pl">Locked cut. Uncleared song. Mix is Friday.</span><span class="hd-pl">47 libraries. 3 million tracks. Nothing fits.</span><span class="hd-pl">In a world where the deadline was yesterday&hellip;</span></span>
-    <h1 class="hd-grad hd-up" style="animation-delay:.2s">Kill the temp.<br>Keep the feeling.</h1>
-    <p class="hd-sub hd-up" style="animation-delay:.45s">Music that hits like your temp, fits your budget and clears before your deadline. A music supervisor's ear on every request, not library roulette.</p>
+    <h1 class="hd-grad hd-up" style="animation-delay:.2s">Temp it.<br>Love it.<br>Keep it.</h1>
+    <p class="hd-sub hd-up" style="animation-delay:.45s">Cut with our music as your temp, fall in love with it, then keep it: budget-friendly and cleared before your deadline. A music supervisor's ear on every request, not library roulette.</p>
     <div class="hd-ctas hd-up" style="animation-delay:.7s">
       <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search the Catalog</a>
       <a class="hd-btn o" href="{contact}">Send Us a Brief</a>
@@ -546,7 +558,7 @@ TEMPLATE = """<style>{css}</style>
       <h2 class="hd-h2">Every production has <span class="hd-grad">seen this movie.</span></h2>
     </div>
     <div class="hd-pains">
-      <div class="hd-pain hd-reveal"><span class="hd-pain-n">01</span><h3>Temp Love</h3><p>The director's married to the temp track. The licensing quote just came back at three times your music budget. You need something that hits the same way, and fast.</p></div>
+      <div class="hd-pain hd-reveal"><span class="hd-pain-n">01</span><h3>Temp Love</h3><p>The director's married to the temp track, and the licensing quote just came back at three times your music budget. Temp with music you can actually keep.</p></div>
       <div class="hd-pain hd-reveal" style="transition-delay:.1s"><span class="hd-pain-n">02</span><h3>The Deadline</h3><p>The cut changed. The mix is Friday. Air date doesn't move. You need real options today, not after another week of digging.</p></div>
       <div class="hd-pain hd-reveal" style="transition-delay:.2s"><span class="hd-pain-n">03</span><h3>The Clearance</h3><p>The perfect song dies at the last minute over split ownership, a slow publisher or a surprise fee, after the cut is locked.</p></div>
       <div class="hd-pain hd-reveal" style="transition-delay:.3s"><span class="hd-pain-n">04</span><h3>Library Roulette</h3><p>Dozens of libraries, millions of tracks, and nothing that fits. Period-authentic vintage, a regional folk recording, the exact door creak: most libraries just don't have it.</p></div>
@@ -618,6 +630,16 @@ TEMPLATE = """<style>{css}</style>
       <div class="hd-deep-row hd-reveal"><span class="hd-deep-n">01</span><div><small>CLASSICAL &middot; VINTAGE &middot; WORLD</small><h3>Naxos</h3></div><p>One of the world's deepest classical, vintage and world music catalogs. We've represented Naxos for twenty years.</p></div>
       <div class="hd-deep-row hd-reveal"><span class="hd-deep-n">02</span><div><small>KARAOKE &middot; COVERS</small><h3>Covered Records</h3></div><p>The largest karaoke catalog in the world. Instrumental and sound-alike versions of the songs your scene is reaching for.</p></div>
       <div class="hd-deep-row hd-reveal"><span class="hd-deep-n">03</span><div><small>500,000+ SOUND EFFECTS</small><h3>Sound Ideas &middot; Hollywood Edge &middot; BOOM</h3></div><p>Sound design from two of the largest SFX distributors in the world, from foley and ambiences to cinematic impacts.</p></div>
+    </div>
+    <div class="hd-more hd-reveal">
+      <span class="hd-more-k">Also representing</span>
+      <div class="hd-more-grid">
+        <div class="hd-more-item"><b>Reality Entertainment</b><span>Metal</span></div>
+        <div class="hd-more-item"><b>El Toro Records</b><span>Vintage Rockabilly</span></div>
+        <div class="hd-more-item"><b>Record Kicks</b><span>Soul &middot; Funk</span></div>
+        <div class="hd-more-item"><b>Four Flies Records</b><span>Italian &middot; Disco &middot; Vintage</span></div>
+        <div class="hd-more-item hd-more-plus"><b>&amp; much more</b><span>Ask us for the sound you can't find</span></div>
+      </div>
     </div>
     <div class="hd-deep-cta hd-reveal"><a class="hd-btn p" href="{contact}">Request a Specialty Search</a></div>
   </div>

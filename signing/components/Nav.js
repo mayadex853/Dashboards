@@ -16,7 +16,7 @@ export default function Nav({ localMode, emailOn }) {
   return (
     <nav className="nav">
       <div className="brand">
-        HD Sign<span>Contracts & signatures</span>
+        TakaSign<span>Contracts & signatures</span>
       </div>
       {LINKS.map(([href, label]) => (
         <Link key={href} href={href} className={(href === "/" ? path === "/" : path.startsWith(href)) ? "active" : ""}>

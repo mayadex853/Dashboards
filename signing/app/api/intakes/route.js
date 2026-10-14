@@ -23,7 +23,7 @@ export const POST = route(async (req) => {
     status: "sent",
   });
   const link = `${appUrl()}/i/${token}`;
-  const sender = process.env.MAIL_FROM_NAME || "HD Music";
+  const sender = process.env.MAIL_FROM_NAME || "TakaSign";
   const mail = b.email === false ? { sent: false } : await sendEmail({
     to: b.signee_email,
     subject: `${sender}: a few details before we send your agreement`,

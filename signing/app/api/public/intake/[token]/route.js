@@ -18,7 +18,7 @@ export const GET = route(async (_req, { token }) => {
     category: CATEGORIES.find((c) => c.key === i.category)?.label,
     questions: intakeQuestions(i.category),
     prefill: { legal_name: i.signee_name, email: i.signee_email, ...(i.answers || {}) },
-    sender: process.env.MAIL_FROM_NAME || "HD Music",
+    sender: process.env.MAIL_FROM_NAME || "TakaSign",
   };
 });
 

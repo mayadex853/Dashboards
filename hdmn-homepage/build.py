@@ -22,6 +22,9 @@ CDN_REF = sys.argv[1] if len(sys.argv) > 1 else "claude/hd-music-now-homepage-tt
 CDN_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/hdmn-homepage/posters/"
 FALLBACK_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/hdmn-homepage/posters/"
 
+# Google Sheet Jody edits; the page reads it live (falls back to the built-in data if unreachable).
+SHEET_ID = "1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ"
+
 CATALOG_URL = "https://hdmusicnow.sourceaudio.com/#!label?l=1222458&page=albums"
 CONTACT_ANCHOR = "#section-1792000000008"
 IMDB_URL = "https://www.imdb.com/name/nm3112237/"
@@ -123,7 +126,7 @@ def build(base):
         tabs=tabs, panels=panels, total="10,000+", total_n=10000, sup_rows=sup_rows,
         sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press, features=features,
         catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL,
-        js=JS.replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
+        js=JS.replace("__SHEET__", SHEET_ID).replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
 CSS = r"""
@@ -411,11 +414,11 @@ JS = r"""
   for(var r=0;r<4;r++){var row=document.createElement('div');row.className='hd-wall-row'+(r%2?' rev':'');row.style.animationDuration=(90+r*20)+'s';
     var pick=shuffled(r+3),h='';for(var k=0;k<2;k++)pick.forEach(function(sl){h+='<img src="'+base+'thumb/'+sl+'.jpg" alt="">';});row.innerHTML=h;wall.appendChild(row);}
   // filmography tabs
-  var tabs=root.querySelectorAll('.hd-tab'),panels=root.querySelectorAll('.hd-panel');
-  tabs.forEach(function(t){t.addEventListener('click',function(){var i=t.getAttribute('data-tab');
-    tabs.forEach(function(x){x.classList.toggle('on',x===t);});
-    panels.forEach(function(p){p.classList.toggle('on',p.getAttribute('data-panel')===i);});
-    var box=root.querySelector('.hd-panels');if(box)box.scrollTop=0;});});
+  var tabbar=root.querySelector('.hd-tabs');
+  if(tabbar)tabbar.addEventListener('click',function(ev){var t=ev.target.closest('.hd-tab');if(!t)return;var i=t.getAttribute('data-tab');
+    root.querySelectorAll('.hd-tab').forEach(function(x){x.classList.toggle('on',x===t);});
+    root.querySelectorAll('.hd-panel').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-panel')===i);});
+    var box=root.querySelector('.hd-panels');if(box)box.scrollTop=0;});
   // nav goes solid on scroll
   // retry any poster that fails on the primary host from the fallback host
   var fb='__FALLBACK__';
@@ -428,12 +431,61 @@ JS = r"""
     els.forEach(function(el){io.observe(el);});
   }else{els.forEach(function(el){el.classList.add('in');});}
   // count-up stats
-  root.querySelectorAll('[data-count]').forEach(function(el){
-    var end=parseFloat(el.getAttribute('data-count')),suf=el.getAttribute('data-suffix')||'',done=false;
-    var o=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!done){done=true;var t0=null;
+  root.querySelectorAll('.hd-stat b').forEach(function(el){
+    var done=false;
+    var o=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!done){done=true;
+      if(!el.hasAttribute('data-count'))return;  // read late: the Google Sheet may have changed these
+      var end=parseFloat(el.getAttribute('data-count')),suf=el.getAttribute('data-suffix')||'',t0=null;
       function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1600,1),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=v.toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(f);}
       requestAnimationFrame(f);}},{threshold:.5});o.observe(el);
   });
+  // ---- live data from Jody's Google Sheet (JSONP via the gviz endpoint; no API key needed)
+  var SHEET='__SHEET__';
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function pic(v){v=String(v||'').trim();if(!v)return '';return /^https?:\/\//.test(v)?v:base+v;}
+  function card(src,cap,title){return '<figure class="hd-card"><img src="'+esc(src)+'" alt="'+esc(title)+' poster" loading="lazy"><figcaption><span>'+cap+'</span><strong>'+esc(title)+'</strong></figcaption></figure>';}
+  function byOrder(a,b){var x=parseFloat(a.Order),y=parseFloat(b.Order);x=isNaN(x)?1e9:x;y=isNaN(y)?1e9:y;return x-y;}
+  function yes(v){return /^y/i.test(String(v||''));}
+  function applySheet(rows){
+    var sec=function(n){return rows.filter(function(r){return String(r.Section||'').trim().toLowerCase()===n;});};
+    var P=sec('placement'),J=sec('project'),A=sec('award/panel'),R=sec('podcast/radio'),N=sec('press'),S=sec('stat');
+    if(!P.length&&!J.length)return;
+    // stats
+    var stats=root.querySelectorAll('.hd-stat');
+    S.slice(0,stats.length).forEach(function(r,i){var t=String(r.Title==null?'':r.Title).trim();if(!t)return;var m=t.match(/^([\d,.]+)(.*)$/),b=stats[i].querySelector('b');
+      b.textContent=t;if(m){b.setAttribute('data-count',m[1].replace(/,/g,''));b.setAttribute('data-suffix',m[2]);}else{b.removeAttribute('data-count');}
+      stats[i].querySelector('span').textContent=r.Detail||'';});
+    // placements filmography
+    if(P.length){var cats=['TV','Film','Trailers','Ads & Campaigns','Video Games'];
+      P.forEach(function(r){var c=String(r.Type||'TV').trim()||'TV';if(cats.indexOf(c)<0)cats.push(c);});
+      var groups=cats.map(function(c){return P.filter(function(r){return (String(r.Type||'TV').trim()||'TV')===c;});});
+      var tabs='',panels='',first=-1;
+      groups.forEach(function(g,i){if(!g.length)return;if(first<0)first=i;
+        tabs+='<button class="hd-tab'+(i===first?' on':'')+'" data-tab="'+i+'">'+esc(cats[i])+' <sup>'+g.length+'</sup></button>';
+        panels+='<ul class="hd-panel'+(i===first?' on':'')+'" data-panel="'+i+'">'+g.map(function(r){return '<li><b>'+esc(r.Title)+'</b>'+(r.Detail?'<span>'+esc(r.Detail)+'</span>':'')+'</li>';}).join('')+'</ul>';});
+      root.querySelector('.hd-tabs').innerHTML=tabs;root.querySelector('.hd-panels').innerHTML=panels;
+      var kind={'TV':'TV Series','Film':'Feature Film','Trailers':'Trailer','Ads & Campaigns':'Campaign','Video Games':'Video Game'};
+      var pc=P.filter(function(r){return yes(r.Carousel)&&pic(r.Poster);}).sort(byOrder);
+      if(pc.length)root.querySelector('.hd-car:not(.hd-car-sup) .hd-car-track').innerHTML=pc.map(function(r){var t=String(r.Type||'TV').trim();
+        return card(pic(r.Poster),esc(kind[t]||t)+(r.Detail?' &middot; '+esc(r.Detail):''),r.Title);}).join('');}
+    // projects worked on
+    if(J.length){root.querySelector('.hd-credlist').innerHTML=J.map(function(r){return '<li><span class="hd-yr">'+esc(r.Year)+'</span><b>'+esc(r.Title)+'</b><span class="hd-role">'+esc(r.Detail)+'</span><span class="hd-kind">'+esc(r.Type)+'</span></li>';}).join('');
+      var jc=J.filter(function(r){return yes(r.Carousel)&&pic(r.Poster);}).sort(byOrder);
+      if(jc.length)root.querySelector('.hd-car-sup .hd-car-track').innerHTML=jc.map(function(r){return card(pic(r.Poster),esc(r.Detail)+(r.Year?' &middot; '+esc(r.Year):''),r.Title);}).join('');}
+    // awards, podcasts, press
+    var lists=root.querySelectorAll('.hd-voice ul');
+    [A,R,N].forEach(function(g,i){if(g.length&&lists[i])lists[i].innerHTML=g.map(function(r){return '<li><span>'+esc(r.Title)+'</span><em>'+esc(r.Detail)+'</em></li>';}).join('');});
+  }
+  if(SHEET){
+    var cb='__hdmnSheet'+Date.now();
+    window[cb]=function(resp){try{if(!resp||resp.status!=='ok')return;var cols=resp.table.cols.map(function(c){return c.label;});
+      var rows=resp.table.rows.map(function(row){var o={};row.c.forEach(function(cell,i){o[cols[i]]=cell?(cell.f!=null?cell.f:cell.v):'';});return o;});
+      applySheet(rows);}catch(e){}finally{delete window[cb];}};
+    var sc=document.createElement('script');
+    sc.src='https://docs.google.com/spreadsheets/d/'+SHEET+'/gviz/tq?headers=1&tqx=out:json;responseHandler:'+cb;
+    sc.onerror=function(){delete window[cb];};document.head.appendChild(sc);
+  }
+
   // poster carousels
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   root.querySelectorAll('.hd-car').forEach(function(car,ci){

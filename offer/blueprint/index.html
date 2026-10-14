@@ -250,7 +250,6 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .hand{font-family:var(--hand)}
 
 /* framework */
-.framework{overflow:hidden}
 .plan-drawing{position:absolute;right:-40px;top:60px;width:min(520px,60vw);opacity:.22;pointer-events:none}
 @media(max-width:900px){.plan-drawing{display:none}}
 .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:56px}
@@ -265,11 +264,72 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .phase .num{font-family:var(--hand);font-size:18px;color:var(--ink-soft);margin-bottom:12px}
 .phase h3{font-family:var(--display);font-weight:400;font-size:clamp(32px,3.2vw,40px);letter-spacing:.01em;margin-bottom:4px;color:var(--white)}
 .phase .verb{display:inline-block;font-family:var(--caps);font-weight:600;font-size:12px;letter-spacing:.26em;text-transform:uppercase;padding:5px 10px 4px;margin:8px 0 20px;background:var(--red);color:#fff}
-.phase:nth-child(3) .verb{background:var(--blue);color:#06121F}
+.phase:nth-child(3) .verb,.scrolly .step:nth-child(3) .phase .verb{background:var(--blue);color:#06121F}
 .phase ol{list-style:none;margin-bottom:20px}
 .phase ol li{padding:8px 0;border-bottom:1px dashed var(--ink-line);font-weight:500}
 .phase ol li::before{content:"\2014\00a0";display:none}
 .phase p{color:var(--ink-soft);font-size:15.5px}
+
+/* ---------- scroll-drawn story (CAD sketch) ---------- */
+.scrolly{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:start;margin-top:40px}
+.scrolly .steps{padding:4vh 0 10vh}
+.scrolly .step{min-height:72vh;display:flex;flex-direction:column;justify-content:center;opacity:.35;transition:opacity .4s ease}
+.scrolly .step.is-active{opacity:1}
+.scrolly .step p{font-size:clamp(18px,1.8vw,21px);max-width:520px}
+.scrolly .step .big{font-family:var(--display);font-size:clamp(28px,3vw,40px);line-height:1.08;text-transform:uppercase;margin-bottom:14px}
+.scrolly .fig{position:sticky;top:10vh;height:80vh;display:flex;align-items:center}
+.story-sheet{width:100%;background:var(--paper) var(--paper-img,url("assets/blueprint-paper.jpg")) 0 0/800px 800px;border:1.5px solid rgba(244,244,244,.6);box-shadow:0 30px 60px -30px rgba(0,0,0,.7);padding:6px}
+.bp .story-sheet{background:rgba(11,13,17,.18);box-shadow:none}
+.story-svg{width:100%;height:auto;display:block}
+.sheet-cap{display:flex;justify-content:space-between;padding:6px 10px 4px;border-bottom:1px solid rgba(244,244,244,.25);font-family:var(--caps);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,244,244,.75)}
+.story-svg .hand{font-size:14px}
+.story-svg *{vector-effect:non-scaling-stroke}
+.story-svg .frm{fill:none;stroke:rgba(244,244,244,.55);stroke-width:1.5}
+.story-svg .frm.thin{stroke-width:.8;stroke:rgba(244,244,244,.3)}
+.story-svg .tb-t{font-family:var(--caps);font-size:11px;letter-spacing:.14em;fill:rgba(244,244,244,.8)}
+.story-svg .draw,.story-svg .lead,.story-svg .dimv path{fill:none;stroke:#F4F4F4;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.story-svg .draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s cubic-bezier(.6,0,.2,1)}
+.story-svg .lead,.story-svg .dimv path{stroke-width:1;stroke:rgba(244,244,244,.7)}
+.story-svg .hatch{fill:none;stroke:rgba(244,244,244,.35);stroke-width:1}
+.story-svg .hatch.red{stroke:rgba(215,38,38,.7)}
+.story-svg .brick,.story-svg .brick-hand{fill:rgba(244,244,244,.06);stroke:#F4F4F4;stroke-width:1.2}
+.story-svg .slab{fill:rgba(215,38,38,.12);stroke:var(--red-hi);stroke-width:1.8}
+.story-svg .lbl{font-family:var(--caps);font-size:13px;letter-spacing:.18em;text-transform:uppercase;fill:#F4F4F4;text-anchor:middle}
+.story-svg .lbl.l{text-anchor:start}.story-svg .lbl.r{text-anchor:end}
+.story-svg .lbl.red,.story-svg .hand.red{fill:#FF6B6B}
+.story-svg .hand{font-family:var(--hand);font-size:15px;fill:rgba(244,244,244,.9)}
+.story-svg .hand.c,.story-svg .lbl.c{text-anchor:middle}.story-svg .hand.r{text-anchor:end}
+.story-svg .dotw{fill:#F4F4F4}
+.story-svg .cloud{fill:none;stroke:#FF6B6B;stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s ease}
+.story-svg .rev{fill:none;stroke:#FF6B6B;stroke-width:1.6}.story-svg .rev-t{font-family:var(--caps);font-size:12px;fill:#FF6B6B;text-anchor:middle}
+.story-svg .lens{fill:rgba(74,167,255,.08);stroke:var(--blue-hi);stroke-width:2;stroke-dasharray:6 5}
+
+/* staged visibility: .on-N appears at scene N, .off-N disappears at scene N */
+.story-svg [class*="on-"],.story-svg .on-1,.story-svg .on-2,.story-svg .on-3,.story-svg .on-4,.story-svg .on-5{opacity:0;transition:opacity .6s ease}
+.s1 .on-1,.s2 .on-2,.s3 .on-3,.s4 .on-4,.s5 .on-5{opacity:1}
+.s2 .off-2,.s3 .off-3,.s4 .off-4{opacity:0!important}
+.s1 .on-1 .draw,.s2 .on-2 .draw,.s3 .on-3 .draw,.s4 .on-4 .draw,.story-fig .draw.always{stroke-dashoffset:0}
+.s1 .story-svg > g:not([class]) .draw,.s1 .off-2 .draw{stroke-dashoffset:0}
+.s5 .cloud{stroke-dashoffset:0}
+.story-svg .on-2 .brick,.story-svg .on-3 .brick{opacity:0;transform:translateY(-10px);transition:opacity .35s ease,transform .35s ease}
+.s2 .on-2 .brick,.s3 .on-3 .brick{opacity:1;transform:none}
+/* B: demolition */
+.story-svg .brick.old{transform-box:fill-box;transform-origin:center;transition:transform 1s cubic-bezier(.5,0,.3,1),stroke .4s,opacity .6s,fill .4s}
+.s2 .brick.old{stroke:var(--red-hi);stroke-dasharray:4 3;fill:none;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}
+.s3 .brick.old{opacity:.3}
+.story-svg .old-slab{transition:transform 1s ease,opacity .6s}
+.s2 .old-slab{transform:translateY(128px);opacity:0}
+.story-fig:not(.s3) .new .draw{stroke-dashoffset:1}
+.story-fig.s3 .new .draw{stroke-dashoffset:0;transition-duration:1.6s}
+
+@media(max-width:900px){
+  .scrolly{grid-template-columns:1fr;gap:0}
+  .scrolly .fig{order:-1;top:0;height:auto;z-index:3;padding:8px 0;background:linear-gradient(180deg,var(--black) 85%,rgba(13,13,15,0))}
+  .bp .scrolly .fig{background:linear-gradient(180deg,var(--paper) 85%,transparent)}
+  .scrolly .step{min-height:60vh}
+  .scrolly .step p{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){.story-svg *{transition:none!important}}
 
 /* what changes: venn + evolution drawings */
 .venn{margin:56px auto 40px;max-width:640px}
@@ -530,38 +590,112 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <section class="room" id="room">
   <div class="wrap">
-    <div class="room-grid">
-      <div class="reveal">
-        <div class="label">01 &middot; The room you're in</div>
-        <h2 class="worn">Somebody else drew the <span class="hl">floor plan.</span></h2>
-        <p class="lede">Your &ldquo;room&rdquo; is the way you think, act and see yourself. Most of it got built when you were a kid. Some came from your family. Some came from fear. Some came from trying to fit in and be liked. Now you run a business from inside it, and it feels like &ldquo;just who you are.&rdquo;</p>
-        <p class="pullquote worn">So you keep moving the furniture around, when the real problem is the walls.</p>
-        <p class="belief">This isn't your fault, and trying harder won't fix it. Someone handed you the plans before you were old enough to read them. The good news: plans can be redrawn.</p>
+    <div class="reveal">
+      <div class="label">01 &middot; The room you're in</div>
+      <h2 class="worn">Somebody else drew the <span class="hl">floor plan.</span></h2>
+    </div>
+    <div class="scrolly">
+      <div class="steps">
+        <div class="step" data-step="1">
+          <div class="big">It started when you were a kid.</div>
+          <p>Your &ldquo;room&rdquo; is the way you think, act and see yourself. You started building it when you were little, because you needed to feel safe.</p>
+        </div>
+        <div class="step" data-step="2">
+          <div class="big">One brick at a time.</div>
+          <p>Some bricks came from your family. Some came from fear. Some came from trying to fit in and be liked.</p>
+        </div>
+        <div class="step" data-step="3">
+          <div class="big">The walls went up.</div>
+          <ul class="forces">
+            <li><strong class="worn">Fitting in</strong><span>Doing things the way everyone else does, even when it doesn't fit you.</span></li>
+            <li><strong class="worn">Performing</strong><span>Acting the part to get approval. A different version of you for clients, your team and your family.</span></li>
+            <li><strong class="worn">Staying quiet</strong><span>Not saying what you really think for so long that you forget what it was.</span></li>
+            <li><strong class="worn">Playing safe</strong><span>Staying where it feels safe because it pays the bills.</span></li>
+          </ul>
+        </div>
+        <div class="step" data-step="4">
+          <div class="big">Then you grew up. <span style="color:var(--red-hi)">The room didn't.</span></div>
+          <p>The last piece was a low ceiling: <strong>playing small</strong>, holding yourself back before anyone else can. Now you run a business from inside this room, and it feels like &ldquo;just who you are.&rdquo;</p>
+          <p class="pullquote worn">So you keep moving the furniture around, when the real problem is the walls.</p>
+        </div>
+        <div class="step" data-step="5">
+          <div class="big">Plans can be redrawn.</div>
+          <p class="belief">This isn't your fault, and trying harder won't fix it. Someone handed you the plans before you were old enough to read them. You can draw new ones.</p>
+        </div>
       </div>
-      <div class="reveal">
-        <svg class="room-plan" viewBox="0 0 380 270" aria-hidden="true">
-          <rect x="70" y="44" width="240" height="176" class="wall"/>
-          <rect x="78" y="52" width="224" height="160" class="wall thin"/>
-          <path d="M70 18 V6 M310 18 V6 M70 12 H310" class="dim"/>
-          <text x="190" y="36" class="lbl">Fitting in</text>
-          <text x="190" y="246" class="lbl">Staying quiet</text>
-          <text x="52" y="132" class="lbl" transform="rotate(-90 52 132)">Playing safe</text>
-          <text x="330" y="132" class="lbl" transform="rotate(90 330 132)">Performing</text>
-          <path d="M110 92 H270" class="ceil"/>
-          <text x="190" y="84" class="note">low ceiling: playing small</text>
-          <text x="190" y="150" class="note big">you are here</text>
-          <circle cx="190" cy="168" r="5" class="dot"/>
-          <text x="190" y="264" class="note">no way out</text>
-        </svg>
-        <p style="color:var(--muted);margin-bottom:18px">You didn't choose these walls. <strong style="color:var(--white)">You picked them up along the way.</strong> They show up as:</p>
-        <ul class="forces">
-          <li><strong class="worn">Fitting in</strong><span>Doing things the way everyone else does, even when it doesn't fit you.</span></li>
-          <li><strong class="worn">Performing</strong><span>Acting the part to get approval. A different version of you for clients, your team and your family.</span></li>
-          <li><strong class="worn">Staying quiet</strong><span>Not saying what you really think for so long that you forget what it was.</span></li>
-          <li><strong class="worn">Playing safe</strong><span>Staying where it feels safe because it pays the bills.</span></li>
-          <li><strong class="worn">Playing small</strong><span>Holding yourself back before anyone else can.</span></li>
-        </ul>
-      </div>
+      <div class="fig"><div class="story-sheet"><div class="sheet-cap"><span>Section A-A</span><span>The room you built</span></div><div class="story-fig"><svg class="story-svg" viewBox="40 185 520 295" role="img" aria-label="Sketch of a child building a room of bricks around himself">
+
+<g class="on-1"><g class="grnd"><path class="draw" pathLength="1" d="M50 430 H550"/>
+<path class="hatch" d="M60 430 l-10 12 M74 430 l-10 12 M88 430 l-10 12 M102 430 l-10 12 M116 430 l-10 12 M130 430 l-10 12 M144 430 l-10 12 M158 430 l-10 12 M172 430 l-10 12 M186 430 l-10 12 M200 430 l-10 12 M214 430 l-10 12 M228 430 l-10 12 M242 430 l-10 12 M256 430 l-10 12 M270 430 l-10 12 M284 430 l-10 12 M298 430 l-10 12 M312 430 l-10 12 M326 430 l-10 12 M340 430 l-10 12 M354 430 l-10 12 M368 430 l-10 12 M382 430 l-10 12 M396 430 l-10 12 M410 430 l-10 12 M424 430 l-10 12 M438 430 l-10 12 M452 430 l-10 12 M466 430 l-10 12 M480 430 l-10 12 M494 430 l-10 12 M508 430 l-10 12 M522 430 l-10 12 M536 430 l-10 12 M550 430 l-10 12"/></g></g>
+<g class="on-1 off-4"><g class="child">
+<circle cx="300" cy="320" r="12" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M300 332 V382 M300 346 L284 364 M300 346 L318 362 M300 382 L289 430 M300 382 L311 430"/>
+</g>
+<g class="dimv"><path d="M246 430 V308 M240 430 H252 M240 308 H252"/><text x="236" y="374" class="hand" transform="rotate(-90 236 374)">3'-6"</text></g>
+<text x="300" y="296" class="hand c">you, age 6</text>
+</g>
+<g class="on-2 off-4"><rect x="318" y="356" width="16" height="9" class="brick-hand"/></g>
+<g class="on-2"><rect class="brick" x="170" y="414" width="30" height="16" style="transition-delay:0ms"/>
+<rect class="brick" x="200" y="414" width="30" height="16" style="transition-delay:45ms"/>
+<rect class="brick" x="170" y="398" width="15" height="16" style="transition-delay:90ms"/>
+<rect class="brick" x="185" y="398" width="30" height="16" style="transition-delay:135ms"/>
+<rect class="brick" x="215" y="398" width="15" height="16" style="transition-delay:180ms"/>
+<rect class="brick" x="370" y="414" width="30" height="16" style="transition-delay:0ms"/>
+<rect class="brick" x="400" y="414" width="30" height="16" style="transition-delay:45ms"/>
+<rect class="brick" x="370" y="398" width="15" height="16" style="transition-delay:90ms"/>
+<rect class="brick" x="385" y="398" width="30" height="16" style="transition-delay:135ms"/>
+<rect class="brick" x="415" y="398" width="15" height="16" style="transition-delay:180ms"/></g>
+<g class="on-3"><rect class="brick" x="170" y="382" width="30" height="16" style="transition-delay:0ms"/>
+<rect class="brick" x="200" y="382" width="30" height="16" style="transition-delay:45ms"/>
+<rect class="brick" x="170" y="366" width="15" height="16" style="transition-delay:90ms"/>
+<rect class="brick" x="185" y="366" width="30" height="16" style="transition-delay:135ms"/>
+<rect class="brick" x="215" y="366" width="15" height="16" style="transition-delay:180ms"/>
+<rect class="brick" x="170" y="350" width="30" height="16" style="transition-delay:225ms"/>
+<rect class="brick" x="200" y="350" width="30" height="16" style="transition-delay:270ms"/>
+<rect class="brick" x="170" y="334" width="15" height="16" style="transition-delay:315ms"/>
+<rect class="brick" x="185" y="334" width="30" height="16" style="transition-delay:360ms"/>
+<rect class="brick" x="215" y="334" width="15" height="16" style="transition-delay:405ms"/>
+<rect class="brick" x="170" y="318" width="30" height="16" style="transition-delay:450ms"/>
+<rect class="brick" x="200" y="318" width="30" height="16" style="transition-delay:495ms"/>
+<rect class="brick" x="170" y="302" width="15" height="16" style="transition-delay:540ms"/>
+<rect class="brick" x="185" y="302" width="30" height="16" style="transition-delay:585ms"/>
+<rect class="brick" x="215" y="302" width="15" height="16" style="transition-delay:630ms"/>
+<rect class="brick" x="370" y="382" width="30" height="16" style="transition-delay:0ms"/>
+<rect class="brick" x="400" y="382" width="30" height="16" style="transition-delay:45ms"/>
+<rect class="brick" x="370" y="366" width="15" height="16" style="transition-delay:90ms"/>
+<rect class="brick" x="385" y="366" width="30" height="16" style="transition-delay:135ms"/>
+<rect class="brick" x="415" y="366" width="15" height="16" style="transition-delay:180ms"/>
+<rect class="brick" x="370" y="350" width="30" height="16" style="transition-delay:225ms"/>
+<rect class="brick" x="400" y="350" width="30" height="16" style="transition-delay:270ms"/>
+<rect class="brick" x="370" y="334" width="15" height="16" style="transition-delay:315ms"/>
+<rect class="brick" x="385" y="334" width="30" height="16" style="transition-delay:360ms"/>
+<rect class="brick" x="415" y="334" width="15" height="16" style="transition-delay:405ms"/>
+<rect class="brick" x="370" y="318" width="30" height="16" style="transition-delay:450ms"/>
+<rect class="brick" x="400" y="318" width="30" height="16" style="transition-delay:495ms"/>
+<rect class="brick" x="370" y="302" width="15" height="16" style="transition-delay:540ms"/>
+<rect class="brick" x="385" y="302" width="30" height="16" style="transition-delay:585ms"/>
+<rect class="brick" x="415" y="302" width="15" height="16" style="transition-delay:630ms"/></g>
+<g class="on-3 lbls">
+<text x="152" y="366" class="lbl" transform="rotate(-90 152 366)">Fitting in</text>
+<text x="448" y="366" class="lbl" transform="rotate(90 448 366)">Performing</text>
+<path class="lead" d="M60 238 H112 L190 330"/><circle cx="190" cy="330" r="3" class="dotw"/><text x="60" y="230" class="lbl l">Staying quiet</text>
+<path class="lead" d="M540 238 H488 L410 330"/><circle cx="410" cy="330" r="3" class="dotw"/><text x="540" y="230" class="lbl r">Playing safe</text>
+</g>
+<g class="on-4">
+<rect x="160" y="286" width="280" height="16" class="slab"/>
+<path class="hatch red" d="M162 302 l10 -16 M171 302 l10 -16 M180 302 l10 -16 M189 302 l10 -16 M198 302 l10 -16 M207 302 l10 -16 M216 302 l10 -16 M225 302 l10 -16 M234 302 l10 -16 M243 302 l10 -16 M252 302 l10 -16 M261 302 l10 -16 M270 302 l10 -16 M279 302 l10 -16 M288 302 l10 -16 M297 302 l10 -16 M306 302 l10 -16 M315 302 l10 -16 M324 302 l10 -16 M333 302 l10 -16 M342 302 l10 -16 M351 302 l10 -16 M360 302 l10 -16 M369 302 l10 -16 M378 302 l10 -16 M387 302 l10 -16 M396 302 l10 -16 M405 302 l10 -16 M414 302 l10 -16 M423 302 l10 -16 M432 302 l10 -16"/>
+<text x="300" y="276" class="lbl red c">Low ceiling: playing small</text>
+</g>
+<g class="on-4"><g class="adult-stoop">
+<circle cx="322" cy="318" r="13" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M314 329 Q300 344 298 384 M306 342 L322 372 M306 342 L290 372 M298 384 L286 430 M298 384 L314 430"/>
+</g><text x="300" y="460" class="hand c">you, today. The room never grew.</text></g>
+<g class="on-5">
+<path class="cloud" d="M140 270 q14 -22 30 -6 q12 -22 30 -6 q14 -22 30 -6 q14 -22 30 -6 q14 -22 30 -6 q14 -22 30 -6 q14 -22 30 -6 q14 -22 30 -6 q14 -22 30 -6 q24 6 10 30 q22 14 4 30 q22 14 4 30 q22 14 4 30 q22 14 4 30 q22 14 4 30 q-6 24 -30 10 q-14 22 -30 6 q-14 22 -30 6 q-14 22 -30 6 q-14 22 -30 6 q-14 22 -30 6 q-14 22 -30 6 q-14 22 -30 6 q-14 22 -30 6 q-24 -6 -10 -30 q-22 -14 -4 -30 q-22 -14 -4 -30 q-22 -14 -4 -30 q-22 -14 -4 -30 q-22 -14 -4 -30 z"/>
+<path class="rev" d="M56 212 l11 -19 l11 19 z"/><text x="67" y="209" class="rev-t">1</text>
+<text x="86" y="210" class="hand red">revision 1: plans can be redrawn</text>
+</g>
+</svg></div></div></div>
     </div>
 
     <div class="cost reveal">
@@ -706,7 +840,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <text x="37" y="12" fill="#F4F4F4" stroke="none" font-family="Architects Daughter, cursive" font-size="14" text-anchor="middle">N</text>
 </svg>
 <section class="framework bp" id="framework">
-  <svg class="plan-drawing" viewBox="0 0 520 420" fill="none" stroke="#F4F4F4" stroke-width="2" aria-hidden="true">
+  <svg class="plan-drawing" style="display:none" viewBox="0 0 520 420" fill="none" stroke="#F4F4F4" stroke-width="2" aria-hidden="true">
     <rect x="20" y="20" width="480" height="380"/>
     <rect x="28" y="28" width="464" height="364" stroke-width="1"/>
     <path d="M260 28 V180 M260 240 V392 M28 210 H180 M240 210 H492"/>
@@ -723,31 +857,106 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>How the rebuild works</h2>
       <p class="lede">Most change doesn't last because people build the new on top of the old. Wreck the Room goes in order. First you see it. Then you take it apart. Then you build. Blueprint walks you through all three steps.</p>
     </div>
-    <div class="phases reveal">
-      <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
+    <div class="scrolly">
+      <div class="steps">
+        <div class="step" data-step="1"><article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="10" width="40" height="34" class="d"/><path d="M6 27h18M24 10v34" class="d"/><circle cx="38" cy="34" r="13"/><path d="M47 43l12 12"/></svg>
         <div class="num">Phase 01</div>
         <h3>Wreck-ognize It</h3>
         <div class="verb">see it</div>
         <ol><li>Reveal the room</li><li>Name the identity</li><li>Expose the lie</li><li>Design the new room</li></ol>
         <p>You can't fix what you can't see. Here you find out what you've been living inside, and why.</p>
-      </article>
-      <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
+      </article></div>
+        <div class="step" data-step="2"><article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 56L40 26"/><path d="M33 10l21 21-9 9-21-21z"/><path d="M8 30l6 2M12 22l5 5M20 16l2 6" class="d"/></svg>
         <div class="num">Phase 02</div>
         <h3>Wreck It</h3>
         <div class="verb">take it apart</div>
         <ol><li>Disrupt the cycle</li><li>Dismantle the role</li><li>Reclaim your power</li></ol>
         <p>Here you stop working around your old patterns and get rid of them. The roles that kept you safe and small come down, one at a time.</p>
-      </article>
-      <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
+      </article></div>
+        <div class="step" data-step="3"><article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="9" r="4"/><path d="M30 12L14 56M34 12l16 44"/><path d="M19 42a24 24 0 0 0 26 0" class="d"/><path d="M6 58h52" class="d"/></svg>
         <div class="num">Phase 03</div>
         <h3>Wrock It</h3>
         <div class="verb">build it</div>
         <ol><li>Rebuild with intention</li><li>Activate the architect</li><li>Anchor the new identity</li></ol>
         <p>A big &ldquo;aha&rdquo; fades fast if your days don't change. Here you turn what you learned into how you live and lead, so it sticks.</p>
-      </article>
+      </article></div>
+      </div>
+      <div class="fig"><div class="story-sheet"><div class="sheet-cap"><span>Section B-B</span><span>The rebuild</span></div><div class="story-fig"><svg class="story-svg" viewBox="40 108 520 372" role="img" aria-label="Sketch of the old room being taken apart and a new, taller room being built">
+
+<g><g class="grnd"><path class="draw" pathLength="1" d="M50 430 H550"/>
+<path class="hatch" d="M60 430 l-10 12 M74 430 l-10 12 M88 430 l-10 12 M102 430 l-10 12 M116 430 l-10 12 M130 430 l-10 12 M144 430 l-10 12 M158 430 l-10 12 M172 430 l-10 12 M186 430 l-10 12 M200 430 l-10 12 M214 430 l-10 12 M228 430 l-10 12 M242 430 l-10 12 M256 430 l-10 12 M270 430 l-10 12 M284 430 l-10 12 M298 430 l-10 12 M312 430 l-10 12 M326 430 l-10 12 M340 430 l-10 12 M354 430 l-10 12 M368 430 l-10 12 M382 430 l-10 12 M396 430 l-10 12 M410 430 l-10 12 M424 430 l-10 12 M438 430 l-10 12 M452 430 l-10 12 M466 430 l-10 12 M480 430 l-10 12 M494 430 l-10 12 M508 430 l-10 12 M522 430 l-10 12 M536 430 l-10 12 M550 430 l-10 12"/></g></g>
+<g class="old">
+<rect class="brick old" x="170" y="414" width="30" height="16" style="transition-delay:0ms;--dx:12px;--dy:10px;--r:21deg"/>
+<rect class="brick old" x="200" y="414" width="30" height="16" style="transition-delay:45ms;--dx:-58px;--dy:11px;--r:57deg"/>
+<rect class="brick old" x="170" y="398" width="15" height="16" style="transition-delay:90ms;--dx:-46px;--dy:23px;--r:69deg"/>
+<rect class="brick old" x="185" y="398" width="30" height="16" style="transition-delay:135ms;--dx:-56px;--dy:20px;--r:-26deg"/>
+<rect class="brick old" x="215" y="398" width="15" height="16" style="transition-delay:180ms;--dx:-61px;--dy:27px;--r:31deg"/>
+<rect class="brick old" x="170" y="382" width="30" height="16" style="transition-delay:225ms;--dx:37px;--dy:43px;--r:-19deg"/>
+<rect class="brick old" x="200" y="382" width="30" height="16" style="transition-delay:270ms;--dx:-47px;--dy:36px;--r:28deg"/>
+<rect class="brick old" x="170" y="366" width="15" height="16" style="transition-delay:315ms;--dx:-55px;--dy:51px;--r:-49deg"/>
+<rect class="brick old" x="185" y="366" width="30" height="16" style="transition-delay:360ms;--dx:-13px;--dy:50px;--r:80deg"/>
+<rect class="brick old" x="215" y="366" width="15" height="16" style="transition-delay:405ms;--dx:-55px;--dy:51px;--r:69deg"/>
+<rect class="brick old" x="170" y="350" width="30" height="16" style="transition-delay:450ms;--dx:31px;--dy:76px;--r:-24deg"/>
+<rect class="brick old" x="200" y="350" width="30" height="16" style="transition-delay:495ms;--dx:-59px;--dy:68px;--r:-46deg"/>
+<rect class="brick old" x="170" y="334" width="15" height="16" style="transition-delay:540ms;--dx:4px;--dy:86px;--r:-44deg"/>
+<rect class="brick old" x="185" y="334" width="30" height="16" style="transition-delay:585ms;--dx:68px;--dy:91px;--r:66deg"/>
+<rect class="brick old" x="215" y="334" width="15" height="16" style="transition-delay:630ms;--dx:8px;--dy:84px;--r:-34deg"/>
+<rect class="brick old" x="170" y="318" width="30" height="16" style="transition-delay:675ms;--dx:-44px;--dy:99px;--r:66deg"/>
+<rect class="brick old" x="200" y="318" width="30" height="16" style="transition-delay:720ms;--dx:-22px;--dy:103px;--r:-56deg"/>
+<rect class="brick old" x="170" y="302" width="15" height="16" style="transition-delay:765ms;--dx:70px;--dy:123px;--r:64deg"/>
+<rect class="brick old" x="185" y="302" width="30" height="16" style="transition-delay:810ms;--dx:-55px;--dy:115px;--r:-28deg"/>
+<rect class="brick old" x="215" y="302" width="15" height="16" style="transition-delay:855ms;--dx:57px;--dy:114px;--r:56deg"/>
+<rect class="brick old" x="370" y="414" width="30" height="16" style="transition-delay:0ms;--dx:39px;--dy:7px;--r:39deg"/>
+<rect class="brick old" x="400" y="414" width="30" height="16" style="transition-delay:45ms;--dx:46px;--dy:7px;--r:-4deg"/>
+<rect class="brick old" x="370" y="398" width="15" height="16" style="transition-delay:90ms;--dx:-7px;--dy:26px;--r:-18deg"/>
+<rect class="brick old" x="385" y="398" width="30" height="16" style="transition-delay:135ms;--dx:-50px;--dy:19px;--r:-4deg"/>
+<rect class="brick old" x="415" y="398" width="15" height="16" style="transition-delay:180ms;--dx:64px;--dy:21px;--r:7deg"/>
+<rect class="brick old" x="370" y="382" width="30" height="16" style="transition-delay:225ms;--dx:44px;--dy:40px;--r:75deg"/>
+<rect class="brick old" x="400" y="382" width="30" height="16" style="transition-delay:270ms;--dx:-52px;--dy:43px;--r:51deg"/>
+<rect class="brick old" x="370" y="366" width="15" height="16" style="transition-delay:315ms;--dx:37px;--dy:58px;--r:7deg"/>
+<rect class="brick old" x="385" y="366" width="30" height="16" style="transition-delay:360ms;--dx:-32px;--dy:53px;--r:27deg"/>
+<rect class="brick old" x="415" y="366" width="15" height="16" style="transition-delay:405ms;--dx:-60px;--dy:50px;--r:-61deg"/>
+<rect class="brick old" x="370" y="350" width="30" height="16" style="transition-delay:450ms;--dx:10px;--dy:71px;--r:9deg"/>
+<rect class="brick old" x="400" y="350" width="30" height="16" style="transition-delay:495ms;--dx:57px;--dy:67px;--r:36deg"/>
+<rect class="brick old" x="370" y="334" width="15" height="16" style="transition-delay:540ms;--dx:-53px;--dy:91px;--r:-11deg"/>
+<rect class="brick old" x="385" y="334" width="30" height="16" style="transition-delay:585ms;--dx:51px;--dy:82px;--r:-64deg"/>
+<rect class="brick old" x="415" y="334" width="15" height="16" style="transition-delay:630ms;--dx:-55px;--dy:88px;--r:67deg"/>
+<rect class="brick old" x="370" y="318" width="30" height="16" style="transition-delay:675ms;--dx:44px;--dy:104px;--r:18deg"/>
+<rect class="brick old" x="400" y="318" width="30" height="16" style="transition-delay:720ms;--dx:18px;--dy:108px;--r:38deg"/>
+<rect class="brick old" x="370" y="302" width="15" height="16" style="transition-delay:765ms;--dx:20px;--dy:122px;--r:76deg"/>
+<rect class="brick old" x="385" y="302" width="30" height="16" style="transition-delay:810ms;--dx:-41px;--dy:117px;--r:-65deg"/>
+<rect class="brick old" x="415" y="302" width="15" height="16" style="transition-delay:855ms;--dx:-15px;--dy:120px;--r:-47deg"/>
+<rect x="160" y="286" width="280" height="16" class="slab old-slab"/>
+</g>
+<g class="off-2"><g class="adult-stoop">
+<circle cx="322" cy="318" r="13" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M314 329 Q300 344 298 384 M306 342 L322 372 M306 342 L290 372 M298 384 L286 430 M298 384 L314 430"/>
+</g></g>
+<g class="on-1 off-2">
+<circle cx="300" cy="340" r="118" class="lens"/><path class="lens" d="M384 424 L430 470"/>
+<text x="60" y="132" class="hand">existing room (inherited)</text>
+<path class="lead" d="M60 140 H150 L196 300"/><circle cx="196" cy="300" r="3" class="dotw"/>
+</g>
+<g class="on-2 off-3"><text x="60" y="132" class="hand red">demo: walls you don't need</text></g>
+<g class="on-2"><g class="adult-tall">
+<circle cx="300" cy="238" r="15" class="draw" pathLength="1"/>
+<path class="draw" pathLength="1" d="M300 253 V338 M300 274 L278 306 M300 274 L326 296 M300 338 L286 430 M300 338 L314 430"/>
+<rect class="draw" pathLength="1" x="324" y="282" width="34" height="9" rx="4" transform="rotate(-25 341 286)"/>
+</g></g>
+<g class="on-3 new">
+<path class="draw" pathLength="1" d="M110 430 V150 H490 V430"/>
+<path class="draw" pathLength="1" d="M122 430 V162 H478 V430"/>
+<path class="draw" pathLength="1" d="M110 220 H122 M110 290 H122 M478 340 H490"/>
+<path class="draw" pathLength="1" d="M110 230 H122 V280 H110 M116 230 V280"/>
+<path class="draw" pathLength="1" d="M490 340 V430 M478 340 A90 90 0 0 0 478 430" style="stroke-dasharray:1"/>
+<g class="dimv"><path d="M520 430 V150 M514 430 H526 M514 150 H526"/><text x="534" y="300" class="hand" transform="rotate(90 534 300)">room to grow</text></g>
+<text x="96" y="200" class="hand r">window</text><text x="504" y="330" class="hand">door</text>
+<text x="300" y="140" class="hand c">drawn by: you</text>
+</g>
+</svg></div></div></div>
     </div>
   </div>
 </section>
@@ -1180,6 +1389,19 @@ const CONFIG = {
   } else {
     document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
   }
+
+
+  // Scroll-drawn story: each .step sets the scene on its .story-fig (classes s1..sN are cumulative)
+  document.querySelectorAll(".scrolly").forEach(sc => {
+    const fig = sc.querySelector(".story-fig"); const steps = [...sc.querySelectorAll(".step")];
+    const set = n => { for (let i = 1; i <= 6; i++) fig.classList.toggle("s" + i, i <= n);
+      steps.forEach(st => st.classList.toggle("is-active", +st.dataset.step === n)); };
+    set(1);
+    if ("IntersectionObserver" in window){
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(+e.target.dataset.step); }), {rootMargin:"-45% 0px -45% 0px"});
+      steps.forEach(st => io.observe(st));
+    } else { set(steps.length); }
+  });
 
   document.getElementById("yr").textContent = new Date().getFullYear();
 })();

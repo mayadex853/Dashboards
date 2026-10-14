@@ -1286,7 +1286,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="label">05 &middot; The Architects</div>
       <h2>Who you become on the other side</h2>
       <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Activated Architect</b></div>
-      <p class="lede">Picture a regular Monday a year from now. You make the hard call without second-guessing yourself. You say what you really think in the meeting. There's free time on your calendar because you put it there. Your business is growing the way you want. The success you already had finally feels like yours. That's an Activated Architect.</p>
+      <p class="lede">Picture a regular Monday a year from now. You make the hard call without second-guessing yourself. You say what you really think in the meeting. There's free time on your calendar because you put it there. Your business is growing the way you want, because once the old room comes down, you can finally see the simplifications and growth levers it was hiding from you. The success you already had finally feels like yours. That's an Activated Architect.</p>
       <p style="color:var(--ink-soft);margin-top:18px">However you do it, you're not alone. You'll be one of the Architects, our private community on Kajabi, with other people doing the same work and tearing down the same walls.</p>
     </div>
   </div>
@@ -1323,7 +1323,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </ul>
       </div>
     </div>
-    <p class="fit-note reveal">If the red list sounds like you, Wreck the Room isn't the right fit right now. If the green list does, pick the level of support below that matches how you work best.</p>
+    <p class="fit-note reveal">If the red list sounds like you, Wreck the Room isn't the right fit right now. If the &ldquo;Approved&rdquo; list does, pick the level of support below that matches how you work best.</p>
   </div>
 </section>
 
@@ -1401,7 +1401,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <li>E.L.E.V.A.T.E. Identity Calibration System: your insurance for when you need to recalibrate</li>
           <li>34 lessons and 140+ learning experiences in all</li>
         </ul>
-        <a class="btn" href="https://calendly.com/jody_friedman/45-minute-strategy-call" data-link="call" target="_blank" rel="noopener">Apply for Council <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="btn" href="https://calendly.com/jody_friedman/council-application-call-council" data-link="council-apply" target="_blank" rel="noopener">Apply for Council <span class="arrow" aria-hidden="true">&rarr;</span></a>
         <div class="t-note">Starts with a strategy call with Jody to make sure it's the right fit.</div>
       </article>
       <article class="tier-card">
@@ -1497,7 +1497,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 const CONFIG = {
   checkoutUrl: "https://www.wrecktheroom.com/offers/FCikqT8z/checkout",
   councilUrl: "https://www.wrecktheroom.com/council",
-  strategyCallUrl: "https://calendly.com/jody_friedman/45-minute-strategy-call",  // Council + Inner Circle apply buttons
+  strategyCallUrl: "https://calendly.com/jody_friedman/45-minute-strategy-call",  // Inner Circle apply + FAQ
+  councilApplyUrl: "https://calendly.com/jody_friedman/council-application-call-council",  // Council apply button
   valuesApproved: false    // set true once Jody signs off on the value stack amounts
 };
 
@@ -1508,6 +1509,7 @@ const CONFIG = {
   document.getElementById("buyBtn").href = CONFIG.checkoutUrl || "#enroll";
   document.querySelectorAll('[data-link="council"]').forEach(a => { a.href = CONFIG.councilUrl || "#fit"; });
   document.querySelectorAll('[data-link="call"]').forEach(a => { a.href = CONFIG.strategyCallUrl || "#enroll"; });
+  document.querySelectorAll('[data-link="council-apply"]').forEach(a => { a.href = CONFIG.councilApplyUrl || CONFIG.strategyCallUrl || "#enroll"; });
 
   // Missing image -> labeled frame instead of a broken icon
   document.querySelectorAll(".imgslot img").forEach(img => {

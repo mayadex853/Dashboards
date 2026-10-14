@@ -53,6 +53,9 @@ h2{font-size:clamp(40px,6vw,76px);margin-bottom:24px}
 h3{font-family:var(--caps);font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.15}
 .lede{font-size:clamp(18px,2vw,21px);max-width:640px}
 
+.announce{background:var(--red);color:#fff;text-align:center;padding:10px 16px;font-family:var(--caps);font-weight:500;font-size:14px;letter-spacing:.12em;text-transform:uppercase;line-height:1.4}
+.announce a{color:#fff;font-weight:600;margin-left:10px;white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){.announce{font-size:12px;letter-spacing:.08em}.announce a{display:inline-block;margin:4px 0 0}}
 /* worn/distressed type for the demolition zone */
 .worn{-webkit-mask-image:var(--wear);mask-image:var(--wear);-webkit-mask-size:260px;mask-size:260px}
 
@@ -495,6 +498,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <div class="guard" id="guard" role="status"></div>
 <div class="rail" id="rail" aria-hidden="true"></div>
+<div class="announce"><span>For founders and leaders who have the success, but it still doesn't feel like their life.</span> <a href="#enroll">Start the Blueprint &rarr;</a></div>
 <img id="paperSrc" src="assets/blueprint-paper.jpg" alt="" hidden>
 
 <!-- ======================= DEMOLITION ZONE ======================= -->
@@ -513,10 +517,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   <div class="wrap">
    <div class="hero-copy">
-    <div class="kicker">For founders and leaders who built the success and still feel like a guest in their own life</div>
     <h1 class="worn">Become the architect of a life that <span class="r">finally feels like yours.</span></h1>
     <p class="hero-q">&ldquo;Did I design this life, or did I just move into it?&rdquo;</p>
-    <p class="lede">You built the company and hit the number, and it still feels like someone else's life. That's how a life you never designed becomes the one you're stuck with. Blueprint is the full Wreck the Room&trade; system, self-guided, at your own pace.</p>
+    <p class="lede">You built the business. You hit the numbers. But it still feels like someone else's life. If nothing changes, this becomes the life you're stuck with. Blueprint is the full Wreck the Room&trade; program. You do it on your own, at your own pace.</p>
     <div class="hero-cta">
       <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <div class="hero-meta"><b>$5,000</b> or 2 &times; $2,650 &middot; 105 learning experiences &middot; Lifetime access</div>
@@ -531,32 +534,32 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="reveal">
         <div class="label">01 &middot; The room you're in</div>
         <h2 class="worn">Somebody else drew the <span class="hl">floor plan.</span></h2>
-        <p class="lede">Rooms get built early. Childhood adds a wall. Survival adds another. Fear, culture, approval and performance finish the job. By the time you're running a business, you're living inside a structure you never signed off on, and it feels like your personality.</p>
-        <p class="pullquote worn">It keeps you adjusting the furniture when the structure is the problem.</p>
-        <p class="belief">None of this is a character flaw, and more discipline won't fix it. You were handed a set of plans before you were old enough to read them, and you've been building on them ever since. Plans can be redrawn.</p>
+        <p class="lede">Your &ldquo;room&rdquo; is the way you think, act and see yourself. Most of it got built when you were a kid. Some came from your family. Some came from fear. Some came from trying to fit in and be liked. Now you run a business from inside it, and it feels like &ldquo;just who you are.&rdquo;</p>
+        <p class="pullquote worn">So you keep moving the furniture around, when the real problem is the walls.</p>
+        <p class="belief">This isn't your fault, and trying harder won't fix it. Someone handed you the plans before you were old enough to read them. The good news: plans can be redrawn.</p>
       </div>
       <div class="reveal">
         <svg class="room-plan" viewBox="0 0 380 270" aria-hidden="true">
           <rect x="70" y="44" width="240" height="176" class="wall"/>
           <rect x="78" y="52" width="224" height="160" class="wall thin"/>
           <path d="M70 18 V6 M310 18 V6 M70 12 H310" class="dim"/>
-          <text x="190" y="36" class="lbl">Conformity</text>
-          <text x="190" y="246" class="lbl">Silence</text>
-          <text x="52" y="132" class="lbl" transform="rotate(-90 52 132)">Comfort</text>
-          <text x="330" y="132" class="lbl" transform="rotate(90 330 132)">Performance</text>
+          <text x="190" y="36" class="lbl">Fitting in</text>
+          <text x="190" y="246" class="lbl">Staying quiet</text>
+          <text x="52" y="132" class="lbl" transform="rotate(-90 52 132)">Playing safe</text>
+          <text x="330" y="132" class="lbl" transform="rotate(90 330 132)">Performing</text>
           <path d="M110 92 H270" class="ceil"/>
-          <text x="190" y="84" class="note">low ceiling: you stay small</text>
+          <text x="190" y="84" class="note">low ceiling: playing small</text>
           <text x="190" y="150" class="note big">you are here</text>
           <circle cx="190" cy="168" r="5" class="dot"/>
           <text x="190" y="264" class="note">no way out</text>
         </svg>
-        <p style="color:var(--muted);margin-bottom:18px">The force behind it has a name: <strong style="color:var(--white)">inherited design.</strong> It doesn't announce itself. It shows up as</p>
+        <p style="color:var(--muted);margin-bottom:18px">You didn't choose these walls. <strong style="color:var(--white)">You picked them up along the way.</strong> They show up as:</p>
         <ul class="forces">
-          <li><strong class="worn">Conformity</strong><span>Building the business the way businesses are supposed to be built, even when it doesn't fit you.</span></li>
-          <li><strong class="worn">Performance</strong><span>Being the version of you that gets approved. Clients, team, family. Every room gets a different you.</span></li>
-          <li><strong class="worn">Silence</strong><span>Not saying the true thing for so long you forget what it was.</span></li>
-          <li><strong class="worn">Comfort</strong><span>Staying in the room you know because it pays the bills.</span></li>
-          <li><strong class="worn">Smallness</strong><span>Capping yourself before anyone else gets the chance.</span></li>
+          <li><strong class="worn">Fitting in</strong><span>Doing things the way everyone else does, even when it doesn't fit you.</span></li>
+          <li><strong class="worn">Performing</strong><span>Acting the part to get approval. A different version of you for clients, your team and your family.</span></li>
+          <li><strong class="worn">Staying quiet</strong><span>Not saying what you really think for so long that you forget what it was.</span></li>
+          <li><strong class="worn">Playing safe</strong><span>Staying where it feels safe because it pays the bills.</span></li>
+          <li><strong class="worn">Playing small</strong><span>Holding yourself back before anyone else can.</span></li>
         </ul>
       </div>
     </div>
@@ -567,25 +570,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div>
           <h3><svg class="cost-ic" viewBox="0 0 44 48" aria-hidden="true"><path d="M8 3h28M8 45h28M11 3c0 13 22 15 22 21S11 32 11 45M33 3c0 13-22 15-22 21s22 8 22 21"/><path d="M15 41h14l-7-8z" class="fill"/></svg>Time</h3>
           <ul>
-            <li>Another year of growth that doesn't feel like yours.</li>
-            <li>Hours every week spent reacting to other people's priorities.</li>
-            <li>Years cycling the same pattern through a new coach, a new framework, a new setting.</li>
+            <li>Another year building a life that doesn't feel like yours.</li>
+            <li>Hours every week putting out other people's fires.</li>
+            <li>Years stuck in the same pattern, no matter how many coaches or programs you try.</li>
           </ul>
         </div>
         <div>
           <h3><svg class="cost-ic" viewBox="0 0 44 48" aria-hidden="true"><ellipse cx="22" cy="10" rx="16" ry="6"/><path d="M6 10v8c0 3.3 7.2 6 16 6s16-2.7 16-6v-8M6 18v8c0 3.3 7.2 6 16 6s16-2.7 16-6v-8M6 26v8c0 3.3 7.2 6 16 6s16-2.7 16-6v-8"/><path d="M4 46 L40 2" class="slash"/></svg>Money</h3>
           <ul>
-            <li>Revenue held at the ceiling your old identity is comfortable with.</li>
-            <li>Money spent on coaching, courses and tactics that sit on top of the old structure and fade.</li>
-            <li>The bold calls you don't make because the safe one keeps you approved.</li>
+            <li>Income stuck at the level your old self feels safe with.</li>
+            <li>Money spent on coaches, courses and quick fixes that wear off.</li>
+            <li>Big moves you don't make because the safe choice feels easier.</li>
           </ul>
         </div>
       </div>
-      <p class="cost-last">And the cost that never shows up on a spreadsheet: the people closest to you get the edited version of you.</p>
+      <p class="cost-last">And the cost you can't put a number on: the people you love get a watered-down version of you.</p>
     </div>
 
     <div class="rooms reveal">
-      <div class="rooms-head"><p>Four rooms. You probably already know which one you're standing in.</p></div>
+      <div class="rooms-head"><p>There are four rooms. You probably already know which one you're in.</p></div>
       <div class="rooms-strip">
         <figure class="roomcard imgslot"><img src="assets/Drifting%20Final.png" alt="The Drifting room" loading="lazy"><div class="missing">assets/Drifting Final.png</div><figcaption>Drifting</figcaption></figure>
         <figure class="roomcard imgslot"><img src="assets/Stalling.png" alt="The Stalling room" loading="lazy"><div class="missing">assets/Stalling.png</div><figcaption>Stalling</figcaption></figure>
@@ -718,32 +721,32 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="reveal">
       <div class="label">02 &middot; The framework</div>
       <h2>How the rebuild works</h2>
-      <p class="lede">Most change doesn't stick because it skips straight to rebuilding. Wreck the Room runs in order: see the structure, take it apart, then build. Blueprint gives you the whole sequence, start to finish.</p>
+      <p class="lede">Most change doesn't last because people build the new on top of the old. Wreck the Room goes in order. First you see it. Then you take it apart. Then you build. Blueprint walks you through all three steps.</p>
     </div>
     <div class="phases reveal">
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="10" width="40" height="34" class="d"/><path d="M6 27h18M24 10v34" class="d"/><circle cx="38" cy="34" r="13"/><path d="M47 43l12 12"/></svg>
         <div class="num">Phase 01</div>
         <h3>Wreck-ognize It</h3>
-        <div class="verb">reveal</div>
+        <div class="verb">see it</div>
         <ol><li>Reveal the room</li><li>Name the identity</li><li>Expose the lie</li><li>Design the new room</li></ol>
-        <p>Most people have never seen their own floor plan. They only feel where it pinches. This phase puts it on paper so you can see what you've been living inside.</p>
+        <p>You can't fix what you can't see. Here you find out what you've been living inside, and why.</p>
       </article>
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 56L40 26"/><path d="M33 10l21 21-9 9-21-21z"/><path d="M8 30l6 2M12 22l5 5M20 16l2 6" class="d"/></svg>
         <div class="num">Phase 02</div>
         <h3>Wreck It</h3>
-        <div class="verb">dismantle</div>
+        <div class="verb">take it apart</div>
         <ol><li>Disrupt the cycle</li><li>Dismantle the role</li><li>Reclaim your power</li></ol>
-        <p>Here you stop managing the pattern and remove it. The roles that kept you safe and small get taken apart, deliberately, one at a time.</p>
+        <p>Here you stop working around your old patterns and get rid of them. The roles that kept you safe and small come down, one at a time.</p>
       </article>
       <article class="phase sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <svg class="ph-ic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="9" r="4"/><path d="M30 12L14 56M34 12l16 44"/><path d="M19 42a24 24 0 0 0 26 0" class="d"/><path d="M6 58h52" class="d"/></svg>
         <div class="num">Phase 03</div>
         <h3>Wrock It</h3>
-        <div class="verb">rebuild</div>
+        <div class="verb">build it</div>
         <ol><li>Rebuild with intention</li><li>Activate the architect</li><li>Anchor the new identity</li></ol>
-        <p>Insight that never makes it into your days fades within a month. This phase turns what you uncovered into the identity you lead from, and anchors it so it holds.</p>
+        <p>A big &ldquo;aha&rdquo; fades fast if your days don't change. Here you turn what you learned into how you live and lead, so it sticks.</p>
       </article>
     </div>
   </div>
@@ -753,8 +756,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div class="reveal">
       <div class="label">03 &middot; What changes</div>
-      <h2>Three shifts. Where they meet is the Activated Architect.</h2>
-      <p class="lede">Fix one of these alone and the other two pull you back. A new identity with no power behind it stays theory. Power without a plan burns out. A plan built on the old identity runs the old life faster. The change holds where all three overlap.</p>
+      <h2>Three big changes. Where they meet, you become an Activated Architect.</h2>
+      <p class="lede">If you only fix one of these, the other two pull you back. A new you with no confidence behind it goes nowhere. Confidence without a plan burns out. A plan built on the old you just gets you more of the same. Real change happens when all three line up.</p>
     </div>
 
     <figure class="venn reveal" aria-label="Venn diagram: Rebuilt Identity, Reclaimed Power and Designed Life overlap at Activated Architect">
@@ -788,9 +791,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>Rebuilt Identity</h3>
         <div class="fromto"><s>Inherited</s> <span>&#8594;</span> <b>Chosen</b></div>
         <dl class="evo-why">
-          <dt>What staying put costs you</dt><dd>You're running a company on an identity you never chose. The roles you took on to stay safe, approved and useful are still making your decisions, so every win lands on someone you don't fully recognize.</dd>
-          <dt>Who you become</dt><dd>Someone whose choices come from who they decided to be. You know why you want what you want, and you stop borrowing other people's definition of enough.</dd>
-          <dt>Why Wreck the Room works</dt><dd>You can't change an identity you can't see. Wreck-ognize It puts the inherited one on paper, names it, and has you design the replacement before anything comes down.</dd>
+          <dt>What it's costing you</dt><dd>You're running your business as someone you never chose to be. The roles you took on to stay safe and liked are still making your decisions. So every win feels like it belongs to someone else.</dd>
+          <dt>Who you become</dt><dd>Someone who makes choices based on who they decided to be. You know what you want and why, and you stop living by other people's idea of &ldquo;enough.&rdquo;</dd>
+          <dt>Why Wreck the Room works</dt><dd>You can't change what you can't see. First you write down the old you and name it. Then you design the new you, before anything gets torn down.</dd>
         </dl>
       </div>
       <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
@@ -823,9 +826,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>Reclaimed Power</h3>
         <div class="fromto"><s>Suppressed</s> <span>&#8594;</span> <b>Unleashed</b></div>
         <dl class="evo-why">
-          <dt>What staying put costs you</dt><dd>You've learned to edit yourself. Softer in the room, smaller in the pitch, quiet about what you actually think. It works well enough to keep you successful and capped at the same time.</dd>
-          <dt>Who you become</dt><dd>The person who says the true thing and leads at full strength, without checking first whether it's allowed.</dd>
-          <dt>Why Wreck the Room works</dt><dd>If you've done therapy or coaching and still hit the same wall, this is why. The pattern was built to protect you, so willpower loses to it. Wreck It goes after the role itself, and the old reflex runs out of work to do.</dd>
+          <dt>What it's costing you</dt><dd>You've learned to hold back. Softer in meetings. Smaller in your pitch. Quiet about what you really think. It keeps you successful, and it keeps you stuck at the same time.</dd>
+          <dt>Who you become</dt><dd>The person who says what they really think and leads at full strength, without asking for permission first.</dd>
+          <dt>Why Wreck the Room works</dt><dd>If you've done therapy or coaching and still hit the same wall, here's why. That pattern was built to protect you, so willpower can't beat it. Wreck It goes after the reason the pattern exists, so it stops running your life.</dd>
         </dl>
       </div>
       <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
@@ -859,9 +862,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>Designed Life</h3>
         <div class="fromto"><s>Reactive</s> <span>&#8594;</span> <b>Proactive</b></div>
         <dl class="evo-why">
-          <dt>What staying put costs you</dt><dd>Your calendar belongs to everyone else. You built the business for freedom and ended up running it on reaction: other people's urgency, other people's priorities, the next fire.</dd>
-          <dt>Who you become</dt><dd>Someone living on a plan they drew. Your time and your work point the same direction, and you can feel it on an ordinary Tuesday.</dd>
-          <dt>Why Wreck the Room works</dt><dd>Tactics and productivity systems sit on top of the old structure, so they fade. Wrock It rebuilds the structure underneath, then anchors the new identity so it holds when things get busy.</dd>
+          <dt>What it's costing you</dt><dd>Your calendar belongs to everyone else. You built the business to be free, and now you spend your days reacting: other people's emergencies, other people's priorities, the next fire.</dd>
+          <dt>Who you become</dt><dd>Someone who lives by their own plan. How you spend your time finally matches what you care about, and you can feel it on a normal Tuesday.</dd>
+          <dt>Why Wreck the Room works</dt><dd>Productivity hacks sit on top of the old you, so they wear off. Wrock It rebuilds the foundation, so the change holds even when life gets busy.</dd>
         </dl>
       </div>
       <svg class="evo-art" viewBox="0 0 440 250" aria-hidden="true">
@@ -903,10 +906,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="label">04 &middot; What's included</div>
       <div class="solves">
         <div class="solves-k">What Blueprint solves</div>
-        <p>You're running a successful life on an identity you never chose, and it's costing you time you don't get back and money you're leaving on the table. Blueprint gives you the complete system to find that identity, take it apart and build the one you'd actually choose.</p>
+        <p>You built a successful life as someone you never chose to be. It's costing you time you can't get back and money you're leaving on the table. Blueprint gives you the full step-by-step system to see the old you, take it apart, and build the you that you'd actually choose.</p>
       </div>
       <h2>The plans, in full</h2>
-      <p class="lede">Everything in the Wreck the Room system across all three phases, priced out line by line. Hold it up against another year spent inside a room you didn't design.</p>
+      <p class="lede">Everything in the Wreck the Room program, with what each piece is worth. Compare it to the cost of another year stuck where you are.</p>
     </div>
     <div class="sheet reveal" role="group" aria-label="Blueprint contents">
       <div class="dims">
@@ -964,8 +967,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="label">05 &middot; The Architects</div>
       <h2>Who you become on the other side</h2>
       <div class="occupant"><s>Occupant</s><span class="to">&rarr;</span><b>Activated Architect</b></div>
-      <p class="lede">Picture a regular Monday a year from now. You make the hard call without running it past the old voices first. You say the true thing in the meeting. There's room in your calendar because you put it there, and the business is growing in the direction you chose. The success you already had finally feels like yours. That's an Activated Architect.</p>
-      <p style="color:var(--ink-soft);margin-top:18px">Blueprint is self-guided, and you still don't do it alone. On the way there you're one of the Architects, the community of people going through the program, with access to the Architects community on Kajabi. Same work, same walls, other people taking them down too.</p>
+      <p class="lede">Picture a regular Monday a year from now. You make the hard call without second-guessing yourself. You say what you really think in the meeting. There's free time on your calendar because you put it there. Your business is growing the way you want. The success you already had finally feels like yours. That's an Activated Architect.</p>
+      <p style="color:var(--ink-soft);margin-top:18px">You do Blueprint on your own, but you're not alone. You'll be one of the Architects, our private community on Kajabi, with other people doing the same work and tearing down the same walls.</p>
     </div>
   </div>
 </section>
@@ -979,30 +982,30 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="deepwork reveal">
       <h3>Done the retreats. Hired the mindset coach. Finished the training. <span>Nothing stuck.</span></h3>
-      <p>That was never about your effort. Lasting change takes deep transformation, and deep transformation takes deep work. Quick fixes never go that deep. Wreck the Room was built for the deep work.</p>
+      <p>That's not because you didn't try hard enough. Real, lasting change takes deep work, and quick fixes don't go deep enough. Wreck the Room was built for the deep work.</p>
     </div>
     <div class="fit-grid reveal">
       <div class="fit-col fit-for sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <h3>You, if <span class="stamp">Approved</span></h3>
         <ul>
           <li>You've built something real and still feel capped.</li>
-          <li>You're successful by every outside measure and disconnected on the inside.</li>
+          <li>You look successful on the outside, but you feel disconnected on the inside.</li>
           <li>You've hired mindset coaches, done the retreats and the trainings, and nothing has stuck.</li>
           <li>You're tired of quick fixes and want change that lasts.</li>
-          <li>You're self-directed. Nobody needs to check in on you for you to finish.</li>
+          <li>You finish what you start, even with no one checking in on you.</li>
         </ul>
       </div>
       <div class="fit-col fit-not sheet-card"><span class="tick tl"></span><span class="tick br"></span>
         <h3>Not you, if <span class="stamp">Redlined</span></h3>
         <ul>
           <li>You need live accountability or a group to actually finish something.<small>That's what <a href="#" data-link="council">Council</a> is for.</small></li>
-          <li>You're looking for tactics, scripts or a quick fix.<small>This is identity-level work. It takes time and it goes deep.</small></li>
-          <li>You're not ready to be honest with yourself in writing, alone, with no coach in the room.</li>
+          <li>You're looking for tactics, scripts or a quick fix.<small>This is deep work. It takes time.</small></li>
+          <li>You're not ready to be honest with yourself on paper, on your own.</li>
           <li>You want direct access to Jody throughout the process.<small>That's Council or Inner Circle.</small></li>
         </ul>
       </div>
     </div>
-    <p class="fit-note reveal">If the redlined list sounds like you, Blueprint is the wrong tier. Pick the one that fits. That's how this work actually gets done.</p>
+    <p class="fit-note reveal">If the red list sounds like you, Blueprint isn't the right fit. Pick the option that fits you. That's how this work actually gets done.</p>
   </div>
 </section>
 
@@ -1039,7 +1042,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="price-head reveal">
       <div class="label">08 &middot; Enroll</div>
       <h2>One price. Everything included.</h2>
-      <p class="lede" style="margin:0 auto">Put $5,000 next to what staying put is already costing you: another year of your time, revenue held at the old ceiling, and money spent on fixes that fade. Then decide which one costs more.</p>
+      <p class="lede" style="margin:0 auto">Put $5,000 next to what staying stuck already costs you: another year of your life, income stuck where it is, and money spent on fixes that don't last. Then decide which costs more.</p>
     </div>
     <div class="card reveal">
       <div class="card-top">
@@ -1073,7 +1076,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
       <div class="terms">
         <h4>Refund policy</h4>
-        <p>Blueprint is non-refundable. All sales are final, including the coaching add-on. You get lifetime access to the entire system the moment you enroll. Read the redlined list above before you buy. If it describes you, choose a different tier.</p>
+        <p>Blueprint is non-refundable. All sales are final, including the coaching add-on. You get lifetime access to the entire system the moment you enroll. Read the red &ldquo;Not you&rdquo; list above before you buy. If it sounds like you, choose a different option.</p>
       </div>
     </div>
   </div>
@@ -1086,13 +1089,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>Questions before you build</h2>
     </div>
     <ol class="notes reveal">
-      <li><details><summary>I've already done coaching, retreats and mindset work. Why would this be different?</summary><p>Most of that work helps you understand a pattern or manage it. Wreck the Room goes after the identity the pattern protects, in a set order: see it, take it apart, rebuild. If you keep hitting the same wall, that order is usually what's been missing.</p></details></li>
-      <li><details><summary>I don't have much time. Can I actually do this?</summary><p>You set the pace. There are 27 video lessons and 78 guided exercises, and you have lifetime access, so you can work through it on your own schedule. Compare that with the time the current pattern already takes from you every week.</p></details></li>
+      <li><details><summary>I've already done coaching, retreats and mindset work. Why would this be different?</summary><p>Most of that work helps you understand your patterns or cope with them. Wreck the Room goes after the reason the patterns exist, in a set order: see it, take it apart, rebuild. If you keep hitting the same wall, that missing order is usually why.</p></details></li>
+      <li><details><summary>I don't have much time. Can I actually do this?</summary><p>You set the pace. There are 27 video lessons and 78 guided exercises, and you have lifetime access, so you can work through it on your own schedule. Then compare that to the time your old patterns already cost you every week.</p></details></li>
       <li><details><summary>What if I get stuck doing it on my own?</summary><p>You'll have the Architects community on Kajabi. You can also add three 1:1 alignment coaching sessions with Jody at checkout for $2,000: one at the beginning, one in the middle and one at the end.</p></details></li>
       <li><details><summary>How is Blueprint different from Council and Inner Circle?</summary><p>Blueprint is the complete system, self-guided. Council adds group coaching with Jody. Inner Circle is private 1:1 coaching with Jody. If you know you need someone in the room with you, <a href="#" data-link="council">start with Council</a>.</p></details></li>
       <li><details><summary>Is there a payment plan?</summary><p>Yes. Pay $5,000 in full, or 2 monthly payments of $2,650. You choose at checkout.</p></details></li>
-      <li><details><summary>Is this therapy?</summary><p>No. Wreck the Room is identity and personal development work. It isn't a substitute for therapy or for medical or mental health care. If you're in crisis or working through trauma, please work with a licensed professional.</p></details></li>
-      <li><details><summary>Can I get a refund?</summary><p>No. Blueprint is non-refundable and all sales are final, including the coaching add-on. Read the redlined list above before you buy.</p></details></li>
+      <li><details><summary>Is this therapy?</summary><p>No. Wreck the Room is personal growth work. It isn't a substitute for therapy or for medical or mental health care. If you're in crisis or working through trauma, please work with a licensed professional.</p></details></li>
+      <li><details><summary>Can I get a refund?</summary><p>No. Blueprint is non-refundable and all sales are final, including the coaching add-on. Read the red &ldquo;Not you&rdquo; list above before you buy.</p></details></li>
     </ol>
   </div>
 </section>
@@ -1114,7 +1117,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="ornament" aria-hidden="true"><i class="s"></i><i></i><i class="s"></i></div>
     <h2 class="worn"><span class="line"><span class="w">Wreck</span> what's not working.</span><span class="line"><span class="b">Build</span> what does.</span></h2>
-    <p class="lede">The question at the top of this page doesn't go away when you close the tab. It waits, another year goes by, and the room gets a little more permanent. Blueprint is how you answer it.</p>
+    <p class="lede">The question at the top of this page doesn't go away when you close this tab. Another year goes by, and the old room gets harder to leave. Blueprint is how you answer it.</p>
     <a class="btn" href="#enroll">Start the Blueprint <span class="arrow" aria-hidden="true">&rarr;</span></a>
     <p class="final-q">Did I design this life, or did I just move into it?</p>
   </div>

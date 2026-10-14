@@ -23,51 +23,17 @@ CATALOG_URL = "https://hdmusicnow.sourceaudio.com/#!label?l=1222458&page=albums"
 CONTACT_ANCHOR = "#section-1792000000008"
 IMDB_URL = "https://www.imdb.com/name/nm3112237/"
 
-# (title, slug, credit type, network/studio)
-POSTERS = [
-    ("The Fall Guy", "the-fall-guy", "Feature Film", "Universal"),
-    ("Superman", "superman", "Trailer", "Warner Bros. / DC"),
-    ("Daredevil: Born Again", "daredevil-born-again", "TV Series", "Disney+"),
-    ("Grey's Anatomy", "grey-s-anatomy", "TV Series", "ABC"),
-    ("The Fall of the House of Usher", "the-fall-of-the-house-of-usher", "TV Series", "Netflix"),
-    ("Spirited", "spirited", "Feature Film", "Apple TV+"),
-    ("Street Fighter", "street-fighter", "Feature Film", "Paramount"),
-    ("Spider-Noir", "spider-noir", "Trailer", "Prime Video"),
-    ("Migration", "migration", "Trailer", "Universal / Illumination"),
-    ("Station 19", "station-19", "TV Series", "ABC"),
-    ("Riverdale", "riverdale", "TV Series", "The CW"),
-    ("Magnum P.I.", "magnum-p-i", "TV Series", "NBC"),
-    ("Fantasy Island", "fantasy-island", "Trailer", "Sony / Blumhouse"),
-    ("Sistas", "sistas", "TV Series", "BET"),
-    ("Three Women", "three-women", "TV Series", "Starz"),
-    ("Animal Control", "animal-control", "TV Series", "FOX"),
-    ("Alert: Missing Persons Unit", "alert-missing-persons-unit", "TV Series", "FOX"),
-    ("It's What's Inside", "it-s-what-s-inside", "Indie Film", "Netflix"),
-    ("Landscape with Invisible Hand", "landscape-with-invisible-hand", "Trailer", "MGM"),
-    ("The End of Oak Street", "the-end-of-oak-street", "Trailer", "Warner Bros."),
-    ("The Front Room", "the-front-room", "Feature Film", "A24"),
-    ("Not Without Hope", "not-without-hope", "Feature Film", "Lionsgate"),
-    ("The Sheep Detectives", "the-sheep-detectives", "Feature Film", "MGM"),
-]
+from credits import BRANDS, CATEGORIES, PRESS, SPEAKING, SUPERVISION  # noqa: E402
 
-CREDITS = {
-    "TV Series": ["SEAL Team", "Station 19", "The Fall of the House of Usher", "Self Portrait as a Coffee Pot",
-                  "Demascus", "Riverdale", "Little America", "Animal Control", "Alert: Missing Persons",
-                  "Sirens", "Lopez vs. Lopez", "Call Me Kat", "Three Women", "Grey's Anatomy",
-                  "Daredevil: Born Again", "The Rookie", "Magnum P.I.", "The Way Home", "Selling Sunset",
-                  "I Can See Your Voice", "Say It Loud", "Sweet Caroline", "Sistas", "The Murder of JonBenet"],
-    "Feature Film": ["Street Fighter", "The Front Room", "Tapawingo", "The Fall Guy", "Not Without Hope",
-                     "Spirited", "One Mile", "The Sheep Detectives"],
-    "Trailer": ["Superman", "Spider-Noir", "Migration", "Landscape with Invisible Hand", "Fantasy Island",
-                "Skyscraper Live", "The End of Oak Street", "Runner"],
-    "Documentary": ["Mistress Dispeller", "Ferragamo", "Love and Treason"],
-    "Indie Film": ["Sisters of Ukraine", "It's What's Inside", "Lineage", "Idea of Progress", "An Expectation"],
-    "Commercial / Blanket": ["Sweeney Todd (Broadway Revival)", "Mariposa", "Slipstream",
-                             "Anthem / Legendary Sound Ideas", "The Instigators"],
-}
+# Poster manifest written by the poster fetch step: [{title, slug, kind, net, group}]
+# group is "placement" (music licensed into the project) or "supervision" (Jody's supervision/clearance credit).
+MANIFEST = json.loads((HERE / "posters" / "manifest.json").read_text())
+PLACEMENT_POSTERS = [p for p in MANIFEST if p["group"] == "placement"]
+SUPERVISION_POSTERS = [p for p in MANIFEST if p["group"] == "supervision"]
 
-CLIENTS = ["Netflix", "Disney+", "Apple TV+", "HBO", "Hulu", "ABC", "NBC", "CBS", "Showtime", "Universal",
-           "Warner Bros.", "Sony", "The CW", "BET", "MTV", "Bunim/Murray"]
+CLIENTS = ["Netflix", "HBO", "AMC", "Marvel", "Disney+", "Apple TV+", "Amazon", "Hulu", "FX", "Showtime", "ABC",
+           "NBC", "CBS", "FOX", "Universal", "Warner Bros.", "Sony", "Paramount", "Lionsgate", "Focus Features", "A24",
+           "Searchlight", "The CW", "Starz", "TNT", "E!", "MTV", "BET", "Nickelodeon", "Adult Swim"]
 
 LABELS = [
     ("Flagship Catalog", "HD Music Now",
@@ -102,16 +68,40 @@ def poster_src(slug, base):
     return f"{base}{slug}.jpg"
 
 
+def _card(p, base, caption):
+    return (f'<figure class="hd-card"><img src="{poster_src(p["slug"], base)}" alt="{e(p["title"])} poster" loading="lazy">'
+            f'<figcaption><span>{caption}</span><strong>{e(p["title"])}</strong></figcaption></figure>')
+
+
+def _marquee(items):
+    return "".join(f"<span>{e(c)}</span><i></i>" for c in items) * 2
+
+
 def build(base):
-    ticker = "".join(f"<span>{e(c)}</span><i></i>" for c in CLIENTS) * 2
+    sup_roles = {t: (role, year) for t, role, year, _ in SUPERVISION}
 
-    cards = "".join(
-        f'<figure class="hd-card"><img src="{poster_src(slug, base)}" alt="{e(t)} poster" loading="lazy">'
-        f'<figcaption><span>{e(kind)} &middot; {e(net)}</span><strong>{e(t)}</strong></figcaption></figure>'
-        for t, slug, kind, net in POSTERS)
+    cards = "".join(_card(p, base, f'{e(p["kind"])} &middot; {e(p["net"])}') for p in PLACEMENT_POSTERS)
+    def sup_role(title):  # poster titles may be short forms of the IMDb title
+        return sup_roles.get(title) or next((v for t, v in sup_roles.items() if t.startswith(title)), None)
 
-    roll = "".join(f"<h5>{e(cat)}</h5>" + "".join(f"<div>{e(t)}</div>" for t in titles)
-                   for cat, titles in CREDITS.items())
+    sup_cards = "".join(
+        _card(p, base, f'{e(sup_role(p["title"])[0])} &middot; {sup_role(p["title"])[1]}')
+        for p in SUPERVISION_POSTERS if sup_role(p["title"]))
+
+    tabs = "".join(
+        f'<button class="hd-tab{" on" if i == 0 else ""}" data-tab="{i}">{e(name)} <sup>{len(items)}</sup></button>'
+        for i, (name, items) in enumerate(CATEGORIES))
+    panels = "".join(
+        f'<ul class="hd-panel{" on" if i == 0 else ""}" data-panel="{i}">'
+        + "".join(f"<li><b>{e(t)}</b>{f'<span>{e(n)}</span>' if n else ''}</li>" for t, n in items)
+        + "</ul>"
+        for i, (_, items) in enumerate(CATEGORIES))
+    total_placements = len({t for _, items in CATEGORIES for t, _ in items})
+
+    sup_rows = "".join(
+        f'<li><span class="hd-yr">{year}</span><b>{e(t)}</b><span class="hd-role">{e(role)}</span>'
+        f'<span class="hd-kind">{e(kind)}</span></li>'
+        for t, role, year, kind in SUPERVISION)
 
     labels = "".join(
         f'<a class="hd-label hd-reveal" href="{e(url)}" target="_blank" rel="noopener">'
@@ -120,11 +110,16 @@ def build(base):
         for k, name, desc, cta, url in LABELS)
 
     subpubs = " <i>&middot;</i> ".join(e(s) for s in SUBPUBS)
+    speaking = "".join(f"<li>{e(s)}</li>" for s in SPEAKING)
+    press = "".join(f"<li>{e(s)}</li>" for s in PRESS)
+    all_slugs = ",".join(p["slug"] for p in MANIFEST)
 
     return TEMPLATE.format(
-        css=_min(CSS), wall="", ticker=ticker, cards=cards, roll=roll, labels=labels,
-        subpubs=subpubs, catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL,
-        js=JS.replace("__BASE__", base).replace("__SLUGS__", ",".join(p[1] for p in POSTERS)))
+        css=_min(CSS), ticker=_marquee(CLIENTS), brands=_marquee(BRANDS), cards=cards, sup_cards=sup_cards,
+        tabs=tabs, panels=panels, total=f"{total_placements // 50 * 50}+", total_n=total_placements // 50 * 50, sup_rows=sup_rows,
+        sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press,
+        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL,
+        js=JS.replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
 CSS = r"""
@@ -204,6 +199,8 @@ CSS = r"""
   mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);}
 .hd-track{display:inline-block;animation:hd-left 55s linear infinite;}
 .hd-track span{font-family:'Bebas Neue',sans-serif;font-size:54px;letter-spacing:.05em;color:rgba(255,255,255,.9);margin:0 34px;vertical-align:middle;}
+.hd-track.rev{animation-name:hd-right;}
+.hd-brands{border-top:1px solid rgba(255,255,255,.06);}
 .hd-track i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--vio);box-shadow:0 0 14px var(--vio);vertical-align:middle;}
 
 /* PROBLEM */
@@ -259,16 +256,45 @@ CSS = r"""
 .hd-car-nav:hover{background:var(--brand);border-color:var(--vio2);box-shadow:0 0 30px rgba(177,75,244,.7);}
 .hd-car-prev{left:22px;}.hd-car-next{right:22px;}
 
-/* CREDITS ROLL */
-.hd-roll-wrap{max-width:760px;margin:80px auto 0;}
-.hd-roll-k{text-align:center;font-size:11px;font-weight:700;letter-spacing:.42em;color:#6b7382;}
-.hd-roll{position:relative;height:540px;overflow:hidden;margin-top:20px;
-  -webkit-mask-image:linear-gradient(transparent,#000 15%,#000 85%,transparent);mask-image:linear-gradient(transparent,#000 15%,#000 85%,transparent);}
-.hd-roll-in{animation:hd-roll 120s linear infinite;text-align:center;}
-.hd-roll:hover .hd-roll-in{animation-play-state:paused;}
-.hd-roll h5{font-size:20px !important;letter-spacing:.38em !important;color:var(--vio2) !important;margin:60px 0 16px !important;}
-.hd-roll div div,.hd-roll-in>div{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:.04em;color:#fff;line-height:1.3;}
-@keyframes hd-roll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+/* FILMOGRAPHY TABS */
+.hd-filmo{margin-top:90px;}
+.hd-filmo-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;border-bottom:1px solid #1c2230;padding-bottom:18px;}
+.hd-filmo-head .hd-eb{margin:0;}.hd-filmo-head p{margin:0;font-size:14px;}
+.hd-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 30px;}
+.hd-tab{font:700 12px/1 Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#c7cdd8;background:transparent;
+  border:1px solid #2a3142;border-radius:40px;padding:13px 20px;cursor:pointer;transition:all .25s;}
+.hd-tab sup{font-size:10px;color:var(--vio2);margin-left:4px;letter-spacing:0;}
+.hd-tab:hover{border-color:var(--vio2);color:#fff;}
+.hd-tab.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 0 30px rgba(177,75,244,.5);}
+.hd-tab.on sup{color:#fff;}
+.hd-panels{position:relative;max-height:560px;overflow-y:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:#3a2a55 transparent;
+  -webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent);}
+.hd-panel{display:none;columns:3;column-gap:40px;list-style:none;margin:0;padding:0 0 60px;}
+.hd-panel.on{display:block;animation:hd-up .6s ease;}
+.hd-panel li{break-inside:avoid;padding:9px 0;border-bottom:1px solid #12161f;display:flex;justify-content:space-between;gap:12px;align-items:baseline;transition:padding .25s;}
+.hd-panel li:hover{padding-left:8px;}
+.hd-panel li b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:23px;letter-spacing:.03em;color:#fff;line-height:1.1;}
+.hd-panel li:hover b{color:var(--vio2);}
+.hd-panel li span{font-size:11px;font-weight:600;letter-spacing:.08em;color:#6b7382;text-transform:uppercase;white-space:nowrap;}
+
+/* SUPERVISION CREDITS LIST */
+.hd-car-sup{margin-top:20px;}
+.hd-credlist{list-style:none;margin:20px 0 0;padding:0 6px 50px 0;columns:2;column-gap:50px;max-height:640px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#6b3b8f transparent;-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent);}
+.hd-credlist li{break-inside:avoid;display:grid;grid-template-columns:52px 1fr auto;gap:4px 14px;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1);}
+.hd-credlist b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:24px;color:#fff;letter-spacing:.03em;line-height:1.05;}
+.hd-yr{font-size:12px;font-weight:700;color:#e9d5ff;letter-spacing:.1em;}
+.hd-role{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#e9d5ff;border:1px solid rgba(233,213,255,.35);padding:5px 9px;border-radius:30px;white-space:nowrap;}
+.hd-kind{grid-column:2;font-size:12px;color:#b9a9cc;}
+.hd-cred-note{margin-top:24px;font-size:13px;color:#b9a9cc !important;}
+.hd-cred-note a{color:#fff !important;border-bottom:1px solid var(--vio2);}
+
+/* SPEAKING & PRESS */
+.hd-voice{background:#000;padding:110px 0;}
+.hd-voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;}
+.hd-voice h3{font-size:44px !important;margin-bottom:26px;}
+.hd-voice ul{list-style:none;margin:0;padding:0;}
+.hd-voice li{font-size:17px;color:#d5dae3;padding:14px 0;border-bottom:1px solid #1c2230;display:flex;align-items:center;gap:14px;}
+.hd-voice li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--vio);box-shadow:0 0 10px var(--vio);flex:none;}
 
 /* ROSTER */
 .hd-roster{background:radial-gradient(ellipse 50% 60% at 0% 100%,rgba(56,189,248,.12),transparent 70%),var(--bg);}
@@ -331,6 +357,9 @@ CSS = r"""
   .hd-deep-row p{grid-column:2;}
   .hd-sup-side{border-left:0;padding-left:0;}
   .hd-links a:not(.hd-btn){display:none;}
+  .hd-panel{columns:2;}
+  .hd-credlist{columns:1;}
+  .hd-voice-grid{grid-template-columns:1fr;gap:50px;}
 }
 @media(max-width:640px){
   .hd{font-size:16px;}
@@ -348,12 +377,15 @@ CSS = r"""
   .hd-car-nav{display:none;}
   .hd-track span{font-size:36px;margin:0 20px;}
   .hd-stat b{font-size:60px;}
-  .hd-roll{height:440px;}
-  .hd-roll-in>div{font-size:28px;}
+  .hd-panel{columns:1;}
+  .hd-panels{max-height:480px;}
+  .hd-credlist{max-height:520px;}
+  .hd-credlist li{grid-template-columns:44px 1fr;}
+  .hd-role{grid-column:2;justify-self:start;}
   .hd-deep-n{font-size:50px;}
 }
 @media(prefers-reduced-motion:reduce){
-  .hd-wall-row,.hd-track,.hd-beam,.hd-roll-in,.hd-scroll{animation:none !important;}
+  .hd-wall-row,.hd-track,.hd-beam,.hd-scroll{animation:none !important;}
   .hd-up,.hd-reveal{opacity:1 !important;transform:none !important;animation:none !important;}
 }
 """
@@ -366,8 +398,12 @@ JS = r"""
   function shuffled(seed){var a=slugs.slice(),s=seed;for(var i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;var j=Math.floor(s/233280*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a.slice(0,12);}
   for(var r=0;r<4;r++){var row=document.createElement('div');row.className='hd-wall-row'+(r%2?' rev':'');row.style.animationDuration=(90+r*20)+'s';
     var pick=shuffled(r+3),h='';for(var k=0;k<2;k++)pick.forEach(function(sl){h+='<img src="'+base+sl+'.jpg" alt="">';});row.innerHTML=h;wall.appendChild(row);}
-  // seamless credits roll
-  var rin=root.querySelector('.hd-roll-in');if(rin){var cl=rin.firstElementChild.cloneNode(true);cl.setAttribute('aria-hidden','true');rin.appendChild(cl);}
+  // filmography tabs
+  var tabs=root.querySelectorAll('.hd-tab'),panels=root.querySelectorAll('.hd-panel');
+  tabs.forEach(function(t){t.addEventListener('click',function(){var i=t.getAttribute('data-tab');
+    tabs.forEach(function(x){x.classList.toggle('on',x===t);});
+    panels.forEach(function(p){p.classList.toggle('on',p.getAttribute('data-panel')===i);});
+    var box=root.querySelector('.hd-panels');if(box)box.scrollTop=0;});});
   // nav goes solid on scroll
   var nav=root.querySelector('.hd-nav');
   function onScroll(){nav.classList.toggle('solid',window.scrollY>60);}
@@ -375,7 +411,7 @@ JS = r"""
   // reveal on scroll
   var els=root.querySelectorAll('.hd-reveal');
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.15});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:0,rootMargin:'0px 0px -8% 0px'});
     els.forEach(function(el){io.observe(el);});
   }else{els.forEach(function(el){el.classList.add('in');});}
   // count-up stats
@@ -385,20 +421,21 @@ JS = r"""
       function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1600,1),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=v+suf;if(p<1)requestAnimationFrame(f);}
       requestAnimationFrame(f);}},{threshold:.5});o.observe(el);
   });
-  // poster carousel
-  var car=root.querySelector('.hd-car'),tr=car.querySelector('.hd-car-track');
-  function step(){var c=tr.querySelector('.hd-card');return c?(c.offsetWidth+24)*2:500;}
-  function next(){if(tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-10){tr.scrollTo({left:0});}else{tr.scrollBy({left:step()});}}
-  function prev(){if(tr.scrollLeft<=5){tr.scrollTo({left:tr.scrollWidth});}else{tr.scrollBy({left:-step()});}}
-  car.querySelector('.hd-car-next').addEventListener('click',next);
-  car.querySelector('.hd-car-prev').addEventListener('click',prev);
-  var paused=false;
-  car.addEventListener('mouseenter',function(){paused=true;});
-  car.addEventListener('mouseleave',function(){paused=false;});
-  car.addEventListener('touchstart',function(){paused=true;},{passive:true});
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    setInterval(function(){if(!paused&&!document.hidden)next();},3000);
-  }
+  // poster carousels
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.querySelectorAll('.hd-car').forEach(function(car,ci){
+    var tr=car.querySelector('.hd-car-track');if(!tr)return;
+    function step(){var c=tr.querySelector('.hd-card');return c?(c.offsetWidth+24)*2:500;}
+    function next(){if(tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-10){tr.scrollTo({left:0});}else{tr.scrollBy({left:step()});}}
+    function prev(){if(tr.scrollLeft<=5){tr.scrollTo({left:tr.scrollWidth});}else{tr.scrollBy({left:-step()});}}
+    car.querySelector('.hd-car-next').addEventListener('click',next);
+    car.querySelector('.hd-car-prev').addEventListener('click',prev);
+    var paused=false;
+    car.addEventListener('mouseenter',function(){paused=true;});
+    car.addEventListener('mouseleave',function(){paused=false;});
+    car.addEventListener('touchstart',function(){paused=true;},{passive:true});
+    if(!reduce){setInterval(function(){if(!paused&&!document.hidden)next();},3000+ci*700);}
+  });
 })();
 """
 
@@ -414,7 +451,7 @@ TEMPLATE = """<style>{css}</style>
 </nav>
 
 <header class="hd-hero">
-  <div class="hd-wall" aria-hidden="true">{wall}</div>
+  <div class="hd-wall" aria-hidden="true"></div>
   <div class="hd-shade"></div><div class="hd-glow"></div><div class="hd-beam"></div>
   <div class="hd-hero-in">
     <span class="hd-eb hd-up">In a world where the deadline was yesterday&hellip;</span>
@@ -424,7 +461,7 @@ TEMPLATE = """<style>{css}</style>
       <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search the Catalog</a>
       <a class="hd-btn o" href="{contact}">Send Us a Brief</a>
     </div>
-    <p class="hd-heard hd-up" style="animation-delay:1s">AS HEARD IN&nbsp; <b>THE FALL GUY &middot; GREY'S ANATOMY &middot; DAREDEVIL: BORN AGAIN &middot; SUPERMAN (TRAILER)</b></p>
+    <p class="hd-heard hd-up" style="animation-delay:1s">AS HEARD IN&nbsp; <b>BREAKING BAD &middot; AVENGERS: ENDGAME (TRAILER) &middot; DEXTER &middot; THE FALL GUY</b></p>
   </div>
   <div class="hd-scroll"></div>
 </header>
@@ -460,8 +497,8 @@ TEMPLATE = """<style>{css}</style>
     <div class="hd-stats hd-reveal" style="transition-delay:.2s">
       <div class="hd-stat"><b data-count="20" data-suffix="+">20+</b><span>Years as a sync agent and as a music supervisor</span></div>
       <div class="hd-stat"><b data-count="500" data-suffix="K+">500K+</b><span>Sound effects from Sound Ideas, Hollywood Edge &amp; BOOM Library</span></div>
-      <div class="hd-stat"><b data-count="50" data-suffix="+">50+</b><span>Recent credits across series, features, trailers &amp; docs</span></div>
-      <div class="hd-stat"><b data-count="20" data-suffix=" YRS">20 YRS</b><span>Representing the Naxos classical, vintage &amp; world catalog</span></div>
+      <div class="hd-stat"><b data-count="{total_n}" data-suffix="+">{total}</b><span>Placements across TV, film, trailers, ads &amp; games</span></div>
+      <div class="hd-stat"><b data-count="{sup_total}" data-suffix="">{sup_total}</b><span>Projects worked on in music supervision, clearance &amp; coordination</span></div>
     </div>
   </div>
 </section>
@@ -470,17 +507,23 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-wrap hd-center hd-reveal">
     <span class="hd-eb">Now Showing</span>
     <h2 class="hd-h2">Heard <span class="hd-grad">on</span></h2>
-    <p>Features, series, trailers, docs and campaigns. Hover a poster for the credit.</p>
+    <p>Music we've placed in series, features, trailers, campaigns and games. Hover a poster for the credit.</p>
   </div>
   <div class="hd-car">
     <button class="hd-car-nav hd-car-prev" aria-label="Previous posters">&#8249;</button>
     <div class="hd-car-track">{cards}</div>
     <button class="hd-car-nav hd-car-next" aria-label="Next posters">&#8250;</button>
   </div>
-  <div class="hd-roll-wrap hd-reveal">
-    <div class="hd-roll-k">THE FULL CREDITS</div>
-    <div class="hd-roll"><div class="hd-roll-in"><div>{roll}</div></div></div>
+  <div class="hd-wrap hd-filmo hd-reveal">
+    <div class="hd-filmo-head"><span class="hd-eb">The Full Filmography</span><p>Partial list of placements. Pick a category.</p></div>
+    <div class="hd-tabs" role="tablist">{tabs}</div>
+    <div class="hd-panels">{panels}</div>
   </div>
+</section>
+
+<section class="hd-ticker hd-brands">
+  <div class="hd-ticker-k">ADVERTISING &amp; CAMPAIGNS FOR</div>
+  <div class="hd-marquee"><div class="hd-track rev">{brands}</div></div>
 </section>
 
 <section class="hd-sec hd-roster" id="hd-roster">
@@ -508,17 +551,37 @@ TEMPLATE = """<style>{css}</style>
 <section class="hd-sec hd-sup" id="hd-sup">
   <div class="hd-wrap hd-sup-grid">
     <div class="hd-reveal">
-      <span class="hd-eb">Music Supervision &amp; Clearance</span>
+      <span class="hd-eb">Music Supervision &middot; Clearance &middot; Coordination</span>
       <h2 class="hd-h2" style="margin-bottom:28px">Need more<br>than a track?</h2>
-      <p>Bring us in as your music supervisor. We source, negotiate and clear music for films, TV, web series and trailers, and help brands define one consistent sound across everything they make.</p>
+      <p>Bring us in on your project. We source, negotiate and clear music for films, series, docs and trailers, and help brands define one consistent sound across everything they make.</p>
       <div class="hd-ctas" style="justify-content:flex-start;margin-top:34px">
         <a class="hd-btn p" href="{contact}">Start a Project</a>
-        <a class="hd-btn o" href="{imdb}" target="_blank" rel="noopener">View IMDb Credits</a>
+        <a class="hd-btn o" href="{imdb}" target="_blank" rel="noopener">Full IMDb Credits</a>
       </div>
     </div>
     <div class="hd-sup-side hd-reveal" style="transition-delay:.2s">
-      <ul><li>Film</li><li>Television</li><li>Trailers &amp; Promos</li><li>Web Series</li><li>Brands</li></ul>
+      <ul><li>Film</li><li>Television</li><li>Docs &amp; Unscripted</li><li>Trailers &amp; Promos</li><li>Brands</li></ul>
     </div>
+  </div>
+  <div class="hd-wrap hd-reveal" style="position:relative;z-index:1;margin-top:90px">
+    <span class="hd-eb">Projects I've Worked On</span>
+    <p style="max-width:640px;color:#d9cfe6">Music supervision, clearance and coordination credits, with the exact role on each. Hover a poster for the credit.</p>
+  </div>
+  <div class="hd-car hd-car-sup">
+    <button class="hd-car-nav hd-car-prev" aria-label="Previous posters">&#8249;</button>
+    <div class="hd-car-track">{sup_cards}</div>
+    <button class="hd-car-nav hd-car-next" aria-label="Next posters">&#8250;</button>
+  </div>
+  <div class="hd-wrap hd-reveal" style="position:relative;z-index:1">
+    <ul class="hd-credlist">{sup_rows}</ul>
+    <p class="hd-cred-note">Source: IMDb. <a href="{imdb}" target="_blank" rel="noopener">View the full profile &rarr;</a></p>
+  </div>
+</section>
+
+<section class="hd-sec hd-voice">
+  <div class="hd-wrap hd-voice-grid">
+    <div class="hd-reveal"><span class="hd-eb">On Stage</span><h3>Speaking &amp; guest lectures</h3><ul>{speaking}</ul></div>
+    <div class="hd-reveal" style="transition-delay:.15s"><span class="hd-eb">On Air</span><h3>Podcasts, radio &amp; features</h3><ul>{press}</ul></div>
   </div>
 </section>
 

@@ -14,6 +14,12 @@ PATHS = {
     "es": {"home": "/es", "about": "/about_es", "albums": "/albums_es", "placements": "/placements_es"},
 }
 
+# Test pages (published alongside the live site for review; mount with data-test="1").
+TEST_PATHS = {
+    "en": {"home": "/new-home", "about": "/new-about", "albums": "/new-albums", "placements": "/new-placements"},
+    "es": {"home": "/new-home-es", "about": "/new-about-es", "albums": "/new-albums-es", "placements": "/new-placements-es"},
+}
+
 # Category names are the English keys used in the Google Sheet; CATS maps them to Spanish.
 ALBUM_CATS = ["Tropical & Salsa", "Urbano", "Regional Mexican & Tejano", "Cinematic Underscore", "TV Packages", "Holiday"]
 PLACEMENT_CATS = ["TV & Streaming", "News & Talk", "Sports", "Ads", "Video Games"]

@@ -36,7 +36,7 @@ def _min(css):
 
 def site_data(base, fallback, preview, audio="", tracks=""):
     return {
-        "t": data.T, "faq": data.FAQ, "paths": data.PATHS, "apm": data.APM_URL,
+        "t": data.T, "faq": data.FAQ, "paths": data.PATHS, "testPaths": data.TEST_PATHS, "apm": data.APM_URL,
         "pdf": {"en": data.PDF_EN, "es": data.PDF_ES},
         "albums": [{"id": k, "title": t, "artist": a, "cat": c, "img": i, "link": ""} for k, t, a, c, i in data.ALBUMS],
         "placements": [{"title": t, "net": n, "cat": c, "img": i} for t, n, c, i in data.PLACEMENTS],
@@ -572,7 +572,7 @@ function route(){
   else{lang=M.getAttribute('data-lang')==='es'?'es':'en';page=M.getAttribute('data-page')||'home';}
   t=D.t[lang];
 }
-function href(p,l){l=l||lang;return D.preview?'#/'+l+'/'+p:D.paths[l][p];}
+function href(p,l){l=l||lang;return D.preview?'#/'+l+'/'+p:(M.getAttribute('data-test')?D.testPaths:D.paths)[l][p];}
 function cat(c){return lang==='es'?(D.catsEs[c]||c):c;}
 function drive(v){var m=String(v).match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);return m?'https://lh3.googleusercontent.com/d/'+m[1]+'=w900':v;}
 function src(v,kind,thumb){v=String(v||'').trim();if(!v)return '';if(/^https?:\/\//.test(v))return drive(v);v=v.replace(/\.jpg$/i,'');return D.base+kind+'/'+(thumb?'thumb/':'')+v+'.jpg';}

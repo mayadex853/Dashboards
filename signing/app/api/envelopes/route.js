@@ -9,8 +9,9 @@ export const POST = route(async (req) => {
   const form = await req.formData();
   const payload = JSON.parse(form.get("payload") || "{}");
   const file = form.get("file");
-  if (!payload.recipients?.length) throw httpError("Add at least one signer");
-  for (const r of payload.recipients) if (!r.name || !/^\S+@\S+\.\S+$/.test(r.email || "")) throw httpError(`Signer needs a name and valid email`);
+  if (!payload.recipients?.some((r) => r.kind !== "cc")) throw httpError("Add at least one person who needs to sign");
+  for (const r of payload.recipients)
+    if (!r.name || !/^\S+@\S+\.\S+$/.test(r.email || "")) throw httpError(`Every recipient needs a name and a valid email`);
   const env = await createEnvelope({
     ...payload,
     pdfBytes: file && typeof file !== "string" ? new Uint8Array(await file.arrayBuffer()) : undefined,

@@ -43,8 +43,8 @@ function Send() {
     setSigners(
       template.roles.map((r, i) =>
         r.kind === "me"
-          ? { name: profile.data?.full_name || "", email: profile.data?.email || "", routing_order: i + 1, is_me: true, roleName: r.name }
-          : { name: "", email: "", routing_order: i + 1, roleName: r.name }
+          ? { name: profile.data?.full_name || "", email: profile.data?.email || "", routing_order: i + 1, is_me: true, roleName: r.name, role_index: i, kind: "signer" }
+          : { name: "", email: "", routing_order: i + 1, roleName: r.name, role_index: i, kind: "signer" }
       )
     );
   }, [template, profile]);
@@ -71,7 +71,8 @@ function Send() {
     setFields([]);
   };
 
-  const roles = template ? template.roles : signers.map((s, i) => ({ name: s.is_me ? "Me" : s.name || `Signer ${i + 1}`, kind: s.is_me ? "me" : "other" }));
+  const signerOnly = signers.filter((s) => s.kind !== "cc");
+  const roles = template ? template.roles : signerOnly.map((s, i) => ({ name: s.is_me ? "Me" : s.name || `Signer ${i + 1}`, kind: s.is_me ? "me" : "other" }));
 
   const submit = async (send) => {
     setErr("");
@@ -89,7 +90,11 @@ function Send() {
           templateId: template?.id,
           fields: template ? undefined : fields,
           values,
-          recipients: signers.map((s, i) => ({ ...s, role_index: i })),
+          recipients: signers.map((orig) => {
+            const { roleName, ...s } = orig;
+            const cc = s.kind === "cc";
+            return { ...s, kind: cc ? "cc" : "signer", role_index: cc ? -1 : template ? s.role_index : signerOnly.indexOf(orig) };
+          }),
           send,
         })
       );
@@ -141,7 +146,7 @@ function Send() {
 
         {(template || file) && (
           <div className="card">
-            <h2>Signers & order</h2>
+            <h2>Recipients</h2>
             <SignerList signers={signers} setSigners={setSigners} profile={profile} fixedRoles={!!template} />
           </div>
         )}

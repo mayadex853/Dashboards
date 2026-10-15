@@ -11,7 +11,7 @@ export default async function Dashboard() {
 
   const rows = envelopes.map((e) => {
     const recs = (byEnv[e.id] || []).sort((a, b) => a.routing_order - b.routing_order);
-    const pending = recs.filter((r) => r.status !== "signed");
+    const pending = recs.filter((r) => r.kind !== "cc" && r.status !== "signed");
     const order = pending.length ? Math.min(...pending.map((r) => r.routing_order)) : null;
     const waitingOn = e.status === "sent" ? pending.filter((r) => r.routing_order === order) : [];
     return { ...e, recs, waitingOn, myTurn: waitingOn.some((r) => r.is_me) };
@@ -81,7 +81,7 @@ export default async function Dashboard() {
                   <td className="small">
                     {e.recs.map((r) => (
                       <span key={r.id} style={{ marginRight: 10, color: r.status === "signed" ? "var(--good)" : e.waitingOn.includes(r) ? "var(--warn)" : "var(--muted)" }}>
-                        {r.routing_order}. {r.is_me ? "You" : r.name} {r.status === "signed" ? "✓" : ""}
+                        {r.kind === "cc" ? "CC" : `${r.routing_order}.`} {r.is_me ? "You" : r.name} {r.status === "signed" ? "✓" : ""}
                       </span>
                     ))}
                   </td>

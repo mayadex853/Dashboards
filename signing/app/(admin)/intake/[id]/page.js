@@ -114,7 +114,7 @@ export default function IntakeDetail({ params }) {
                     </div>
                   </>
                 )}
-                <h3>Signers & order</h3>
+                <h3>Recipients</h3>
                 <SignerList signers={signers} setSigners={setSigners} profile={profile} fixedRoles />
                 <div className="row end">
                   <button className="btn ghost" disabled={busy || !intake.answers} onClick={() => generate(false)}>Create draft</button>

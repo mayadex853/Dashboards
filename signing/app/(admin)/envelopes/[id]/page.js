@@ -38,9 +38,9 @@ export default function EnvelopePage({ params }) {
     }
   };
 
-  const pending = recipients.filter((r) => r.status !== "signed");
+  const pending = recipients.filter((r) => r.kind !== "cc" && r.status !== "signed");
   const order = pending.length ? Math.min(...pending.map((r) => r.routing_order)) : null;
-  const isTurn = (r) => e.status === "sent" && r.status !== "signed" && r.routing_order === order;
+  const isTurn = (r) => r.kind !== "cc" && e.status === "sent" && r.status !== "signed" && r.routing_order === order;
 
   return (
     <>
@@ -62,15 +62,15 @@ export default function EnvelopePage({ params }) {
       {err && <div className="error">{err}</div>}
 
       <div className="card" style={{ marginBottom: 18 }}>
-        <h2>Signers</h2>
+        <h2>Recipients</h2>
         <table>
-          <thead><tr><th>#</th><th>Signer</th><th>Status</th><th>Sent</th><th>Viewed</th><th>Signed</th><th /></tr></thead>
+          <thead><tr><th>Order</th><th>Recipient</th><th>Status</th><th>Sent</th><th>Viewed</th><th>Signed</th><th /></tr></thead>
           <tbody>
             {recipients.map((r) => (
               <tr key={r.id}>
-                <td>{r.routing_order}</td>
+                <td>{r.kind === "cc" ? "CC" : r.routing_order}</td>
                 <td>{r.name}{r.is_me && <span className="badge" style={{ marginLeft: 6 }}>You</span>}<div className="muted small">{r.email}</div></td>
-                <td>{isTurn(r) ? <span className="badge turn">Waiting</span> : <span className={`badge ${r.status}`}>{r.status}</span>}</td>
+                <td>{r.kind === "cc" ? <span className="badge">{e.status === "completed" ? "Copy sent" : "Receives a copy"}</span> : isTurn(r) ? <span className="badge turn">Waiting</span> : <span className={`badge ${r.status}`}>{r.status}</span>}</td>
                 <td className="small muted">{fmtDate(r.sent_at)}</td>
                 <td className="small muted">{fmtDate(r.viewed_at)}</td>
                 <td className="small muted">{fmtDate(r.signed_at)}</td>

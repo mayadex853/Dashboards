@@ -110,6 +110,28 @@ export default function Profile() {
         </div>
 
         <div className="card">
+          <div className="row" style={{ justifyContent: "space-between" }}>
+            <div>
+              <h2 style={{ margin: 0 }}>Email</h2>
+              <div className="muted small">Signing requests and completed documents are sent from your Microsoft 365 mailbox.</div>
+            </div>
+            <button
+              className="btn ghost sm"
+              onClick={async () => {
+                try {
+                  const r = await api("/api/test-email", { method: "POST" });
+                  toast(`Test email sent to ${r.to}. Check your inbox.`);
+                } catch (e) {
+                  toast(`Email not sent: ${e.message}`, true);
+                }
+              }}
+            >
+              Send me a test email
+            </button>
+          </div>
+        </div>
+
+        <div className="card">
           <h2>Other saved values</h2>
           <p className="muted small" style={{ marginTop: -6 }}>Anything else you type often: SoundExchange ID, business license #, bank name…</p>
           {extra.map((row, i) => (

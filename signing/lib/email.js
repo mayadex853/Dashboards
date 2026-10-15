@@ -23,6 +23,17 @@ async function graphToken() {
   return cached.token;
 }
 
+/** Checks the Microsoft app credentials by requesting a token (sends nothing). */
+export async function emailAuthProblem() {
+  if (!configured()) return "Microsoft 365 isn't connected (missing MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET or MAIL_FROM).";
+  try {
+    await graphToken();
+    return null;
+  } catch (e) {
+    return e.message;
+  }
+}
+
 const MAX_ATTACH_BYTES = 2.8 * 1024 * 1024; // Graph sendMail limit is ~3MB per request
 
 /**
@@ -59,7 +70,12 @@ export async function sendEmail({ to, subject, html, attachments = [] }) {
   if (!res.ok) {
     const text = await res.text();
     console.error("Graph sendMail failed", res.status, text);
-    return { sent: false, reason: `Microsoft Graph error ${res.status}` };
+    let detail = "";
+    try {
+      detail = JSON.parse(text).error?.message || "";
+    } catch {}
+    const hint = res.status === 403 ? " (check that Mail.Send has admin consent in Azure)" : "";
+    return { sent: false, reason: `Microsoft Graph error ${res.status}: ${detail}${hint}` };
   }
   return { sent: true };
 }

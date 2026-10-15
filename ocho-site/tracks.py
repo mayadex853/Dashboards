@@ -112,7 +112,7 @@ def load_apm():
                 continue
             k = (alb, norm(os.path.splitext(fn)[0]))
             cur = tracks.setdefault(k, {})
-            for field in ("Track Title", "BPM", "Track Description", "ISRC"):
+            for field in ("Track Title", "BPM", "Track Description", "ISRC", "Track Number"):
                 if r.get(field) and not cur.get(field):
                     cur[field] = r[field].strip()
     return tracks, albums
@@ -136,9 +136,9 @@ def main():
             base, label = split_version(src)
             g = groups.setdefault(norm(base), {"base": base, "versions": [], "order": 999})
             num = re.match(r"^(\d+)\s", src)
-            if num and not label:
-                g["order"] = int(num.group(1))
             info = apm.get((alb, norm(src)), {})
+            if not label and (num or info.get("Track Number", "").isdigit()):
+                g["order"] = int(num.group(1)) if num else int(info["Track Number"])
             rec = titles.get(norm(src)) or titles.get(norm(base + (f" ({label})" if label else "")))
             fname = f"{slug(base)}{'--' + slug(label) if label else ''}.mp3"
             (DIST / alb).mkdir(parents=True, exist_ok=True)

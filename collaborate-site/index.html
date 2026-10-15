@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
 <style>
-/* Layout: a darkened screening room. Full-bleed bands, a poster wall as the hero, gold used like a projector beam (rarely, and only where the eye should land). */
+/* Layout: a darkened screening room lit by gold, with the label's purple dragon-scale armor as its signature surface. Full-bleed bands, a poster wall as the hero, gold used like a projector beam (rarely, and only where the eye should land). */
 :root{
   --ink:#08080b;        /* page ground, the dark theatre */
   --stage:#111015;      /* raised bands */
@@ -21,6 +21,8 @@
   --fg:#efe9dc;         /* warm screen white */
   --mute:#a49d8e;       /* secondary text */
   --line:rgba(214,178,94,.22);
+  --royal:#2a0f45;      /* dragon-scale purple */
+  --royal-hi:#5b2a8c;
   --display:'Cinzel','Trajan Pro',Georgia,serif;
   --body:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;
   --label:'Archivo Narrow','Arial Narrow',Arial,sans-serif;
@@ -64,15 +66,13 @@ p{margin:0}
 
 /* HERO: a wall of real one-sheets, dimmed like house lights going down */
 .hero{position:relative;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--line)}
-.hero-wall{position:absolute;inset:-6%;display:grid;grid-template-columns:repeat(8,1fr);gap:10px;transform:rotate(-4deg) scale(1.08);opacity:.42;z-index:-2;animation:drift 60s linear infinite alternate}
-.hero-wall img{width:100%;aspect-ratio:2/3;object-fit:cover;filter:grayscale(.35) contrast(1.05)}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(8,8,11,.55),var(--ink) 78%),linear-gradient(180deg,rgba(8,8,11,.3),var(--ink))}
-.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,rgba(244,220,151,.10) 50%,transparent 65%);animation:beam 9s ease-in-out infinite}
-@keyframes drift{to{transform:rotate(-4deg) scale(1.08) translateY(-6%)}}
+.scales{background-color:var(--royal);background-image:url("img/scales.jpg");background-size:cover;background-repeat:no-repeat;background-position:center 30%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 46% 50% at 50% 50%,rgba(8,8,11,.62),rgba(8,8,11,.18) 100%),linear-gradient(180deg,transparent 82%,var(--ink))}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,rgba(244,220,151,.16) 50%,transparent 70%);mix-blend-mode:screen;animation:beam 9s ease-in-out infinite}
 @keyframes beam{0%,100%{transform:translateX(-30%)}50%{transform:translateX(30%)}}
 .hero-in{padding-block:clamp(80px,12vw,150px) clamp(64px,9vw,110px);text-align:center;display:grid;justify-items:center;gap:26px}
 .hero-logo{width:min(620px,92%);height:auto;filter:drop-shadow(0 6px 30px rgba(0,0,0,.8))}
-.hero h1{font-size:clamp(38px,6.4vw,82px);max-width:16ch;text-shadow:0 4px 30px #000}
+.hero h1{font-size:clamp(40px,7.2vw,96px);max-width:14ch;text-shadow:0 4px 30px #000}
 .hero .lede{color:#d9d2c3;text-align:center;font-size:clamp(17px,1.6vw,20px);text-shadow:0 2px 16px #000}
 .hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:6px}
 .hero .textlink{margin-top:4px}
@@ -86,7 +86,7 @@ p{margin:0}
 @keyframes scroll{to{transform:translateX(-50%)}}
 
 /* PLACEMENTS: one-sheets + slates for campaigns that have no poster */
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 @media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .card{position:relative;margin:0;aspect-ratio:2/3;overflow:hidden;background:var(--slate);border:1px solid rgba(255,255,255,.06)}
@@ -102,6 +102,7 @@ a.card{text-decoration:none}
 .next{border-style:dashed;background:transparent;transition:border-color .25s}
 .next:hover{border-color:var(--gold-hi)}
 .next .slate-title{color:var(--gold-hi)}
+@media (max-width:640px){.next{grid-column:span 2;aspect-ratio:auto;min-height:170px}}
 /* slate = a clapperboard-style title card */
 .slate{display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px;background:linear-gradient(160deg,#1d1a20,#0e0d11);border:1px solid var(--line)}
 .slate-top{display:flex;justify-content:space-between;font:700 10px/1 var(--label);letter-spacing:.2em;color:var(--mute);text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
@@ -125,9 +126,12 @@ a.card{text-decoration:none}
 .clip span{font-size:14px;color:var(--mute);line-height:1.4}
 
 /* SOUNDBREAKERS */
+.sb-band{position:relative;isolation:isolate}
+.sb-band::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(8,8,11,.82) 0%,rgba(8,8,11,.45) 50%,rgba(8,8,11,.75) 100%)}
+.sb>div:first-child{container-type:inline-size;min-width:0}
 .sb{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,6vw,90px);align-items:start}
 @media (max-width:900px){.sb{grid-template-columns:1fr}}
-.sb-mark{font:700 clamp(40px,5.4vw,76px)/.95 var(--display);letter-spacing:.01em;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,#8a6a28);-webkit-background-clip:text;background-clip:text;color:transparent;margin-block:14px 24px}
+.sb-mark{font:700 clamp(30px,11.5cqi,110px)/.95 var(--display);white-space:nowrap;letter-spacing:.01em;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,#8a6a28);-webkit-background-clip:text;background-clip:text;color:transparent;margin-block:14px 24px}
 .sb p+p{margin-top:16px}
 .sb .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
 .tracks{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
@@ -137,6 +141,12 @@ a.card{text-decoration:none}
 .tracks .tag{grid-column:2;grid-row:1/span 2;align-self:center;text-align:right}
 @media (max-width:480px){.tracks li{grid-template-columns:1fr}.tracks .tag{grid-column:1;grid-row:auto;text-align:left}}
 
+.covers-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin:clamp(56px,7vw,88px) 0 20px;padding-top:28px;border-top:1px solid var(--line)}
+.covers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.covers{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:480px){.covers{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.covers img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,.6);transition:transform .3s}
+.covers img:hover{transform:translateY(-4px)}
 /* SERVICES: the two ways in */
 .ways{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 @media (max-width:800px){.ways{grid-template-columns:1fr}}
@@ -187,7 +197,7 @@ a.card{text-decoration:none}
 .photo figcaption{margin-top:10px;font-size:13px;color:var(--mute)}
 /* CONTACT */
 .contact{text-align:center;position:relative;overflow:hidden;isolation:isolate}
-.contact::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 55% 70% at 50% 100%,rgba(214,178,94,.16),transparent 70%)}
+.contact::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 55% 70% at 50% 100%,rgba(214,178,94,.18),transparent 70%),linear-gradient(180deg,var(--ink),rgba(8,8,11,.55) 30%,rgba(8,8,11,.55) 70%,var(--ink))}
 .contact .wrap{display:grid;justify-items:center;gap:22px}
 .contact h2{font-size:clamp(38px,6vw,76px);max-width:15ch}
 .contact .lede{text-align:center}
@@ -226,16 +236,11 @@ footer a:hover{color:var(--fg)}
 </header>
 
 <main id="top">
-<section class="hero">
-  <div class="hero-wall" aria-hidden="true">
-    <img src="img/the-handmaid-s-tale.jpg" alt=""><img src="img/gunpowder-milkshake.jpg" alt=""><img src="img/runner.jpg" alt=""><img src="img/star-trek-picard.jpg" alt=""><img src="img/haunt.jpg" alt=""><img src="img/big-sky.jpg" alt=""><img src="img/fantasy-island.jpg" alt=""><img src="img/set-it-up.jpg" alt="">
-    <img src="img/the-challenge.jpg" alt=""><img src="img/the-bachelor.jpg" alt=""><img src="img/haunt.jpg" alt=""><img src="img/the-handmaid-s-tale.jpg" alt=""><img src="img/runner.jpg" alt=""><img src="img/gunpowder-milkshake.jpg" alt=""><img src="img/star-trek-picard.jpg" alt=""><img src="img/big-sky.jpg" alt="">
-    <img src="img/fantasy-island.jpg" alt=""><img src="img/set-it-up.jpg" alt=""><img src="img/the-bachelor.jpg" alt=""><img src="img/the-challenge.jpg" alt=""><img src="img/star-trek-picard.jpg" alt=""><img src="img/runner.jpg" alt=""><img src="img/the-handmaid-s-tale.jpg" alt=""><img src="img/haunt.jpg" alt="">
-  </div>
+<section class="hero scales">
   <div class="wrap hero-in">
     <img class="hero-logo" src="img/logo.png" alt="Collaborate Music Productions" width="620" height="111">
     <span class="eyebrow">Trailer Music &middot; Home of SoundBreakers</span>
-    <h1>Music built to <span class="gold">cut to picture</span></h1>
+    <h1>Forged for the <span class="gold">big screen</span></h1>
     <p class="lede">Epic originals and re-imagined covers heard in campaigns for Netflix, Hulu, ABC, CBS, Sony Pictures, Angel Studios, ESPN and WWE.</p>
     <div class="hero-cta">
       <a class="btn solid" href="#contact" data-subject="Master License Request">License a Master</a>
@@ -248,8 +253,8 @@ footer a:hover{color:var(--fg)}
 <div class="marq" aria-label="Networks and studios">
   <div class="marq-k">Heard in campaigns for</div>
   <div class="marq-track">
-    <span>Netflix</span><span>Hulu</span><span>ABC</span><span>CBS</span><span>Sony Pictures</span><span>Angel Studios</span><span>ESPN</span><span>Formula 1</span><span>MTV</span><span>WWE</span><span>Paycom</span>
-    <span aria-hidden="true">Netflix</span><span aria-hidden="true">Hulu</span><span aria-hidden="true">ABC</span><span aria-hidden="true">CBS</span><span aria-hidden="true">Sony Pictures</span><span aria-hidden="true">Angel Studios</span><span aria-hidden="true">ESPN</span><span aria-hidden="true">Formula 1</span><span aria-hidden="true">MTV</span><span aria-hidden="true">WWE</span><span aria-hidden="true">Paycom</span>
+    <span>Netflix</span><span>Hulu</span><span>ABC</span><span>CBS</span><span>Sony Pictures</span><span>Angel Studios</span><span>ESPN</span><span>Formula 1</span><span>MTV</span><span>WWE</span>
+    <span aria-hidden="true">Netflix</span><span aria-hidden="true">Hulu</span><span aria-hidden="true">ABC</span><span aria-hidden="true">CBS</span><span aria-hidden="true">Sony Pictures</span><span aria-hidden="true">Angel Studios</span><span aria-hidden="true">ESPN</span><span aria-hidden="true">Formula 1</span><span aria-hidden="true">MTV</span><span aria-hidden="true">WWE</span>
   </div>
 </div>
 
@@ -266,12 +271,11 @@ footer a:hover{color:var(--fg)}
       <figure class="card"><img src="img/gunpowder-milkshake.jpg" alt="Gunpowder Milkshake poster"><figcaption><span class="tag">Trailer</span><strong>Gunpowder Milkshake</strong><small>Netflix</small><span class="trk">&ldquo;Bad to the Bone&rdquo;</span></figcaption></figure>
       <figure class="card slate"><div class="slate-top">ABC</div><div><span class="tag">Promos</span><div class="slate-title">Doctor Odyssey</div></div><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figure>
       <figure class="card"><img src="img/the-bachelor.jpg" alt="The Bachelor poster"><figcaption><span class="tag">In Show</span><strong>The Bachelor</strong><small>ABC</small><span class="trk">&ldquo;Sea of Love&rdquo;</span></figcaption></figure>
-      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">F1 Racing</div></div><span class="trk">&ldquo;Feel Good Inc.&rdquo;</span></figure>
       <figure class="card"><img src="img/fantasy-island.jpg" alt="Fantasy Island poster"><figcaption><span class="tag">Trailer</span><strong>Fantasy Island</strong><small>Sony Pictures</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
-      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">NCAA on ESPN</div></div><span class="trk">&ldquo;The Best&rdquo;</span></figure>
+      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">F1 Racing</div></div><span class="trk">&ldquo;Feel Good Inc.&rdquo;</span></figure>
       <figure class="card"><img src="img/big-sky.jpg" alt="Big Sky poster"><figcaption><span class="tag">S1 Promo</span><strong>Big Sky</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">NCAA on ESPN</div></div><span class="trk">&ldquo;The Best&rdquo;</span></figure>
       <figure class="card"><img src="img/the-handmaid-s-tale.jpg" alt="The Handmaid's Tale poster"><figcaption><span class="tag">S1 Trailer</span><strong>The Handmaid&rsquo;s Tale</strong><small>Hulu</small><span class="trk">&ldquo;Pure As Snow (Mike Raznick Remix)&rdquo;</span></figcaption></figure>
-      <figure class="card slate"><div class="slate-top">Paycom</div><div><span class="tag">Ad Spot</span><div class="slate-title">Paycom</div></div><span class="trk">&ldquo;I Love Rock N Roll&rdquo;</span></figure>
       <figure class="card"><img src="img/star-trek-picard.jpg" alt="Star Trek: Picard poster"><figcaption><span class="tag">S1 Promo</span><strong>Star Trek: Picard</strong><small>CBS</small><span class="trk">&ldquo;Blue Skies (Teaser Mix)&rdquo;</span></figcaption></figure>
       <figure class="card"><img src="img/haunt.jpg" alt="Haunt poster"><figcaption><span class="tag">Trailer</span><strong>Haunt</strong><small>Momentum Pictures</small><span class="trk">&ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></figcaption></figure>
       <figure class="card"><img src="img/set-it-up.jpg" alt="Set It Up poster"><figcaption><span class="tag">In Film</span><strong>Set It Up</strong><small>Netflix</small><span class="trk">&ldquo;Come Go With Me&rdquo;</span></figcaption></figure>
@@ -301,7 +305,7 @@ footer a:hover{color:var(--fg)}
   </div>
 </section>
 
-<section class="band" id="soundbreakers">
+<section class="band sb-band scales" id="soundbreakers">
   <div class="wrap sb">
     <div>
       <span class="eyebrow">Our Artist</span>
@@ -323,6 +327,23 @@ footer a:hover{color:var(--fg)}
       <li><b>The Best</b><em>Re-imagined cover</em><span class="tag">NCAA on ESPN</span></li>
       <li><b>Creepy Cradle</b><em>feat. Jude Rivers &middot; a Collaborate original</em><span class="tag">Haunt</span></li>
     </ul>
+  </div>
+  <div class="wrap">
+    <div class="covers-head"><span class="eyebrow">Latest releases</span><a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Hear them all on DISCO &rarr;</a></div>
+    <div class="covers">
+      <img src="img/sb-bad-to-the-bone.jpg" alt="SoundBreakers &ndash; Bad to the Bone" width="300" height="300">
+      <img src="img/sb-midnight-rider.jpg" alt="SoundBreakers &ndash; Midnight Rider" width="300" height="300">
+      <img src="img/sb-feel-good-inc.jpg" alt="SoundBreakers &ndash; Feel Good Inc." width="300" height="300">
+      <img src="img/sb-goodbye-blue-sky.jpg" alt="SoundBreakers &ndash; Goodbye Blue Sky" width="300" height="300">
+      <img src="img/sb-fake-empire.jpg" alt="SoundBreakers &ndash; Fake Empire" width="300" height="300">
+      <img src="img/sb-champagne-supernova.jpg" alt="SoundBreakers &ndash; Champagne Supernova" width="300" height="300">
+      <img src="img/sb-virtual-insanity.jpg" alt="SoundBreakers &ndash; Virtual Insanity" width="300" height="300">
+      <img src="img/sb-the-end.jpg" alt="SoundBreakers &ndash; The End (Destroyboy Remix)" width="300" height="300">
+      <img src="img/sb-king-volcano.jpg" alt="SoundBreakers &ndash; King Volcano" width="300" height="300">
+      <img src="img/sb-sober.jpg" alt="SoundBreakers &ndash; Sober" width="300" height="300">
+      <img src="img/sb-blue-christmas.jpg" alt="SoundBreakers &ndash; Blue Christmas" width="300" height="300">
+      <img src="img/sb-have-yourself.jpg" alt="SoundBreakers &ndash; Have Yourself a Merry Little Christmas" width="300" height="300">
+    </div>
   </div>
 </section>
 
@@ -378,7 +399,7 @@ footer a:hover{color:var(--fg)}
     <div class="brands"><span class="eyebrow">Brand work</span><p>HP &middot; Samsung &middot; Smirnoff &middot; Dunkin&rsquo; &middot; ASICS &middot; Bumble and bumble &middot; Ken Block&rsquo;s Gymkhana</p></div>
     <div class="people">
       <article class="person" id="jenn">
-        <div class="person-head"><img class="mono" src="img/jenn.jpg" alt="Jennifer Lanchart" width="72" height="72"><div><h3>Jennifer Lanchart</h3><div class="role">Co-Founder &middot; Music Supervisor</div></div></div>
+        <div class="person-head"><img class="mono" src="img/jenn.jpg" alt="Jennifer Lanchart" width="72" height="72"><div><h3>Jennifer Lanchart</h3><div class="role">Co-Founder &middot; Founder, Syncalicious Music</div></div></div>
         <ul class="creds">
           <li><b>The Bachelor<i>ABC</i></b><span>Music Dept.</span></li>
           <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Dept.</span></li>
@@ -395,7 +416,7 @@ footer a:hover{color:var(--fg)}
         <p class="more">Music supervising since 2008, with more than 40 projects across film, TV, web series and advertising.</p>
       </article>
       <article class="person" id="jody">
-        <div class="person-head"><img class="mono" src="img/jody.jpg" alt="Jody Friedman" width="72" height="72"><div><h3>Jody Friedman</h3><div class="role">Co-Founder &middot; Music Supervisor</div></div></div>
+        <div class="person-head"><img class="mono" src="img/jody.jpg" alt="Jody Friedman" width="72" height="72"><div><h3>Jody Friedman</h3><div class="role">Co-Founder &middot; Founder, HD Music Now</div></div></div>
         <ul class="creds">
           <li><b>The Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
           <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
@@ -428,6 +449,7 @@ footer a:hover{color:var(--fg)}
         <h3>Jennifer Lanchart</h3>
         <div class="role">Co-Founder &middot; Music Supervisor &middot; Songwriter</div>
         <p>Jenn has been a music supervisor since 2008, with credits across Netflix, HBO, Amazon, ABC, NBC and Focus Features, plus brand campaigns for Smirnoff, Samsung and HP. As a songwriter she co-wrote the SoundBreakers original &ldquo;Creepy Cradle,&rdquo; featured in the trailer for Eli Roth&rsquo;s <em>Haunt</em>.</p>
+        <div class="badges"><span class="badge"><b>Founder</b> of Syncalicious Music</span></div>
       </div>
       <div class="bio">
         <h3>Jody Friedman</h3>
@@ -442,7 +464,7 @@ footer a:hover{color:var(--fg)}
   </div>
 </section>
 
-<section class="band contact" id="contact">
+<section class="band contact scales" id="contact">
   <div class="wrap">
     <span class="eyebrow">Let&rsquo;s Talk</span>
     <h2>Need the track that <span class="gold">sells the cut?</span></h2>

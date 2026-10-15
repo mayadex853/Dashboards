@@ -86,24 +86,27 @@ p{margin:0}
 @keyframes scroll{to{transform:translateX(-50%)}}
 
 /* PLACEMENTS: one-sheets + slates for campaigns that have no poster */
-.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px}
-@media (max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .card{position:relative;margin:0;aspect-ratio:2/3;overflow:hidden;background:var(--slate);border:1px solid rgba(255,255,255,.06)}
 .card img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s}
 .card:hover img{transform:scale(1.05);filter:brightness(.55)}
 .card figcaption{position:absolute;inset:auto 0 0 0;padding:44px 12px 12px;background:linear-gradient(transparent,rgba(5,5,7,.94) 45%);display:grid;gap:3px}
 .tag{font:700 11px/1.2 var(--label);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi)}
-.card strong{font:600 16px/1.15 var(--display);color:var(--fg)}
+.card strong{font:600 clamp(16px,1.6vw,21px)/1.15 var(--display);color:var(--fg)}
 .card small{font-size:13px;line-height:1.35;color:var(--mute)}
-.card .trk{display:none;font-size:13px;line-height:1.35;color:var(--fg);font-style:italic}
-.card:hover .trk,.card:focus-within .trk{display:block}
-@media (hover:none){.card .trk{display:block}}
+.card .trk{display:block;font-size:14px;line-height:1.35;color:var(--gold-hi);margin-top:2px}
+.slate .trk{font-size:15px}
+a.card{text-decoration:none}
+.next{border-style:dashed;background:transparent;transition:border-color .25s}
+.next:hover{border-color:var(--gold-hi)}
+.next .slate-title{color:var(--gold-hi)}
 /* slate = a clapperboard-style title card */
 .slate{display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px;background:linear-gradient(160deg,#1d1a20,#0e0d11);border:1px solid var(--line)}
 .slate-top{display:flex;justify-content:space-between;font:700 10px/1 var(--label);letter-spacing:.2em;color:var(--mute);text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .slate-top::before{content:"";flex:0 0 46px;height:10px;background:repeating-linear-gradient(-45deg,var(--gold) 0 6px,transparent 6px 12px)}
-.slate-title{font:600 clamp(22px,2.2vw,30px)/1.05 var(--display);color:var(--fg)}
+.slate-title{font:600 clamp(22px,2.6vw,36px)/1.05 var(--display);color:var(--fg)}
 .slate .tag{display:block;margin-bottom:8px}
 .slate small{font-size:13px;color:var(--mute)}
 .grid-note{margin-top:22px;font-size:14px;color:var(--mute)}
@@ -152,8 +155,7 @@ p{margin:0}
 @media (max-width:900px){.people{grid-template-columns:1fr}}
 .person{border:1px solid var(--line);padding:clamp(26px,3.5vw,42px);background:var(--ink);min-width:0}
 .person-head{display:flex;align-items:center;gap:18px;margin-bottom:22px}
-.mono{flex:0 0 64px;height:64px;display:grid;place-items:center;border:1px solid var(--gold);font:600 22px/1 var(--display);color:var(--gold-hi);transform:rotate(45deg)}
-.mono span{transform:rotate(-45deg)}
+.mono{flex:0 0 72px;width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--gold);padding:3px;background:var(--ink)}
 .person h3{font-size:clamp(26px,2.8vw,34px)}
 .role{font:600 12px/1.4 var(--label);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:6px}
 .creds{list-style:none;margin:0;padding:0}
@@ -173,13 +175,16 @@ p{margin:0}
 .about-quote{font:600 clamp(32px,4.4vw,56px)/1.08 var(--display);margin-block:16px 26px}
 .about p+p{margin-top:16px}
 .about p{color:#cfc8b8}
-.bios{display:grid;gap:34px}
+.bios{display:grid;gap:34px;align-content:start}
 .bio h3{font-size:28px}
 .bio p{margin-top:12px}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .badge{font-size:13px;color:var(--fg);padding:8px 14px;border:1px solid var(--line);border-radius:40px;text-decoration:none}
 .badge b{color:var(--gold-hi);font-weight:600}
 
+.photo{margin:34px 0 0;max-width:460px}
+.photo img{width:100%;height:auto;border:1px solid var(--line);filter:saturate(.9)}
+.photo figcaption{margin-top:10px;font-size:13px;color:var(--mute)}
 /* CONTACT */
 .contact{text-align:center;position:relative;overflow:hidden;isolation:isolate}
 .contact::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 55% 70% at 50% 100%,rgba(214,178,94,.16),transparent 70%)}
@@ -231,7 +236,7 @@ footer a:hover{color:var(--fg)}
     <img class="hero-logo" src="img/logo.png" alt="Collaborate Music Productions" width="620" height="111">
     <span class="eyebrow">Trailer Music &middot; Home of SoundBreakers</span>
     <h1>Music built to <span class="gold">cut to picture</span></h1>
-    <p class="lede">Epic originals and re-imagined covers heard in campaigns for Netflix, Hulu, ABC, CBS, Sony Pictures, Angel Studios, ESPN and F1.</p>
+    <p class="lede">Epic originals and re-imagined covers heard in campaigns for Netflix, Hulu, ABC, CBS, Sony Pictures, Angel Studios, ESPN and WWE.</p>
     <div class="hero-cta">
       <a class="btn solid" href="#contact" data-subject="Master License Request">License a Master</a>
       <a class="btn" href="#contact" data-subject="Custom Music Inquiry">Custom Music for Your Campaign</a>
@@ -243,8 +248,8 @@ footer a:hover{color:var(--fg)}
 <div class="marq" aria-label="Networks and studios">
   <div class="marq-k">Heard in campaigns for</div>
   <div class="marq-track">
-    <span>Netflix</span><span>Hulu</span><span>ABC</span><span>CBS</span><span>Sony Pictures</span><span>Angel Studios</span><span>ESPN</span><span>Formula 1</span><span>MTV</span><span>Paycom</span>
-    <span aria-hidden="true">Netflix</span><span aria-hidden="true">Hulu</span><span aria-hidden="true">ABC</span><span aria-hidden="true">CBS</span><span aria-hidden="true">Sony Pictures</span><span aria-hidden="true">Angel Studios</span><span aria-hidden="true">ESPN</span><span aria-hidden="true">Formula 1</span><span aria-hidden="true">MTV</span><span aria-hidden="true">Paycom</span>
+    <span>Netflix</span><span>Hulu</span><span>ABC</span><span>CBS</span><span>Sony Pictures</span><span>Angel Studios</span><span>ESPN</span><span>Formula 1</span><span>MTV</span><span>WWE</span><span>Paycom</span>
+    <span aria-hidden="true">Netflix</span><span aria-hidden="true">Hulu</span><span aria-hidden="true">ABC</span><span aria-hidden="true">CBS</span><span aria-hidden="true">Sony Pictures</span><span aria-hidden="true">Angel Studios</span><span aria-hidden="true">ESPN</span><span aria-hidden="true">Formula 1</span><span aria-hidden="true">MTV</span><span aria-hidden="true">WWE</span><span aria-hidden="true">Paycom</span>
   </div>
 </div>
 
@@ -256,20 +261,22 @@ footer a:hover{color:var(--fg)}
       <p class="lede">Trailers, promos, spots and in-show uses for the biggest names in film, TV and sports.</p>
     </div>
     <div class="grid">
-      <figure class="card"><img src="img/runner.jpg" alt="Runner poster"><figcaption><span class="tag">Feature Film</span><strong>Runner</strong><small>Angel Studios</small></figcaption></figure>
-      <figure class="card slate"><div class="slate-top">ABC</div><div><span class="tag">Promos</span><div class="slate-title">Doctor Odyssey</div></div><small>Series promo campaign</small></figure>
-      <figure class="card"><img src="img/the-bachelor.jpg" alt="The Bachelor poster"><figcaption><span class="tag">In Show</span><strong>The Bachelor</strong><small>ABC</small></figcaption></figure>
-      <figure class="card slate"><div class="slate-top">Formula 1</div><div><span class="tag">Promo</span><div class="slate-title">F1 Racing</div></div><small>Racing promo</small></figure>
-      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">NCAA on ESPN</div></div><small>College sports promo</small></figure>
-      <figure class="card slate"><div class="slate-top">Paycom</div><div><span class="tag">Ad Spot</span><div class="slate-title">Paycom</div></div><small>National ad campaign</small></figure>
+      <figure class="card"><img src="img/runner.jpg" alt="Runner poster"><figcaption><span class="tag">Feature Film</span><strong>Runner</strong><small>Angel Studios</small><span class="trk">&ldquo;Midnight Rider&rdquo;</span></figcaption></figure>
+      <figure class="card slate"><div class="slate-top">Netflix</div><div><span class="tag">Series</span><div class="slate-title">WWE: Unreal</div></div><span class="trk">&ldquo;My Way&rdquo;</span></figure>
       <figure class="card"><img src="img/gunpowder-milkshake.jpg" alt="Gunpowder Milkshake poster"><figcaption><span class="tag">Trailer</span><strong>Gunpowder Milkshake</strong><small>Netflix</small><span class="trk">&ldquo;Bad to the Bone&rdquo;</span></figcaption></figure>
+      <figure class="card slate"><div class="slate-top">ABC</div><div><span class="tag">Promos</span><div class="slate-title">Doctor Odyssey</div></div><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figure>
+      <figure class="card"><img src="img/the-bachelor.jpg" alt="The Bachelor poster"><figcaption><span class="tag">In Show</span><strong>The Bachelor</strong><small>ABC</small><span class="trk">&ldquo;Sea of Love&rdquo;</span></figcaption></figure>
+      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">F1 Racing</div></div><span class="trk">&ldquo;Feel Good Inc.&rdquo;</span></figure>
+      <figure class="card"><img src="img/fantasy-island.jpg" alt="Fantasy Island poster"><figcaption><span class="tag">Trailer</span><strong>Fantasy Island</strong><small>Sony Pictures</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card slate"><div class="slate-top">ESPN</div><div><span class="tag">Promo</span><div class="slate-title">NCAA on ESPN</div></div><span class="trk">&ldquo;The Best&rdquo;</span></figure>
+      <figure class="card"><img src="img/big-sky.jpg" alt="Big Sky poster"><figcaption><span class="tag">S1 Promo</span><strong>Big Sky</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
       <figure class="card"><img src="img/the-handmaid-s-tale.jpg" alt="The Handmaid's Tale poster"><figcaption><span class="tag">S1 Trailer</span><strong>The Handmaid&rsquo;s Tale</strong><small>Hulu</small><span class="trk">&ldquo;Pure As Snow (Mike Raznick Remix)&rdquo;</span></figcaption></figure>
-      <figure class="card"><img src="img/star-trek-picard.jpg" alt="Star Trek: Picard poster"><figcaption><span class="tag">S1 Promo</span><strong>Star Trek: Picard</strong><small>CBS</small><span class="trk">&ldquo;Blue Skies&rdquo;</span></figcaption></figure>
-      <figure class="card"><img src="img/big-sky.jpg" alt="Big Sky poster"><figcaption><span class="tag">S1 Promo</span><strong>Big Sky</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom (Life Could Be a Dream)&rdquo;</span></figcaption></figure>
-      <figure class="card"><img src="img/fantasy-island.jpg" alt="Fantasy Island poster"><figcaption><span class="tag">Trailer</span><strong>Fantasy Island</strong><small>Sony Pictures</small><span class="trk">&ldquo;Sh-Boom (Life Could Be a Dream)&rdquo;</span></figcaption></figure>
-      <figure class="card"><img src="img/haunt.jpg" alt="Haunt poster"><figcaption><span class="tag">Trailer</span><strong>Haunt</strong><small>Eli Roth</small><span class="trk">&ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></figcaption></figure>
-      <figure class="card"><img src="img/set-it-up.jpg" alt="Set It Up poster"><figcaption><span class="tag">In Film</span><strong>Set It Up</strong><small>Netflix</small><span class="trk">&ldquo;Come Go With Me&rdquo; (Adam &amp; Esthero)</span></figcaption></figure>
-      <figure class="card"><img src="img/the-challenge.jpg" alt="The Challenge: War of the Worlds poster"><figcaption><span class="tag">In Program</span><strong>The Challenge</strong><small>MTV</small><span class="trk">&ldquo;Too Far Gone&rdquo; &amp; &ldquo;No Surprises&rdquo;</span></figcaption></figure>
+      <figure class="card slate"><div class="slate-top">Paycom</div><div><span class="tag">Ad Spot</span><div class="slate-title">Paycom</div></div><span class="trk">&ldquo;I Love Rock N Roll&rdquo;</span></figure>
+      <figure class="card"><img src="img/star-trek-picard.jpg" alt="Star Trek: Picard poster"><figcaption><span class="tag">S1 Promo</span><strong>Star Trek: Picard</strong><small>CBS</small><span class="trk">&ldquo;Blue Skies (Teaser Mix)&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/haunt.jpg" alt="Haunt poster"><figcaption><span class="tag">Trailer</span><strong>Haunt</strong><small>Momentum Pictures</small><span class="trk">&ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></figcaption></figure>
+      <figure class="card"><img src="img/set-it-up.jpg" alt="Set It Up poster"><figcaption><span class="tag">In Film</span><strong>Set It Up</strong><small>Netflix</small><span class="trk">&ldquo;Come Go With Me&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/the-challenge.jpg" alt="The Challenge poster"><figcaption><span class="tag">In Program</span><strong>The Challenge</strong><small>MTV</small><span class="trk">&ldquo;No Surprises&rdquo; &amp; &ldquo;Too Far Gone&rdquo;</span></figcaption></figure>
+      <a class="card slate next" href="#contact"><div class="slate-top">Your Campaign</div><div><span class="tag">Coming Soon</span><div class="slate-title">Your trailer here</div></div><span class="trk">Tell us about your cut &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -307,13 +314,14 @@ footer a:hover{color:var(--fg)}
       </div>
     </div>
     <ul class="tracks" aria-label="Signature tracks">
-      <li><b>Pure As Snow (Mike Raznick Remix)</b><em>feat. I Hate You Just Kidding &amp; the El Rancho Children&rsquo;s Chorus</em><span class="tag">The Handmaid&rsquo;s Tale</span></li>
+      <li><b>Sh-Boom (Life Could Be a Dream)</b><em>Re-imagined cover of The Chords classic</em><span class="tag">Fantasy Island &middot; Big Sky &middot; Doctor Odyssey</span></li>
+      <li><b>Midnight Rider</b><em>Re-imagined cover</em><span class="tag">Runner</span></li>
+      <li><b>My Way</b><em>Re-imagined cover</em><span class="tag">WWE: Unreal</span></li>
+      <li><b>Bad to the Bone</b><em>Re-imagined cover</em><span class="tag">Gunpowder Milkshake</span></li>
+      <li><b>Pure As Snow (Mike Raznick Remix)</b><em>feat. I Hate You Just Kidding &amp; the El Rancho Children&rsquo;s Chorus &middot; a Collaborate original</em><span class="tag">The Handmaid&rsquo;s Tale</span></li>
+      <li><b>Feel Good Inc.</b><em>Re-imagined cover</em><span class="tag">F1 Racing on ESPN</span></li>
+      <li><b>The Best</b><em>Re-imagined cover</em><span class="tag">NCAA on ESPN</span></li>
       <li><b>Creepy Cradle</b><em>feat. Jude Rivers &middot; a Collaborate original</em><span class="tag">Haunt</span></li>
-      <li><b>Sh-Boom (Life Could Be a Dream)</b><em>Re-imagined cover</em><span class="tag">Big Sky &middot; Fantasy Island</span></li>
-      <li><b>Blue Skies</b><em>Re-imagined cover</em><span class="tag">Star Trek: Picard</span></li>
-      <li><b>No Surprises</b><em>Radiohead, re-imagined</em><span class="tag">The Challenge</span></li>
-      <li><b>Too Far Gone</b><em>feat. Will Champlin &middot; a Collaborate original</em><span class="tag">The Challenge</span></li>
-      <li><b>Come Go With Me</b><em>Del-Vikings cover, performed by Adam &amp; Esthero</em><span class="tag">Set It Up</span></li>
     </ul>
   </div>
 </section>
@@ -370,7 +378,7 @@ footer a:hover{color:var(--fg)}
     <div class="brands"><span class="eyebrow">Brand work</span><p>HP &middot; Samsung &middot; Smirnoff &middot; Dunkin&rsquo; &middot; ASICS &middot; Bumble and bumble &middot; Ken Block&rsquo;s Gymkhana</p></div>
     <div class="people">
       <article class="person" id="jenn">
-        <div class="person-head"><div class="mono"><span>JL</span></div><div><h3>Jennifer Lanchart</h3><div class="role">Co-Founder &middot; Music Supervisor</div></div></div>
+        <div class="person-head"><img class="mono" src="img/jenn.jpg" alt="Jennifer Lanchart" width="72" height="72"><div><h3>Jennifer Lanchart</h3><div class="role">Co-Founder &middot; Music Supervisor</div></div></div>
         <ul class="creds">
           <li><b>The Bachelor<i>ABC</i></b><span>Music Dept.</span></li>
           <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Dept.</span></li>
@@ -387,7 +395,7 @@ footer a:hover{color:var(--fg)}
         <p class="more">Music supervising since 2008, with more than 40 projects across film, TV, web series and advertising.</p>
       </article>
       <article class="person" id="jody">
-        <div class="person-head"><div class="mono"><span>JF</span></div><div><h3>Jody Friedman</h3><div class="role">Co-Founder &middot; Music Supervisor</div></div></div>
+        <div class="person-head"><img class="mono" src="img/jody.jpg" alt="Jody Friedman" width="72" height="72"><div><h3>Jody Friedman</h3><div class="role">Co-Founder &middot; Music Supervisor</div></div></div>
         <ul class="creds">
           <li><b>The Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
           <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
@@ -413,6 +421,7 @@ footer a:hover{color:var(--fg)}
       <p class="about-quote">Two music supervisors who <span class="gold">make the music</span> they wish they could find.</p>
       <p>Collaborate Music Productions was founded in Los Angeles by industry veterans Jennifer Lanchart and Jody Friedman to create high-end original music and re-imagined covers for every kind of media, with a focus on film trailers.</p>
       <p>We produce records with well-known trailer composers, producers, musicians and vocalists, and release them through our artist SoundBreakers. Because we also work as music supervisors, we know what an editor needs from a track before the first note is written.</p>
+      <figure class="photo"><img src="img/jenn-jody.jpg" alt="Jennifer Lanchart and Jody Friedman" width="800" height="804"><figcaption>Jenn and Jody at the Guild of Music Supervisors&rsquo; State of Music in Media conference</figcaption></figure>
     </div>
     <div class="bios">
       <div class="bio">

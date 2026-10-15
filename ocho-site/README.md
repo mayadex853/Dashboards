@@ -32,12 +32,27 @@ shows the built-in lists from `data.py`.
 | Column           | Meaning |
 |------------------|---------|
 | Section          | `Album` or `Placement` |
+| ID               | Albums only: catalog number (e.g. `OCHO-0023`). Connects the album to its streaming tracks |
 | Title            | Album or show title |
 | Artist / Network | Artist (albums) or network/platform (placements) |
 | Category         | Albums: `Tropical & Salsa`, `Urbano`, `Regional Mexican & Tejano`, `Cinematic Underscore`, `TV Packages`, `Holiday`. Placements: `TV & Streaming`, `News & Talk`, `Sports`, `Ads`, `Video Games`. A new name creates a new filter. |
 | Image            | A file already on the site (e.g. `telecumbias.jpg`), any image URL, or a Google Drive share link (file shared "anyone with the link") |
 | Link             | Albums only: the album's APM page. Blank = Ocho's APM library page |
 | Order            | Position (1 = first) |
+
+## Streaming player
+
+Album panels list every track with a waveform, plus alternate versions (instrumental, TV mix, stings...).
+Audio is MP3 (192 kbps) on Cloudflare R2; its public URL goes in `AUDIO_BASE` (the player stays hidden while
+that file is missing). Track lists live in `tracks/<ALBUM-ID>.json`.
+
+To add or refresh audio: put the release masters through the Mega download step (192k MP3 + WAV discarded), then
+
+```bash
+python3 tracks.py <work dir>   # writes tracks/*.json and <work dir>/dist/<ALBUM-ID>/*.mp3
+```
+
+and upload `dist/` to the R2 bucket as-is.
 
 ## Rebuilding (code or copy changes)
 

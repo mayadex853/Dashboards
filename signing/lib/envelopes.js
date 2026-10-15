@@ -74,6 +74,7 @@ export async function createEnvelope(input) {
       email: r.email,
       routing_order: Number(r.routing_order || 1),
       is_me: !!r.is_me,
+      kind: r.kind === "cc" ? "cc" : "signer",
       status: "pending",
     });
   }
@@ -89,7 +90,7 @@ export async function recipientsFor(envelopeId) {
 export async function advance(envelopeId) {
   const env = await db.get("envelopes", envelopeId);
   const recs = await recipientsFor(envelopeId);
-  const unsigned = recs.filter((r) => r.status !== "signed");
+  const unsigned = recs.filter((r) => r.kind !== "cc" && r.status !== "signed");
   if (!unsigned.length) return completeEnvelope(envelopeId);
   const order = Math.min(...unsigned.map((r) => r.routing_order));
   const results = [];
@@ -141,7 +142,7 @@ export async function recipientByToken(token) {
 /** Is it this recipient's turn? (Everyone in a lower routing order has signed.) */
 export async function isTurn(env, r) {
   const recs = await recipientsFor(env.id);
-  return recs.filter((x) => x.routing_order < r.routing_order).every((x) => x.status === "signed");
+  return recs.filter((x) => x.kind !== "cc" && x.routing_order < r.routing_order).every((x) => x.status === "signed");
 }
 
 /**
@@ -238,7 +239,7 @@ async function appendCertificate(pdfBytes, env, recs, events) {
   line(`Original document SHA-256: ${env.original_sha256}`, { size: 8, color: grey });
   y -= 10;
   line("Signers", { f: bold, size: 12 });
-  for (const r of recs) {
+  for (const r of recs.filter((x) => x.kind !== "cc")) {
     line(`${r.routing_order}. ${r.name} <${r.email}>`, { f: bold });
     line(`Sent: ${fmt(r.sent_at)}   Viewed: ${fmt(r.viewed_at)}`, { indent: 12 });
     line(`Consented to electronic signature: ${fmt(r.consent_at)}`, { indent: 12 });
@@ -246,6 +247,12 @@ async function appendCertificate(pdfBytes, env, recs, events) {
     line(`IP address: ${r.ip || "—"}`, { indent: 12 });
     line(`Device: ${(r.user_agent || "—").slice(0, 100)}`, { indent: 12, size: 8, color: grey });
     y -= 4;
+  }
+  const ccs = recs.filter((x) => x.kind === "cc");
+  if (ccs.length) {
+    y -= 6;
+    line("Carbon copies (received the completed document)", { f: bold, size: 12 });
+    for (const r of ccs) line(`${r.name} <${r.email}>`);
   }
   y -= 6;
   line("Event history (UTC)", { f: bold, size: 12 });

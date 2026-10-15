@@ -118,7 +118,7 @@ export default function QuickSign() {
       startPaletteDrag(e, {
         label: item.value && item.type === "text" ? item.value : item.label,
         onDrop: (page, fx, fy) => place(item, page, fx, fy),
-        onClick: () => setTool(tool === item ? null : item),
+        onClick: () => setTool(item),
       }),
   });
 
@@ -229,7 +229,13 @@ export default function QuickSign() {
                 <div className="help">Add your details under <a href="/profile">My signature & info</a> to drag them here.</div>
               )}
               <div className="hint" style={{ marginTop: 12 }}>
-                {tool ? `Click the document to place "${tool.label}". Esc to stop.` : "Drag an item onto the page, or click it and then click the page."}
+                {tool ? (
+                  <>
+                    Click the document to place <b>{tool.label}</b>. <button className="link" onClick={() => setTool(null)}>Stop placing</button>
+                  </>
+                ) : (
+                  "Drag an item onto the page, or click it and then click the page."
+                )}
               </div>
             </div>
 

@@ -102,7 +102,7 @@ export default function FieldEditor({ src, fields, setFields, roles, showKeys = 
                   startPaletteDrag(e, {
                     label: t.label,
                     onDrop: (page, fx, fy) => place(t.type, page, fx, fy),
-                    onClick: () => setTool(tool === t.type ? null : t.type),
+                    onClick: () => setTool(t.type),
                   })
                 }
               >
@@ -112,7 +112,14 @@ export default function FieldEditor({ src, fields, setFields, roles, showKeys = 
             ))}
           </div>
           <div className="hint" style={{ marginTop: 12 }}>
-            {tool ? `Click the document to place "${FIELD_TYPES.find((t) => t.type === tool).label}". Esc to stop.` : "Drag a field onto the document, or click a field then click the page."}
+            {tool ? (
+              <>
+                Click the document to place <b>{FIELD_TYPES.find((t) => t.type === tool).label}</b> for <b>{roles[role]?.name || "this recipient"}</b>.{" "}
+                <button className="link" onClick={() => setTool(null)}>Stop placing</button>
+              </>
+            ) : (
+              "Drag a field onto the document, or click a field then click the page."
+            )}
           </div>
         </div>
       </div>

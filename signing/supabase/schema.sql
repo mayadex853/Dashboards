@@ -51,6 +51,7 @@ create table if not exists recipients (
   email text not null,
   routing_order int not null default 1,
   is_me boolean not null default false,
+  kind text not null default 'signer',     -- signer | cc (receives a copy)
   token_hash text,
   status text not null default 'pending',    -- pending | sent | viewed | signed
   sent_at timestamptz,

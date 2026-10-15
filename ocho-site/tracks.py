@@ -1,7 +1,7 @@
 """Build the streaming catalog: tracks/<ALBUM-ID>.json plus web-ready MP3s named for upload.
 
 Input (WORK dir, made by the Mega download step):
-  out/<ALBUM-ID>/<source name>.mp3 + .json   192k MP3 and waveform peaks for every master WAV
+  out/<ALBUM-ID>/<source name>.mp3 + .json   320k MP3 and waveform peaks for every master WAV
   meta/OCHO_ISRC_MASTER_*.csv                 track IDs, ISRCs and proper titles for the whole catalog
   meta/apm/<ALBUM-ID>__OCHO_00NN*.csv         APM delivery sheets (BPM, timing, track and album descriptions)
 

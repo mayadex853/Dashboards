@@ -16,7 +16,7 @@ async function worker(w){
     fs.mkdirSync('out/'+k.split('/')[0],{recursive:true})
     for(let a=1;a<=6;a++){try{
       const buf=await nodes[x.path].downloadBuffer({maxConnections:4}); const wav=`tmp_${w}.wav`; fs.writeFileSync(wav,buf)
-      execFileSync('ffmpeg',['-v','error','-y','-i',wav,'-ac','2','-ar','44100','-b:a','192k','-id3v2_version','3',mp3])
+      execFileSync('ffmpeg',['-v','error','-y','-i',wav,'-ac','2','-ar','44100','-b:a','320k','-id3v2_version','3',mp3])
       const pcm=execFileSync('ffmpeg',['-v','error','-i',wav,'-ac','1','-ar','2000','-f','s16le','-'],{maxBuffer:1<<28})
       const s=new Int16Array(pcm.buffer,pcm.byteOffset,pcm.length>>1), N=800, step=Math.max(1,Math.floor(s.length/N)), peaks=[]
       for(let b=0;b<N;b++){let m=0;for(let j=b*step;j<Math.min(s.length,(b+1)*step);j++){const v=Math.abs(s[j]);if(v>m)m=v}peaks.push(m)}

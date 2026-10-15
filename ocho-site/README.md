@@ -43,10 +43,10 @@ shows the built-in lists from `data.py`.
 ## Streaming player
 
 Album panels list every track with a waveform, plus alternate versions (instrumental, TV mix, stings...).
-Audio is MP3 (192 kbps) on Cloudflare R2; its public URL goes in `AUDIO_BASE` (the player stays hidden while
+Audio is MP3 (320 kbps) on Cloudflare R2; its public URL goes in `AUDIO_BASE` (the player stays hidden while
 that file is missing). Track lists live in `tracks/<ALBUM-ID>.json`.
 
-To add or refresh audio: put the release masters through the Mega download step (192k MP3 + WAV discarded), then
+To add or refresh audio: put the release masters through the Mega download step (320k MP3 + WAV discarded), then
 
 ```bash
 python3 tracks.py <work dir>   # writes tracks/*.json and <work dir>/dist/<ALBUM-ID>/*.mp3

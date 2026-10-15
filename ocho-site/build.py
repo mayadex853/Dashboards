@@ -442,6 +442,12 @@ CSS = r"""
 .o-ptext p b{color:#fff;}
 .o-creds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 36px;}
 .o-pgrid2>*,.o-cred{min-width:0;overflow-wrap:anywhere;}
+.o-creds.n4{grid-template-columns:repeat(2,minmax(0,1fr));}
+.o-stage-h{font-size:28px !important;margin:34px 0 14px;}
+.o-stage{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;}
+.o-stage li{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid var(--line);}
+.o-stage b{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--cy);}
+.o-stage span{font-size:15px;color:#efe8f5;}
 .o-cred{border:1px solid var(--line);border-radius:14px;padding:18px 16px;background:#0b0810;}
 .o-cred b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:40px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .o-person.r .o-cred b{background:linear-gradient(95deg,var(--cy),#8fe9ff);-webkit-background-clip:text;background-clip:text;}
@@ -533,6 +539,8 @@ CSS = r"""
   .o-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%;}
   .o-chip{flex:none;}
   .o-creds{grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .o-creds.n4{grid-template-columns:1fr 1fr;}
+  .o-stage{grid-template-columns:1fr;}
   .o-cred{padding:14px 10px;}
   .o-cred b{font-size:22px;}
   .o-cred span{font-size:9px;letter-spacing:.06em;}
@@ -666,8 +674,9 @@ function person(key,photos,rev){
   var nm=t[key+'_name'].split(' ');
   var creds=t[key+'_creds'].map(function(c){return '<div class="o-cred"><b>'+c[0]+'</b><span>'+c[1]+'</span></div>';}).join('');
   return '<section class="o-sec o-person'+(rev?' r':'')+'"><div class="o-wrap o-pgrid2"><div class="o-photos o-reveal">'+ph+'</div>'+
-  '<div class="o-ptext o-reveal"><h2 class="o-bigname">'+esc(nm[0])+'<span>'+esc(nm.slice(1).join(' '))+'</span></h2><div class="o-role">'+t[key+'_role']+'</div><div class="o-creds">'+creds+'</div>'+
-  t[key+'_bio'].map(function(p){return '<p>'+p+'</p>';}).join('')+'</div></div></section>';
+  '<div class="o-ptext o-reveal"><h2 class="o-bigname">'+esc(nm[0])+'<span>'+esc(nm.slice(1).join(' '))+'</span></h2><div class="o-role">'+t[key+'_role']+'</div><div class="o-creds'+(t[key+'_creds'].length>3?' n4':'')+'">'+creds+'</div>'+
+  t[key+'_bio'].map(function(p){return '<p>'+p+'</p>';}).join('')+
+  (t[key+'_stage']?'<h4 class="o-stage-h">'+t.stage_h+'</h4><ul class="o-stage">'+t[key+'_stage'].map(function(x){return '<li><b>'+x[0]+'</b><span>'+x[1]+'</span></li>';}).join('')+'</ul>':'')+'</div></div></section>';
 }
 function about(){
   var pol=[['jody-mike','Jody & Michael',{left:'4%',top:'6%',width:'64%',height:'58%',transform:'rotate(-5deg)',zIndex:3}],

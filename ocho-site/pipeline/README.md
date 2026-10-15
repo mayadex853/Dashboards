@@ -16,7 +16,7 @@ Sources (read-only Mega share links):
    `meta/apm/<ALBUM-ID>__<file>`, then `node mega-catalog.mjs <catalog link> 4`.
 3. Single albums: `node mega-album.mjs <link> OCHO-0008` and `node mega-album.mjs <link> OCHO-0014`
    (run from a sibling folder; they write into `../mega/out`).
-   Each WAV becomes a 192 kbps MP3 and is deleted. Mega is ~1–2 MB/s and has a transfer quota; the
+   Each WAV becomes a 320 kbps MP3 and is deleted. Mega is ~1–2 MB/s and has a transfer quota; the
    scripts retry with back-off. ~20 GB of WAVs → 1–3 hours.
 4. `python3 ../tracks.py W` → writes `ocho-site/tracks/*.json` and `W/dist/<ALBUM-ID>/*.mp3`.
 5. Upload `W/dist` to the R2 bucket (`CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`), enable public

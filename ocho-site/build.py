@@ -18,11 +18,13 @@ from pathlib import Path
 import data
 
 HERE = Path(__file__).parent
-# Images and track lists come from a fixed commit (default: the current HEAD, which already contains them).
+# Images and track lists come from a fixed commit: by default the last commit that changed them, so code-only
+# rebuilds keep the same (already cached) asset URLs.
 # jsDelivr is the primary host (fast, no rate limit, and it cannot resolve branch names containing "/");
 # raw.githubusercontent.com is the automatic fallback.
 CDN_REF = sys.argv[1] if len(sys.argv) > 1 else subprocess.run(
-    ["git", "rev-parse", "HEAD"], cwd=Path(__file__).parent, capture_output=True, text=True, check=True).stdout.strip()
+    ["git", "log", "-1", "--format=%H", "--", "img", "tracks"], cwd=Path(__file__).parent,
+    capture_output=True, text=True, check=True).stdout.strip()
 CDN_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/img/"
 FALLBACK_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/ocho-site/img/"
 

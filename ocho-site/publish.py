@@ -33,7 +33,7 @@ def put(key, path, cache):
 
 def exists(url):
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=30) as r:
+        with urllib.request.urlopen(urllib.request.Request(url, method="HEAD", headers={"User-Agent": "ocho-publish/1.0"}), timeout=30) as r:
             return r.status == 200
     except Exception:
         return False

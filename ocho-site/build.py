@@ -352,7 +352,7 @@ CSS = r"""
 .o-hide{display:none !important;}
 
 /* LIGHTBOX */
-.o-lb{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:30px;background:rgba(5,3,8,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+.o-lb{position:fixed;inset:0;bottom:var(--o-pbh,0px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:30px;background:rgba(5,3,8,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   opacity:0;pointer-events:none;transition:opacity .35s;}
 .o-lb.on{opacity:1;pointer-events:auto;}
 .o-lb-box{display:grid;grid-template-columns:auto 1fr;gap:46px;align-items:center;max-width:1080px;width:100%;transform:scale(.94);transition:transform .45s cubic-bezier(.2,.8,.2,1);}
@@ -410,7 +410,7 @@ CSS = r"""
 .o-al-play svg{width:20px;height:20px;}
 .o-al:hover .o-al-play{opacity:1;transform:none;}
 .o-fplay{margin-top:16px;padding:14px 24px;}
-.o-pbar{position:fixed !important;left:0;right:0;bottom:0;z-index:1500;overflow:visible !important;display:grid;grid-template-columns:auto minmax(120px,240px) auto minmax(0,1fr) 90px auto auto;align-items:center;gap:18px;
+.o-pbar{position:fixed !important;left:0;right:0;bottom:0;z-index:2100;overflow:visible !important;display:grid;grid-template-columns:auto minmax(120px,240px) auto minmax(0,1fr) 90px auto auto;align-items:center;gap:18px;
   padding:12px max(18px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));
   background:rgba(10,7,14,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,46,154,.35);box-shadow:0 -20px 60px rgba(0,0,0,.6);}
 .o-pbar[hidden]{display:none !important;}
@@ -721,7 +721,7 @@ function nav(){
     '<a href="#o-faq" data-go="faq">'+t.nav_faq+'</a><a href="#o-contact" data-go="contact">'+t.nav_contact+'</a>'+
     '<a class="o-lang" href="'+href(page,lang==='en'?'es':'en')+'" title="'+t.lang_name+'">'+t.lang_label+'</a>'+
     '<a class="o-btn p" href="'+href('albums')+'">'+t.nav_cta+'</a></div>'+
-    '<button class="o-burger" aria-label="Menu"><i></i><i></i><i></i></button></nav></div>';
+    '<button class="o-burger" aria-label="'+t.a_menu+'"><i></i><i></i><i></i></button></nav></div>';
 }
 function ticker(){return '<section class="o-ticker"><div class="o-ticker-k">'+t.heard+'</div><div class="o-mq">'+track(D.networks)+'</div></section>';}
 function tape(){return '<section class="o-tape" aria-hidden="true"><div class="o-band a">'+track(D.genres)+'</div><div class="o-band b">'+track(D.genres.slice().reverse())+'</div></section>';}
@@ -750,7 +750,7 @@ function footer(){
   '<nav><a href="'+href('about')+'">'+t.nav_about+'</a><a href="'+href('albums')+'">'+t.nav_albums+'</a><a href="'+href('placements')+'">'+t.nav_placements+'</a><a href="'+href(page,lang==='en'?'es':'en')+'">'+t.lang_name+'</a></nav></div>'+
   '<small>&copy; '+new Date().getFullYear()+' Ocho Music Group LLC &middot; '+t.footer_tag+'</small></div></footer>';
 }
-function lightbox(){return '<div class="o-lb" role="dialog" aria-modal="true"><button class="o-lb-x" aria-label="Close">&times;</button><button class="o-lb-arrow o-lb-l" aria-label="Previous">&#8249;</button><button class="o-lb-arrow o-lb-r" aria-label="Next">&#8250;</button><div class="o-lb-box"></div></div>';}
+function lightbox(){return '<div class="o-lb" role="dialog" aria-modal="true"><button class="o-lb-x" aria-label="'+t.a_close+'">&times;</button><button class="o-lb-arrow o-lb-l" aria-label="'+t.a_prev+'">&#8249;</button><button class="o-lb-arrow o-lb-r" aria-label="'+t.a_next+'">&#8250;</button><div class="o-lb-box"></div></div>';}
 
 /* ---------- data-driven blocks ---------- */
 function coverflow(){return D.albums.map(function(a,i){return '<div class="o-fi" data-i="'+i+'"><img src="'+esc(src(a.img,'covers'))+'" alt="'+esc(a.title)+' album cover" loading="lazy"></div>';}).join('');}
@@ -816,12 +816,12 @@ function home(){
   ticker()+
   '<section class="o-sec o-diff"><div class="o-wrap"><div class="o-diff-head o-reveal"><span class="o-eb">'+t.diff_eb+'</span><h2 class="o-h2">'+t.diff_h2+'</h2></div><div class="o-pillars">'+pills+'</div></div></section>'+
   '<section class="o-albums" id="o-albums"><div class="o-wrap o-center o-reveal"><span class="o-eb">'+t.albums_eb+'</span><h2 class="o-h2">'+t.albums_h2+'</h2><p>'+t.albums_p+'</p></div>'+
-  '<div class="o-flow" data-block="flow"><button class="o-nav-btn o-prev" aria-label="Previous">&#8249;</button>'+coverflow()+'<button class="o-nav-btn o-next" aria-label="Next">&#8250;</button></div><div class="o-fcap" aria-live="polite"></div>'+
+  '<div class="o-flow" data-block="flow"><button class="o-nav-btn o-prev" aria-label="'+t.a_prev+'">&#8249;</button>'+coverflow()+'<button class="o-nav-btn o-next" aria-label="'+t.a_next+'">&#8250;</button></div><div class="o-fcap" aria-live="polite"></div>'+
   '<div class="o-wrap"><div class="o-reveal" style="margin-top:40px"><span class="o-eb">'+t.sounds_eb+'</span></div><div class="o-sounds o-reveal" data-block="sounds" style="margin-top:0">'+sounds()+'</div>'+
   '<div class="o-more"><a class="o-btn p" href="'+href('albums')+'">'+t.albums_all+' &rarr;</a></div></div></section>'+
   tape()+
   '<section class="o-sec o-place"><div class="o-wrap o-reveal"><span class="o-eb">'+t.place_eb+'</span><h2 class="o-h2">'+t.place_h2+'</h2><p style="max-width:620px;margin-top:22px">'+t.place_p+'</p></div>'+
-  '<div class="o-rail-wrap"><button class="o-nav-btn o-prev" aria-label="Previous">&#8249;</button><div class="o-rail" data-block="rail">'+rail()+'</div><button class="o-nav-btn o-next" aria-label="Next">&#8250;</button></div>'+
+  '<div class="o-rail-wrap"><button class="o-nav-btn o-prev" aria-label="'+t.a_prev+'">&#8249;</button><div class="o-rail" data-block="rail">'+rail()+'</div><button class="o-nav-btn o-next" aria-label="'+t.a_next+'">&#8250;</button></div>'+
   '<div class="o-more" style="margin-top:10px"><a class="o-btn c" href="'+href('placements')+'">'+t.place_all+' &rarr;</a></div></section>'+
   doors()+
   '<section class="o-sec o-founders"><div class="o-wrap"><div class="o-reveal" style="max-width:900px"><span class="o-eb">'+t.founders_eb+'</span><h2 class="o-h2" style="font-size:clamp(44px,6vw,88px) !important">'+t.founders_h2+'</h2><p style="max-width:640px;margin-top:24px">'+t.founders_p+'</p></div>'+
@@ -903,10 +903,10 @@ function bar(){
   if(P.bar)return P.bar;
   var b=document.createElement('div');b.id='ocho-player';b.className='o o-pbar';b.hidden=true;
   b.innerHTML='<img class="o-pb-cover" alt=""><div class="o-pb-meta"><strong></strong><span></span></div>'+
-    '<div class="o-pb-ctl"><button data-pb="prev" aria-label="Previous">'+IC.prev+'</button><button data-pb="play" class="o-pb-play" aria-label="Play">'+IC.play+'</button><button data-pb="next" aria-label="Next">'+IC.next+'</button></div>'+
+    '<div class="o-pb-ctl"><button data-pb="prev" aria-label="'+t.a_prev+'">'+IC.prev+'</button><button data-pb="play" class="o-pb-play" aria-label="'+t.play+'">'+IC.play+'</button><button data-pb="next" aria-label="'+t.a_next+'">'+IC.next+'</button></div>'+
     '<div class="o-pb-wave"><span class="o-pb-t">0:00</span><canvas></canvas><span class="o-pb-d">0:00</span></div>'+
-    '<input class="o-pb-vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume">'+
-    '<a class="o-btn p o-pb-lic" href="#o-contact" data-pb="lic"></a><button data-pb="close" class="o-pb-x" aria-label="Close">&times;</button>';
+    '<input class="o-pb-vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="'+t.a_vol+'">'+
+    '<a class="o-btn p o-pb-lic" href="#o-contact" data-pb="lic"></a><button data-pb="close" class="o-pb-x" aria-label="'+t.a_close+'">&times;</button>';
   document.body.appendChild(b);
   var a=P.a=new Audio();a.preload='auto';
   a.addEventListener('timeupdate',tick);a.addEventListener('play',sync);a.addEventListener('pause',sync);a.addEventListener('loadedmetadata',tick);
@@ -914,10 +914,10 @@ function bar(){
   b.addEventListener('click',function(e){var k=e.target.closest('[data-pb]');if(!k)return;k=k.getAttribute('data-pb');
     if(k==='play'){if(a.paused)a.play();else a.pause();}else if(k==='next')step(1);else if(k==='prev'){if(a.currentTime>3)a.currentTime=0;else step(-1);}
     else if(k==='lic'){e.preventDefault();goContact();}
-    else if(k==='close'){a.pause();b.hidden=true;document.body.style.paddingBottom='';P.cur=null;drawRows(M);}});
+    else if(k==='close'){a.pause();b.hidden=true;document.body.style.paddingBottom='';document.documentElement.style.removeProperty('--o-pbh');P.cur=null;drawRows(M);}});
   b.querySelector('.o-pb-vol').oninput=function(){a.volume=+this.value;};
   b.querySelector('canvas').addEventListener('click',function(e){var r=this.getBoundingClientRect();if(a.duration)a.currentTime=(e.clientX-r.left)/r.width*a.duration;});
-  window.addEventListener('resize',function(){tick();});
+  window.addEventListener('resize',function(){tick();if(!b.hidden)document.documentElement.style.setProperty('--o-pbh',b.offsetHeight+'px');});
   return P.bar=b;
 }
 function tick(){if(!P.bar||!P.a)return;var a=P.a,d=a.duration||(P.cur&&P.cur.d)||0,p=d?a.currentTime/d:0;
@@ -934,7 +934,7 @@ function play(id,ti,vi,seek){
   b.querySelector('.o-pb-meta strong').textContent=tr.t+(v.l?' ('+v.l+')':'');
   b.querySelector('.o-pb-meta span').textContent=(al.title||'')+(al.artist?' · '+al.artist:'');
   b.querySelector('.o-pb-lic').textContent=t.license;
-  if(b.hidden){b.hidden=false;}document.body.style.paddingBottom=b.offsetHeight+'px';
+  if(b.hidden){b.hidden=false;}document.body.style.paddingBottom=b.offsetHeight+'px';document.documentElement.style.setProperty('--o-pbh',b.offsetHeight+'px');
   drawRows(M);tick();
 }
 function step(d){if(!P.cur)return;var n=ALB[P.cur.id].tracks.length,ti=(P.cur.t+d+n)%n;if(d>0&&P.cur.t+d>=n){P.a.pause();return;}play(P.cur.id,ti,0);}
@@ -1077,6 +1077,10 @@ M.addEventListener('click',function(e){
   var al=e.target.closest('.o-al');if(al){lbOpen(D.albums,+al.getAttribute('data-i'),'album');return;}
   var pc=e.target.closest('.o-card');if(pc){lbOpen(D.placements,+pc.getAttribute('data-i'),'place');return;}
 });
+// swipe left/right in the lightbox to move between items (the arrows are hidden on phones)
+var lbx=null;M.addEventListener('touchstart',function(e){lbx=e.target.closest('.o-lb.on')&&!e.target.closest('input,.o-tw')?[e.touches[0].clientX,e.touches[0].clientY]:null;},{passive:true});
+M.addEventListener('touchend',function(e){if(!lbx||!LB.list)return;var dx=e.changedTouches[0].clientX-lbx[0],dy=e.changedTouches[0].clientY-lbx[1];lbx=null;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){LB.i=(LB.i+(dx<0?1:-1)+LB.list.length)%LB.list.length;lbShow();}},{passive:true});
 document.addEventListener('keydown',function(e){var lb=M.querySelector('.o-lb.on');if(!lb)return;
   if(e.key==='Escape')lbClose();else if(e.key==='ArrowRight'){LB.i=(LB.i+1)%LB.list.length;lbShow();}else if(e.key==='ArrowLeft'){LB.i=(LB.i-1+LB.list.length)%LB.list.length;lbShow();}});
 window.addEventListener('scroll',function(){var top=M.querySelector('.o-top');if(top)top.classList.toggle('solid',window.pageYOffset>40);},{passive:true});

@@ -65,6 +65,7 @@ export async function createEnvelope(input) {
     original_sha256: sha256(pdfBytes),
     fields,
     message: input.message || null,
+    subject: input.subject || null,
   });
   for (const r of input.recipients) {
     await db.insert("recipients", {
@@ -112,7 +113,7 @@ export async function notifyRecipient(env, r, { reminder = false } = {}) {
   const sender = process.env.MAIL_FROM_NAME || "TakaSign";
   const mail = await sendEmail({
     to: r.email,
-    subject: `${reminder ? "Reminder: " : ""}Please sign: ${env.title}`,
+    subject: `${reminder ? "Reminder: " : ""}${env.subject || `Complete with TakaSign: ${env.title}`}`,
     html: emailLayout({
       heading: `${sender} sent you a document to sign`,
       intro: `Hi ${r.name},\n\n${env.message || `Please review and sign "${env.title}".`}`,
@@ -173,7 +174,8 @@ export async function submitSignature(env, r, values, { ip, user_agent, localDat
   );
   await db.update("envelopes", env.id, { current_pdf_path: path, fields });
   const now = new Date().toISOString();
-  await db.update("recipients", r.id, { status: "signed", signed_at: now, ip, user_agent, token_hash: null });
+  // Keep the link valid so the signer can view/download their copy (signing again is blocked by status)
+  await db.update("recipients", r.id, { status: "signed", signed_at: now, ip, user_agent });
   await logEvent(env.id, "signed", { recipient_id: r.id, ip, user_agent, detail: { name: r.name, email: r.email } });
   return advance(env.id);
 }

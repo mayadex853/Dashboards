@@ -140,3 +140,24 @@ export const FIELD_TYPES = [
 
 /** Field types that hold typed text (stamped with the text renderer). */
 export const TEXTLIKE = new Set(["text", "name", "email", "company", "title", "date"]);
+
+export const initialsOf = (name = "") =>
+  String(name || "").split(/\s+/).filter(Boolean).map((p) => p[0].toUpperCase()).join("").slice(0, 3);
+
+/** Agreement folder/status for an envelope, from the sender's point of view. */
+export function envelopeView(env, recs) {
+  const signers = recs.filter((r) => r.kind !== "cc").sort((a, b) => a.routing_order - b.routing_order);
+  const pending = signers.filter((r) => r.status !== "signed");
+  const order = pending.length ? Math.min(...pending.map((r) => r.routing_order)) : null;
+  const waitingOn = env.status === "sent" ? pending.filter((r) => r.routing_order === order) : [];
+  const myTurn = waitingOn.some((r) => r.is_me);
+  let status;
+  if (env.status === "draft") status = { key: "draft", label: "Draft", cls: "draft", icon: "✎" };
+  else if (env.status === "completed") status = { key: "completed", label: "Completed", cls: "done", icon: "✓" };
+  else if (env.status === "voided") status = { key: "voided", label: "Voided", cls: "void", icon: "✕" };
+  else if (env.status === "declined") status = { key: "declined", label: "Declined", cls: "void", icon: "✕" };
+  else if (myTurn) status = { key: "action", label: "Needs to sign", cls: "need", icon: "!" };
+  else status = { key: "waiting", label: `Waiting for ${waitingOn.map((r) => r.name.split(" ")[0]).join(", ") || "others"}`, cls: "wait", icon: "…" };
+  const sorted = [...signers, ...recs.filter((r) => r.kind === "cc")];
+  return { ...env, recs: sorted, signers, waitingOn, myTurn, view: status };
+}

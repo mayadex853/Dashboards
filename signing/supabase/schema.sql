@@ -37,6 +37,7 @@ create table if not exists envelopes (
   final_sha256 text,
   fields jsonb not null default '[]',
   message text,
+  subject text,
   created_at timestamptz not null default now(),
   sent_at timestamptz,
   completed_at timestamptz,

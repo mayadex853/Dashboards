@@ -25,7 +25,7 @@ export default function Templates() {
       form.append("file", file);
       form.append("category", category);
       const t = await api("/api/templates", { method: "POST", form });
-      router.push(`/templates/${t.id}`);
+      router.push(`/templates/${t.id}?new=1`);
     } catch (e) {
       setErr(e.message);
       setBusy(false);
@@ -36,7 +36,7 @@ export default function Templates() {
     <>
       <div className="page-head">
         <div>
-          <h1>Contract templates</h1>
+          <h1>Templates</h1>
           <div className="muted">Upload a PDF once, place fields, reuse for every signing.</div>
         </div>
       </div>
@@ -71,7 +71,7 @@ export default function Templates() {
                   <td className="muted">{CATEGORIES.find((c) => c.key === t.category)?.label || "Any"}</td>
                   <td className="muted">{t.fields.length}</td>
                   <td className="muted small">{fmtDate(t.updated_at || t.created_at)}</td>
-                  <td style={{ textAlign: "right" }}><Link className="btn sm ghost" href={`/send?template=${t.id}`}>Use</Link></td>
+                  <td style={{ textAlign: "right" }}><Link className="btn sm yellow" href={`/send?template=${t.id}`}>Use</Link></td>
                 </tr>
               ))}
             </tbody>

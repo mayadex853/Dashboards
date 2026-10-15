@@ -11,22 +11,26 @@ Usage: python3 build.py [CDN_REF]   (CDN_REF = git branch or commit the images a
 """
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
 import data
 
 HERE = Path(__file__).parent
-CDN_REF = sys.argv[1] if len(sys.argv) > 1 else "claude/festive-fermat-ghujni"
-# Images are served from raw.githubusercontent.com; jsDelivr is the automatic fallback (same setup as hdmn-homepage).
-CDN_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/ocho-site/img/"
-FALLBACK_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/img/"
+# Images and track lists come from a fixed commit (default: the current HEAD, which already contains them).
+# jsDelivr is the primary host (fast, no rate limit, and it cannot resolve branch names containing "/");
+# raw.githubusercontent.com is the automatic fallback.
+CDN_REF = sys.argv[1] if len(sys.argv) > 1 else subprocess.run(
+    ["git", "rev-parse", "HEAD"], cwd=Path(__file__).parent, capture_output=True, text=True, check=True).stdout.strip()
+CDN_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/img/"
+FALLBACK_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/ocho-site/img/"
 
 # Google Sheet with the album and placement lists; the page reads it live and falls back to data.py.
 SHEET_ID = (HERE / "SHEET_ID").read_text().strip() if (HERE / "SHEET_ID").exists() else ""
 # Public base URL of the streaming audio (Cloudflare R2 bucket); empty hides the player.
 AUDIO_BASE = (HERE / "AUDIO_BASE").read_text().strip() if (HERE / "AUDIO_BASE").exists() else ""
-TRACKS_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/ocho-site/tracks/"
+TRACKS_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/tracks/"
 
 
 def _min(css):
@@ -584,7 +588,7 @@ function track(items,cls){var h='';items.forEach(function(x){h+='<span>'+esc(x)+
 /* ---------- shared blocks ---------- */
 function nav(){
   var L=function(p,label){return '<a href="'+href(p)+'"'+(page===p?' class="on"':'')+'>'+label+'</a>';};
-  return '<div class="o-top"><a class="o-banner" href="'+D.pdf[lang]+'" target="_blank" rel="noopener">'+t.banner+' <b>&rarr;</b></a>'+
+  return '<div class="o-top"><a class="o-banner" href="'+href('home')+'#o-artists" data-go="artists">'+t.banner+' <b>&rarr;</b></a>'+
     '<nav class="o-nav"><a class="o-logo" href="'+href('home')+'"><img src="'+D.base+'logo.png" alt="Ocho Music Group"></a>'+
     '<div class="o-links">'+L('about',t.nav_about)+L('albums',t.nav_albums)+L('placements',t.nav_placements)+
     '<a href="#o-faq" data-go="faq">'+t.nav_faq+'</a><a href="#o-contact" data-go="contact">'+t.nav_contact+'</a>'+
@@ -606,8 +610,8 @@ function faq(){
   return '<section class="o-sec o-faq" id="o-faq"><div class="o-wrap o-faq-grid"><div class="o-reveal"><span class="o-eb">'+t.faq_eb+'</span><h2 class="o-h2">'+t.faq_h2+'</h2></div><div class="o-reveal">'+q+'</div></div></section>';
 }
 function artists(){
-  return '<section class="o-sec o-artists"><div class="o-wrap o-agrid"><div class="o-reveal"><span class="o-eb" style="color:#ffd0e6">'+t.artists_eb+'</span><h2 class="o-h2" style="margin-bottom:26px">'+t.artists_h2+'</h2><p>'+t.artists_p+'</p>'+
-  '<div class="o-ctas" style="justify-content:flex-start;margin-top:30px"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.artists_cta+'</a><a class="o-btn c" href="'+D.pdf[lang]+'" target="_blank" rel="noopener">'+t.artists_pdf+'</a></div></div>'+
+  return '<section class="o-sec o-artists" id="o-artists"><div class="o-wrap o-agrid"><div class="o-reveal"><span class="o-eb" style="color:#ffd0e6">'+t.artists_eb+'</span><h2 class="o-h2" style="margin-bottom:26px">'+t.artists_h2+'</h2><p>'+t.artists_p+'</p>'+
+  '<div class="o-ctas" style="justify-content:flex-start;margin-top:30px"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.artists_cta+'</a></div></div>'+
   '<ul class="o-rules o-reveal" style="transition-delay:.15s">'+t.artists_rules.map(function(r){return '<li><span>'+r+'</span></li>';}).join('')+'</ul></div></section>';
 }
 function contact(){
@@ -780,6 +784,7 @@ function goContact(){
   if(el){var y=el.getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y,behavior:'smooth'});}
 }
 function goFaq(){var el=document.getElementById('o-faq');if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-80,behavior:'smooth'});}else{location.href=href('home')+(D.preview?'':'#o-faq');}}
+function goArtists(){var el=document.getElementById('o-artists');if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'});}else{location.href=href('home')+(D.preview?'':'#o-artists');}}
 function every(fn,ms){timers.push(setInterval(fn,ms));}
 function reveal(scope){
   var els=(scope||M).querySelectorAll('.o-reveal:not(.in)');
@@ -876,6 +881,7 @@ function render(){
   var body=page==='about'?about():page==='albums'?albumsPage():page==='placements'?placementsPage():home();
   M.innerHTML='<div class="o" id="ocho"><div class="o-grain"></div>'+nav()+body+footer()+lightbox()+'</div>';
   wall();reveal();bindData();
+  if(!D.preview&&/^#o-(artists|faq)$/.test(location.hash))setTimeout(function(){var el=document.getElementById(location.hash.slice(1));if(el)window.scrollTo(0,el.getBoundingClientRect().top+window.pageYOffset-70);},300);
   var rl=M.querySelectorAll('.o-rl');
   if(rl.length>1&&!reduce){var ri=0;every(function(){rl[ri].classList.remove('on');ri=(ri+1)%rl.length;rl[ri].classList.add('on');},3400);}
   M.querySelectorAll('[data-mail]').forEach(function(a){a.href='mailto:'+mail();a.textContent=mail();});
@@ -889,7 +895,7 @@ function handleTrack(e){var tvb=e.target.closest('.o-tvb');if(tvb){var vs=tvb.cl
 /* global listeners (bound once) */
 M.addEventListener('click',function(e){
   var g=e.target.closest('[data-go]');
-  if(g){e.preventDefault();var top=M.querySelector('.o-top');if(top)top.classList.remove('open');lbClose();if(g.getAttribute('data-go')==='contact')goContact();else goFaq();return;}
+  if(g){e.preventDefault();var top=M.querySelector('.o-top');if(top)top.classList.remove('open');lbClose();var gg=g.getAttribute('data-go');if(gg==='contact')goContact();else if(gg==='artists')goArtists();else goFaq();return;}
   if(e.target.closest('.o-burger')){M.querySelector('.o-top').classList.toggle('open');return;}
   if(e.target.closest('.o-links a')){M.querySelector('.o-top').classList.remove('open');}
   var q=e.target.closest('.o-q button');

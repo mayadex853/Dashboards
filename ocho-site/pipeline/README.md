@@ -28,3 +28,11 @@ Sources (read-only Mega share links):
   `ochoaudio.com` is registered with Cloudflare in the same account). The r2.dev test URL is disabled.
 - CORS: GET/HEAD from https://www.ochomusicgroup.com and https://ochomusicgroup.com (Range allowed for seeking).
 - To add an album: run steps 2–4 for it and upload only its new `dist/<ALBUM-ID>/` folder.
+
+## Publishing the site (code, images, track lists)
+The Kajabi pages load `https://ochoaudio.com/site/ocho.js` (cached 5 minutes). Images and track lists live under
+`site/<asset-commit>/` on the same domain, with jsDelivr as an automatic fallback. After any change:
+1. Commit image/track changes first (the asset folder is named after the last commit that touched `img/` or `tracks/`).
+2. `python3 build.py`, commit `ocho.js` and `preview.html`, push.
+3. `python3 publish.py` (uploads new assets once, then replaces `site/ocho.js`). Without this step the live
+   pages keep showing the previous build.

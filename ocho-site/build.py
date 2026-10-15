@@ -25,14 +25,19 @@ HERE = Path(__file__).parent
 CDN_REF = sys.argv[1] if len(sys.argv) > 1 else subprocess.run(
     ["git", "log", "-1", "--format=%H", "--", "img", "tracks"], cwd=Path(__file__).parent,
     capture_output=True, text=True, check=True).stdout.strip()
-CDN_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/img/"
-FALLBACK_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/ocho-site/img/"
 
 # Google Sheet with the album and placement lists; the page reads it live and falls back to data.py.
 SHEET_ID = (HERE / "SHEET_ID").read_text().strip() if (HERE / "SHEET_ID").exists() else ""
 # Public base URL of the streaming audio (Cloudflare R2 bucket); empty hides the player.
 AUDIO_BASE = (HERE / "AUDIO_BASE").read_text().strip() if (HERE / "AUDIO_BASE").exists() else ""
-TRACKS_BASE = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/tracks/"
+JSDELIVR = f"https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@{CDN_REF}/ocho-site/"
+# Primary host: our own Cloudflare R2 domain (same bucket as the audio), under a folder per asset commit so
+# URLs are immutable; `publish.py` uploads them. jsDelivr is the automatic fallback for images and track lists.
+SITE_BASE = f"{AUDIO_BASE}site/{CDN_REF[:12]}/" if AUDIO_BASE else JSDELIVR
+CDN_BASE = SITE_BASE + "img/"
+FALLBACK_BASE = JSDELIVR + "img/" if AUDIO_BASE else f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/ocho-site/img/"
+TRACKS_BASE = SITE_BASE + "tracks/"
+TRACKS_FALLBACK = JSDELIVR + "tracks/"
 
 
 def _min(css):
@@ -48,7 +53,7 @@ def site_data(base, fallback, preview, audio="", tracks=""):
         "placements": [{"title": t, "net": n, "cat": c, "img": i} for t, n, c, i in data.PLACEMENTS],
         "albumCats": data.ALBUM_CATS, "placeCats": data.PLACEMENT_CATS, "catsEs": data.CATS_ES,
         "networks": data.NETWORKS, "genres": data.GENRES,
-        "pos": data.PHOTO_POS, "base": base, "fallback": fallback, "sheet": SHEET_ID, "preview": preview, "audio": audio, "tracksBase": tracks,
+        "pos": data.PHOTO_POS, "base": base, "fallback": fallback, "sheet": SHEET_ID, "preview": preview, "audio": audio, "tracksBase": tracks, "tracksFallback": TRACKS_FALLBACK,
         "email": ["music", "ochomusicgroup.com"],
     }
 
@@ -868,7 +873,7 @@ var IC={play:'<svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>',paus
   prev:'<svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>',next:'<svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>'};
 var ALB={},TRQ={},P={a:null,cur:null,peaks:[],bar:null};
 function loadTracks(id){if(!id||!D.audio)return Promise.resolve(null);
-  if(!TRQ[id])TRQ[id]=fetch(D.tracksBase+id+'.json').then(function(r){return r.ok?r.json():null;}).then(function(d){if(d)ALB[id]=d;return d;}).catch(function(){return null;});return TRQ[id];}
+  if(!TRQ[id])TRQ[id]=fetch(D.tracksBase+id+'.json').then(function(r){if(!r.ok)throw 0;return r.json();}).catch(function(){return fetch(D.tracksFallback+id+'.json').then(function(r){return r.ok?r.json():null;});}).then(function(d){if(d)ALB[id]=d;return d;}).catch(function(){return null;});return TRQ[id];}
 function fmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+('0'+s%60).slice(-2);}
 function drawWave(cv,peaks,prog){if(!cv||!peaks)return;var dpr=window.devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
   if(cv.width!==Math.round(w*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);}

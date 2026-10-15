@@ -9,14 +9,14 @@ PDF_ES = "https://drive.google.com/file/d/1G8NyOS-2SSjSBmfpzLtDjfQC3v6ceszw/view
 
 # Kajabi page paths for each page/language.
 PATHS = {
-    "en": {"home": "/", "about": "/about", "albums": "/albums", "placements": "/placements"},
-    "es": {"home": "/es", "about": "/about_es", "albums": "/albums_es", "placements": "/placements_es"},
+    "en": {"home": "/", "about": "/about", "albums": "/albums", "placements": "/placements", "learn": "/production-music"},
+    "es": {"home": "/es", "about": "/about_es", "albums": "/albums_es", "placements": "/placements_es", "learn": "/production-music_es"},
 }
 
 # Test pages (published alongside the live site for review; mount with data-test="1").
 TEST_PATHS = {
-    "en": {"home": "/new-home", "about": "/new-about", "albums": "/new-albums", "placements": "/new-placements"},
-    "es": {"home": "/new-home-es", "about": "/new-about-es", "albums": "/new-albums-es", "placements": "/new-placements-es"},
+    "en": {"home": "/new-home", "about": "/new-about", "albums": "/new-albums", "placements": "/new-placements", "learn": "/new-learn"},
+    "es": {"home": "/new-home-es", "about": "/new-about-es", "albums": "/new-albums-es", "placements": "/new-placements-es", "learn": "/new-learn-es"},
 }
 
 # Category names are the English keys used in the Google Sheet; CATS maps them to Spanish.
@@ -85,7 +85,7 @@ PLACEMENTS = [
     ("En Casa con Telemundo", "Telemundo", "News & Talk", "en-casa-con-telemundo"),
     ("Pica y Se Extiende", "", "News & Talk", "pica-y-se-extiende"),
     ("Tennis Channel This Week", "Tennis Channel", "Sports", "tennis-channel-this-week"),
-    ("Chef's Night Out", "Food TV", "TV & Streaming", "chefs-night-out"),
+    ("Chef's Night Out", "Vice", "TV & Streaming", "chefs-night-out"),
     ("The List", "Syndicated TV", "News & Talk", "the-list"),
     ("Play Ball", "Sports Broadcast", "Sports", "play-ball"),
     ("Live Games Showcase", "Sports Broadcast", "Sports", "live-games-showcase"),
@@ -95,7 +95,7 @@ PLACEMENTS = [
 ]
 
 NETWORKS = ["Apple TV+", "NBC", "Telemundo", "Hulu", "Peacock", "Prime Video", "Discovery", "A&E", "TBS", "TNT",
-            "UFC", "PBS", "Tennis Channel", "Food Network", "PlayStation", "Publix", "ICI Télé"]
+            "UFC", "PBS", "Tennis Channel", "Food Network", "Vice", "PlayStation", "Publix", "ICI Télé"]
 
 GENRES = ["Salsa", "Timba", "Cumbia", "Tejano", "Bachata", "Son Cubano", "Urbano", "Norteño", "Latin Brass",
           "Bolero", "Andean", "Tropical", "Corridos", "Latin Jazz"]
@@ -103,7 +103,7 @@ GENRES = ["Salsa", "Timba", "Cumbia", "Tejano", "Bachata", "Son Cubano", "Urbano
 FAQ = {
     "en": [
         ("How do I license one of your songs?",
-         "Reach out to Ocho directly, wherever you are in the world. Email us at music [at] ochomusicgroup [dot] com or use the form below with the scene, territory and timing, and we will take care of the licensing from there."),
+         "Reach out to Ocho, wherever you are. Email us at music [at] ochomusicgroup [dot] com or use the form below with the scene, territory and timing, and we will take it from there."),
         ("How do I submit my music?",
          "Send a link to your best 3–4 songs (vocals or instrumentals are welcome). The link should be streamable with an option to download. Due to the high volume of inquiries, messages may not be answered."),
         ("Does my music have to include Spanish lyrics?",
@@ -113,7 +113,7 @@ FAQ = {
     ],
     "es": [
         ("¿Cómo obtengo la licencia de una de sus canciones?",
-         "Comuníquese directamente con Ocho, esté donde esté en el mundo. Escríbanos a music [arroba] ochomusicgroup [punto] com o use el formulario de abajo con la escena, el territorio y los plazos, y nosotros nos encargamos de la licencia."),
+         "Comuníquese con Ocho, esté donde esté. Escríbanos a music [arroba] ochomusicgroup [punto] com o use el formulario de abajo con la escena, el territorio y los plazos, y nosotros nos encargamos del resto."),
         ("¿Cómo envío mi música?",
          "Mándenos un enlace a sus mejores 3 o 4 canciones (temas vocales e instrumentales son bienvenidos). El enlace debe poder escucharse en línea y ofrecer opción de descarga. Debido al gran volumen de consultas, es posible que los mensajes no sean respondidos."),
         ("¿Mi música tiene que incluir letras en español?",
@@ -133,7 +133,7 @@ T = {
                        "Real players. Live instruments. Zero AI.", "Source cues &amp; cinematic Latin underscore"],
         "hero_h1": "Real Latin.<br>Real players.<br><span class=\"o-neon\">Ready for picture.</span>",
         "hero_sub": "A boutique Latin catalog for film, TV &amp; ads, recorded on live instruments by award-winning artists from the U.S., the Caribbean, Central and South America. One-stop. Organic. Authentic.",
-        "cta_license": "License Our Music", "cta_license_note": "Worldwide, direct with Ocho",
+        "cta_license": "License Our Music", "cta_license_note": "Tell us about your project",
         "cta_albums": "&#9654; Explore the Albums", "cta_albums_note": "Stream the catalog",
         "cta_world": "License Worldwide", "cta_world_note": "Everywhere else",
         "heard": "As heard on",
@@ -152,7 +152,7 @@ T = {
         "place_p": "Networks, streamers, sports, brands and games trust Ocho when the scene has to feel real.",
         "place_all": "See All Placements",
         "doors_eb": "How to License", "doors_h2": "One door.<br><span class=\"o-grad\">Worldwide.</span>",
-        "doors_p": "From Los Angeles to Madrid, Mexico City to Buenos Aires, every Ocho track is licensed directly with us. No middlemen, no runaround: one conversation from first listen to final clearance.",
+        "doors_p": "From Los Angeles to Madrid, Mexico City to Buenos Aires, it all starts with one conversation with Ocho. Tell us what you need and we will guide you from first listen to final clearance.",
         "steps": [("Tell us the scene", "The mood, references, territory, media and timing."),
                   ("Get options &amp; a quote", "We pull the right tracks and versions and send a clear quote fast."),
                   ("Cleared &amp; delivered", "One-stop paperwork and full-quality files, ready for the mix.")],
@@ -230,7 +230,7 @@ T = {
                        "Músicos reales. Instrumentos en vivo. Cero IA.", "Música de origen y underscore latino cinemático"],
         "hero_h1": "Latino real.<br>Músicos reales.<br><span class=\"o-neon\">Listo para pantalla.</span>",
         "hero_sub": "Un catálogo boutique de música latina para cine, TV y publicidad, grabado con instrumentos en vivo por artistas galardonados de EE.UU., el Caribe, Centro y Sudamérica. Punto único de compra. Orgánico. Auténtico.",
-        "cta_license": "Licencie Nuestra Música", "cta_license_note": "En todo el mundo, directo con Ocho",
+        "cta_license": "Licencie Nuestra Música", "cta_license_note": "Cuéntenos su proyecto",
         "cta_albums": "&#9654; Explorar los Álbumes", "cta_albums_note": "Escuche el catálogo",
         "cta_world": "Licencias Mundiales", "cta_world_note": "Resto del mundo",
         "heard": "Escuchado en",
@@ -249,7 +249,7 @@ T = {
         "place_p": "Cadenas, plataformas, deportes, marcas y videojuegos confían en Ocho cuando la escena tiene que sentirse real.",
         "place_all": "Ver Todas las Colocaciones",
         "doors_eb": "Cómo Licenciar", "doors_h2": "Una puerta.<br><span class=\"o-grad\">Todo el mundo.</span>",
-        "doors_p": "De Los Ángeles a Madrid, de Ciudad de México a Buenos Aires, cada tema de Ocho se licencia directamente con nosotros. Sin intermediarios ni vueltas: una sola conversación desde la primera escucha hasta la licencia final.",
+        "doors_p": "De Los Ángeles a Madrid, de Ciudad de México a Buenos Aires, todo empieza con una conversación con Ocho. Cuéntenos lo que necesita y le guiamos desde la primera escucha hasta la licencia final.",
         "steps": [("Cuéntenos la escena", "El tono, las referencias, el territorio, los medios y los plazos."),
                   ("Opciones y cotización", "Seleccionamos los temas y versiones adecuados y le enviamos una cotización clara y rápida."),
                   ("Licencia y entrega", "Papeles en orden en un solo lugar y archivos en alta calidad, listos para la mezcla.")],
@@ -323,4 +323,70 @@ PHOTO_POS = {
     "mike-bass": "50% 6%", "mike-1": "50% 22%", "mike-4": "50% 35%", "latin-grammys": "50% 45%",
     "cubadisco-2024": "50% 40%", "jody-1": "50% 26%", "jody-stage": "60% 18%", "jody-namm": "50% 10%",
     "jody-mike": "50% 24%", "jody-gms-awards": "50% 14%",
+}
+
+# "How Production Music Works" explainer page (linked from the top banner).
+LEARN = {
+    "en": {
+        "eb": "For Artists, Composers &amp; Producers",
+        "h1": "How Production<br><span class=\"o-grad\">Music Works</span>",
+        "p": "A quick, plain-English tour of the business your music is entering: what production music is, how licensing works, how writers get paid, and where Ocho fits in.",
+        "scroll": "Scroll the story",
+        "c1_eb": "01 &middot; The Basics", "c1_h": "Music made<br>for picture.",
+        "c1_p": "Production music is pre-existing music created specifically for media: television, film, radio, video games, news broadcasts and online. It covers every genre and structure, from vocal songs to sound design, orchestral to era-specific, and it can be cleared and licensed quickly.",
+        "flow": ["You write &amp; record", "Ocho Music Group", "Libraries &amp; clients", "On screen"],
+        "why": [("Ready now", "Tracks already exist, so they can be licensed for immediate placement."),
+                ("Non-exclusive", "The same track can be licensed again and again, which keeps it more affordable than custom music."),
+                ("Every format", "TV, film, radio, games, news, ads and online video.")],
+        "c2_eb": "02 &middot; Flexibility", "c2_h": "One track.<br><span class=\"o-grad\">Many cuts.</span>",
+        "c2_p": "Production music usually comes in different versions and lengths, so editors can tailor it to the exact moment. Libraries offer subscriptions or individual licenses, which makes it easy to find and download.",
+        "cuts": [("Full Mix", 100, "2:30"), ("Instrumental", 100, "2:30"), ("60 Sec", 40, "1:00"), ("30 Sec", 20, "0:30"), ("15 Sec", 10, "0:15"), ("Sting", 4, "0:05")],
+        "c3_eb": "03 &middot; Licensing 101", "c3_h": "No license,<br>no airtime.",
+        "c3_p": "Music is intellectual property. Before it can be used in any production, the owner has to grant permission. That permission is a license.",
+        "lic": [("Sync License", "The right to use a recording of a musical work together with picture, other audio or live elements."),
+                ("Needledrop", "One use, in one production, for a set amount of time. Named after dropping the needle on a record once. Re-edit it or take it to new media and another license may be needed."),
+                ("Blanket License", "Access to many tracks for many future uses, usually for a yearly flat fee based on the libraries included, the length of the deal and broadcast vs. non-broadcast use.")],
+        "c4_eb": "04 &middot; Getting Paid", "c4_h": "Every airing<br><span class=\"o-grad\">counts.</span>",
+        "c4_p": "Performance royalties are usually cleared and paid by the TV station, radio station or streaming platform that airs the production, through performing rights organizations like ASCAP, BMI and SESAC. When an outlet has no performance agreement, a direct license may be needed, and we can help with that.",
+        "roy": ["Your track airs", "The outlet pays the PRO", "Cue sheet logs the music", "Writers &amp; publishers get paid"],
+        "roy_note": "Production music is not royalty-free. It is built on fair compensation for songwriters.",
+        "c5_eb": "05 &middot; Where Ocho Fits", "c5_h": "Your way<br><span class=\"o-grad\">in.</span>",
+        "c5_p": "Major production music libraries don't sign individual composers. They work with production companies like ours. Ocho curates, produces and delivers authentic Latin music, then gets it in front of the people who license music every day.",
+        "terr": [("US &amp; Canada", "Represented by our partner <b>APM Music</b>, a joint venture of Sony Music Publishing and Universal Music Publishing Group, with 1,000,000+ tracks from 50+ libraries worldwide."),
+                 ("Rest of the World", "Licensed by <b>Ocho Music Group</b>, from Mexico City to Madrid to Buenos Aires.")],
+        "terr_note": "Wherever you are, start with us. We'll point you to the right door.",
+        "cta_h": "Got Latin fire?", "cta_p": "Send us your best 3&ndash;4 songs with a download option, and tell us who you are.",
+        "cta_a": "Submit Your Music", "cta_b": "&#9654; Explore the Albums",
+    },
+    "es": {
+        "eb": "Para Artistas, Compositores y Productores",
+        "h1": "Cómo Funciona<br><span class=\"o-grad\">la Música de Producción</span>",
+        "p": "Un recorrido rápido y sin tecnicismos por el negocio al que entra tu música: qué es la música de producción, cómo funcionan las licencias, cómo se les paga a los autores y dónde encaja Ocho.",
+        "scroll": "Desliza la historia",
+        "c1_eb": "01 &middot; Lo Básico", "c1_h": "Música hecha<br>para pantalla.",
+        "c1_p": "La música de producción es música preexistente creada específicamente para medios: televisión, cine, radio, videojuegos, noticieros y contenido en línea. Abarca todos los géneros y estructuras, desde canciones con voz hasta diseño sonoro, de lo orquestal a lo de época, y se puede licenciar con rapidez.",
+        "flow": ["Tú compones y grabas", "Ocho Music Group", "Librerías y clientes", "En pantalla"],
+        "why": [("Lista ya", "Los temas ya existen, así que se pueden licenciar para uso inmediato."),
+                ("No exclusiva", "El mismo tema se puede licenciar una y otra vez, lo que la hace más accesible que la música por encargo."),
+                ("Todo formato", "TV, cine, radio, videojuegos, noticias, publicidad y video en línea.")],
+        "c2_eb": "02 &middot; Flexibilidad", "c2_h": "Un tema.<br><span class=\"o-grad\">Muchos cortes.</span>",
+        "c2_p": "La música de producción suele venir en distintas versiones y duraciones para que los editores la ajusten al momento exacto. Las librerías ofrecen suscripciones o licencias individuales, lo que facilita encontrarla y descargarla.",
+        "cuts": [("Mezcla Completa", 100, "2:30"), ("Instrumental", 100, "2:30"), ("60 Seg", 40, "1:00"), ("30 Seg", 20, "0:30"), ("15 Seg", 10, "0:15"), ("Sting", 4, "0:05")],
+        "c3_eb": "03 &middot; Licencias 101", "c3_h": "Sin licencia,<br>no hay aire.",
+        "c3_p": "La música es propiedad intelectual. Antes de usarla en cualquier producción, el titular debe otorgar permiso. Ese permiso es una licencia.",
+        "lic": [("Licencia de Sincronización", "El derecho a usar la grabación de una obra musical junto con imagen, otros audios o elementos en vivo."),
+                ("Needledrop", "Un uso, en una producción, por un tiempo determinado. Su nombre viene de bajar la aguja sobre el disco una vez. Si se reedita o se lleva a otros medios, puede requerir otra licencia."),
+                ("Licencia General (Blanket)", "Acceso a muchos temas para muchos usos futuros, normalmente por una tarifa anual fija según las librerías incluidas, la duración del acuerdo y si el uso es para transmisión o no.")],
+        "c4_eb": "04 &middot; Cómo se Cobra", "c4_h": "Cada emisión<br><span class=\"o-grad\">cuenta.</span>",
+        "c4_p": "Las regalías por ejecución pública suelen pagarlas la televisora, la radio o la plataforma de streaming que transmite la producción, a través de sociedades de gestión como ASCAP, BMI y SESAC. Cuando un medio no tiene acuerdo con ellas, puede necesitarse una licencia directa, y te podemos ayudar.",
+        "roy": ["Tu tema sale al aire", "El medio paga a la sociedad de gestión", "La hoja de cue registra la música", "Autores y editoras cobran"],
+        "roy_note": "La música de producción no es libre de regalías. Se basa en una compensación justa para los compositores.",
+        "c5_eb": "05 &middot; Dónde Entra Ocho", "c5_h": "Tu puerta<br><span class=\"o-grad\">de entrada.</span>",
+        "c5_p": "Las grandes librerías de música de producción no firman a compositores individuales. Trabajan con compañías productoras como la nuestra. Ocho selecciona, produce y entrega música latina auténtica, y la pone frente a quienes licencian música todos los días.",
+        "terr": [("EE. UU. y Canadá", "Representado por nuestro socio <b>APM Music</b>, una empresa conjunta de Sony Music Publishing y Universal Music Publishing Group, con más de 1,000,000 de temas de más de 50 librerías del mundo."),
+                 ("Resto del Mundo", "Licenciado por <b>Ocho Music Group</b>, de Ciudad de México a Madrid y Buenos Aires.")],
+        "terr_note": "Estés donde estés, empieza con nosotros. Te indicamos la puerta correcta.",
+        "cta_h": "¿Tienes fuego latino?", "cta_p": "Envíanos tus mejores 3 o 4 canciones con opción de descarga y cuéntanos quién eres.",
+        "cta_a": "Envía Tu Música", "cta_b": "&#9654; Explorar los Álbumes",
+    },
 }

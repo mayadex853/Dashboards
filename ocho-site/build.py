@@ -1060,6 +1060,10 @@ window.addEventListener('resize',function(){flowSet(flowI);});
 if(D.preview)window.addEventListener('hashchange',function(){render();window.scrollTo(0,0);});
 // images that fail on the primary host retry from the fallback host
 if(D.fallback)M.addEventListener('error',function(ev){var im=ev.target;if(im.tagName!=='IMG'||im.dataset.fb||im.src.indexOf(D.base)!==0)return;im.dataset.fb='1';im.src=D.fallback+im.src.slice(D.base.length);},true);
+// the primary CDN can stall on a cold file without erroring: swap images that sit unloaded near the viewport for 6s
+if(D.fallback)setInterval(function(){var now=Date.now(),vh=window.innerHeight;document.querySelectorAll('#ocho img, #ocho-player img').forEach(function(im){
+  if(im.complete||im.dataset.fb||im.src.indexOf(D.base)!==0)return;var r=im.getBoundingClientRect();if(r.bottom<-vh||r.top>2*vh){delete im.dataset.wt;return;}
+  if(!im.dataset.wt){im.dataset.wt=now;return;}if(now-im.dataset.wt>6000){im.dataset.fb='1';im.src=D.fallback+im.src.slice(D.base.length);}});},2000);
 
 render();
 

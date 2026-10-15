@@ -24,7 +24,7 @@ build from our own Cloudflare domain (`python3 publish.py` replaces it; 5-minute
 commit on jsDelivr if that fails:
 
 ```html
-<div id="ocho-mount" data-page="albums" data-lang="en" data-test="1" style="min-height:100vh;background:#07050a"></div>
+<div id="ocho-mount" data-page="albums" data-lang="en" style="min-height:100vh;background:#07050a"></div>
 <script>(function(){var pin='<last known good commit>';function load(u,next){var s=document.createElement('script');s.src=u;s.onerror=function(){s.remove();if(next)next();};document.body.appendChild(s);}load('https://ochoaudio.com/site/ocho.js',function(){load('https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@'+pin+'/ocho-site/ocho.js');});})();</script>
 ```
 
@@ -72,3 +72,12 @@ python3 build.py <commit>   # writes ocho.js and preview.html
 Copy (both languages) lives in `data.py`. Images are in `img/` and are served from raw.githubusercontent.com at the
 given ref, with jsDelivr as an automatic fallback. Open `preview.html` locally to review every page:
 `#/en/home`, `#/es/about`, `#/en/albums`, `#/es/placements`, and so on.
+
+## Live (since 2026-10-15)
+The new site is live on ochomusicgroup.com. Kajabi landing pages (Encore theme, Code block + native contact form):
+`/` (homepage = landing page "new-home", set as the site homepage in Kajabi), `/es`, `/about`, `/about_es`,
+`/albums`, `/albums_es`, `/placements`, `/placements_es`, `/production-music`, `/production-music_es`.
+Live pages omit `data-test` (links use PATHS); a test copy can add `data-test="1"` to link to TEST_PATHS instead.
+The pre-redesign pages are kept as unpublished drafts: `es-legacy`, `about-legacy`, `about_es-legacy`
+(to roll back: rename and republish them, and point the homepage setting back to the Kajabi site home page).
+After a page edit in Kajabi, republish it (publish_at = now); the bare homepage URL can stay cached for a few minutes.

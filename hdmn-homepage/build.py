@@ -23,6 +23,8 @@ CDN_BASE = "https://mayadex853.github.io/Dashboards/hdmn-homepage/posters/"
 FALLBACK_BASE = f"https://raw.githubusercontent.com/mayadex853/Dashboards/{CDN_REF}/hdmn-homepage/posters/"
 
 # Google Sheet Jody edits; the page reads it live (falls back to the built-in data if unreachable).
+LOGO_URL = "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/2149398140/settings_images/5pvwVfsaSKOnEoufXhp5_HDMN_3D.png"
+
 SHEET_ID = "1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ"
 
 CATALOG_URL = "https://hdmusicnow.sourceaudio.com/#!label?l=1222458&page=albums"
@@ -125,7 +127,7 @@ def build(base):
         css=_min(CSS), ticker=_marquee(CLIENTS), brands=_marquee(BRANDS), cards=cards, sup_cards=sup_cards,
         tabs=tabs, panels=panels, total="10,000+", total_n=10000, sup_rows=sup_rows,
         sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press, features=features,
-        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL,
+        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL,
         js=JS.replace("__SHEET__", SHEET_ID).replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
@@ -154,17 +156,42 @@ CSS = r"""
 .hd-reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.8,.2,1);}
 .hd-reveal.in{opacity:1;transform:none;}
 
-/* NAV */
-.hd-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;
-  padding:18px 32px;transition:all .35s ease;}
-.hd-nav.solid{background:rgba(5,6,8,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  padding:12px 32px;border-bottom:1px solid rgba(255,255,255,.07);}
-.hd-logo{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.08em;color:#fff !important;line-height:1;}
-.hd-logo b{font-weight:400;color:var(--vio2);text-shadow:0 0 18px rgba(177,75,244,.8);}
-.hd-links{display:flex;align-items:center;gap:34px;}
-.hd-links a:not(.hd-btn){font-size:12px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:#d5dae3 !important;transition:color .2s;}
-.hd-links a:not(.hd-btn):hover{color:var(--vio2) !important;}
-.hd-links .hd-btn{padding:14px 22px;font-size:11px;}
+/* NAV (replaces the Kajabi header on this page) */
+header.header{display:none !important;}
+.hd-nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;width:min(1240px,calc(100% - 32px));
+  display:flex;align-items:center;gap:22px;padding:10px 10px 10px 16px;border-radius:999px;
+  background:rgba(8,9,14,.55);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 40px rgba(0,0,0,.45);transition:background .35s,box-shadow .35s,top .35s;}
+.hd-nav.solid,.hd-nav.open{background:rgba(8,9,14,.94);box-shadow:0 14px 50px rgba(0,0,0,.6),0 0 0 1px rgba(177,75,244,.25);}
+.hd-nav-logo{display:flex;align-items:center;gap:10px;flex:none;color:#fff !important;}
+.hd-nav-logo img{width:40px;height:40px;border-radius:50%;filter:drop-shadow(0 0 10px rgba(177,75,244,.6));}
+.hd-nav-logo span{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.1em;line-height:1;}
+.hd-nav-links{display:flex;align-items:center;gap:4px;margin:0 auto;}
+.hd-nav-links a{position:relative;padding:10px 14px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:#cfd4de !important;transition:color .2s,background .2s;white-space:nowrap;}
+.hd-nav-links a:hover{color:#fff !important;background:rgba(255,255,255,.06);}
+.hd-nav-links a.on{color:#fff !important;background:rgba(177,75,244,.22);box-shadow:inset 0 0 0 1px rgba(192,132,252,.45);}
+.hd-nav .hd-btn{padding:13px 20px;font-size:11px;flex:none;}
+.hd-nav-tog{display:none;flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:transparent;
+  cursor:pointer;position:relative;}
+.hd-nav-tog i{position:absolute;left:13px;right:13px;height:2px;background:#fff;transition:transform .3s,opacity .3s;}
+.hd-nav-tog i:nth-child(1){top:15px}.hd-nav-tog i:nth-child(2){top:21px}.hd-nav-tog i:nth-child(3){top:27px}
+.hd-nav.open .hd-nav-tog i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hd-nav.open .hd-nav-tog i:nth-child(2){opacity:0}
+.hd-nav.open .hd-nav-tog i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.hd [id^="hd-"]{scroll-margin-top:96px;}
+@media(max-width:1100px){.hd-nav-links a{padding:10px 9px;letter-spacing:.14em}}
+@media(max-width:960px){
+  .hd-nav{top:10px;width:calc(100% - 20px);border-radius:28px;flex-wrap:wrap;gap:10px;padding:8px 8px 8px 12px;}
+  .hd-nav-logo span{display:none}
+  .hd-nav .hd-btn{margin-left:auto;padding:12px 16px;font-size:10px;}
+  .hd-nav-tog{display:block}
+  .hd-nav-links{order:3;width:100%;flex-direction:column;align-items:stretch;gap:2px;margin:0;max-height:0;overflow:hidden;
+    transition:max-height .4s ease,padding .4s ease;}
+  .hd-nav.open .hd-nav-links{max-height:420px;padding:6px 0 8px;}
+  .hd-nav-links a{padding:14px 12px;font-size:12px;letter-spacing:.2em;}
+}
+@media(max-width:380px){.hd-nav .hd-btn{display:none}.hd-nav-tog{margin-left:auto}}
 
 /* HERO */
 .hd-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;
@@ -398,7 +425,7 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
   .hd{font-size:16px;}
   .hd-sec{padding:90px 0;}
   .hd-wrap{padding:0 20px;}
-  .hd-nav{padding:14px 18px;}.hd-nav.solid{padding:10px 18px;}
+
   .hd-logo{font-size:24px;}
   .hd-hero{border-width:14px;}
   .hd-wall-row img{width:118px;height:176px;}
@@ -425,6 +452,32 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 
 JS = r"""
 (function(){
+  /* floating nav: solid on scroll, mobile menu, smooth jumps, active section */
+  var nav=document.querySelector('.hd-nav');
+  if(nav){
+    var tog=nav.querySelector('.hd-nav-tog'),links=[].slice.call(nav.querySelectorAll('.hd-nav-links a, .hd-nav-logo'));
+    function setOpen(v){nav.classList.toggle('open',v);tog.setAttribute('aria-expanded',v?'true':'false');}
+    tog.addEventListener('click',function(){setOpen(!nav.classList.contains('open'));});
+    links.forEach(function(a){a.addEventListener('click',function(ev){
+      var id=(a.getAttribute('href')||'').split('#')[1],t=id&&document.getElementById(id);
+      if(!t)return;ev.preventDefault();setOpen(false);
+      var off=window.innerWidth<=960?84:96,n=0;
+      function go(beh){var y=id==='hd-top'?0:t.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo({top:y,behavior:beh});return y;}
+      go('smooth');
+      /* content above can still be loading; re-aim until the section settles under the nav */
+      (function fix(){setTimeout(function(){var d=id==='hd-top'?window.pageYOffset:t.getBoundingClientRect().top-off;
+        if(Math.abs(d)>6&&n++<4){go(n>2?'auto':'smooth');fix();}},700);})();
+    });});
+    var secs=links.map(function(a){var id=(a.getAttribute('href')||'').split('#')[1];return {a:a,el:id&&id!=='hd-top'&&document.getElementById(id)};}).filter(function(x){return x.el;});
+    var tick=false;
+    function onScroll(){tick=false;var y=window.pageYOffset;nav.classList.toggle('solid',y>40);
+      var cur=null,line=window.innerHeight*0.35;
+      secs.forEach(function(x){var r=x.el.getBoundingClientRect();if(r.top<=line&&r.bottom>line)cur=x;});
+      secs.forEach(function(x){x.a.classList.toggle('on',x===cur);});}
+    window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(onScroll);}},{passive:true});
+    document.addEventListener('keydown',function(ev){if(ev.key==='Escape')setOpen(false);});
+    onScroll();
+  }
   var root=document.getElementById('hdmn');if(!root)return;
   // poster wall (decorative)
   var base='__BASE__',slugs='__SLUGS__'.split(','),wall=root.querySelector('.hd-wall');
@@ -529,8 +582,22 @@ JS = r"""
 
 TEMPLATE = """<style>{css}</style>
 <div class="hd" id="hdmn">
+<nav class="hd-nav" aria-label="Page sections">
+  <a class="hd-nav-logo" href="#hd-top" aria-label="HD Music Now, back to top"><img src="{logo}" alt="" width="40" height="40"><span>HD Music Now</span></a>
+  <div class="hd-nav-links" id="hd-nav-links">
+    <a href="#hd-why">Why Us</a>
+    <a href="#hd-credits">Credits</a>
+    <a href="#hd-roster">Catalogs</a>
+    <a href="#hd-deep">Specialty</a>
+    <a href="#hd-sup">Supervision</a>
+    <a href="#hd-voice">Press</a>
+    <a href="{contact}">Contact</a>
+  </div>
+  <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search Catalog</a>
+  <button class="hd-nav-tog" type="button" aria-label="Menu" aria-expanded="false" aria-controls="hd-nav-links"><i></i><i></i><i></i></button>
+</nav>
 
-<header class="hd-hero">
+<header class="hd-hero" id="hd-top">
   <div class="hd-wall" aria-hidden="true"></div>
   <div class="hd-shade"></div><div class="hd-glow"></div><div class="hd-beam"></div>
   <div class="hd-hero-in">
@@ -551,7 +618,7 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-marquee"><div class="hd-track">{ticker}</div></div>
 </section>
 
-<section class="hd-sec hd-problem">
+<section class="hd-sec hd-problem" id="hd-why">
   <div class="hd-wrap">
     <div class="hd-problem-head hd-reveal">
       <span class="hd-eb">The Problem</span>
@@ -623,7 +690,7 @@ TEMPLATE = """<style>{css}</style>
   </div>
 </section>
 
-<section class="hd-sec hd-deep">
+<section class="hd-sec hd-deep" id="hd-deep">
   <div class="hd-wrap">
     <div class="hd-reveal"><span class="hd-eb">The Deep Cuts</span><h2 class="hd-h2">The music no one<br><span class="hd-grad">else can find.</span></h2></div>
     <div class="hd-deep-list">
@@ -675,7 +742,7 @@ TEMPLATE = """<style>{css}</style>
   </div>
 </section>
 
-<section class="hd-sec hd-voice">
+<section class="hd-sec hd-voice" id="hd-voice">
   <div class="hd-wrap">
     <div class="hd-reveal" style="margin-bottom:60px"><span class="hd-eb">Industry Voice</span><h2 class="hd-h2">On stage. <span class="hd-grad">On air.</span></h2></div>
     <div class="hd-voice-grid">

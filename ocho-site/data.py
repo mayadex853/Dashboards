@@ -85,7 +85,7 @@ PLACEMENTS = [
     ("En Casa con Telemundo", "Telemundo", "News & Talk", "en-casa-con-telemundo"),
     ("Pica y Se Extiende", "", "News & Talk", "pica-y-se-extiende"),
     ("Tennis Channel This Week", "Tennis Channel", "Sports", "tennis-channel-this-week"),
-    ("Chef's Night Out", "Food TV", "TV & Streaming", "chefs-night-out"),
+    ("Chef's Night Out", "Vice", "TV & Streaming", "chefs-night-out"),
     ("The List", "Syndicated TV", "News & Talk", "the-list"),
     ("Play Ball", "Sports Broadcast", "Sports", "play-ball"),
     ("Live Games Showcase", "Sports Broadcast", "Sports", "live-games-showcase"),
@@ -95,7 +95,7 @@ PLACEMENTS = [
 ]
 
 NETWORKS = ["Apple TV+", "NBC", "Telemundo", "Hulu", "Peacock", "Prime Video", "Discovery", "A&E", "TBS", "TNT",
-            "UFC", "PBS", "Tennis Channel", "Food Network", "PlayStation", "Publix", "ICI Télé"]
+            "UFC", "PBS", "Tennis Channel", "Food Network", "Vice", "PlayStation", "Publix", "ICI Télé"]
 
 GENRES = ["Salsa", "Timba", "Cumbia", "Tejano", "Bachata", "Son Cubano", "Urbano", "Norteño", "Latin Brass",
           "Bolero", "Andean", "Tropical", "Corridos", "Latin Jazz"]

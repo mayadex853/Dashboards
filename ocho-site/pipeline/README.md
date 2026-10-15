@@ -20,5 +20,11 @@ Sources (read-only Mega share links):
    scripts retry with back-off. ~20 GB of WAVs → 1–3 hours.
 4. `python3 ../tracks.py W` → writes `ocho-site/tracks/*.json` and `W/dist/<ALBUM-ID>/*.mp3`.
 5. Upload `W/dist` to the R2 bucket (`CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`), enable public
-   access (r2.dev URL or a custom domain such as audio.ochomusicgroup.com) and allow GET CORS from
-   ochomusicgroup.com. Put the public base URL (ending in `/`) in `ocho-site/AUDIO_BASE` and rebuild.
+   access and allow GET CORS from ochomusicgroup.com. Put the public base URL (ending in `/`) in
+   `ocho-site/AUDIO_BASE` and rebuild.
+
+## Live setup
+- Bucket `ocho-audio` (Cloudflare R2), served at **https://ochoaudio.com/** (custom domain, CDN-cached;
+  `ochoaudio.com` is registered with Cloudflare in the same account). The r2.dev test URL is disabled.
+- CORS: GET/HEAD from https://www.ochomusicgroup.com and https://ochomusicgroup.com (Range allowed for seeking).
+- To add an album: run steps 2–4 for it and upload only its new `dist/<ALBUM-ID>/` folder.

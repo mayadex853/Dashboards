@@ -1,51 +1,50 @@
 import Link from "next/link";
 import * as db from "@/lib/db";
-import { CATEGORIES } from "@/lib/fields";
+import { CATEGORIES, envelopeView } from "@/lib/fields";
+import { getProfile } from "@/lib/envelopes";
+import HomeDrop from "@/components/HomeDrop";
 
 const fmt = (t) => (t ? new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "—");
 
-export default async function Dashboard() {
-  const [envelopes, recipients, intakes] = await Promise.all([db.list("envelopes"), db.list("recipients"), db.list("intakes")]);
+export default async function Home() {
+  const [envelopes, recipients, intakes, profile] = await Promise.all([
+    db.list("envelopes").catch(() => []),
+    db.list("recipients").catch(() => []),
+    db.list("intakes").catch(() => []),
+    getProfile().catch(() => ({ data: {} })),
+  ]);
   const byEnv = {};
   for (const r of recipients) (byEnv[r.envelope_id] ||= []).push(r);
-
-  const rows = envelopes.map((e) => {
-    const recs = (byEnv[e.id] || []).sort((a, b) => a.routing_order - b.routing_order);
-    const pending = recs.filter((r) => r.kind !== "cc" && r.status !== "signed");
-    const order = pending.length ? Math.min(...pending.map((r) => r.routing_order)) : null;
-    const waitingOn = e.status === "sent" ? pending.filter((r) => r.routing_order === order) : [];
-    return { ...e, recs, waitingOn, myTurn: waitingOn.some((r) => r.is_me) };
-  });
-  const myTurn = rows.filter((r) => r.myTurn);
-  const awaiting = rows.filter((r) => r.status === "sent" && !r.myTurn);
-  const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
-  const completedMonth = rows.filter((r) => r.status === "completed" && r.completed_at >= monthStart);
+  const rows = envelopes.map((e) => envelopeView(e, byEnv[e.id] || []));
+  const since = new Date(Date.now() - 182 * 864e5).toISOString();
+  const count = (k) => rows.filter((r) => r.view.key === k).length;
+  const completed = rows.filter((r) => r.view.key === "completed" && r.completed_at >= since).length;
   const intakeReady = intakes.filter((i) => i.status === "submitted");
+  const first = (profile.data?.full_name || "").split(" ")[0];
 
   return (
     <>
-      <div className="page-head">
+      <div className="home-hero">
         <div>
-          <h1>Home</h1>
-          <div className="muted">Contracts, intake and signatures in one place</div>
+          <h1>Welcome back{first ? `, ${first}` : ""}</h1>
+          <div style={{ opacity: 0.85 }}>Send, sign and track your agreements.</div>
+          <div className="sigcard">
+            {profile.signature ? <img src={profile.signature} alt="Your signature" /> : <span style={{ opacity: 0.8 }}>No signature yet</span>}
+            <Link href="/profile">{profile.signature ? "Edit" : "Create your signature"}</Link>
+          </div>
         </div>
+        <HomeDrop />
       </div>
 
-      <div className="quick">
-        <Link href="/quick-sign"><b>Sign a document</b><span>Someone sent you a form? Upload it, drag in your info and signature, send it back.</span></Link>
-        <Link href="/intake"><b>New signing intake</b><span>Send an artist, writer or catalog owner an intake form → contract.</span></Link>
-        <Link href="/send"><b>Send for signature</b><span>Pick a template or upload a PDF and route it in signing order.</span></Link>
-      </div>
-
-      <div className="stats">
-        <div className="card stat"><div className="n" style={{ color: myTurn.length ? "var(--warn)" : undefined }}>{myTurn.length}</div><div className="l">Waiting on you</div></div>
-        <div className="card stat"><div className="n">{awaiting.length}</div><div className="l">Waiting on others</div></div>
-        <div className="card stat"><div className="n">{intakeReady.length}</div><div className="l">Intakes ready for contract</div></div>
-        <div className="card stat"><div className="n">{completedMonth.length}</div><div className="l">Completed this month</div></div>
+      <div className="tiles">
+        <Link className="tile" href="/agreements?f=action"><div className="n" style={{ color: count("action") ? "var(--warn)" : undefined }}>{count("action")}</div><div className="l">Action Required</div></Link>
+        <Link className="tile" href="/agreements?f=waiting"><div className="n">{count("waiting")}</div><div className="l">Waiting for Others</div></Link>
+        <Link className="tile" href="/intake"><div className="n">{intakeReady.length}</div><div className="l">Intakes ready for contract</div></Link>
+        <Link className="tile" href="/agreements?f=completed"><div className="n">{completed}</div><div className="l">Completed (last 6 months)</div></Link>
       </div>
 
       {intakeReady.length > 0 && (
-        <div className="card" style={{ marginBottom: 20 }}>
+        <div className="card" style={{ marginBottom: 18 }}>
           <h2>Intakes ready for a contract</h2>
           <table>
             <tbody>
@@ -63,29 +62,26 @@ export default async function Dashboard() {
       )}
 
       <div className="card">
-        <h2>Documents</h2>
+        <div className="row" style={{ justifyContent: "space-between", marginBottom: 6 }}>
+          <h2 style={{ margin: 0 }}>Recent activity</h2>
+          <Link href="/agreements">View all agreements</Link>
+        </div>
         {!rows.length ? (
-          <p className="muted">Nothing yet. Start by signing a document, sending an intake, or sending a contract for signature.</p>
+          <p className="muted">No agreements yet. Drop a document above, or use Start → Send an envelope.</p>
         ) : (
           <table>
-            <thead>
-              <tr><th>Document</th><th>Status</th><th>Signers</th><th>Updated</th></tr>
-            </thead>
             <tbody>
-              {rows.map((e) => (
+              {rows.slice(0, 8).map((e) => (
                 <tr key={e.id}>
-                  <td><Link href={`/envelopes/${e.id}`}>{e.title}</Link></td>
                   <td>
-                    {e.myTurn ? <span className="badge turn">Your turn</span> : <span className={`badge ${e.status}`}>{e.status === "sent" ? "In progress" : e.status}</span>}
+                    <Link href={`/envelopes/${e.id}`} style={{ fontWeight: 600 }}>{e.title}</Link>
+                    <div className="muted small">To: {e.recs.map((r) => (r.is_me ? "You" : r.name)).join(", ")}</div>
                   </td>
-                  <td className="small">
-                    {e.recs.map((r) => (
-                      <span key={r.id} style={{ marginRight: 10, color: r.status === "signed" ? "var(--good)" : e.waitingOn.includes(r) ? "var(--warn)" : "var(--muted)" }}>
-                        {r.kind === "cc" ? "CC" : `${r.routing_order}.`} {r.is_me ? "You" : r.name} {r.status === "signed" ? "✓" : ""}
-                      </span>
-                    ))}
-                  </td>
+                  <td><span className={`st ${e.view.cls}`}><span className="dot">{e.view.icon}</span>{e.view.label}</span></td>
                   <td className="muted small">{fmt(e.completed_at || e.sent_at || e.created_at)}</td>
+                  <td style={{ textAlign: "right" }}>
+                    {e.myTurn ? <Link className="btn yellow sm" href={`/envelopes/${e.id}?sign=1`}>Sign</Link> : <Link className="btn ghost sm" href={`/envelopes/${e.id}`}>View</Link>}
+                  </td>
                 </tr>
               ))}
             </tbody>

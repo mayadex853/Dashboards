@@ -87,23 +87,24 @@ export default function SignerPage({ params }) {
       TakaSign
     </div>
   );
-  const Message = ({ title, children }) => (
+  const Message = ({ title, children, download }) => (
     <div className="public">
       <div className="topbar"><Brand /></div>
       <div className="center-box">
         <div className="card narrow" style={{ padding: 32 }}>
           <h1>{title}</h1>
-          <p className="muted" style={{ marginBottom: 0 }}>{children}</p>
+          <p className="muted" style={{ marginBottom: download ? 18 : 0 }}>{children}</p>
+          {download && <a className="btn yellow" href={`/api/public/sign/${token}/pdf`} target="_blank" rel="noreferrer">Download a copy</a>}
         </div>
       </div>
     </div>
   );
 
-  if (done === "sign") return <Message title="You're done signing">Thanks for signing. You'll receive a copy by email once everyone has signed.</Message>;
+  if (done === "sign") return <Message title="You're done signing" download>Thanks for signing. You'll get the completed document by email once everyone has signed.</Message>;
   if (done === "decline") return <Message title="You declined to sign">We've let {info.sender} know.</Message>;
   if (err && !info) return <Message title="Unable to open document">{err}</Message>;
   if (!info) return <div className="public"><div className="center-box muted">Loading document…</div></div>;
-  if (info.signer.status === "signed") return <Message title="Already signed">You've already signed this document.</Message>;
+  if (info.signer.status === "signed") return <Message title="Already signed" download>You've already signed this document.</Message>;
   if (!info.turn) return <Message title="Not your turn yet">Someone earlier in the signing order still needs to sign. We'll email you when it's ready for you.</Message>;
 
   return (

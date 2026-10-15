@@ -4,12 +4,15 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { CATEGORIES } from "@/lib/fields";
 import FieldEditor from "@/components/FieldEditor";
+import FullScreen from "@/components/FullScreen";
 
-export default function TemplateEditor({ params }) {
+export default function TemplateEditor({ params, searchParams }) {
   const { id } = use(params);
+  const sp = use(searchParams);
   const [t, setT] = useState(null);
   const [fields, setFields] = useState([]);
   const [msg, setMsg] = useState("");
+  const [editing, setEditing] = useState(sp?.new === "1");
   const [err, setErr] = useState("");
   const router = useRouter();
 
@@ -43,7 +46,7 @@ export default function TemplateEditor({ params }) {
         <div className="actions">
           {msg && <span className="muted" style={{ alignSelf: "center" }}>{msg}</span>}
           <button className="btn danger" onClick={async () => { if (confirm("Delete this template?")) { await api(`/api/templates/${id}`, { method: "DELETE" }); router.push("/templates"); } }}>Delete</button>
-          <button className="btn ghost" onClick={async () => { await save(); router.push(`/send?template=${id}`); }}>Save & use</button>
+          <button className="btn yellow" onClick={async () => { await save(); router.push(`/send?template=${id}`); }}>Use</button>
           <button className="btn" onClick={save}>Save</button>
         </div>
       </div>
@@ -82,7 +85,25 @@ export default function TemplateEditor({ params }) {
         </div>
       </div>
 
-      <FieldEditor src={`/api/templates/${id}/pdf`} fields={fields} setFields={setFields} roles={t.roles} />
+      <div className="card row" style={{ justifyContent: "space-between" }}>
+        <div>
+          <h2 style={{ margin: 0 }}>Fields</h2>
+          <div className="muted small">{fields.length} field{fields.length === 1 ? "" : "s"} placed for {t.roles.length} role{t.roles.length === 1 ? "" : "s"}.</div>
+        </div>
+        <button className="btn yellow" onClick={() => setEditing(true)}>{fields.length ? "Edit fields" : "Add fields"}</button>
+      </div>
+
+      {editing && (
+        <FullScreen
+          title={t.name}
+          subtitle="Template fields. Drag fields onto the document for each role."
+          onBack={() => setEditing(false)}
+          backLabel="Template details"
+          actions={<button className="btn yellow" onClick={async () => { await save(); setEditing(false); }}>Save and close</button>}
+        >
+          <FieldEditor src={`/api/templates/${id}/pdf`} fields={fields} setFields={setFields} roles={t.roles} />
+        </FullScreen>
+      )}
     </>
   );
 }

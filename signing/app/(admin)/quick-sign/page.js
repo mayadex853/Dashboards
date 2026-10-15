@@ -11,6 +11,7 @@ import FieldBox from "@/components/FieldBox";
 import SignaturePad from "@/components/SignaturePad";
 import { startPaletteDrag } from "@/components/dragPlace";
 import { toast } from "@/components/Toast";
+import { takeUpload } from "@/components/HomeDrop";
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 const size = (type) => FIELD_TYPES.find((x) => x.type === type) || FIELD_TYPES.find((x) => x.type === "text");
@@ -34,6 +35,11 @@ export default function QuickSign() {
   useEffect(() => {
     api("/api/profile").then(setProfile).catch((e) => { setProfile({ data: {} }); toast(e.message, true); });
     loadHistory();
+    if (new URLSearchParams(location.search).get("from") === "drop") {
+      const f = takeUpload();
+      if (f) open(f);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

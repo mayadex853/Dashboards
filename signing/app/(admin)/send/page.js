@@ -1,9 +1,15 @@
 "use client";
+// DocuSign-style send wizard:
+//   Step 1 — Add documents, recipients (with signing order / CC) and the email message
+//   Step 2 — Full-screen "Add Fields" editor, then Send
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { stashLinks, api } from "@/lib/api";
 import FieldEditor from "@/components/FieldEditor";
 import SignerList from "@/components/SignerList";
+import FullScreen from "@/components/FullScreen";
+import { takeUpload } from "@/components/HomeDrop";
+import { toast } from "@/components/Toast";
 
 export default function SendPage() {
   return (
@@ -13,17 +19,22 @@ export default function SendPage() {
   );
 }
 
+const blankSigner = () => ({ name: "", email: "", routing_order: 1, kind: "signer" });
+
 function Send() {
   const params = useSearchParams();
   const router = useRouter();
+  const [step, setStep] = useState(1);
   const [templates, setTemplates] = useState([]);
   const [profile, setProfile] = useState(null);
   const [templateId, setTemplateId] = useState(params.get("template") || "");
   const [file, setFile] = useState(null);
   const [fileBytes, setFileBytes] = useState(null);
   const [title, setTitle] = useState("");
+  const [subject, setSubject] = useState("");
+  const [subjectTouched, setSubjectTouched] = useState(false);
   const [message, setMessage] = useState("");
-  const [signers, setSigners] = useState([{ name: "", email: "", routing_order: 1 }]);
+  const [signers, setSigners] = useState([blankSigner()]);
   const [fields, setFields] = useState([]);
   const [values, setValues] = useState({});
   const [busy, setBusy] = useState(false);
@@ -32,14 +43,20 @@ function Send() {
   const template = templates.find((t) => t.id === templateId);
 
   useEffect(() => {
-    api("/api/templates").then(setTemplates);
-    api("/api/profile").then(setProfile);
+    api("/api/templates").then(setTemplates).catch(() => {});
+    api("/api/profile").then(setProfile).catch(() => setProfile({ data: {} }));
+    if (params.get("from") === "drop") {
+      const f = takeUpload();
+      if (f) pickFile(f);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // When a template is picked, build the signer list from its roles
+  // Picking a template sets the document, its recipient roles and its fields
   useEffect(() => {
     if (!template || !profile) return;
-    setTitle((t) => t || template.name);
+    setTitle(template.name);
+    setFields(template.fields.map((f) => ({ ...f })));
     setSigners(
       template.roles.map((r, i) =>
         r.kind === "me"
@@ -49,7 +66,11 @@ function Send() {
     );
   }, [template, profile]);
 
-  // Keyed fields we can't resolve automatically → ask for values
+  useEffect(() => {
+    if (!subjectTouched) setSubject(title ? `Complete with TakaSign: ${title}` : "");
+  }, [title, subjectTouched]);
+
+  // Template text fields that need values from you when sending (deal terms etc.)
   const askKeys = useMemo(() => {
     if (!template) return [];
     const seen = new Map();
@@ -62,33 +83,63 @@ function Send() {
     return [...seen].map(([key, label]) => ({ key, label }));
   }, [template, profile]);
 
-  const pickFile = async (f) => {
+  async function pickFile(f) {
     if (!f) return;
     setTemplateId("");
     setFile(f);
     setFileBytes(new Uint8Array(await f.arrayBuffer()));
     setTitle(f.name.replace(/\.pdf$/i, ""));
     setFields([]);
+    setSigners((s) => (s.some((x) => x.role_index !== undefined) ? [blankSigner()] : s));
+  }
+  const clearDoc = () => {
+    setFile(null);
+    setFileBytes(null);
+    setTemplateId("");
+    setTitle("");
+    setFields([]);
+    setSigners([blankSigner()]);
   };
 
   const signerOnly = signers.filter((s) => s.kind !== "cc");
-  const roles = template ? template.roles : signerOnly.map((s, i) => ({ name: s.is_me ? "Me" : s.name || `Signer ${i + 1}`, kind: s.is_me ? "me" : "other" }));
+  // Roles shown in the field editor, labelled with the real person's name
+  const roles = template
+    ? template.roles.map((r, i) => {
+        const s = signers.find((x) => x.role_index === i);
+        return { ...r, name: s?.name ? `${s.name} (${r.name})` : r.name };
+      })
+    : signerOnly.map((s, i) => ({ name: s.is_me ? "Me" : s.name || `Signer ${i + 1}`, kind: s.is_me ? "me" : "other" }));
+
+  const next = () => {
+    setErr("");
+    if (!template && !file) return setErr("Add a document or choose a template");
+    if (!signerOnly.length) return setErr("Add at least one person who needs to sign");
+    const bad = signers.find((s) => !s.name.trim() || !/^\S+@\S+\.\S+$/.test(s.email));
+    if (bad) return setErr("Every recipient needs a name and a valid email");
+    setStep(2);
+  };
 
   const submit = async (send) => {
     setErr("");
+    const roleCount = template ? template.roles.length : signerOnly.length;
+    const empty = [...Array(roleCount).keys()].filter((i) => !fields.some((f) => f.role === i));
+    if (send && empty.length) {
+      const names = empty.map((i) => roles[i]?.name || `Signer ${i + 1}`).join(", ");
+      toast(`Add at least one field for: ${names}`, true);
+      return;
+    }
     setBusy(true);
     try {
-      if (!template && !file) throw new Error("Choose a template or upload a PDF");
-      if (!template && !fields.length) throw new Error("Place at least one field on the document");
       const form = new FormData();
       if (file && !template) form.append("file", file);
       form.append(
         "payload",
         JSON.stringify({
           title,
+          subject,
           message,
           templateId: template?.id,
-          fields: template ? undefined : fields,
+          fields,
           values,
           recipients: signers.map((orig) => {
             const { roleName, ...s } = orig;
@@ -102,58 +153,83 @@ function Send() {
       stashLinks(res);
       router.push(`/envelopes/${res.envelope.id}`);
     } catch (e) {
-      setErr(e.message);
+      toast(e.message, true);
       setBusy(false);
     }
   };
 
+  if (step === 2)
+    return (
+      <FullScreen
+        title={title}
+        subtitle="Add fields for each recipient. Drag a field onto the document, or click a field then click the page."
+        onBack={() => setStep(1)}
+        actions={
+          <>
+            <button className="btn ghost" disabled={busy} onClick={() => submit(false)}>Save and close</button>
+            <button className="btn yellow" disabled={busy} onClick={() => submit(true)}>{busy ? "Sending…" : "Send"}</button>
+          </>
+        }
+      >
+        <FieldEditor src={template ? `/api/templates/${template.id}/pdf` : fileBytes} fields={fields} setFields={setFields} roles={roles} showKeys />
+      </FullScreen>
+    );
+
   return (
     <>
-      <div className="page-head">
-        <div>
-          <h1>Send for signature</h1>
-          <div className="muted">Signers get emailed one after another in signing order.</div>
+      <div className="wiz-steps">
+        <div className="s on"><span className="num">1</span>Add documents and recipients</div>
+        <div className="s"><span className="num">2</span>Add fields</div>
+      </div>
+
+      <div className="wiz-section">
+        <div className="h">Add documents</div>
+        <div className="b">
+          <div className="row" style={{ alignItems: "flex-start", gap: 14 }}>
+            {(file || template) && (
+              <div className="doc-tile">
+                <div className="thumb">📄</div>
+                <div className="nm" title={title}>{template ? `${template.name} (template)` : file.name}</div>
+                <button className="link small" style={{ padding: "0 10px 8px", color: "var(--bad)" }} onClick={clearDoc}>Remove</button>
+              </div>
+            )}
+            {!file && !template && (
+              <label
+                className="upload-tile"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => { e.preventDefault(); pickFile(e.dataTransfer.files[0]); }}
+              >
+                <span style={{ fontSize: 28 }}>⬆</span>
+                <b>Upload</b>
+                <span className="small muted">or drop a PDF here</span>
+                <input type="file" accept="application/pdf" hidden onChange={(e) => pickFile(e.target.files[0])} />
+              </label>
+            )}
+            {!file && !template && (
+              <div className="upload-tile" style={{ cursor: "default" }}>
+                <span style={{ fontSize: 28 }}>▤</span>
+                <b>Use a template</b>
+                <select value={templateId} onChange={(e) => setTemplateId(e.target.value)} style={{ fontSize: 12.5 }}>
+                  <option value="">Choose…</option>
+                  {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+                </select>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="stack">
-        <div className="card">
-          <h2>Document</h2>
-          <div className="row">
-            <select style={{ maxWidth: 360 }} value={templateId} onChange={(e) => { setTemplateId(e.target.value); setFile(null); setFileBytes(null); setTitle(""); }}>
-              <option value="">Choose a template…</option>
-              {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
-            </select>
-            <span className="muted">or</span>
-            <label className="btn ghost" style={{ margin: 0 }}>
-              {file ? file.name : "Upload a PDF"}
-              <input type="file" accept="application/pdf" hidden onChange={(e) => pickFile(e.target.files[0])} />
-            </label>
-          </div>
-          {(template || file) && (
-            <div className="form-grid" style={{ marginTop: 14 }}>
-              <div>
-                <label>Title</label>
-                <input value={title} onChange={(e) => setTitle(e.target.value)} />
-              </div>
-              <div style={{ gridColumn: "span 2" }}>
-                <label>Message to signers (optional)</label>
-                <input value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Hi! Here's the agreement we discussed." />
-              </div>
-            </div>
-          )}
+      <div className="wiz-section">
+        <div className="h">Add recipients</div>
+        <div className="b">
+          <SignerList signers={signers} setSigners={setSigners} profile={profile} fixedRoles={!!template} />
         </div>
+      </div>
 
-        {(template || file) && (
-          <div className="card">
-            <h2>Recipients</h2>
-            <SignerList signers={signers} setSigners={setSigners} profile={profile} fixedRoles={!!template} />
-          </div>
-        )}
-
-        {askKeys.length > 0 && (
-          <div className="card">
-            <h2>Fill in contract details</h2>
+      {askKeys.length > 0 && (
+        <div className="wiz-section">
+          <div className="h">Fill in contract details</div>
+          <div className="b">
             <div className="form-grid">
               {askKeys.map((k) => (
                 <div key={k.key}>
@@ -162,24 +238,28 @@ function Send() {
                 </div>
               ))}
             </div>
-            <div className="help">Blank values stay blank; fields assigned to a signer can be completed by them.</div>
           </div>
-        )}
+        </div>
+      )}
 
-        {fileBytes && !template && (
-          <div>
-            <h2>Place fields</h2>
-            <FieldEditor src={fileBytes} fields={fields} setFields={setFields} roles={roles} showKeys />
+      <div className="wiz-section">
+        <div className="h">Add message</div>
+        <div className="b">
+          <div className="field">
+            <label>Email subject *</label>
+            <input value={subject} maxLength={100} onChange={(e) => { setSubject(e.target.value); setSubjectTouched(true); }} placeholder="Complete with TakaSign: Agreement" />
           </div>
-        )}
+          <div className="field" style={{ marginBottom: 0 }}>
+            <label>Email message</label>
+            <textarea value={message} maxLength={2000} onChange={(e) => setMessage(e.target.value)} placeholder="Enter a message for your recipients" />
+          </div>
+        </div>
+      </div>
 
-        {err && <div className="error">{err}</div>}
-        {(template || file) && (
-          <div className="row end">
-            <button className="btn ghost" disabled={busy} onClick={() => submit(false)}>Save draft</button>
-            <button className="btn" disabled={busy} onClick={() => submit(true)}>{busy ? "Sending…" : "Send"}</button>
-          </div>
-        )}
+      {err && <div className="error">{err}</div>}
+      <div className="wiz-foot">
+        <button className="btn ghost" onClick={() => router.push("/")}>Cancel</button>
+        <button className="btn" onClick={next}>Next</button>
       </div>
     </>
   );

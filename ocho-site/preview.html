@@ -306,6 +306,10 @@ function wall(){
     h+='<div class="o-wall-row'+(r%2?' rev':'')+'" style="animation-duration:'+(100+r*22)+'s">'+row+'</div>';}
   w.innerHTML=h;
 }
+function placeFoot(){
+  var kf=document.querySelector('form[action*="/forms/"]'),ks=kf&&kf.closest('[id^="section-"]'),ft=M.querySelector('.o-foot');
+  if(!ks||!ft)return;var w=document.createElement('div');w.id='ocho-foot';w.className='o';w.appendChild(ft);ks.parentNode.insertBefore(w,ks.nextSibling);
+}
 function render(){
   timers.forEach(clearInterval);timers=[];lbClose();
   route();document.documentElement.lang=lang;
@@ -317,8 +321,7 @@ function render(){
   M.querySelectorAll('[data-mail]').forEach(function(a){a.href='mailto:'+mail();a.textContent=mail();});
   // live pages: the Kajabi contact form section follows the code block, so move the footer below it
   var old=document.getElementById('ocho-foot');if(old)old.remove();
-  var kf=D.preview?null:document.querySelector('form[action*="/forms/"]'),ks=kf&&kf.closest('[id^="section-"]');
-  if(ks){var ft=M.querySelector('.o-foot'),w=document.createElement('div');w.id='ocho-foot';w.className='o';w.appendChild(ft);ks.parentNode.insertBefore(w,ks.nextSibling);}
+  if(!D.preview){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',placeFoot);else placeFoot();}
 }
 
 function handleTrack(e){var tvb=e.target.closest('.o-tvb');if(tvb){var vs=tvb.closest('.o-tg').querySelector('.o-vers');vs.hidden=!vs.hidden;tvb.setAttribute('aria-expanded',!vs.hidden);if(!vs.hidden)drawRows(vs);return;}

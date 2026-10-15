@@ -39,7 +39,7 @@ def site_data(base, fallback, preview):
         "placements": [{"title": t, "net": n, "cat": c, "img": i} for t, n, c, i in data.PLACEMENTS],
         "albumCats": data.ALBUM_CATS, "placeCats": data.PLACEMENT_CATS, "catsEs": data.CATS_ES,
         "networks": data.NETWORKS, "genres": data.GENRES,
-        "base": base, "fallback": fallback, "sheet": SHEET_ID, "preview": preview,
+        "pos": data.PHOTO_POS, "base": base, "fallback": fallback, "sheet": SHEET_ID, "preview": preview,
         "email": ["music", "ochomusicgroup.com"],
     }
 
@@ -388,7 +388,8 @@ CSS = r"""
 .o-ptext p{font-size:17px;}
 .o-ptext p a{color:#fff !important;border-bottom:1px solid var(--pink);}
 .o-ptext p b{color:#fff;}
-.o-creds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 36px;}
+.o-creds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 36px;}
+.o-pgrid2>*,.o-cred{min-width:0;overflow-wrap:anywhere;}
 .o-cred{border:1px solid var(--line);border-radius:14px;padding:18px 16px;background:#0b0810;}
 .o-cred b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:40px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .o-person.r .o-cred b{background:linear-gradient(95deg,var(--cy),#8fe9ff);-webkit-background-clip:text;background-clip:text;}
@@ -462,8 +463,10 @@ CSS = r"""
   .o-search{flex:1 1 100%;}
   .o-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%;}
   .o-chip{flex:none;}
-  .o-creds{grid-template-columns:1fr 1fr 1fr;}
-  .o-cred b{font-size:28px;}
+  .o-creds{grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .o-cred{padding:14px 10px;}
+  .o-cred b{font-size:22px;}
+  .o-cred span{font-size:9px;letter-spacing:.06em;}
   .o-q button{font-size:22px;}
   .o-panel-in{padding:34px 24px;}
   .o-collage{height:380px;}
@@ -497,6 +500,7 @@ function cat(c){return lang==='es'?(D.catsEs[c]||c):c;}
 function drive(v){var m=String(v).match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);return m?'https://lh3.googleusercontent.com/d/'+m[1]+'=w900':v;}
 function src(v,kind,thumb){v=String(v||'').trim();if(!v)return '';if(/^https?:\/\//.test(v))return drive(v);v=v.replace(/\.jpg$/i,'');return D.base+kind+'/'+(thumb?'thumb/':'')+v+'.jpg';}
 function photo(n){return D.base+'photos/'+n+'.jpg';}
+function pimg(n,alt){return '<img src="'+photo(n)+'" alt="'+esc(alt)+'" loading="lazy" style="object-position:'+(D.pos[n]||'50% 30%')+'">';}
 function mail(){return D.email[0]+'@'+D.email[1];}
 function track(items,cls){var h='';items.forEach(function(x){h+='<span>'+esc(x)+'</span><i></i>';});return '<div class="o-track'+(cls||'')+'">'+h+h+'</div>';}
 
@@ -583,13 +587,13 @@ function home(){
   '<div class="o-more" style="margin-top:10px"><a class="o-btn c" href="'+href('placements')+'">'+t.place_all+' &rarr;</a></div></section>'+
   doors()+
   '<section class="o-sec o-founders"><div class="o-wrap"><div class="o-reveal" style="max-width:900px"><span class="o-eb">'+t.founders_eb+'</span><h2 class="o-h2" style="font-size:clamp(44px,6vw,88px) !important">'+t.founders_h2+'</h2><p style="max-width:640px;margin-top:24px">'+t.founders_p+'</p></div>'+
-  '<div class="o-fgrid"><a class="o-fcard o-reveal" href="'+href('about')+'"><figure><img src="'+photo('mike-1')+'" alt="Michael Lazarus" loading="lazy"></figure><div class="o-fcard-in"><h3>'+t.mike_name+'</h3><div class="o-role">'+t.mike_role+'</div><p>'+t.mike_short+'</p></div></a>'+
-  '<a class="o-fcard o-reveal" style="transition-delay:.12s" href="'+href('about')+'"><figure><img src="'+photo('jody-1')+'" alt="Jody Friedman" loading="lazy"></figure><div class="o-fcard-in"><h3>'+t.jody_name+'</h3><div class="o-role">'+t.jody_role+'</div><p>'+t.jody_short+'</p></div></a></div>'+
+  '<div class="o-fgrid"><a class="o-fcard o-reveal" href="'+href('about')+'"><figure>'+pimg('mike-1','Michael Lazarus')+'</figure><div class="o-fcard-in"><h3>'+t.mike_name+'</h3><div class="o-role">'+t.mike_role+'</div><p>'+t.mike_short+'</p></div></a>'+
+  '<a class="o-fcard o-reveal" style="transition-delay:.12s" href="'+href('about')+'"><figure>'+pimg('jody-1','Jody Friedman')+'</figure><div class="o-fcard-in"><h3>'+t.jody_name+'</h3><div class="o-role">'+t.jody_role+'</div><p>'+t.jody_short+'</p></div></a></div>'+
   '<div class="o-stats o-reveal">'+stats+'</div><div class="o-more"><a class="o-btn c" href="'+href('about')+'">'+t.about_cta+' &rarr;</a></div></div></section>'+
   artists()+faq()+contact();
 }
 function person(key,photos,rev){
-  var ph=photos.map(function(p){return '<figure><img src="'+photo(p[0])+'" alt="'+esc(p[1])+'" loading="lazy"></figure>';}).join('');
+  var ph=photos.map(function(p){return '<figure>'+pimg(p[0],p[1])+'</figure>';}).join('');
   var nm=t[key+'_name'].split(' ');
   var creds=t[key+'_creds'].map(function(c){return '<div class="o-cred"><b>'+c[0]+'</b><span>'+c[1]+'</span></div>';}).join('');
   return '<section class="o-sec o-person'+(rev?' r':'')+'"><div class="o-wrap o-pgrid2"><div class="o-photos o-reveal">'+ph+'</div>'+
@@ -602,14 +606,14 @@ function about(){
            ['cubadisco-2024','Cubadisco 2024',{right:'6%',bottom:'2%',width:'34%',height:'52%',transform:'rotate(4deg)',zIndex:4}],
            ['jody-namm','NAMM 2025',{left:'0',bottom:'0',width:'52%',height:'40%',transform:'rotate(-3deg)',zIndex:5}]];
   var col=pol.map(function(p){var s='';for(var k in p[2])s+=k.replace(/[A-Z]/g,function(m){return '-'+m.toLowerCase();})+':'+p[2][k]+';';
-    return '<figure class="o-pol" style="'+s+'"><img src="'+photo(p[0])+'" alt="'+esc(p[1])+'" loading="lazy"><figcaption>'+esc(p[1])+'</figcaption></figure>';}).join('');
+    return '<figure class="o-pol" style="'+s+'">'+pimg(p[0],p[1])+'<figcaption>'+esc(p[1])+'</figcaption></figure>';}).join('');
   return '<header class="o-sec o-about-hero"><div class="o-glow"></div><div class="o-wrap o-about-grid"><div class="o-up"><span class="o-eb">'+t.about_eb+'</span><h1>'+t.about_h1+'</h1><p>'+t.about_story+'</p>'+
   '<p class="o-tagline">'+t.about_tag.replace(/\. /g,'.<span> / </span>')+'</p><div class="o-ctas" style="justify-content:flex-start"><a class="o-btn p" href="'+D.apm+'" target="_blank" rel="noopener">'+t.cta_apm+'<small>'+t.cta_apm_note+'</small></a><a class="o-btn c" href="#o-contact" data-go="contact">'+t.cta_world+'<small>'+t.cta_world_note+'</small></a></div></div>'+
   '<div class="o-collage o-up" style="animation-delay:.3s">'+col+'</div></div></header>'+
   ticker()+
   person('mike',[['mike-bass','Michael Lazarus on bass'],['latin-grammys','Latin Grammy awards'],['mike-4','Michael Lazarus']],false)+
   '<section class="o-sec o-panel"><div class="o-wrap"><div class="o-panel-card o-reveal"><figure><img src="'+photo('pmc-2024-panel')+'" alt="PMC 2024 panel" loading="lazy"></figure><div class="o-panel-in"><span class="o-eb">'+t.panel_eb+'</span><h3>'+t.panel_h+'</h3><div class="o-role">'+t.panel_k+'</div>'+t.panel_p.map(function(p){return '<p>'+p+'</p>';}).join('')+'</div></div></div></section>'+
-  person('jody',[['jody-3','Jody Friedman speaking'],['jody-namm','Jody Friedman at NAMM'],['jody-1','Jody Friedman']],true)+
+  person('jody',[['jody-1','Jody Friedman'],['jody-stage','Jody Friedman speaking'],['jody-namm','Jody Friedman at NAMM']],true)+
   doors()+faq()+contact();
 }
 function albumsPage(){

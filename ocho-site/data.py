@@ -4,7 +4,7 @@ Albums and placements can be edited live from the Google Sheet (see README.md); 
 Image values are files in img/covers or img/posters (slug.jpg) or a full URL.
 """
 
-APM_URL = "https://www.apmmusic.com/libraries/ocho-music-group-ocho"
+APM_URL = "https://www.apmmusic.com/libraries/ocho-music-group-(ocho)"
 PDF_EN = "https://drive.google.com/file/d/1KaB5ywmcyHIKzn0cH_OT9qThNm5iKnZE/view"
 PDF_ES = "https://drive.google.com/file/d/1G8NyOS-2SSjSBmfpzLtDjfQC3v6ceszw/view"
 
@@ -136,7 +136,7 @@ T = {
         "founders_p": "Ocho Music Group was founded in 2020 to give music supervisors what generic libraries can't: Latin music made by the people who live it, curated by people who know what plays on screen.",
         "mike_role": "President &amp; Co-Founder", "jody_role": "CEO &amp; Co-Founder",
         "mike_short": "Puerto Rico-born, 2X Latin Grammy&reg;-winning mix &amp; mastering engineer, bassist and producer. Cubadisco&reg; 2024 nominee. Founder of TIMBA.com.",
-        "jody_short": "L.A. music supervisor (The Bachelor franchise), producer and award-winning songwriter with 20+ years in film, TV, trailers and ads. Co-founder of Sync Titan.",
+        "jody_short": "L.A. music supervisor (The Bachelor franchise), producer and award-winning songwriter with 20+ years in film, TV, trailers and ads. GMS member and GMS Award nominee.",
         "about_cta": "Meet the Founders",
         "stats": [("2X", "Latin Grammy&reg; winning engineer"), ("20+", "Years in film, TV &amp; ad music"),
                   ("2020", "Founded, built for sync"), ("0%", "AI-generated music")],
@@ -183,10 +183,10 @@ T = {
         "jody_bio": [
             "As <b>CEO &amp; Co-Founder of Ocho Music Group</b>, Jody Friedman helps cultivate this premier catalog, securing placements in film, TV, trailers, ads and video games.",
             "A <b>Los Angeles-based music supervisor, producer and award-winning songwriter</b> with over 20 years in the entertainment industry, he is the music supervisor for <i>The Bachelor</i> franchise and has worked on projects like <i>Ugly Delicious</i> (Netflix), <i>Generation</i> (HBO Max) and <i>Won't You Be My Neighbor</i> (Focus Features).",
-            "A <b>Guild of Music Supervisors</b> member, Jody also founded <a href=\"https://www.elitemusiccoaching.com/getstarted\" target=\"_blank\" rel=\"noopener\">Elite Music Coaching</a> and <a href=\"https://www.synctitan.com/\" target=\"_blank\" rel=\"noopener\">Sync Titan</a>, the premier community of elite sync professionals. His music has been featured in major trailers and TV shows including <i>The Handmaid's Tale</i>, <i>Picard</i>, <i>Big Sky</i> and <i>Ray Donovan</i>.",
+            "A <b>Guild of Music Supervisors</b> member and <b>GMS Award nominee</b> (Best Film Under $2M), Jody also founded <a href=\"https://www.elitemusiccoaching.com/getstarted\" target=\"_blank\" rel=\"noopener\">Elite Music Coaching</a> and <a href=\"https://www.synctitan.com/\" target=\"_blank\" rel=\"noopener\">Sync Titan</a>, the premier community of elite sync professionals. His music has been featured in major trailers and TV shows including <i>The Handmaid's Tale</i>, <i>Picard</i>, <i>Big Sky</i> and <i>Ray Donovan</i>.",
             "Through <a href=\"https://www.collaboratemusic.com/\" target=\"_blank\" rel=\"noopener\">Collaborate Music</a>, he continues to create high-impact music for trailers and advertising while championing independent artists and expanding Ocho Music Group's influence in sync licensing.",
         ],
-        "jody_creds": [("20+", "Years in Entertainment"), ("GMS", "Guild of Music Supervisors"), ("TV", "Music Supervisor, The Bachelor")],
+        "jody_creds": [("GMS", "Guild of Music Supervisors Member"), ("Nominee", "GMS Award: Best Film Under $2M"), ("20+", "Years in Entertainment")],
     },
     "es": {
         "lang_label": "EN", "lang_name": "English",
@@ -225,7 +225,7 @@ T = {
         "founders_p": "Ocho Music Group nació en 2020 para dar a los supervisores musicales lo que las librerías genéricas no pueden: música latina hecha por quienes la viven, curada por quienes saben lo que funciona en pantalla.",
         "mike_role": "Presidente y Co-Fundador", "jody_role": "Director Ejecutivo y Co-Fundador",
         "mike_short": "Nacido en Puerto Rico, ingeniero de mezcla y masterización, bajista y productor, dos veces ganador del Latin Grammy&reg;. Nominado a Cubadisco&reg; 2024. Fundador de TIMBA.com.",
-        "jody_short": "Supervisor musical en Los Ángeles (franquicia The Bachelor), productor y compositor galardonado con más de 20 años en cine, TV, tráilers y publicidad. Co-fundador de Sync Titan.",
+        "jody_short": "Supervisor musical en Los Ángeles (franquicia The Bachelor), productor y compositor galardonado con más de 20 años en cine, TV, tráilers y publicidad. Miembro y nominado al Premio GMS.",
         "about_cta": "Conozca a los Fundadores",
         "stats": [("2X", "Ingeniero ganador del Latin Grammy&reg;"), ("20+", "Años en música para cine, TV y publicidad"),
                   ("2020", "Fundado para la sincronización"), ("0%", "Música generada por IA")],
@@ -270,9 +270,16 @@ T = {
         "jody_bio": [
             "Como <b>Director Ejecutivo y Co-Fundador de Ocho Music Group</b>, Jody Friedman ayuda a cultivar este catálogo de primer nivel, logrando colocaciones en cine, televisión, tráilers, publicidad y videojuegos.",
             "<b>Supervisor musical, productor y compositor galardonado radicado en Los Ángeles</b>, con más de 20 años en la industria del entretenimiento, es el supervisor musical de la franquicia <i>The Bachelor</i> y ha trabajado en proyectos como <i>Ugly Delicious</i> (Netflix), <i>Generation</i> (HBO Max) y <i>Won't You Be My Neighbor</i> (Focus Features).",
-            "Miembro del <b>Guild of Music Supervisors</b>, Jody también fundó <a href=\"https://www.elitemusiccoaching.com/getstarted\" target=\"_blank\" rel=\"noopener\">Elite Music Coaching</a> y <a href=\"https://www.synctitan.com/\" target=\"_blank\" rel=\"noopener\">Sync Titan</a>, la comunidad principal de profesionales de la sincronización. Su música ha aparecido en importantes tráilers y series como <i>The Handmaid's Tale</i>, <i>Picard</i>, <i>Big Sky</i> y <i>Ray Donovan</i>.",
+            "Miembro del <b>Guild of Music Supervisors</b> y <b>nominado al Premio GMS</b> (Mejor Película con presupuesto menor a $2M), Jody también fundó <a href=\"https://www.elitemusiccoaching.com/getstarted\" target=\"_blank\" rel=\"noopener\">Elite Music Coaching</a> y <a href=\"https://www.synctitan.com/\" target=\"_blank\" rel=\"noopener\">Sync Titan</a>, la comunidad principal de profesionales de la sincronización. Su música ha aparecido en importantes tráilers y series como <i>The Handmaid's Tale</i>, <i>Picard</i>, <i>Big Sky</i> y <i>Ray Donovan</i>.",
             "A través de <a href=\"https://www.collaboratemusic.com/\" target=\"_blank\" rel=\"noopener\">Collaborate Music</a>, sigue creando música de alto impacto para tráilers y publicidad, apoyando a artistas independientes y ampliando la influencia de Ocho Music Group en el mundo de las licencias de sincronización.",
         ],
-        "jody_creds": [("20+", "Años en el Entretenimiento"), ("GMS", "Guild of Music Supervisors"), ("TV", "Supervisor Musical, The Bachelor")],
+        "jody_creds": [("GMS", "Miembro del Guild of Music Supervisors"), ("Nominado", "Premio GMS: Mejor Película Menor a $2M"), ("20+", "Años en el Entretenimiento")],
     },
+}
+
+# Focal point (CSS object-position) per photo so faces stay in frame when cropped.
+PHOTO_POS = {
+    "mike-bass": "50% 6%", "mike-1": "50% 22%", "mike-4": "50% 35%", "latin-grammys": "50% 45%",
+    "cubadisco-2024": "50% 40%", "jody-1": "50% 26%", "jody-stage": "65% 28%", "jody-namm": "50% 10%",
+    "jody-mike": "50% 18%",
 }

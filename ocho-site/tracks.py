@@ -78,6 +78,20 @@ def rms_wave(mp3, n=POINTS):
     return wave
 
 
+def tags(facets, n=18):
+    """'Main;RealityTV,Unscripted;FilmScore/Orchestral;Tense' -> ['Reality TV, Unscripted', 'Film Score / Orchestral', 'Tense']"""
+    out = {}
+    for f in facets.split(";"):
+        f = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", f.strip()).replace(",", ", ").replace("/", " / ")
+        if f and f.lower() not in ("main", "alt") and f.lower() not in out:
+            out[f.lower()] = f
+    return list(out.values())[:n]
+
+
+def key_name(k):
+    return re.sub(r"\s+min(or)?$", " minor", re.sub(r"\s+maj(or)?$", " major", k.strip(), flags=re.I), flags=re.I)
+
+
 def downsample(peaks, n=POINTS):
     if len(peaks) <= n:
         return peaks
@@ -113,9 +127,15 @@ def load_apm():
                 continue
             k = (alb, norm(os.path.splitext(fn)[0]))
             cur = tracks.setdefault(k, {})
-            for field in ("Track Title", "BPM", "Track Description", "ISRC", "Track Number"):
+            for field in ("Track Title", "BPM", "Track Description", "ISRC", "Track Number", "Key", "Facet Names"):
                 if r.get(field) and not cur.get(field):
                     cur[field] = r[field].strip()
+            comp = ", ".join(dict.fromkeys(n for n in (" ".join(
+                (r.get(f"Composer{i} {part}") or "").strip() for part in ("First Name", "Middle Name", "Last Name")
+                if (r.get(f"Composer{i} {part}") or "").strip()) for i in (1, 2, 3)) if n))
+            pub = ", ".join(dict.fromkeys(v for v in ((r.get(f"Publisher{i}") or "").strip() for i in (1, 2, 3)) if v))
+            cur["comp"] = cur.get("comp") or comp
+            cur["pub"] = cur.get("pub") or pub
     return tracks, albums
 
 
@@ -149,6 +169,8 @@ def main():
                 "bpm": info.get("BPM", ""), "desc": info.get("Track Description", ""),
                 "isrc": (rec or {}).get("ISRC CODE", "") or info.get("ISRC", ""),
                 "title": (rec or {}).get("TRACK TITLE", "") or info.get("Track Title", ""),
+                "key": key_name(info.get("Key", "")), "tags": tags(info.get("Facet Names", "")),
+                "comp": info.get("comp", ""), "pub": info.get("pub", ""),
             })
         # Alternate mixes whose file name drifts from the master's ("Tu me enseñaste" vs "...enseñastes",
         # "Yerba buena" vs "Yerba buena (yo te dejo 3)") would form a row led by an alt: fold them into the master.
@@ -167,8 +189,10 @@ def main():
             vs = sorted(g["versions"], key=lambda v: (v["l"] != "", v["l"]))
             main = vs[0]
             title = re.sub(r"\s*\((?:[^)]*mix[^)]*)\)\s*$", "", main["title"] or g["base"], flags=re.I) or g["base"]
+            first = lambda f: next((v[f] for v in vs if v[f]), "")  # main mix first, else any version that has it
             tracks.append({
-                "t": title, "isrc": main["isrc"], "bpm": main["bpm"], "desc": main["desc"], "order": g["order"],
+                "t": title, "isrc": main["isrc"], "bpm": first("bpm"), "desc": first("desc"), "order": g["order"],
+                "key": first("key"), "tags": first("tags"), "comp": first("comp"), "pub": first("pub"),
                 "v": [{"l": v["l"], "f": v["f"], "d": v["d"], "p": v["p"]} for v in vs],
             })
         tracks.sort(key=lambda x: (x["order"], norm(x["t"])))

@@ -875,6 +875,10 @@ function render(){
   var rl=M.querySelectorAll('.o-rl');
   if(rl.length>1&&!reduce){var ri=0;every(function(){rl[ri].classList.remove('on');ri=(ri+1)%rl.length;rl[ri].classList.add('on');},3400);}
   M.querySelectorAll('[data-mail]').forEach(function(a){a.href='mailto:'+mail();a.textContent=mail();});
+  // live pages: the Kajabi contact form section follows the code block, so move the footer below it
+  var old=document.getElementById('ocho-foot');if(old)old.remove();
+  var kf=D.preview?null:document.querySelector('form[action*="/forms/"]'),ks=kf&&kf.closest('[id^="section-"]');
+  if(ks){var ft=M.querySelector('.o-foot'),w=document.createElement('div');w.id='ocho-foot';w.className='o';w.appendChild(ft);ks.parentNode.insertBefore(w,ks.nextSibling);}
 }
 
 function handleTrack(e){var tvb=e.target.closest('.o-tvb');if(tvb){var vs=tvb.closest('.o-tg').querySelector('.o-vers');vs.hidden=!vs.hidden;tvb.setAttribute('aria-expanded',!vs.hidden);if(!vs.hidden)drawRows(vs);return;}

@@ -19,13 +19,13 @@ Same setup as `hdmn-homepage`: everything lives in one script, `ocho.js`, loaded
 | `/placements` | `placements` | `en`      |
 | `/placements_es` | `placements` | `es`   |
 
-**Loader used on the live pages** (Kajabi Code block; set `data-page`/`data-lang` per page). It asks GitHub for the
-branch's latest commit; if that check fails (GitHub allows 60 anonymous checks per hour per network) it loads the
-branch straight from jsDelivr, and only then the pinned commit, so visitors never get a stale build:
+**Loader used on the live pages** (Kajabi Code block; set `data-page`/`data-lang` per page). It loads the current
+build from our own Cloudflare domain (`python3 publish.py` replaces it; 5-minute cache) and falls back to a pinned
+commit on jsDelivr if that fails:
 
 ```html
 <div id="ocho-mount" data-page="albums" data-lang="en" data-test="1" style="min-height:100vh;background:#07050a"></div>
-<script>(function(){var br='claude/festive-fermat-ghujni',pin='<last known good commit>';function load(ref,next){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@'+ref+'/ocho-site/ocho.js';s.onerror=function(){s.remove();if(next)setTimeout(next,1500);};document.body.appendChild(s);}function fallback(){load(br,function(){load(pin,function(){load(pin);});});}fetch('https://api.github.com/repos/mayadex853/Dashboards/commits/'+encodeURIComponent(br),{headers:{Accept:'application/vnd.github.sha'}}).then(function(r){return r.ok?r.text():'';}).then(function(t){if(/^[0-9a-f]{40}$/.test(t))load(t,fallback);else fallback();}).catch(fallback);})();</script>
+<script>(function(){var pin='<last known good commit>';function load(u,next){var s=document.createElement('script');s.src=u;s.onerror=function(){s.remove();if(next)next();};document.body.appendChild(s);}load('https://ochoaudio.com/site/ocho.js',function(){load('https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@'+pin+'/ocho-site/ocho.js');});})();</script>
 ```
 
 Keep the native Kajabi contact form section directly under the Code block on every page: every

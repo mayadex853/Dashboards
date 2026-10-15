@@ -61,6 +61,16 @@ LABELS = [
      "Visit Ocho", "https://www.ochomusicgroup.com"),
 ]
 
+# "Search Catalog" opens a short finder; each answer routes to the right catalog (new tab) or to the brief form.
+SOURCEAUDIO_URL = "https://hdmusicnow.sourceaudio.com/"
+FINDER = [
+    ("Latin Music", "Ocho Music Group", "https://www.ochomusicgroup.com"),
+    ("Trailer Music", "Collaborate Music", "https://www.collaboratemusic.com"),
+    ("Vintage and/or Ethnic Music", "Stacks to Tracks on APM", "https://www.apmmusic.com/libraries/stacks-to-tracks-(strx)"),
+    ("SFX", "500K+ effects on SourceAudio", SOURCEAUDIO_URL),
+    ("Other", "Tell us what you need", ""),
+]
+
 SUBPUBS = ["HDMN Royalty Music UK", "BMG", "Sonoton", "ViMusica", "Moodoofind", "Red Igloo", "Kouros",
            "Yellowgroove", "Miles of Musik", "Apollo Music"]
 
@@ -122,13 +132,17 @@ def build(base):
         return "".join(f"<li><span>{e(name)}</span><em>{e(note)}</em></li>" for name, note in items)
     speaking, press, features = li(STAGE), li(PRESS), li(FEATURES)
     all_slugs = ",".join(p["slug"] for p in MANIFEST)
+    finder = "".join(
+        f'<button type="button" class="hd-fopt" data-label="{e(label)}" data-url="{e(url)}">'
+        f'<b>{e(label)}</b><small>{e(dest)}</small><i>{"&#8599;" if url else "&rarr;"}</i></button>'
+        for label, dest, url in FINDER)
 
     return TEMPLATE.format(
         css=_min(CSS), ticker=_marquee(CLIENTS), brands=_marquee(BRANDS), cards=cards, sup_cards=sup_cards,
         tabs=tabs, panels=panels, total="10,000+", total_n=10000, sup_rows=sup_rows,
         sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press, features=features,
-        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL,
-        js=JS.replace("__SHEET__", SHEET_ID).replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
+        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL, finder=finder, sourceaudio=e(SOURCEAUDIO_URL),
+        js=JS.replace("__CONTACT__", CONTACT_ANCHOR).replace("__SHEET__", SHEET_ID).replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
 CSS = r"""
@@ -192,6 +206,39 @@ header.header{display:none !important;}
   .hd-nav-links a{padding:14px 12px;font-size:12px;letter-spacing:.2em;}
 }
 @media(max-width:380px){.hd-nav .hd-btn{display:none}.hd-nav-tog{margin-left:auto}}
+
+/* FINDER */
+.hd-finder{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;}
+.hd-finder[hidden]{display:none;}
+.hd-f-back{position:absolute;inset:0;background:rgba(3,4,8,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:hd-fade .3s ease;}
+.hd-f-box{position:relative;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:44px 40px 0;border-radius:22px;
+  background:linear-gradient(180deg,#141022,#08090e);border:1px solid rgba(192,132,252,.3);
+  box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 80px rgba(177,75,244,.25);animation:hd-pop .35s cubic-bezier(.2,.8,.2,1);}
+.hd-f-box h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(34px,5vw,46px);line-height:1;letter-spacing:.02em;color:#fff;margin:12px 0 24px;}
+.hd-f-box p{color:#c3c9d4;font-size:16px;line-height:1.6;margin:0 0 26px;}
+.hd-f-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);
+  background:transparent;color:#fff;font-size:24px;line-height:1;cursor:pointer;}
+.hd-f-x:hover{background:rgba(255,255,255,.1);}
+.hd-f-opts{display:grid;gap:10px;}
+.hd-fopt{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 16px;text-align:left;width:100%;padding:18px 22px;
+  border-radius:14px;border:1px solid #2a3142;background:rgba(255,255,255,.03);color:#fff;cursor:pointer;transition:all .2s;font:inherit;}
+.hd-fopt b{font-size:17px;font-weight:700;letter-spacing:.01em;}
+.hd-fopt small{grid-row:2;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8d95a5;}
+.hd-fopt i{grid-row:1/3;grid-column:2;font-style:normal;font-size:20px;color:var(--vio2);transition:transform .2s;}
+.hd-fopt:hover,.hd-fopt:focus-visible{border-color:rgba(192,132,252,.7);background:rgba(177,75,244,.14);transform:translateX(4px);outline:none;}
+.hd-fopt:hover i{transform:translateX(4px);}
+.hd-f-row{display:flex;flex-wrap:wrap;gap:12px;}
+.hd-f-prev{margin-top:22px;background:none;border:0;color:#8d95a5;font:inherit;font-size:13px;letter-spacing:.1em;cursor:pointer;padding:0;}
+.hd-f-prev:hover{color:#fff;}
+.hd-f-brief{display:block;width:calc(100% + 80px);margin:32px -40px 0;padding:20px 40px;border:0;border-top:1px solid rgba(255,255,255,.08);
+  background:rgba(177,75,244,.1);color:#e9dcff;font:inherit;font-size:14px;text-align:left;cursor:pointer;transition:background .2s;}
+.hd-f-brief span{display:block;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--vio2);margin-bottom:4px;}
+.hd-f-brief[hidden]{display:none;}
+.hd-f-brief:hover{background:rgba(177,75,244,.22);}
+@keyframes hd-fade{from{opacity:0}}
+@keyframes hd-pop{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@media(max-width:600px){.hd-f-box{padding:38px 20px 0}.hd-f-brief{width:calc(100% + 40px);margin:26px -20px 0;padding:18px 20px}
+  .hd-fopt{padding:15px 16px}.hd-f-row .hd-btn{width:100%;text-align:center}}
 
 /* HERO */
 .hd-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;
@@ -452,6 +499,32 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 
 JS = r"""
 (function(){
+  /* music finder: "Search Catalog" asks what they need, then routes them */
+  var fd=document.getElementById('hd-finder');
+  if(fd){
+    var lastFocus=null,choice='';
+    function step(n){[].forEach.call(fd.querySelectorAll('.hd-f-step'),function(s){s.hidden=s.getAttribute('data-step')!=String(n);});fd.querySelector('.hd-f-brief').hidden=n!==1;}
+    function openF(ev){ev.preventDefault();lastFocus=document.activeElement;choice='';step(1);fd.hidden=false;
+      document.documentElement.style.overflow='hidden';var nv=document.querySelector('.hd-nav');if(nv)nv.classList.remove('open');
+      setTimeout(function(){var f=fd.querySelector('.hd-fopt');if(f)f.focus();},50);}
+    function closeF(){fd.hidden=true;document.documentElement.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}
+    function brief(){closeF();
+      var form=document.querySelector('textarea[name="form_submission[custom_1]"]'),sec=form&&form.closest('section,[id^="section-"]');
+      var t=sec||document.querySelector('[id^="section-1792000000008"]');
+      if(form&&!form.value)form.value=(choice&&choice!=='Other'?'Looking for: '+choice+'\n\n':'')+'Project / scene / deadline / budget: ';
+      if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-90,behavior:'smooth'});
+        if(form)setTimeout(function(){form.focus({preventScroll:true});},900);}
+      else location.href='__CONTACT__';}
+    [].forEach.call(document.querySelectorAll('[data-hd-finder]'),function(a){a.addEventListener('click',openF);});
+    fd.addEventListener('click',function(ev){var t=ev.target.closest('[data-close],[data-brief],[data-prev],.hd-fopt');if(!t)return;
+      if(t.hasAttribute('data-close'))return closeF();
+      if(t.hasAttribute('data-brief'))return brief();
+      if(t.hasAttribute('data-prev'))return step(1);
+      choice=t.getAttribute('data-label');var u=t.getAttribute('data-url');
+      if(u){window.open(u,'_blank','noopener');closeF();}else step(2);});
+    document.addEventListener('keydown',function(ev){if(!fd.hidden&&ev.key==='Escape')closeF();});
+  }
+
   /* floating nav: solid on scroll, mobile menu, smooth jumps, active section */
   var nav=document.querySelector('.hd-nav');
   if(nav){
@@ -593,9 +666,31 @@ TEMPLATE = """<style>{css}</style>
     <a href="#hd-voice">Press</a>
     <a href="{contact}">Contact</a>
   </div>
-  <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search Catalog</a>
+  <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener" data-hd-finder>&#9654; Search Catalog</a>
   <button class="hd-nav-tog" type="button" aria-label="Menu" aria-expanded="false" aria-controls="hd-nav-links"><i></i><i></i><i></i></button>
 </nav>
+<div class="hd-finder" id="hd-finder" role="dialog" aria-modal="true" aria-labelledby="hd-f-title" hidden>
+  <div class="hd-f-back" data-close></div>
+  <div class="hd-f-box">
+    <button type="button" class="hd-f-x" data-close aria-label="Close">&times;</button>
+    <div class="hd-f-step" data-step="1">
+      <span class="hd-eb">Find your music</span>
+      <h3 id="hd-f-title">What type of music are you looking for?</h3>
+      <div class="hd-f-opts">{finder}</div>
+    </div>
+    <div class="hd-f-step" data-step="2" hidden>
+      <span class="hd-eb">Not everything is online</span>
+      <h3>Tell us what you need.</h3>
+      <p>Many of our catalogs aren&rsquo;t searchable online. Send us your brief and we&rsquo;ll compile a custom playlist for you, or browse what&rsquo;s on SourceAudio.</p>
+      <div class="hd-f-row">
+        <button type="button" class="hd-btn p" data-brief>Send Us Your Brief</button>
+        <a class="hd-btn o" href="{sourceaudio}" target="_blank" rel="noopener">Browse SourceAudio &#8599;</a>
+      </div>
+      <button type="button" class="hd-f-prev" data-prev>&larr; Back to options</button>
+    </div>
+    <button type="button" class="hd-f-brief" data-brief><span>Need something specific?</span> Send us your brief and we&rsquo;ll compile a custom playlist &rarr;</button>
+  </div>
+</div>
 
 <header class="hd-hero" id="hd-top">
   <div class="hd-wall" aria-hidden="true"></div>
@@ -605,7 +700,7 @@ TEMPLATE = """<style>{css}</style>
     <h1 class="hd-grad hd-up" style="animation-delay:.2s">Temp it.<br>Love it.<br>Keep it.</h1>
     <p class="hd-sub hd-up" style="animation-delay:.45s">Cut with our music as your temp, fall in love with it, then keep it: budget-friendly and cleared before your deadline. A music supervisor's ear on every request, not library roulette.</p>
     <div class="hd-ctas hd-up" style="animation-delay:.7s">
-      <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener">&#9654; Search the Catalog</a>
+      <a class="hd-btn p" href="{catalog}" target="_blank" rel="noopener" data-hd-finder>&#9654; Search the Catalog</a>
       <a class="hd-btn o" href="{contact}">Send Us a Brief</a>
     </div>
     <p class="hd-heard hd-up" style="animation-delay:1s">AS HEARD IN&nbsp; <b>SATURDAY NIGHT LIVE &middot; BREAKING BAD &middot; NOPE &middot; AVENGERS: ENDGAME (TRAILER)</b></p>

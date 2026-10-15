@@ -13,6 +13,7 @@ Usage: python3 tracks.py WORK
 """
 import array
 import csv
+import difflib
 import math
 import subprocess
 import glob
@@ -149,6 +150,18 @@ def main():
                 "isrc": (rec or {}).get("ISRC CODE", "") or info.get("ISRC", ""),
                 "title": (rec or {}).get("TRACK TITLE", "") or info.get("Track Title", ""),
             })
+        # Alternate mixes whose file name drifts from the master's ("Tu me enseñaste" vs "...enseñastes",
+        # "Yerba buena" vs "Yerba buena (yo te dejo 3)") would form a row led by an alt: fold them into the master.
+        mains = {k: g for k, g in groups.items() if any(not v["l"] for v in g["versions"])}
+        for k, g in list(groups.items()):
+            if k in mains:
+                continue
+            best = max(mains, default=None, key=lambda m: (m.startswith(k) or k.startswith(m),
+                                                          difflib.SequenceMatcher(None, k, m).ratio()))
+            if best and (best.startswith(k) or k.startswith(best)
+                         or difflib.SequenceMatcher(None, k, best).ratio() >= 0.85):
+                mains[best]["versions"] += g["versions"]
+                del groups[k]
         tracks = []
         for g in groups.values():
             vs = sorted(g["versions"], key=lambda v: (v["l"] != "", v["l"]))

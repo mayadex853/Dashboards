@@ -185,7 +185,7 @@ T = {
         "place_page_p": "A selection of series, specials, news, sports, brands and games that feature music from Ocho Music Group.",
         "all": "All", "search": "Search albums or artists", "no_results": "Nothing matches that search yet.",
         "license_album": "License This Album", "license_world": "License Our Music",
-        "play": "Play", "versions": "versions", "license": "License", "loading": "Loading tracks&hellip;",
+        "play": "Play", "versions": "versions", "more_info": "More info", "composer": "Composer", "publisher": "Publisher", "tempo": "Tempo", "key": "Key", "license": "License", "loading": "Loading tracks&hellip;",
         "no_audio": "Streaming for this album is coming soon. Get in touch and we will send you the tracks.",
         "albums_count": "albums", "place_count": "placements",
         # about page
@@ -282,7 +282,7 @@ T = {
         "place_page_p": "Una selección de series, especiales, noticieros, deportes, marcas y videojuegos con música de Ocho Music Group.",
         "all": "Todos", "search": "Buscar álbumes o artistas", "no_results": "Todavía no hay resultados para esa búsqueda.",
         "license_album": "Licenciar Este Álbum", "license_world": "Licencie Nuestra Música",
-        "play": "Escuchar", "versions": "versiones", "license": "Licenciar", "loading": "Cargando temas&hellip;",
+        "play": "Escuchar", "versions": "versiones", "more_info": "Más info", "composer": "Compositor", "publisher": "Editorial", "tempo": "Tempo", "key": "Tonalidad", "license": "Licenciar", "loading": "Cargando temas&hellip;",
         "no_audio": "El streaming de este álbum llegará pronto. Escríbanos y le enviaremos los temas.",
         "albums_count": "álbumes", "place_count": "colocaciones",
         "about_eb": "Sobre Nosotros", "about_h1": "Hecho por<br><span class=\"o-grad\">la cultura.</span>",

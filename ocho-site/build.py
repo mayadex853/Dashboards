@@ -593,7 +593,7 @@ function nav(){
     '<div class="o-links">'+L('about',t.nav_about)+L('albums',t.nav_albums)+L('placements',t.nav_placements)+
     '<a href="#o-faq" data-go="faq">'+t.nav_faq+'</a><a href="#o-contact" data-go="contact">'+t.nav_contact+'</a>'+
     '<a class="o-lang" href="'+href(page,lang==='en'?'es':'en')+'" title="'+t.lang_name+'">'+t.lang_label+'</a>'+
-    '<a class="o-btn p" href="#o-contact" data-go="contact">'+t.nav_cta+'</a></div>'+
+    '<a class="o-btn p" href="'+href('albums')+'">'+t.nav_cta+'</a></div>'+
     '<button class="o-burger" aria-label="Menu"><i></i><i></i><i></i></button></nav></div>';
 }
 function ticker(){return '<section class="o-ticker"><div class="o-ticker-k">'+t.heard+'</div><div class="o-mq">'+track(D.networks)+'</div></section>';}
@@ -654,7 +654,7 @@ function home(){
   '<h1 class="o-up" style="animation-delay:.2s">'+t.hero_h1+'</h1>'+
   '<p class="o-sub o-up" style="animation-delay:.45s">'+t.hero_sub+'</p>'+
   '<div class="o-ctas o-up" style="animation-delay:.7s"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.cta_license+'<small>'+t.cta_license_note+'</small></a><a class="o-btn c" href="'+href('albums')+'">'+t.cta_albums+'<small>'+t.cta_albums_note+'</small></a></div>'+
-  '<p class="o-heard o-up" style="animation-delay:1s">'+t.heard+'&nbsp; <b>Telemundo &middot; NBC &middot; Hulu &middot; Peacock &middot; Prime Video &middot; PlayStation</b></p></div></header>'+
+  '<p class="o-heard o-up" style="animation-delay:1s">'+t.heard+'&nbsp; <b>Apple TV+ &middot; NBC &middot; Telemundo &middot; Hulu &middot; Discovery &middot; UFC &middot; PlayStation</b></p></div></header>'+
   ticker()+
   '<section class="o-sec o-diff"><div class="o-wrap"><div class="o-diff-head o-reveal"><span class="o-eb">'+t.diff_eb+'</span><h2 class="o-h2">'+t.diff_h2+'</h2></div><div class="o-pillars">'+pills+'</div></div></section>'+
   '<section class="o-albums" id="o-albums"><div class="o-wrap o-center o-reveal"><span class="o-eb">'+t.albums_eb+'</span><h2 class="o-h2">'+t.albums_h2+'</h2><p>'+t.albums_p+'</p></div>'+

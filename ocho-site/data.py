@@ -21,12 +21,12 @@ TEST_PATHS = {
 
 # Category names are the English keys used in the Google Sheet; CATS maps them to Spanish.
 ALBUM_CATS = ["Tropical & Salsa", "Urbano", "Regional Mexican & Tejano", "Cinematic Underscore", "TV Packages", "Holiday"]
-PLACEMENT_CATS = ["TV & Streaming", "News & Talk", "Sports", "Ads", "Video Games"]
+PLACEMENT_CATS = ["TV & Streaming", "Film", "News & Talk", "Sports", "Ads", "Video Games"]
 CATS_ES = {
     "Tropical & Salsa": "Tropical y Salsa", "Urbano": "Urbano", "Regional Mexican & Tejano": "Regional Mexicano y Tejano",
     "Cinematic Underscore": "Underscore Cinemático", "TV Packages": "Paquetes para TV", "Holiday": "Navidad",
     "TV & Streaming": "TV y Streaming", "News & Talk": "Noticias y Variedades", "Sports": "Deportes", "Ads": "Publicidad",
-    "Video Games": "Videojuegos",
+    "Video Games": "Videojuegos", "Film": "Cine",
 }
 
 # (catalog ID, title, artist, category, image slug), newest first
@@ -58,26 +58,44 @@ ALBUMS = [
 
 # (title, network, category, image slug)
 PLACEMENTS = [
+    ("Sugar", "Apple TV+", "TV & Streaming", "sugar"),
     ("Law & Order: Organized Crime", "NBC", "TV & Streaming", "law-and-order-organized-crime"),
     ("Marvel's Spider-Man 2", "PlayStation 5", "Video Games", "marvels-spider-man-2"),
+    ("Today", "NBC", "News & Talk", "today-show"),
     ("Murdaugh: Death in the Family", "Hulu", "TV & Streaming", "murdaugh-death-in-the-family"),
+    ("Voicemails for Isabelle", "Feature Film", "Film", "voicemails-for-isabelle"),
+    ("Expedition Unknown", "Discovery", "TV & Streaming", "expedition-unknown"),
+    ("UFC PPV Main Card", "UFC", "Sports", "ufc-ppv-main-card"),
+    ("AEW Dynamite", "TBS", "Sports", "aew-dynamite"),
     ("Married to El Chapo", "Peacock", "TV & Streaming", "married-to-el-chapo"),
     ("Groundswell", "Prime Video", "TV & Streaming", "groundswell"),
+    ("Hustlers Gamblers Crooks", "A&E", "TV & Streaming", "hustlers-gamblers-crooks"),
+    ("AEW Collision", "TNT", "Sports", "aew-collision"),
     ("Diners, Drive-Ins and Dives", "Food Network", "TV & Streaming", "diners-drive-ins-and-dives"),
+    ("Top Chef Internacional", "Telemundo", "TV & Streaming", "top-chef-internacional"),
     ("Al Rojo Vivo", "Telemundo", "News & Talk", "al-rojo-vivo"),
     ("Hoy Día", "Telemundo", "News & Talk", "hoy-dia"),
     ("Mutua Madrid Open", "Tennis Channel", "Sports", "mutua-madrid-open"),
     ("Miami Open", "Tennis Channel", "Sports", "miami-open"),
+    ("New York Yankees Spring Training", "MLB Broadcast", "Sports", "yankees-spring-training"),
+    ("Marlins Live! Postgame", "MLB Broadcast", "Sports", "marlins-live-postgame"),
     ("Publix", "Ad Campaign", "Ads", "publix"),
     ("Moveable Feast with Relish", "PBS", "TV & Streaming", "moveable-feast"),
     ("Noticias Telemundo 40", "Telemundo", "News & Talk", "noticias-telemundo-40"),
+    ("En Casa con Telemundo", "Telemundo", "News & Talk", "en-casa-con-telemundo"),
     ("Pica y Se Extiende", "", "News & Talk", "pica-y-se-extiende"),
     ("Tennis Channel This Week", "Tennis Channel", "Sports", "tennis-channel-this-week"),
+    ("Chef's Night Out", "Food TV", "TV & Streaming", "chefs-night-out"),
+    ("The List", "Syndicated TV", "News & Talk", "the-list"),
+    ("Play Ball", "Sports Broadcast", "Sports", "play-ball"),
+    ("Live Games Showcase", "Sports Broadcast", "Sports", "live-games-showcase"),
+    ("Planet World", "Sync Placement", "TV & Streaming", "planet-world"),
+    ("Mother's Day Gifts", "Brand Campaign", "Ads", "mothers-day-gifts"),
     ("Discussions avec mes parents", "ICI Télé", "TV & Streaming", "discussions-avec-mes-parents"),
 ]
 
-NETWORKS = ["Telemundo", "NBC", "Hulu", "Peacock", "Prime Video", "PBS", "Tennis Channel", "Food Network",
-            "PlayStation", "Publix", "ICI Télé"]
+NETWORKS = ["Apple TV+", "NBC", "Telemundo", "Hulu", "Peacock", "Prime Video", "Discovery", "A&E", "TBS", "TNT",
+            "UFC", "PBS", "Tennis Channel", "Food Network", "PlayStation", "Publix", "ICI Télé"]
 
 GENRES = ["Salsa", "Timba", "Cumbia", "Tejano", "Bachata", "Son Cubano", "Urbano", "Norteño", "Latin Brass",
           "Bolero", "Andean", "Tropical", "Corridos", "Latin Jazz"]
@@ -109,7 +127,7 @@ T = {
     "en": {
         "lang_label": "ES", "lang_name": "Español",
         "nav_about": "About", "nav_albums": "Albums", "nav_placements": "Placements", "nav_faq": "FAQ",
-        "nav_contact": "Contact", "nav_cta": "License Music",
+        "nav_contact": "Contact", "nav_cta": "&#9654; Explore Albums",
         "banner": "Artists, composers &amp; producers: learn how the production music business works",
         "hero_lines": ["Salsa &middot; Cumbia &middot; Tejano &middot; Timba", "From San Juan to Patagonia",
                        "Real players. Live instruments. Zero AI.", "Source cues &amp; cinematic Latin underscore"],
@@ -206,7 +224,7 @@ T = {
     "es": {
         "lang_label": "EN", "lang_name": "English",
         "nav_about": "Nosotros", "nav_albums": "Álbumes", "nav_placements": "Colocaciones", "nav_faq": "FAQ",
-        "nav_contact": "Contacto", "nav_cta": "Licenciar Música",
+        "nav_contact": "Contacto", "nav_cta": "&#9654; Explorar Álbumes",
         "banner": "Artistas, compositores y productores: aprendan cómo funciona el negocio de la música de producción",
         "hero_lines": ["Salsa &middot; Cumbia &middot; Tejano &middot; Timba", "De San Juan a la Patagonia",
                        "Músicos reales. Instrumentos en vivo. Cero IA.", "Música de origen y underscore latino cinemático"],

@@ -37,7 +37,7 @@ shows the built-in lists from `data.py`.
 | Artist / Network | Artist (albums) or network/platform (placements) |
 | Category         | Albums: `Tropical & Salsa`, `Urbano`, `Regional Mexican & Tejano`, `Cinematic Underscore`, `TV Packages`, `Holiday`. Placements: `TV & Streaming`, `News & Talk`, `Sports`, `Ads`, `Video Games`. A new name creates a new filter. |
 | Image            | A file already on the site (e.g. `telecumbias.jpg`), any image URL, or a Google Drive share link (file shared "anyone with the link") |
-| Link             | Albums only: the album's APM page. Blank = Ocho's APM library page |
+| Link             | Not used |
 | Order            | Position (1 = first) |
 
 ## Streaming player

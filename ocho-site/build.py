@@ -42,9 +42,9 @@ def _min(css):
 
 def site_data(base, fallback, preview, audio="", tracks=""):
     return {
-        "t": data.T, "faq": data.FAQ, "paths": data.PATHS, "testPaths": data.TEST_PATHS, "apm": data.APM_URL,
+        "t": data.T, "faq": data.FAQ, "paths": data.PATHS, "testPaths": data.TEST_PATHS,
         "pdf": {"en": data.PDF_EN, "es": data.PDF_ES},
-        "albums": [{"id": k, "title": t, "artist": a, "cat": c, "img": i, "link": ""} for k, t, a, c, i in data.ALBUMS],
+        "albums": [{"id": k, "title": t, "artist": a, "cat": c, "img": i} for k, t, a, c, i in data.ALBUMS],
         "placements": [{"title": t, "net": n, "cat": c, "img": i} for t, n, c, i in data.PLACEMENTS],
         "albumCats": data.ALBUM_CATS, "placeCats": data.PLACEMENT_CATS, "catsEs": data.CATS_ES,
         "networks": data.NETWORKS, "genres": data.GENRES,
@@ -228,21 +228,18 @@ CSS = r"""
 .o-rail-wrap{position:relative;}
 .o-rail-wrap .o-nav-btn{top:50%;transform:translateY(-50%);}
 
-/* DOORS */
+/* LICENSING (one door) */
 .o-doors{background:#000;}
-.o-doors-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:64px;}
-.o-door{position:relative;padding:54px 46px 48px;border-radius:22px;overflow:hidden;min-height:400px;display:flex;flex-direction:column;
-  background:linear-gradient(#0e0a14,#0e0a14) padding-box,linear-gradient(140deg,var(--cy),#3a2a55 60%) border-box;border:2px solid transparent;transition:transform .45s,box-shadow .45s;}
-.o-door.w{background:linear-gradient(#140a14,#140a14) padding-box,var(--grad) border-box;}
-.o-door:hover{transform:translateY(-10px);box-shadow:0 30px 90px rgba(34,225,255,.2);}
-.o-door.w:hover{box-shadow:0 30px 90px rgba(255,46,154,.3);}
-.o-door-k{font-size:11px;font-weight:800;letter-spacing:.32em;text-transform:uppercase;color:var(--cy);margin-bottom:18px;}
-.o-door.w .o-door-k{color:var(--pink);}
-.o-door h3{font-size:clamp(40px,4.4vw,62px) !important;margin-bottom:18px;}
-.o-door p{flex:1;}
-.o-door-n{position:absolute;right:26px;top:6px;font-family:Anton,sans-serif;font-size:190px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(34,225,255,.22);pointer-events:none;}
-.o-door.w .o-door-n{-webkit-text-stroke-color:rgba(255,46,154,.25);}
-.o-globe{position:absolute;right:-60px;bottom:-60px;width:240px;height:240px;border-radius:50%;opacity:.2;pointer-events:none;
+.o-one{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;padding:70px 64px;border-radius:26px;
+  background:linear-gradient(#120a14,#120a14) padding-box,var(--grad) border-box;border:2px solid transparent;box-shadow:0 30px 120px rgba(255,46,154,.18);}
+.o-one-head p{font-size:18px;color:#efe8f5;max-width:560px;margin:24px 0 32px;}
+.o-steps{list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+.o-steps li{display:grid;grid-template-columns:70px 1fr;grid-template-rows:auto auto;column-gap:16px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.12);}
+.o-steps li:last-child{border-bottom:0;}
+.o-step-n{grid-row:1/3;font-family:Anton,sans-serif;font-size:54px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--pink);}
+.o-steps b{font-family:Anton,sans-serif;font-weight:400;font-size:28px;color:#fff;text-transform:uppercase;line-height:1.05;}
+.o-steps li>span:last-child{font-size:15px;color:var(--mute);margin-top:4px;}
+.o-globe{position:absolute;right:-80px;bottom:-80px;width:320px;height:320px;border-radius:50%;opacity:.16;pointer-events:none;
   background:repeating-radial-gradient(circle,transparent 0 18px,rgba(255,255,255,.5) 18px 19px),repeating-linear-gradient(90deg,transparent 0 28px,rgba(255,255,255,.4) 28px 29px);
   -webkit-mask-image:radial-gradient(circle,#000 60%,transparent 71%);mask-image:radial-gradient(circle,#000 60%,transparent 71%);animation:o-spin 40s linear infinite;}
 @keyframes o-spin{to{transform:rotate(360deg)}}
@@ -484,7 +481,7 @@ CSS = r"""
   .o-top.open .o-links{opacity:1;pointer-events:auto;}
   .o-links a:not(.o-btn){font-size:18px;}
   .o-burger{display:block;}
-  .o-doors-grid,.o-fgrid,.o-agrid,.o-faq-grid,.o-cgrid,.o-about-grid,.o-pgrid2,.o-person.r .o-pgrid2,.o-panel-card{grid-template-columns:1fr;}
+  .o-one,.o-fgrid,.o-agrid,.o-faq-grid,.o-cgrid,.o-about-grid,.o-pgrid2,.o-person.r .o-pgrid2,.o-panel-card{grid-template-columns:1fr;}
   .o-person.r .o-ptext{order:0;}
   .o-photos{position:relative;top:0;}
   .o-faq-grid{gap:30px;}
@@ -535,8 +532,9 @@ CSS = r"""
   .o-card{width:180px;}
   .o-card figcaption{transform:none;opacity:1;padding-top:50px;}
   .o-card figcaption strong{font-size:20px;}
-  .o-door{padding:40px 26px 34px;min-height:0;}
-  .o-door-n{font-size:120px;}
+  .o-one{padding:40px 24px;gap:30px;}
+  .o-step-n{font-size:40px;}
+  .o-steps li{grid-template-columns:52px 1fr;}
   .o-agrid2{grid-template-columns:1fr 1fr;gap:34px 18px;}
   .o-al-cap strong{font-size:19px;}
   .o-pgrid{grid-template-columns:1fr 1fr;gap:16px;}
@@ -595,17 +593,16 @@ function nav(){
     '<div class="o-links">'+L('about',t.nav_about)+L('albums',t.nav_albums)+L('placements',t.nav_placements)+
     '<a href="#o-faq" data-go="faq">'+t.nav_faq+'</a><a href="#o-contact" data-go="contact">'+t.nav_contact+'</a>'+
     '<a class="o-lang" href="'+href(page,lang==='en'?'es':'en')+'" title="'+t.lang_name+'">'+t.lang_label+'</a>'+
-    '<a class="o-btn p" href="'+D.apm+'" target="_blank" rel="noopener">'+t.nav_cta+'</a></div>'+
+    '<a class="o-btn p" href="#o-contact" data-go="contact">'+t.nav_cta+'</a></div>'+
     '<button class="o-burger" aria-label="Menu"><i></i><i></i><i></i></button></nav></div>';
 }
 function ticker(){return '<section class="o-ticker"><div class="o-ticker-k">'+t.heard+'</div><div class="o-mq">'+track(D.networks)+'</div></section>';}
 function tape(){return '<section class="o-tape" aria-hidden="true"><div class="o-band a">'+track(D.genres)+'</div><div class="o-band b">'+track(D.genres.slice().reverse())+'</div></section>';}
 function doors(){
-  return '<section class="o-sec o-doors" id="o-license"><div class="o-wrap"><div class="o-reveal"><span class="o-eb">'+t.doors_eb+'</span><h2 class="o-h2">'+t.doors_h2+'</h2></div>'+
-  '<div class="o-doors-grid">'+
-  '<a class="o-door o-reveal" href="'+D.apm+'" target="_blank" rel="noopener"><span class="o-door-n">01</span><span class="o-door-k">'+t.door1_k+'</span><h3>'+t.door1_h+'</h3><p>'+t.door1_p+'</p><span><span class="o-btn c">'+t.door1_cta+' &rarr;</span></span></a>'+
-  '<a class="o-door w o-reveal" style="transition-delay:.12s" href="#o-contact" data-go="contact"><span class="o-door-n">02</span><div class="o-globe"></div><span class="o-door-k">'+t.door2_k+'</span><h3>'+t.door2_h+'</h3><p>'+t.door2_p+'</p><span><span class="o-btn p">'+t.door2_cta+' &rarr;</span></span></a>'+
-  '</div></div></section>';
+  var steps=t.steps.map(function(x,i){return '<li><span class="o-step-n">0'+(i+1)+'</span><b>'+x[0]+'</b><span>'+x[1]+'</span></li>';}).join('');
+  return '<section class="o-sec o-doors" id="o-license"><div class="o-wrap"><div class="o-one o-reveal"><div class="o-globe"></div>'+
+  '<div class="o-one-head"><span class="o-eb">'+t.doors_eb+'</span><h2 class="o-h2">'+t.doors_h2+'</h2><p>'+t.doors_p+'</p>'+
+  '<a class="o-btn p" href="#o-contact" data-go="contact">'+t.doors_cta+' &rarr;</a></div><ol class="o-steps">'+steps+'</ol></div></div></section>';
 }
 function faq(){
   var q=D.faq[lang].map(function(x,i){return '<div class="o-q'+(i===0?' on':'')+'"><button aria-expanded="'+(i===0)+'">'+esc(x[0])+'<i></i></button><div class="o-a"><div><p>'+esc(x[1])+'</p></div></div></div>';}).join('');
@@ -623,7 +620,7 @@ function contact(){
 }
 function footer(){
   return '<footer class="o-foot"><div class="o-wrap"><div class="o-foot-grid"><a href="'+href('home')+'"><img src="'+D.base+'logo.png" alt="Ocho Music Group"></a>'+
-  '<nav><a href="'+href('about')+'">'+t.nav_about+'</a><a href="'+href('albums')+'">'+t.nav_albums+'</a><a href="'+href('placements')+'">'+t.nav_placements+'</a><a href="'+D.apm+'" target="_blank" rel="noopener">APM Music</a><a href="'+href(page,lang==='en'?'es':'en')+'">'+t.lang_name+'</a></nav></div>'+
+  '<nav><a href="'+href('about')+'">'+t.nav_about+'</a><a href="'+href('albums')+'">'+t.nav_albums+'</a><a href="'+href('placements')+'">'+t.nav_placements+'</a><a href="'+href(page,lang==='en'?'es':'en')+'">'+t.lang_name+'</a></nav></div>'+
   '<small>&copy; '+new Date().getFullYear()+' Ocho Music Group LLC &middot; '+t.footer_tag+'</small></div></footer>';
 }
 function lightbox(){return '<div class="o-lb" role="dialog" aria-modal="true"><button class="o-lb-x" aria-label="Close">&times;</button><button class="o-lb-arrow o-lb-l" aria-label="Previous">&#8249;</button><button class="o-lb-arrow o-lb-r" aria-label="Next">&#8250;</button><div class="o-lb-box"></div></div>';}
@@ -656,7 +653,7 @@ function home(){
   '<span class="o-eb o-up o-rot" style="margin-bottom:26px" aria-live="polite">'+lines+'</span>'+
   '<h1 class="o-up" style="animation-delay:.2s">'+t.hero_h1+'</h1>'+
   '<p class="o-sub o-up" style="animation-delay:.45s">'+t.hero_sub+'</p>'+
-  '<div class="o-ctas o-up" style="animation-delay:.7s"><a class="o-btn p" href="'+D.apm+'" target="_blank" rel="noopener">'+t.cta_apm+'<small>'+t.cta_apm_note+'</small></a><a class="o-btn c" href="#o-contact" data-go="contact">'+t.cta_world+'<small>'+t.cta_world_note+'</small></a></div>'+
+  '<div class="o-ctas o-up" style="animation-delay:.7s"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.cta_license+'<small>'+t.cta_license_note+'</small></a><a class="o-btn c" href="'+href('albums')+'">'+t.cta_albums+'<small>'+t.cta_albums_note+'</small></a></div>'+
   '<p class="o-heard o-up" style="animation-delay:1s">'+t.heard+'&nbsp; <b>Telemundo &middot; NBC &middot; Hulu &middot; Peacock &middot; Prime Video &middot; PlayStation</b></p></div></header>'+
   ticker()+
   '<section class="o-sec o-diff"><div class="o-wrap"><div class="o-diff-head o-reveal"><span class="o-eb">'+t.diff_eb+'</span><h2 class="o-h2">'+t.diff_h2+'</h2></div><div class="o-pillars">'+pills+'</div></div></section>'+
@@ -692,7 +689,7 @@ function about(){
   var col=pol.map(function(p){var s='';for(var k in p[2])s+=k.replace(/[A-Z]/g,function(m){return '-'+m.toLowerCase();})+':'+p[2][k]+';';
     return '<figure class="o-pol" style="'+s+'">'+pimg(p[0],p[1])+'<figcaption>'+esc(p[1])+'</figcaption></figure>';}).join('');
   return '<header class="o-sec o-about-hero"><div class="o-glow"></div><div class="o-wrap o-about-grid"><div class="o-up"><span class="o-eb">'+t.about_eb+'</span><h1>'+t.about_h1+'</h1><p>'+t.about_story+'</p>'+
-  '<p class="o-tagline">'+t.about_tag.replace(/\. /g,'.<span> / </span>')+'</p><div class="o-ctas" style="justify-content:flex-start"><a class="o-btn p" href="'+D.apm+'" target="_blank" rel="noopener">'+t.cta_apm+'<small>'+t.cta_apm_note+'</small></a><a class="o-btn c" href="#o-contact" data-go="contact">'+t.cta_world+'<small>'+t.cta_world_note+'</small></a></div></div>'+
+  '<p class="o-tagline">'+t.about_tag.replace(/\. /g,'.<span> / </span>')+'</p><div class="o-ctas" style="justify-content:flex-start"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.cta_license+'<small>'+t.cta_license_note+'</small></a><a class="o-btn c" href="'+href('albums')+'">'+t.cta_albums+'<small>'+t.cta_albums_note+'</small></a></div></div>'+
   '<div class="o-collage o-up" style="animation-delay:.3s">'+col+'</div></div></header>'+
   ticker()+
   person('mike',[['mike-bass','Michael Lazarus on bass'],['latin-grammys','Latin Grammy awards'],['mike-4','Michael Lazarus']],false)+
@@ -745,13 +742,14 @@ function bar(){
     '<div class="o-pb-ctl"><button data-pb="prev" aria-label="Previous">'+IC.prev+'</button><button data-pb="play" class="o-pb-play" aria-label="Play">'+IC.play+'</button><button data-pb="next" aria-label="Next">'+IC.next+'</button></div>'+
     '<div class="o-pb-wave"><span class="o-pb-t">0:00</span><canvas></canvas><span class="o-pb-d">0:00</span></div>'+
     '<input class="o-pb-vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume">'+
-    '<a class="o-btn p o-pb-lic" target="_blank" rel="noopener"></a><button data-pb="close" class="o-pb-x" aria-label="Close">&times;</button>';
+    '<a class="o-btn p o-pb-lic" href="#o-contact" data-pb="lic"></a><button data-pb="close" class="o-pb-x" aria-label="Close">&times;</button>';
   document.body.appendChild(b);
   var a=P.a=new Audio();a.preload='auto';
   a.addEventListener('timeupdate',tick);a.addEventListener('play',sync);a.addEventListener('pause',sync);a.addEventListener('loadedmetadata',tick);
   a.addEventListener('ended',function(){step(1);});
   b.addEventListener('click',function(e){var k=e.target.closest('[data-pb]');if(!k)return;k=k.getAttribute('data-pb');
     if(k==='play'){if(a.paused)a.play();else a.pause();}else if(k==='next')step(1);else if(k==='prev'){if(a.currentTime>3)a.currentTime=0;else step(-1);}
+    else if(k==='lic'){e.preventDefault();goContact();}
     else if(k==='close'){a.pause();b.hidden=true;document.body.style.paddingBottom='';P.cur=null;drawRows(M);}});
   b.querySelector('.o-pb-vol').oninput=function(){a.volume=+this.value;};
   b.querySelector('canvas').addEventListener('click',function(e){var r=this.getBoundingClientRect();if(a.duration)a.currentTime=(e.clientX-r.left)/r.width*a.duration;});
@@ -771,7 +769,7 @@ function play(id,ti,vi,seek){
   b.querySelector('.o-pb-cover').src=src(al.img,'covers',1);
   b.querySelector('.o-pb-meta strong').textContent=tr.t+(v.l?' ('+v.l+')':'');
   b.querySelector('.o-pb-meta span').textContent=(al.title||'')+(al.artist?' · '+al.artist:'');
-  var lic=b.querySelector('.o-pb-lic');lic.href=al.link||D.apm;lic.textContent=t.license;
+  b.querySelector('.o-pb-lic').textContent=t.license;
   if(b.hidden){b.hidden=false;}document.body.style.paddingBottom=b.offsetHeight+'px';
   drawRows(M);tick();
 }
@@ -799,7 +797,7 @@ function lbShow(){
   if(LB.kind==='album'){
     box.className='o-lb-box o-lb-album';
     box.innerHTML='<div class="o-la-side"><img src="'+esc(src(x.img,'covers'))+'" alt="'+esc(x.title)+'">'+
-      '<div class="o-ctas"><a class="o-btn p" href="'+esc(x.link||D.apm)+'" target="_blank" rel="noopener">'+t.listen_apm+'</a><a class="o-btn c" href="#o-contact" data-go="contact">'+t.license_world+'</a></div></div>'+
+      '<div class="o-ctas"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.license_album+'</a></div></div>'+
       '<div class="o-la-main"><span class="o-lb-k">'+esc(cat(x.cat))+'</span><h3>'+esc(x.title)+'</h3><p class="o-lb-a">'+esc(x.artist)+'</p><p class="o-la-desc"></p>'+
       '<div class="o-tl">'+(D.audio&&x.id?'<p class="o-tl-note">'+t.loading+'</p>':'')+'</div></div>';
     if(D.audio&&x.id)loadTracks(x.id).then(function(d){if(LB.list[LB.i]!==x||!lb.classList.contains('on'))return;var tl=box.querySelector('.o-tl');
@@ -808,7 +806,7 @@ function lbShow(){
   }else{
     box.className='o-lb-box';
     box.innerHTML='<img src="'+esc(src(x.img,'posters'))+'" alt="'+esc(x.title)+'"><div><span class="o-lb-k">'+esc(cat(x.cat))+'</span><h3>'+esc(x.title)+'</h3><p class="o-lb-a">'+esc(x.net)+'</p>'+
-      '<div class="o-ctas"><a class="o-btn p" href="'+D.apm+'" target="_blank" rel="noopener">'+t.nav_cta+'</a><a class="o-btn c" href="#o-contact" data-go="contact">'+t.cta_world+'</a></div></div>';
+      '<div class="o-ctas"><a class="o-btn p" href="#o-contact" data-go="contact">'+t.license_world+'</a><a class="o-btn c" href="'+href('albums')+'">'+t.cta_albums+'</a></div></div>';
   }
   lb.classList.add('on');document.documentElement.style.overflow='hidden';
 }
@@ -931,7 +929,7 @@ function applySheet(rows){
   var A=pick('album').filter(function(r){return r.Title&&r.Image;}).sort(ord),P=pick('placement').filter(function(r){return r.Title&&r.Image;}).sort(ord);
   var changed=false;
   var nt=function(x){return String(x||'').toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,'');},ids={};D.albums.forEach(function(a){ids[nt(a.title)]=a.id;});
-  if(A.length){D.albums=A.map(function(r){return {id:String(r.ID||'').trim()||ids[nt(r.Title)]||'',title:String(r.Title).trim(),artist:String(r['Artist / Network']||'').trim(),cat:String(r.Category||'').trim(),img:String(r.Image).trim(),link:String(r.Link||'').trim()};});changed=true;}
+  if(A.length){D.albums=A.map(function(r){return {id:String(r.ID||'').trim()||ids[nt(r.Title)]||'',title:String(r.Title).trim(),artist:String(r['Artist / Network']||'').trim(),cat:String(r.Category||'').trim(),img:String(r.Image).trim()};});changed=true;}
   if(P.length){D.placements=P.map(function(r){return {title:String(r.Title).trim(),net:String(r['Artist / Network']||'').trim(),cat:String(r.Category||'').trim(),img:String(r.Image).trim()};});changed=true;}
   if(!changed)return;
   var set=function(sel,h){var el=M.querySelector('[data-block="'+sel+'"]');if(el)el.innerHTML=h;return el;};

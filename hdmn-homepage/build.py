@@ -59,6 +59,9 @@ LABELS = [
     ("Via APM Music", "Ocho Music Group",
      "Our library distributed through APM Music, searchable and licensable directly on APM.",
      "Visit Ocho", "https://www.ochomusicgroup.com"),
+    ("For UK Productions", "HDMN Royalty Music UK",
+     "MCPS & PRS approved. Our home for productions based in the UK.",
+     "Visit Royalty Music UK", "https://www.royaltymusicuk.com"),
 ]
 
 # "Search Catalog" opens a short finder; each answer routes to the right catalog (new tab) or to the brief form.
@@ -68,6 +71,7 @@ FINDER = [
     ("Trailer Music", "Collaborate Music", "https://www.collaboratemusic.com"),
     ("Vintage and/or Ethnic Music", "Stacks to Tracks on APM", "https://www.apmmusic.com/libraries/stacks-to-tracks-(strx)"),
     ("SFX", "500K+ effects on SourceAudio", SOURCEAUDIO_URL),
+    ("UK Production (MCPS & PRS)", "HDMN Royalty Music UK", "https://www.royaltymusicuk.com"),
     ("Other", "Tell us what you need", ""),
 ]
 
@@ -211,7 +215,7 @@ header.header{display:none !important;}
 .hd-finder{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;}
 .hd-finder[hidden]{display:none;}
 .hd-f-back{position:absolute;inset:0;background:rgba(3,4,8,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:hd-fade .3s ease;}
-.hd-f-box{position:relative;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:44px 40px 0;border-radius:22px;
+.hd-f-box{position:relative;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:36px 40px 0;border-radius:22px;
   background:linear-gradient(180deg,#141022,#08090e);border:1px solid rgba(192,132,252,.3);
   box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 80px rgba(177,75,244,.25);animation:hd-pop .35s cubic-bezier(.2,.8,.2,1);}
 .hd-f-box h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(34px,5vw,46px);line-height:1;letter-spacing:.02em;color:#fff;margin:12px 0 24px;}
@@ -219,8 +223,8 @@ header.header{display:none !important;}
 .hd-f-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);
   background:transparent;color:#fff;font-size:24px;line-height:1;cursor:pointer;}
 .hd-f-x:hover{background:rgba(255,255,255,.1);}
-.hd-f-opts{display:grid;gap:10px;}
-.hd-fopt{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 16px;text-align:left;width:100%;padding:18px 22px;
+.hd-f-opts{display:grid;gap:8px;}
+.hd-fopt{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 16px;text-align:left;width:100%;padding:14px 22px;
   border-radius:14px;border:1px solid #2a3142;background:rgba(255,255,255,.03);color:#fff;cursor:pointer;transition:all .2s;font:inherit;}
 .hd-fopt b{font-size:17px;font-weight:700;letter-spacing:.01em;}
 .hd-fopt small{grid-row:2;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8d95a5;}
@@ -230,7 +234,7 @@ header.header{display:none !important;}
 .hd-f-row{display:flex;flex-wrap:wrap;gap:12px;}
 .hd-f-prev{margin-top:22px;background:none;border:0;color:#8d95a5;font:inherit;font-size:13px;letter-spacing:.1em;cursor:pointer;padding:0;}
 .hd-f-prev:hover{color:#fff;}
-.hd-f-brief{display:block;width:calc(100% + 80px);margin:32px -40px 0;padding:20px 40px;border:0;border-top:1px solid rgba(255,255,255,.08);
+.hd-f-brief{display:block;width:calc(100% + 80px);margin:24px -40px 0;padding:18px 40px;border:0;border-top:1px solid rgba(255,255,255,.08);
   background:rgba(177,75,244,.1);color:#e9dcff;font:inherit;font-size:14px;text-align:left;cursor:pointer;transition:background .2s;}
 .hd-f-brief span{display:block;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--vio2);margin-bottom:4px;}
 .hd-f-brief[hidden]{display:none;}
@@ -399,7 +403,6 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 .hd-label{grid-column:span 2;position:relative;display:flex;flex-direction:column;padding:40px 32px 34px;min-height:320px;border-radius:4px;
   background:linear-gradient(#0c0f17,#0c0f17) padding-box,linear-gradient(140deg,#2a3142,#141924) border-box;border:1px solid transparent;
   transition:all .45s ease;overflow:hidden;}
-.hd-label:nth-child(4),.hd-label:nth-child(5){grid-column:span 3;}
 .hd-label::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .45s;
   background:radial-gradient(ellipse 80% 70% at 100% 0%,rgba(177,75,244,.28),transparent 70%);}
 .hd-label:hover{transform:translateY(-8px);background:linear-gradient(#0c0f17,#0c0f17) padding-box,linear-gradient(140deg,var(--vio),var(--blu)) border-box;
@@ -778,7 +781,7 @@ TEMPLATE = """<style>{css}</style>
 <section class="hd-sec hd-roster" id="hd-roster">
   <div class="hd-wrap">
     <div class="hd-roster-head hd-reveal">
-      <div><span class="hd-eb">The Roster</span><h2 class="hd-h2">Five labels.<br><span class="hd-grad">One call.</span></h2></div>
+      <div><span class="hd-eb">The Roster</span><h2 class="hd-h2">Six labels.<br><span class="hd-grad">One call.</span></h2></div>
       <p>From a needle-drop for a cold open to a trailer cue that hits on the cut.</p>
     </div>
     <div class="hd-labels">{labels}</div>

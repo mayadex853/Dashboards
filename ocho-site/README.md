@@ -19,6 +19,15 @@ Same setup as `hdmn-homepage`: everything lives in one script, `ocho.js`, loaded
 | `/placements` | `placements` | `en`      |
 | `/placements_es` | `placements` | `es`   |
 
+**Loader used on the live pages** (Kajabi Code block; set `data-page`/`data-lang` per page). It asks GitHub for the
+branch's latest commit; if that check fails (GitHub allows 60 anonymous checks per hour per network) it loads the
+branch straight from jsDelivr, and only then the pinned commit, so visitors never get a stale build:
+
+```html
+<div id="ocho-mount" data-page="albums" data-lang="en" data-test="1" style="min-height:100vh;background:#07050a"></div>
+<script>(function(){var br='claude/festive-fermat-ghujni',pin='<last known good commit>';function load(ref,next){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@'+ref+'/ocho-site/ocho.js';s.onerror=function(){s.remove();if(next)setTimeout(next,1500);};document.body.appendChild(s);}function fallback(){load(br,function(){load(pin,function(){load(pin);});});}fetch('https://api.github.com/repos/mayadex853/Dashboards/commits/'+encodeURIComponent(br),{headers:{Accept:'application/vnd.github.sha'}}).then(function(r){return r.ok?r.text():'';}).then(function(t){if(/^[0-9a-f]{40}$/.test(t))load(t,fallback);else fallback();}).catch(fallback);})();</script>
+```
+
 Keep the native Kajabi contact form section directly under the Code block on every page: every
 "Contact / License Worldwide / Submit" button scrolls to it. The site draws its own navigation and footer,
 so hide the Kajabi header/footer on these pages.

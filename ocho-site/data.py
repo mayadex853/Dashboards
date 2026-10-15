@@ -280,6 +280,6 @@ T = {
 # Focal point (CSS object-position) per photo so faces stay in frame when cropped.
 PHOTO_POS = {
     "mike-bass": "50% 6%", "mike-1": "50% 22%", "mike-4": "50% 35%", "latin-grammys": "50% 45%",
-    "cubadisco-2024": "50% 40%", "jody-1": "50% 26%", "jody-stage": "65% 28%", "jody-namm": "50% 10%",
-    "jody-mike": "50% 18%",
+    "cubadisco-2024": "50% 40%", "jody-1": "50% 26%", "jody-stage": "60% 18%", "jody-namm": "50% 10%",
+    "jody-mike": "50% 24%", "jody-gms-awards": "50% 14%",
 }

@@ -613,7 +613,7 @@ function about(){
   ticker()+
   person('mike',[['mike-bass','Michael Lazarus on bass'],['latin-grammys','Latin Grammy awards'],['mike-4','Michael Lazarus']],false)+
   '<section class="o-sec o-panel"><div class="o-wrap"><div class="o-panel-card o-reveal"><figure><img src="'+photo('pmc-2024-panel')+'" alt="PMC 2024 panel" loading="lazy"></figure><div class="o-panel-in"><span class="o-eb">'+t.panel_eb+'</span><h3>'+t.panel_h+'</h3><div class="o-role">'+t.panel_k+'</div>'+t.panel_p.map(function(p){return '<p>'+p+'</p>';}).join('')+'</div></div></div></section>'+
-  person('jody',[['jody-1','Jody Friedman'],['jody-stage','Jody Friedman speaking'],['jody-namm','Jody Friedman at NAMM']],true)+
+  person('jody',[['jody-1','Jody Friedman'],['jody-gms-awards','Jody Friedman at the Guild of Music Supervisors Awards'],['jody-stage','Jody Friedman speaking']],true)+
   doors()+faq()+contact();
 }
 function albumsPage(){

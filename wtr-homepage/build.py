@@ -81,8 +81,9 @@ def preview(css, body, js):
     # Embedded so the preview shows the logo even when opened as a single file.
     wtr_logo = "data:image/png;base64," + base64.b64encode((HERE / "img" / "wtr-logo.png").read_bytes()).decode()
     badges = {}
-    for n in (1, 2, 3):  # small copies keep the preview file light; img/badge-N.png are the full-size files
-        im = Image.open(HERE / "img" / f"badge-{n}.png")
+    for n, f in (("b2", "badge-2"), ("ng", "badge-2-nogold"), ("hm", "hammer-mark")):
+        # small copies keep the preview file light; the files in img/ are full size
+        im = Image.open(HERE / "img" / f"{f}.png")
         im.thumbnail((192, 192), Image.LANCZOS)
         buf = io.BytesIO()
         im.save(buf, "PNG", optimize=True)
@@ -106,20 +107,21 @@ html,body{{margin:0;background:#0a0908;}}
 .pv-dir button{{all:unset;cursor:pointer;padding:12px 14px;color:#d2cbbe;}}
 .pv-dir button[aria-pressed=true]{{background:#c9a84c;color:#0a0908;}}
 .pv-dir span{{padding:12px 12px;color:#aaa395;}}
+@media(max-width:760px){{.pv-dir{{font-size:9px;letter-spacing:.08em;}}.pv-dir button,.pv-dir span{{padding:8px 7px;}}}}
 </style></head><body>
-<div class="pv-head"><a href="#" id="pv-logo"><img src="{LOGO}" alt="Jody Friedman" data-jf="{LOGO}" data-wtr="{wtr_logo}" data-b1="{badges[1]}" data-b2="{badges[2]}" data-b3="{badges[3]}"></a>
+<div class="pv-head"><a href="#" id="pv-logo"><img src="{LOGO}" alt="Jody Friedman" data-jf="{LOGO}" data-wtr="{wtr_logo}" data-b2="{badges['b2']}" data-ng="{badges['ng']}" data-hm="{badges['hm']}"></a>
 <nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a><a href="https://www.wrecktheroom.com/coaching">Work With Me</a><a href="https://www.wrecktheroom.com/blog">Blog</a>
 <a class="bk" href="#two-step" data-target="#two-step" data-toggle="modal">Book Jody to speak</a></nav></div>
 <style>{css}</style>
 {body}
 <div class="modal two-step" id="two-step"><div class="modal__content">{PREVIEW_FORM}</div></div>
 <div class="pv-dir" role="group" aria-label="Design direction"><span>Direction</span>
-<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="false">JF</button><button data-l="wtr" aria-pressed="false">Full</button><button data-l="b1" aria-pressed="false">Badge 1</button><button data-l="b2" aria-pressed="true">Badge 2</button><button data-l="b3" aria-pressed="false">Badge 3</button></div>
+<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="false">JF</button><button data-l="wtr" aria-pressed="false">Full</button><button data-l="b2" aria-pressed="false">Badge 2</button><button data-l="ng" aria-pressed="true">No gold ring</button><button data-l="hm" aria-pressed="false">Hammer only</button></div>
 <script>{js}
 wtrInit(document.getElementById('wtr'));
 function setLogo(k){{var i=document.querySelector('#pv-logo img');i.src=i.dataset[k];i.className=k==='wtr'?'wtr-logo':(k==='jf'?'':'badge');i.alt=k==='jf'?'Jody Friedman':'Wreck the Room';
 [].forEach.call(document.querySelectorAll('.pv-dir [data-l]'),function(x){{x.setAttribute('aria-pressed',x.dataset.l===k);}});}}
-setLogo('b2');
+setLogo('ng');
 document.querySelector('.pv-dir').addEventListener('click',function(e){{var b=e.target.closest('button');if(!b)return;
 if(b.dataset.l){{setLogo(b.dataset.l);return;}}
 document.getElementById('wtr').setAttribute('data-dir',b.dataset.d);

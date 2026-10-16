@@ -26,6 +26,19 @@ Credits, carousels, stats and the speaking/press lists are read live from the Go
 
 Rows appear on the site in sheet order; Google may take a few minutes to refresh after an edit.
 
+### Ethan Bloom screenings (tab "Screenings")
+
+| Column | Meaning |
+|--------|---------|
+| City   | e.g. `Los Angeles, CA` |
+| Venue  | e.g. `Laemmle's Royal` |
+| Date   | Screening date (leave blank for "Now Playing" or "Coming Soon") |
+| Label  | Badge such as `LA Premiere`, `Boston Opening`, or `Now Playing` / `Coming Soon` for undated rows |
+| Note   | Extra line, e.g. Q&A guests. `{week}` is replaced with the current week of the Movies of Delray run |
+
+Order on the site: Now Playing, upcoming dates (soonest first), Coming Soon, then past dates (dimmed, never removed).
+The hero banner always shows the next upcoming date.
+
 ## Rebuilding (code changes only)
 
 ```bash

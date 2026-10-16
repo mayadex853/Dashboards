@@ -871,7 +871,7 @@ TEMPLATE = """<style>{css}</style>
         <a class="hd-btn o" href="{eb_showtimes}" target="_blank" rel="noopener">Showtimes &#8599;</a>
       </div>
       <div class="hd-eb-la" data-until="2026-10-23">
-        <span class="hd-eb-la-k">LA Sneak Preview &middot; Two Nights Only</span>
+        <span class="hd-eb-la-k">LA Premiere &middot; Two Nights Only</span>
         <p><b>Wed, Oct 21</b> Laemmle&rsquo;s Royal, West LA &nbsp;&middot;&nbsp; <b>Thu, Oct 22</b> Laemmle Town Center 5, Encino</p>
         <p class="hd-eb-la-s">With Q&amp;As featuring stars Joshua Malina, Hank Greenspan and Mindy Sterling. Coming soon to New York and Boston.</p>
       </div>

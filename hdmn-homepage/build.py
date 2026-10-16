@@ -75,6 +75,26 @@ FINDER = [
     ("Other", "Tell us what you need", ""),
 ]
 
+# Ethan Bloom: Jody's feature as Producer & Music Supervisor (sources: Menemsha Films, festival listings)
+EB_TRAILER = "P_yeWY0b_RE"
+EB_SHOWTIMES = "https://www.menemshafilms.com/ethan-bloom"
+EB_FESTIVALS = [
+    "Miami Film Festival \u00b7 World Premiere", "Sedona International Film Festival \u00b7 Award Winner",
+    "Austin Film Festival", "Boston Jewish Film Festival", "San Diego Jewish Film Festival",
+    "Santa Barbara Jewish Film Festival", "Key Biscayne Film Festival", "Palm Springs Jewish Film Festival",
+    "East Bay International Jewish Film Festival", "New Jersey Jewish Film Festival", "Jewish Film Festival of Dallas",
+    "JFilm Festival Pittsburgh", "St. Louis Jewish Film Festival", "Lenore Marwil Jewish Film Festival (Detroit)",
+    "Boca Raton Jewish Film Festival", "Dayton Jewish International Film Festival", "Charlotte Jewish Film Festival",
+    "Cincinnati Jewish & Israeli Film Festival", "Nashville Jewish Film Festival", "New Hampshire Jewish Film Festival",
+    "Rehoboth Beach Jewish Film Festival", "Stowe Jewish Film Festival", "Wilmington Jewish Film Festival",
+    "Michiana Jewish Film Festival", "Fresno Jewish Film Series", "Jewish International Film Festival (Australia)",
+]
+EB_QUOTES = [
+    ("Paints a raw and authentic portrait of adolescence.", "The Austin Chronicle"),
+    ("A simple story, big heart, and a lasting impression.", "True View Reviews"),
+    ("5 stars for tweens and teens to Grandma and Grandpa.", "ACED Magazine"),
+]
+
 SUBPUBS = ["HDMN Royalty Music UK", "BMG", "Sonoton", "ViMusica", "Moodoofind", "Red Igloo", "Kouros",
            "Yellowgroove", "Miles of Musik", "Apollo Music"]
 
@@ -136,6 +156,8 @@ def build(base):
         return "".join(f"<li><span>{e(name)}</span><em>{e(note)}</em></li>" for name, note in items)
     speaking, press, features = li(STAGE), li(PRESS), li(FEATURES)
     all_slugs = ",".join(p["slug"] for p in MANIFEST)
+    eb_fest = _marquee(EB_FESTIVALS)
+    eb_quotes = "".join(f'<figure class="hd-eb-q hd-reveal"><blockquote>&ldquo;{e(q)}&rdquo;</blockquote><figcaption>{e(src)}</figcaption></figure>' for q, src in EB_QUOTES)
     finder = "".join(
         f'<button type="button" class="hd-fopt" data-label="{e(label)}" data-url="{e(url)}">'
         f'<b>{e(label)}</b><small>{e(dest)}</small><i>{"&#8599;" if url else "&rarr;"}</i></button>'
@@ -145,7 +167,7 @@ def build(base):
         css=_min(CSS), ticker=_marquee(CLIENTS), brands=_marquee(BRANDS), cards=cards, sup_cards=sup_cards,
         tabs=tabs, panels=panels, total="10,000+", total_n=10000, sup_rows=sup_rows,
         sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press, features=features,
-        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL, finder=finder, sourceaudio=e(SOURCEAUDIO_URL),
+        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL, finder=finder, eb_fest=eb_fest, eb_quotes=eb_quotes, eb_n=len(EB_FESTIVALS), eb_showtimes=EB_SHOWTIMES, eb_trailer=EB_TRAILER, base=base, sourceaudio=e(SOURCEAUDIO_URL),
         js=JS.replace("__CONTACT__", CONTACT_ANCHOR).replace("__SHEET__", SHEET_ID).replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
@@ -210,6 +232,58 @@ header.header{display:none !important;}
   .hd-nav-links a{padding:14px 12px;font-size:12px;letter-spacing:.2em;}
 }
 @media(max-width:380px){.hd-nav .hd-btn{display:none}.hd-nav-tog{margin-left:auto}}
+
+/* ETHAN BLOOM */
+.hd-ethan{position:relative;overflow:hidden;padding:140px 0 0;background:#06070b;}
+.hd-eb-bg{position:absolute;inset:0;background-size:cover;background-position:center 30%;opacity:.28;filter:saturate(1.1);}
+.hd-ethan::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,#06070b 8%,rgba(6,7,11,.75) 45%,rgba(6,7,11,.9)),linear-gradient(0deg,#06070b,transparent 40%);}
+.hd-eb-grid{position:relative;z-index:1;display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:center;}
+.hd-eb-play{display:block;position:relative;width:100%;padding:0;border:0;background:none;cursor:pointer;border-radius:6px;overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);transform:rotate(-2deg);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;}
+.hd-eb-play img{display:block;width:100%;height:auto;}
+.hd-eb-play:hover{transform:rotate(0) scale(1.02);box-shadow:0 50px 140px rgba(0,0,0,.8),0 0 80px rgba(177,75,244,.45);}
+.hd-eb-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(123,31,162,.88);color:#fff;font-size:30px;padding-left:6px;box-shadow:0 0 60px rgba(177,75,244,.8);transition:transform .3s;}
+.hd-eb-play:hover .hd-eb-playbtn{transform:translate(-50%,-50%) scale(1.12);}
+.hd-laurel{margin:34px auto 0;max-width:340px;text-align:center;position:relative;padding:18px 26px 16px;color:#f5e9c8;
+  border:1px solid rgba(217,196,138,.55);border-radius:4px;background:linear-gradient(180deg,rgba(217,196,138,.12),rgba(217,196,138,.02));}
+.hd-laurel::before{content:"\2605";position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:0 10px;background:#06070b;color:#d9c48a;font-size:16px;line-height:24px;}
+.hd-laurel span{display:block;font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#d9c48a;}
+.hd-laurel b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:30px;letter-spacing:.04em;line-height:1.05;margin:4px 0;color:#fff;}
+.hd-eb-copy .hd-h2{margin-bottom:8px;}
+.hd-eb-role{font-size:13px !important;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#e9d5ff;margin:0 0 26px;}
+.hd-eb-role b{color:#fff;}
+.hd-eb-log{font-size:20px;line-height:1.55;color:#d7dce5;max-width:640px;}
+.hd-eb-cred{font-size:14px;line-height:1.8;color:#8d95a5;margin:18px 0 30px;}
+.hd-eb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#1c2230;border:1px solid #1c2230;margin-bottom:34px;max-width:620px;}
+.hd-eb-stats div{background:#0b0d14;padding:20px 22px;}
+.hd-eb-stats b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:46px;line-height:1;color:#fff;}
+.hd-eb-stats span{font-size:12px;letter-spacing:.06em;color:#9aa3b2;}
+.hd-eb-la{margin-top:30px;max-width:640px;padding:20px 24px;border-left:3px solid var(--vio);background:rgba(177,75,244,.1);border-radius:0 8px 8px 0;}
+.hd-eb-la[hidden]{display:none;}
+.hd-eb-la-k{display:block;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--vio2);margin-bottom:8px;}
+.hd-eb-la p{margin:0;font-size:15px;color:#e5e7eb;}
+.hd-eb-la b{color:#fff;}
+.hd-eb-la .hd-eb-la-s{margin-top:6px;font-size:13px;color:#9aa3b2;}
+.hd-eb-quotes{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:100px;}
+.hd-eb-q{margin:0;padding:30px 30px 26px;border:1px solid #1c2230;background:rgba(11,13,20,.8);border-radius:4px;}
+.hd-eb-q blockquote{margin:0 0 16px;font-family:'Bebas Neue',sans-serif;font-size:30px;line-height:1.1;letter-spacing:.01em;color:#fff;}
+.hd-eb-q figcaption{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--vio2);}
+.hd-eb-fest{position:relative;z-index:1;margin-top:90px;}
+.hd-trailer{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:16px;}
+.hd-trailer[hidden]{display:none;}
+.hd-tr-box{position:relative;width:min(1100px,100%);animation:hd-pop .35s cubic-bezier(.2,.8,.2,1);}
+.hd-tr-box .hd-f-x{top:-52px;right:0;}
+.hd-tr-frame{position:relative;padding-top:56.25%;background:#000;border-radius:10px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.8);}
+.hd-tr-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+@media(max-width:960px){
+  .hd-ethan{padding-top:90px;}
+  .hd-eb-grid{grid-template-columns:1fr;gap:40px;}
+  .hd-eb-poster{max-width:380px;margin:0 auto;}
+  .hd-eb-quotes{grid-template-columns:1fr;margin-top:60px;}
+  .hd-eb-stats b{font-size:36px;}
+  .hd-eb-stats div{padding:16px;}
+}
 
 /* FINDER */
 .hd-finder{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;}
@@ -502,6 +576,21 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 
 JS = r"""
 (function(){
+  /* Ethan Bloom: trailer pop-up and date-limited screening notice */
+  var tr=document.getElementById('hd-trailer');
+  if(tr){
+    var frame=tr.querySelector('.hd-tr-frame'),trLast=null;
+    function trOpen(ev){ev.preventDefault();trLast=document.activeElement;
+      frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+frame.getAttribute('data-yt')+'?autoplay=1&rel=0" title="Ethan Bloom trailer" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+      tr.hidden=false;document.documentElement.style.overflow='hidden';setTimeout(function(){tr.querySelector('.hd-f-x').focus();},50);}
+    function trClose(){tr.hidden=true;frame.innerHTML='';document.documentElement.style.overflow='';if(trLast&&trLast.focus)trLast.focus();}
+    [].forEach.call(document.querySelectorAll('[data-hd-trailer]'),function(b){b.addEventListener('click',trOpen);});
+    tr.addEventListener('click',function(ev){if(ev.target.closest('[data-tclose]'))trClose();});
+    document.addEventListener('keydown',function(ev){if(!tr.hidden&&ev.key==='Escape')trClose();});
+  }
+  [].forEach.call(document.querySelectorAll('[data-until]'),function(el){
+    var d=new Date(el.getAttribute('data-until')+'T23:59:59-07:00');if(!isNaN(d)&&new Date()>d)el.hidden=true;});
+
   /* music finder: "Search Catalog" asks what they need, then routes them */
   var fd=document.getElementById('hd-finder');
   if(fd){
@@ -662,6 +751,7 @@ TEMPLATE = """<style>{css}</style>
   <a class="hd-nav-logo" href="#hd-top" aria-label="HD Music Now, back to top"><img src="{logo}" alt="" width="40" height="40"><span>HD Music Now</span></a>
   <div class="hd-nav-links" id="hd-nav-links">
     <a href="#hd-why">Why Us</a>
+    <a href="#hd-ethan">Ethan Bloom</a>
     <a href="#hd-credits">Credits</a>
     <a href="#hd-roster">Catalogs</a>
     <a href="#hd-deep">Specialty</a>
@@ -754,6 +844,46 @@ TEMPLATE = """<style>{css}</style>
     </div>
   </div>
 </section>
+
+<section class="hd-ethan" id="hd-ethan">
+  <div class="hd-eb-bg" style="background-image:url('{base}ethan-bloom-still.jpg')"></div>
+  <div class="hd-wrap hd-eb-grid">
+    <div class="hd-eb-poster hd-reveal">
+      <button type="button" class="hd-eb-play" data-hd-trailer aria-label="Play the Ethan Bloom trailer">
+        <img src="{base}ethan-bloom-key.jpg" alt="Ethan Bloom theatrical poster" loading="lazy" width="600" height="889">
+        <span class="hd-eb-playbtn">&#9654;</span>
+      </button>
+      <div class="hd-laurel"><span>Director&rsquo;s Choice Award</span><b>Best Feature &middot; Comedy</b><span>Sedona International Film Festival 2026</span></div>
+    </div>
+    <div class="hd-eb-copy hd-reveal" style="transition-delay:.15s">
+      <span class="hd-eb">Now in Theaters &middot; A Jody Friedman Production</span>
+      <h2 class="hd-h2 hd-grad">Ethan Bloom</h2>
+      <p class="hd-eb-role"><b>Producer</b> &amp; <b>Music Supervisor</b></p>
+      <p class="hd-eb-log">A 13-year-old who should be studying for his bar mitzvah secretly finds comfort in the Catholic church. A heartfelt coming-of-age comedy about grief, faith and first love, set in Miami&rsquo;s Coconut Grove.</p>
+      <p class="hd-eb-cred">Directed by Herschel Faber &middot; Written by Maylen Dominguez<br>Starring Joshua Malina, Rachelle Lefevre, Carlos Ponce, Mindy Sterling, Caroline Valencia and Hank Greenspan<br>Distributed in North America by Menemsha Films</p>
+      <div class="hd-eb-stats">
+        <div><b>29</b><span>Weeks &amp; counting in theaters</span></div>
+        <div><b>{eb_n}+</b><span>Festival selections</span></div>
+        <div><b>1</b><span>Award: Best Feature, Comedy</span></div>
+      </div>
+      <div class="hd-ctas" style="justify-content:flex-start">
+        <button type="button" class="hd-btn p" data-hd-trailer>&#9654; Watch the Trailer</button>
+        <a class="hd-btn o" href="{eb_showtimes}" target="_blank" rel="noopener">Showtimes &#8599;</a>
+      </div>
+      <div class="hd-eb-la" data-until="2026-10-23">
+        <span class="hd-eb-la-k">LA Sneak Preview &middot; Two Nights Only</span>
+        <p><b>Wed, Oct 21</b> Laemmle&rsquo;s Royal, West LA &nbsp;&middot;&nbsp; <b>Thu, Oct 22</b> Laemmle Town Center 5, Encino</p>
+        <p class="hd-eb-la-s">With Q&amp;As featuring stars Joshua Malina, Hank Greenspan and Mindy Sterling. Coming soon to New York and Boston.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hd-wrap hd-eb-quotes">{eb_quotes}</div>
+  <div class="hd-ticker hd-eb-fest"><div class="hd-ticker-k">OFFICIAL SELECTION</div><div class="hd-marquee"><div class="hd-track">{eb_fest}</div></div></div>
+</section>
+<div class="hd-trailer" id="hd-trailer" role="dialog" aria-modal="true" aria-label="Ethan Bloom trailer" hidden>
+  <div class="hd-f-back" data-tclose></div>
+  <div class="hd-tr-box"><button type="button" class="hd-f-x" data-tclose aria-label="Close">&times;</button><div class="hd-tr-frame" data-yt="{eb_trailer}"></div></div>
+</div>
 
 <section class="hd-showing" id="hd-credits">
   <div class="hd-wrap hd-center hd-reveal">

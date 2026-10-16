@@ -116,12 +116,12 @@ html,body{{margin:0;background:#0a0908;}}
 {body}
 <div class="modal two-step" id="two-step"><div class="modal__content">{PREVIEW_FORM}</div></div>
 <div class="pv-dir" role="group" aria-label="Design direction"><span>Direction</span>
-<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="false">JF</button><button data-l="wtr" aria-pressed="false">Full</button><button data-l="b2" aria-pressed="false">Badge 2</button><button data-l="ng" aria-pressed="true">No gold ring</button><button data-l="hm" aria-pressed="false">Hammer only</button></div>
+<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="true">JF</button><button data-l="wtr" aria-pressed="false">Full</button><button data-l="b2" aria-pressed="false">Badge 2</button><button data-l="ng" aria-pressed="false">No gold ring</button><button data-l="hm" aria-pressed="false">Hammer only</button></div>
 <script>{js}
 wtrInit(document.getElementById('wtr'));
 function setLogo(k){{var i=document.querySelector('#pv-logo img');i.src=i.dataset[k];i.className=k==='wtr'?'wtr-logo':(k==='jf'?'':'badge');i.alt=k==='jf'?'Jody Friedman':'Wreck the Room';
 [].forEach.call(document.querySelectorAll('.pv-dir [data-l]'),function(x){{x.setAttribute('aria-pressed',x.dataset.l===k);}});}}
-setLogo('ng');
+setLogo('jf');
 document.querySelector('.pv-dir').addEventListener('click',function(e){{var b=e.target.closest('button');if(!b)return;
 if(b.dataset.l){{setLogo(b.dataset.l);return;}}
 document.getElementById('wtr').setAttribute('data-dir',b.dataset.d);

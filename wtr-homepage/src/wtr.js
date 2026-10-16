@@ -37,7 +37,7 @@ function wtrInit(root){
       });
     }
   }
-  var targets=root.querySelectorAll('.w-rv,[data-wall],[data-steps]');
+  var targets=root.querySelectorAll('.w-rv,[data-wall],[data-steps],[data-curve]');
   if(reduce||!('IntersectionObserver' in window)){
     [].forEach.call(targets,fire);
   }else{

@@ -11,3 +11,4 @@ Static redesign of collaboratemusic.com. It needs no build step: `index.html` pl
 - The player at the bottom streams `audio/<slug>.mp3` (128 kbps copies of the DISCO masters). Artwork lives in `img/art/<slug>.jpg`.
 - Track names, artists, "Heard in" credits and waveforms are in the `TRACKS` list in the script at the end of `index.html`. To add a track, drop the MP3 and artwork in, then add one entry there.
 - Any element with `data-play="<slug>"` plays that track. Any element with `data-video="yt:<YouTube id>"` or `data-video="vm:<Vimeo id>"` opens that video in the pop-up.
+- The gold emblem (`img/emblem.png`) is used in the opening section, the contact section and the favicon.

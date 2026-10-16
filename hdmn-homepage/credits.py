@@ -139,11 +139,14 @@ BRANDS = ["Kmart", "Chevrolet", "ASICS", "McAfee", "DirecTV", "Cricket Wireless"
 
 # (event, role)
 STAGE = [
+    ("CNN International Talent Search", "Winner, 2003"),
     ("Guild of Music Supervisors Awards", "Nominee"),
+    ("LARAS & NARAS (Latin Recording Academy & Recording Academy)", "Voting Member"),
     ("Hollywood Independent Music Awards", "Presenter"),
     ("Guild of Music Supervisors: State of Music & Media", "3x Panelist"),
     ("Production Music Conference", "3x Panelist"),
     ("Catch the Moon Music Event", "Panelist"),
+    ("Guild of Music Supervisors Education Committee", "Volunteer, 2022–2024"),
     ("Sync Summit", "Speaker"),
     ("East Coast Music Awards (Canada)", "Speaker"),
     ("Chapman University, Dodge College of Film", "Guest Lecturer"),

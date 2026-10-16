@@ -844,7 +844,7 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-wall" aria-hidden="true"></div>
   <div class="hd-shade"></div><div class="hd-glow"></div><div class="hd-beam"></div>
   <div class="hd-hero-in">
-    <a class="hd-hero-eb hd-up" href="#hd-ethan"><span class="hd-hero-eb-k">&#9733; Now in Theaters</span><span class="hd-hero-eb-t"><b>Ethan Bloom</b> &middot; a Jody Friedman production</span><span class="hd-hero-eb-n" data-eb-next>Award-winning comedy &middot; See screenings</span><i>&rarr;</i></a>
+    <a class="hd-hero-eb hd-up" href="#hd-ethan"><span class="hd-hero-eb-k">&#9733; Now in Theaters</span><span class="hd-hero-eb-t"><b>Ethan Bloom</b> &middot; Jody Friedman, Producer &amp; Music Supervisor</span><span class="hd-hero-eb-n" data-eb-next>Award-winning comedy &middot; See screenings</span><i>&rarr;</i></a>
     <span class="hd-eb hd-up hd-pain-line" aria-live="polite"><span class="hd-pl on">The director loves the temp. The budget doesn&rsquo;t.</span><span class="hd-pl">Locked cut. Uncleared song. Mix is Friday.</span><span class="hd-pl">47 libraries. 3 million tracks. Nothing fits.</span><span class="hd-pl">In a world where the deadline was yesterday&hellip;</span></span>
     <h1 class="hd-grad hd-up" style="animation-delay:.2s">Temp it.<br>Love it.<br>Keep it.</h1>
     <p class="hd-sub hd-up" style="animation-delay:.45s">Cut with our music as your temp, fall in love with it, then keep it: budget-friendly and cleared before your deadline. A music supervisor's ear on every request, not library roulette.</p>
@@ -912,7 +912,7 @@ TEMPLATE = """<style>{css}</style>
       <div class="hd-laurel"><span>Director&rsquo;s Choice Award</span><b>Best Feature &middot; Comedy</b><span>Sedona International Film Festival 2026</span></div>
     </div>
     <div class="hd-eb-copy hd-reveal" style="transition-delay:.15s">
-      <span class="hd-eb">Now in Theaters &middot; A Jody Friedman Production</span>
+      <span class="hd-eb">Now in Theaters &middot; Award-Winning Comedy</span>
       <h2 class="hd-h2 hd-grad">Ethan Bloom</h2>
       <p class="hd-eb-role"><b>Producer</b> &amp; <b>Music Supervisor</b></p>
       <p class="hd-eb-log">A 13-year-old who should be studying for his bar mitzvah secretly finds comfort in the Catholic church. A heartfelt coming-of-age comedy about grief, faith and first love, set in Miami&rsquo;s Coconut Grove.</p>

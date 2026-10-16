@@ -83,7 +83,7 @@ function wtrCredits(root, DATA, POSTERS, SHEET){
   });
 
   render(DATA);
-  watch(root.querySelectorAll('.w-rv'));
+  watch(root.querySelectorAll('.w-rv,.hd-reveal'));
 
   /* ---- live data: the same Google Sheet that feeds hdmusicnow.com ---- */
   if(SHEET){

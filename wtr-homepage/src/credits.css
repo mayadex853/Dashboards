@@ -4,7 +4,7 @@
 .c-hero{position:relative;padding:190px 0 120px;overflow:hidden;
   background:radial-gradient(900px 600px at 85% 20%,rgba(201,168,76,.12),transparent 60%),var(--bg);}
 .c-hero .w-wrap{position:relative;z-index:2;}
-.c-hero h1{font-size:clamp(48px,7vw,116px);margin-bottom:34px !important;max-width:900px;}
+.c-hero h1{font-size:clamp(44px,5.6vw,94px);margin-bottom:34px !important;max-width:980px;}
 .c-hero h1 .ln{display:block;overflow:hidden;}
 .c-hero h1 .ln>span{display:inline-block;transform:translateY(105%);animation:w-up 1.2s cubic-bezier(.2,.75,.15,1) forwards;}
 .c-hero h1 .ln:nth-child(2)>span{animation-delay:.12s}.c-hero h1 .ln:nth-child(3)>span{animation-delay:.24s}

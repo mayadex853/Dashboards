@@ -20,6 +20,7 @@ import urllib.request
 from pathlib import Path
 
 from build import minify_css
+from hdmn_clone import ethan_bloom
 
 HERE = Path(__file__).parent
 SRC = HERE / "src"
@@ -56,10 +57,11 @@ def header_html(logo=LOGO):
 
 
 def parts(data):
-    css = minify_css((SRC / "wtr.css").read_text() + (SRC / "credits.css").read_text())
-    body = (SRC / "credits.html").read_text().replace("{{POSTERS}}", POSTERS)
-    js = (SRC / "credits.js").read_text()
-    init = (f"wtrCredits(document.getElementById('wtr'),{json.dumps(data, separators=(',', ':'))},"
+    eb_import, eb_css, eb_html, eb_js = ethan_bloom()  # the Ethan Bloom section, cloned from hdmusicnow.com
+    css = eb_import + minify_css((SRC / "wtr.css").read_text() + (SRC / "credits.css").read_text() + eb_css)
+    body = (SRC / "credits.html").read_text().replace("{{POSTERS}}", POSTERS).replace("{{ETHAN}}", eb_html)
+    js = (SRC / "credits.js").read_text() + "\n" + eb_js
+    init = (f"wtrCredits(document.getElementById('wtr-credits'),{json.dumps(data, separators=(',', ':'))},"
             f"{json.dumps(POSTERS)},{json.dumps(SHEET_ID)});")
     return css, body, js, init
 

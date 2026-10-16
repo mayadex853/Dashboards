@@ -12,6 +12,10 @@ Custom homepage for wrecktheroom.com, embedded in Kajabi as a single Code block 
 
 `preview.html` shows the page with a stand-in Kajabi header. Use the switch in the bottom-left corner to flip between the two directions (it opens on B; add `#a` to the URL to open on A).
 
+## Logo
+
+`img/wtr-logo.png` is the Wreck the Room logo cut out onto a transparent background (for dark backgrounds). The preview has a **Logo** switch to compare it with the JF logo in the header. The live header logo is set in Kajabi (Header settings → Logo); upload this file there to use it.
+
 ## Installing on Kajabi
 
 1. On the homepage, keep the header, footer and the **Two-Step Opt-in** pop-up (the booking form) as they are.

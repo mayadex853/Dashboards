@@ -3,14 +3,14 @@
 Custom homepage for wrecktheroom.com, embedded in Kajabi as a single Code block (same setup as `hdmn-homepage`).
 
 ```html
-<div id="wtr-mount" data-dir="noir"></div>
+<div id="wtr-mount" data-dir="brick"></div>
 <script src="https://mayadex853.github.io/Dashboards/wtr-homepage/wtr.js"></script>
 ```
 
-- `data-dir="noir"` is **Direction A, Gold Noir** (serif display type, gold on black).
-- `data-dir="brick"` is **Direction B, Demolition** (condensed caps, gold on black with Wreck the Room red as the accent).
+- `data-dir="brick"` is **Direction B, Demolition** (condensed caps, gold on black with Wreck the Room red as the accent). This is the chosen design.
+- `data-dir="noir"` is **Direction A, Gold Noir** (serif display type, gold on black), kept as an alternative.
 
-`preview.html` shows the page with a stand-in Kajabi header. Use the switch in the bottom-left corner to flip between the two directions (add `#b` to the URL to open on B).
+`preview.html` shows the page with a stand-in Kajabi header. Use the switch in the bottom-left corner to flip between the two directions (it opens on B; add `#a` to the URL to open on A).
 
 ## Installing on Kajabi
 

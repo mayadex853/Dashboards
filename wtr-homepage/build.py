@@ -2,12 +2,12 @@
 
 Sources live in src/ (wtr.css, wtr.html, wtr.js). Outputs:
   preview.html       standalone page for review, including a stand-in Kajabi header and booking pop-up
-                     (bottom-left switch flips between design directions A and B)
+                     (bottom-left switch flips between design directions; opens on B, add #a for A)
   kajabi-embed.html  the whole embed, can be pasted into a single Kajabi Code block
   wtr.js             the same embed as a script; the Kajabi Code block loads it with:
-                       <div id="wtr-mount" data-dir="noir"></div>
+                       <div id="wtr-mount" data-dir="brick"></div>
                        <script src="https://mayadex853.github.io/Dashboards/wtr-homepage/wtr.js"></script>
-                     data-dir="noir" is direction A (Gold Noir), data-dir="brick" is direction B (Demolition).
+                     data-dir="brick" is direction B (Demolition, the chosen default); data-dir="noir" is direction A (Gold Noir).
 
 Usage: python3 build.py
 """
@@ -87,9 +87,9 @@ html,body{{margin:0;background:#0a0908;}}
 @media(max-width:760px){{.pv-head nav a:not(.bk){{display:none;}}.pv-head{{padding:16px 20px;}}.pv-head .bk{{padding:11px 12px;font-size:10px;}}}}
 .modal{{display:none;}}
 .pv-dir{{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:0;font:700 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;border:1px solid #c9a84c;background:rgba(10,9,8,.92);backdrop-filter:blur(6px);}}
-.pv-dir button{{all:unset;cursor:pointer;padding:12px 14px;color:#a59e91;}}
+.pv-dir button{{all:unset;cursor:pointer;padding:12px 14px;color:#d2cbbe;}}
 .pv-dir button[aria-pressed=true]{{background:#c9a84c;color:#0a0908;}}
-.pv-dir span{{padding:12px 12px;color:#6f695f;}}
+.pv-dir span{{padding:12px 12px;color:#aaa395;}}
 </style></head><body>
 <div class="pv-head"><img src="{LOGO}" alt="Jody Friedman">
 <nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a><a href="https://www.wrecktheroom.com/coaching">Work With Me</a><a href="https://www.wrecktheroom.com/blog">Blog</a>
@@ -98,13 +98,13 @@ html,body{{margin:0;background:#0a0908;}}
 {body}
 <div class="modal two-step" id="two-step"><div class="modal__content">{PREVIEW_FORM}</div></div>
 <div class="pv-dir" role="group" aria-label="Design direction"><span>Direction</span>
-<button data-d="noir" aria-pressed="true">A · Gold Noir</button><button data-d="brick" aria-pressed="false">B · Demolition</button></div>
+<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button></div>
 <script>{js}
 wtrInit(document.getElementById('wtr'));
 document.querySelector('.pv-dir').addEventListener('click',function(e){{var b=e.target.closest('button');if(!b)return;
 document.getElementById('wtr').setAttribute('data-dir',b.dataset.d);
 [].forEach.call(this.querySelectorAll('button'),function(x){{x.setAttribute('aria-pressed',x===b);}});}});
-if(location.hash==='#b')document.querySelector('[data-d=brick]').click();
+if(location.hash==='#a')document.querySelector('[data-d=noir]').click();
 document.addEventListener('submit',function(e){{if(e.target.matches('[data-preview]')){{e.preventDefault();alert('Preview only: on the live page this submits to Kajabi exactly as today.');}}}});
 </script></body></html>
 """

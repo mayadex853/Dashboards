@@ -492,6 +492,15 @@ repeating-linear-gradient(180deg,transparent 0 179px,var(--ink-line) 179px 180px
 .fit-note{margin-top:30px;color:var(--ink-soft);max-width:700px}
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
 @media(max-width:900px){.proof-grid{grid-template-columns:1fr}}
+.tcard{position:relative;margin:0;padding:30px 28px 26px;border:1.5px solid var(--ink-line);background:rgba(11,13,17,.22);display:flex;flex-direction:column;justify-content:space-between}
+.tcard .qmark{position:absolute;top:-6px;left:20px;font-family:var(--display);font-size:72px;line-height:1;color:var(--red-hi)}
+.tcard blockquote{margin:14px 0 0}
+.tcard blockquote p{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 12px}
+.tcard .t-head{font-family:var(--hand);font-size:21px;line-height:1.35;color:var(--white)!important}
+.tcard .who{display:flex;align-items:center;gap:14px;margin-top:14px}
+.tcard .avatar{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ink-line);display:grid;place-items:center;font-family:var(--caps);font-weight:600;letter-spacing:.06em;color:var(--white)}
+.tcard .who b{display:block;font-family:var(--caps);font-weight:600;letter-spacing:.06em;color:var(--white)}
+.tcard .who span{font-size:14px;color:var(--ink-soft)}
 .tslot{position:relative;min-height:260px;padding:28px;border:2px dashed var(--red-hi);background:rgba(11,13,17,.18);display:flex;flex-direction:column;justify-content:space-between}
 .tslot .flag{position:absolute;top:-13px;left:18px;background:var(--red);color:#fff;font-family:var(--caps);font-weight:600;font-size:11.5px;letter-spacing:.18em;padding:4px 10px}
 .tslot .fields{font-family:var(--hand);font-size:17px;color:var(--ink);line-height:1.7}
@@ -1272,10 +1281,14 @@ Wreck it. Rebuild it. Own it.
 <h2>In their words</h2>
 </div>
 <div class="proof-grid reveal">
-<figure class="tslot" data-placeholder="testimonial-1">
-<span class="flag">PLACEHOLDER &middot; REPLACE BEFORE LAUNCH</span>
-<div class="fields">Slot 1<br>Quote: real client words only<br>Name + role/company<br>Written permission on file</div>
-<div class="who"><div class="avatar">photo</div><div>name / role</div></div>
+<figure class="tcard">
+<span class="qmark" aria-hidden="true">&ldquo;</span>
+<blockquote>
+<p class="t-head">Jody's framework doesn't just focus on changing behaviors. It helps you understand the identity underneath.</p>
+<p>When I came into this course, I thought it would be about working through things from my past. What I've really discovered is that I have begun to create a new blueprint for my future.</p>
+<p>Naming my room was a real turning point. It wasn't about blaming my past. It was about understanding where those patterns came from, and realizing that I had the freedom to choose differently.</p>
+</blockquote>
+<figcaption class="who"><div class="avatar">AP</div><div><b>Amara P.</b><span>Business owner</span></div></figcaption>
 </figure>
 <figure class="tslot" data-placeholder="testimonial-2">
 <span class="flag">PLACEHOLDER &middot; REPLACE BEFORE LAUNCH</span>

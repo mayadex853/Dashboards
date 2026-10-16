@@ -570,6 +570,8 @@ nav.top .btn{padding:11px 18px;font-size:14px}
 .tcard .avatar{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ink-line);display:grid;place-items:center;font-family:var(--caps);font-weight:600;letter-spacing:.06em;color:var(--white)}
 .tcard .who b{display:block;font-family:var(--caps);font-weight:600;letter-spacing:.06em;color:var(--white)}
 .tcard .who span{font-size:14px;color:var(--ink-soft)}
+.tcard.t-wide{grid-column:1/-1}
+.t-pending{position:absolute;top:-13px;right:18px;background:var(--red);color:#fff;font-family:var(--caps);font-weight:600;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px}
 .tslot{position:relative;min-height:260px;padding:28px;border:2px dashed var(--red-hi);background:rgba(11,13,17,.18);display:flex;flex-direction:column;justify-content:space-between}
 .tslot .flag{position:absolute;top:-13px;left:18px;background:var(--red);color:#fff;font-family:var(--caps);font-weight:600;font-size:11.5px;letter-spacing:.18em;padding:4px 10px}
 .tslot .fields{font-family:var(--hand);font-size:17px;color:var(--ink);line-height:1.7}
@@ -1430,6 +1432,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </blockquote>
         <figcaption class="who"><div class="avatar">JD</div><div><b>Jeremy D.</b><span>Small business owner</span></div></figcaption>
       </figure>
+      <!-- DRAFT written from Jody's notes. Richard must approve the exact wording (and the 10x figure) in writing.
+           Once approved, delete the data-placeholder attribute and the .t-pending flag. -->
+      <figure class="tcard t-wide" data-placeholder="testimonial-richard-approval">
+        <span class="t-pending">Pending Richard's approval</span>
+        <span class="qmark" aria-hidden="true">&ldquo;</span>
+        <blockquote>
+          <p class="t-head">I took my first vacation in six years. I'm already planning the second one.</p>
+          <p>I didn't see how much of my life I'd spent waiting for permission. Wrecking that room is what finally let me rest without guilt.</p>
+          <p>It also took care of the thing I was most afraid of: sales. Once I stopped waiting for permission, I started asking for the business. Since then, our revenue has grown 10x.</p>
+        </blockquote>
+        <figcaption class="who"><div class="avatar">RE</div><div><b>Richard E.</b><span>Marketing team leader</span></div></figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -1610,7 +1624,7 @@ const CONFIG = {
   // Pre-launch guard: visible until placeholders and links are handled
   const issues = [];
   const ph = document.querySelectorAll("[data-placeholder]").length;
-  if (ph) issues.push(ph + " placeholder" + (ph > 1 ? "s" : "") + " (testimonials)");
+  if (ph) issues.push(ph + " placeholder" + (ph > 1 ? "s" : "") + " (testimonial awaiting approval)");
   if (!CONFIG.checkoutUrl) issues.push("checkout URL not set");
   if (!CONFIG.councilUrl) issues.push("Council link not set");
   if (!CONFIG.valuesApproved) issues.push("value stack amounts not approved");

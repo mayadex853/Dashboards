@@ -24,6 +24,10 @@ Custom homepage for wrecktheroom.com, embedded in Kajabi as a single Code block 
 2. Remove the existing body sections and add one **Custom Code** section with the snippet above.
 3. Publish. Changes merged to `main` go live within about 10 minutes with no further Kajabi edits.
 
+## Live status and rollback
+
+The redesign is live as the homepage (Kajabi landing page `home`, theme 2163962849), in a section called `wtr_home` that holds one Custom Code block. The old sections are still saved in the theme, just not shown. To roll back, set the theme's `content_for_index` to the list in `data/old-homepage-layout.json`.
+
 ## How the CTAs work
 
 - **Quiz:** every quiz button links to `https://quiz.wrecktheroom.com`, the same link as today.

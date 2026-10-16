@@ -29,8 +29,10 @@ function wtrCredits(root, DATA, POSTERS, SHEET){
     $('c-stats').innerHTML=stats.map(function(r){return '<div class="c-stat"><b>'+esc(title(r))+'</b><span>'+esc(r.Detail)+'</span></div>';}).join('');
 
     /* hero poster wall */
-    var all=J.concat(P).filter(function(r){return pic(r.Poster);}).map(function(r){return pic(r.Poster);});
-    var cols='';for(var c=0;c<4;c++){var set=[];for(var k=0;k<7;k++){set.push(all[(c*7+k*5+c*3)%all.length]);}
+    // alternate Jody's projects with the best-known placements, no repeats
+    var jp=J.filter(function(r){return pic(r.Poster);}),pp=P.filter(function(r){return yes(r.Carousel)&&pic(r.Poster);}).sort(byOrder),all=[],seen={};
+    for(var q=0;q<Math.max(jp.length,pp.length);q++){[jp[q],pp[q]].forEach(function(r){var s=r&&pic(r.Poster);if(s&&!seen[s]){seen[s]=1;all.push(s);}});}
+    var cols='';for(var c=0;c<4;c++){var set=[];for(var k=0;k<7;k++){set.push(all[(k*4+c)%all.length]);}
       var imgs=set.map(function(s){return '<img src="'+esc(s)+'" alt="" loading="lazy">';}).join('');cols+='<div>'+imgs+imgs+'</div>';}
     if(all.length)$('c-hero-wall').innerHTML=cols;
 

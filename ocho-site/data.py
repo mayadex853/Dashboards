@@ -186,6 +186,11 @@ T = {
         "all": "All", "search": "Search albums or artists", "no_results": "Nothing matches that search yet.",
         "license_album": "License This Album", "license_world": "License Our Music",
         "a_menu": "Menu", "a_close": "Close", "a_prev": "Previous", "a_next": "Next", "a_vol": "Volume",
+        "find_eb": "Find Your Sound", "find_h": "What does your scene need?",
+        "find_p": "Pick a mood or describe the moment. We'll match you with the albums and tracks that fit.",
+        "find_ph": "Try \u201ctense chase\u201d, \u201ctelenovela\u201d, \u201cbeach party\u201d\u2026", "find_btn": "Find Music",
+        "find_top": "Best matches", "find_none": "No exact match yet. Tell us about your scene and we'll pitch tracks from the full catalog.",
+        "find_brief": "Need something specific?", "find_brief_a": "Send us your brief &rarr;", "find_open": "Open album",
         "play": "Play", "versions": "versions", "more_info": "More info", "composer": "Composer", "publisher": "Publisher", "tempo": "Tempo", "key": "Key", "license": "License", "loading": "Loading tracks&hellip;",
         "no_audio": "Streaming for this album is coming soon. Get in touch and we will send you the tracks.",
         "albums_count": "albums", "place_count": "placements",
@@ -284,6 +289,11 @@ T = {
         "all": "Todos", "search": "Buscar álbumes o artistas", "no_results": "Todavía no hay resultados para esa búsqueda.",
         "license_album": "Licenciar Este Álbum", "license_world": "Licencie Nuestra Música",
         "a_menu": "Menú", "a_close": "Cerrar", "a_prev": "Anterior", "a_next": "Siguiente", "a_vol": "Volumen",
+        "find_eb": "Encuentra Tu Sonido", "find_h": "¿Qué necesita tu escena?",
+        "find_p": "Elige un estado de ánimo o describe el momento. Te recomendamos los álbumes y temas que encajan.",
+        "find_ph": "Prueba \u201cpersecución tensa\u201d, \u201ctelenovela\u201d, \u201cfiesta en la playa\u201d\u2026", "find_btn": "Buscar Música",
+        "find_top": "Mejores coincidencias", "find_none": "Aún no hay una coincidencia exacta. Cuéntanos sobre tu escena y te proponemos temas de todo el catálogo.",
+        "find_brief": "¿Necesitas algo específico?", "find_brief_a": "Envíanos tu brief &rarr;", "find_open": "Ver álbum",
         "play": "Escuchar", "versions": "versiones", "more_info": "Más info", "composer": "Compositor", "publisher": "Editorial", "tempo": "Tempo", "key": "Tonalidad", "license": "Licenciar", "loading": "Cargando temas&hellip;",
         "no_audio": "El streaming de este álbum llegará pronto. Escríbanos y le enviaremos los temas.",
         "albums_count": "álbumes", "place_count": "colocaciones",
@@ -394,3 +404,47 @@ LEARN = {
         "cta_a": "Envía Tu Música", "cta_b": "&#9654; Explorar los Álbumes",
     },
 }
+
+
+# ---------- mood / keyword finder ----------
+# (key, EN label, ES label, search terms). Terms are matched as word prefixes against the APM
+# tags, titles and descriptions of every track, so keep them lowercase and accent-free.
+MOODS = [
+    ("tense", "Tense & Suspense", "Tensión y Suspenso", "tense|suspense|mystery|crime|detective|espionage|dark|eerie|thriller|noir|intrig"),
+    ("feelgood", "Feel Good", "Buena Vibra", "feel good|happy|cheerful|uplifting|joyous|bright|positive|optimistic"),
+    ("romance", "Romance", "Romance", "romance|romantic|intimate|tender|sultry|passionate|flirtatious|love"),
+    ("party", "Party / Fiesta", "Fiesta", "celebratory|party|fun|bouncy|dance|energetic|festive|upbeat"),
+    ("action", "Action & Sports", "Acción y Deportes", "action|sports|relentless|exciting|exhilarating|extreme|soccer|boxing|racing|adrenaline"),
+    ("sad", "Sad & Emotional", "Triste y Emotivo", "melancholy|heartbroken|bittersweet|gloomy|lonely|sad|emotional|poignant|longing"),
+    ("novela", "Telenovela", "Telenovela", "telenovela|soap opera|melodramatic|tvdrama|human drama"),
+    ("travel", "Travel & Lifestyle", "Viajes y Estilo de Vida", "travel|leisure|lifestyle|nature|documentary|road|tropical|caribbean|beach"),
+    ("comedy", "Comedy", "Comedia", "playful|mischievous|lighthearted|comedy|sitcom|eccentric|quirky"),
+    ("horror", "Horror", "Terror", "horror|creepy|spooky|evil|disturbing|eerie"),
+    ("western", "Western", "Western", "western|desert|gunslinger|pistolero"),
+    ("holiday", "Holiday", "Navidad", "holiday|christmas|seasonal"),
+]
+
+# Free-text synonyms (EN and ES, accent-free) expanded into the tag vocabulary.
+SYNONYMS = {
+    "sad": "melancholy heartbroken gloomy bittersweet lonely", "party": "celebratory fun dance festive",
+    "scary": "horror creepy spooky", "happy": "feel good cheerful joyous", "suspense": "suspenseful tense",
+    "love": "romance romantic", "funny": "playful lighthearted comedy", "comedy": "playful lighthearted mischievous",
+    "chill": "calm peaceful leisure", "relax": "calm peaceful leisure", "sexy": "sultry flirtatious",
+    "chase": "action relentless exciting tense", "beach": "tropical travel leisure caribbean", "fight": "action boxing relentless",
+    "suspenso": "suspense tense", "tenso": "tense", "tensa": "tense", "misterio": "mystery", "crimen": "crime",
+    "policia": "police crime detective", "oscuro": "dark", "oscura": "dark", "miedo": "horror creepy", "terror": "horror",
+    "alegre": "happy cheerful", "feliz": "happy", "romantico": "romance romantic", "romantica": "romance romantic",
+    "amor": "romance romantic love", "fiesta": "party celebratory", "baile": "dance", "bailar": "dance",
+    "triste": "sad melancholy heartbroken", "tristeza": "sad melancholy", "deporte": "sports", "deportes": "sports",
+    "futbol": "soccer", "boxeo": "boxing", "accion": "action", "viaje": "travel", "viajes": "travel",
+    "playa": "beach tropical", "navidad": "christmas holiday", "comedia": "comedy playful", "epico": "epic",
+    "epica": "epic", "tranquilo": "calm peaceful", "tranquila": "calm peaceful", "guitarra": "guitar",
+    "vaquero": "western", "oeste": "western", "carreras": "racing", "sensual": "sultry",
+    "nostalgia": "nostalgic", "nostalgico": "nostalgic", "inspirador": "inspirational uplifting",
+    "persecucion": "chase action relentless", "pelea": "fight action", "noche": "night",
+}
+FIND_STOP = "a an and the for of with to in on music song songs track tracks scene de la el los las y con para en un una musica cancion canciones tema temas escena".split()
+
+# Album-level search keywords for albums whose tracks have no APM mood tags yet ({ALBUM-ID: "words"}).
+# Every album is tagged as of the full APM export; add an entry here for a new album until its sheet arrives.
+ALBUM_KW = {}

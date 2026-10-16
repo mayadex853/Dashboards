@@ -16,6 +16,8 @@ Custom homepage for wrecktheroom.com, embedded in Kajabi as a single Code block 
 
 `img/wtr-logo.png` is the Wreck the Room logo cut out onto a transparent background (for dark backgrounds). The preview has a **Logo** switch to compare it with the JF logo in the header. The live header logo is set in Kajabi (Header settings → Logo); upload this file there to use it.
 
+`img/badge-1.png`, `img/badge-2.png` and `img/badge-3.png` are circular sledgehammer badges (one per hammer artwork, 512×512, transparent corners) that stay readable at header size. The preview's Logo switch shows each one.
+
 ## Installing on Kajabi
 
 1. On the homepage, keep the header, footer and the **Two-Step Opt-in** pop-up (the booking form) as they are.

@@ -12,9 +12,12 @@ Sources live in src/ (wtr.css, wtr.html, wtr.js). Outputs:
 Usage: python3 build.py
 """
 import base64
+import io
 import json
 import re
 from pathlib import Path
+
+from PIL import Image
 
 HERE = Path(__file__).parent
 SRC = HERE / "src"
@@ -77,6 +80,13 @@ def loader(css, body, js):
 def preview(css, body, js):
     # Embedded so the preview shows the logo even when opened as a single file.
     wtr_logo = "data:image/png;base64," + base64.b64encode((HERE / "img" / "wtr-logo.png").read_bytes()).decode()
+    badges = {}
+    for n in (1, 2, 3):  # small copies keep the preview file light; img/badge-N.png are the full-size files
+        im = Image.open(HERE / "img" / f"badge-{n}.png")
+        im.thumbnail((192, 192), Image.LANCZOS)
+        buf = io.BytesIO()
+        im.save(buf, "PNG", optimize=True)
+        badges[n] = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Wreck the Room · Home (preview)</title>
@@ -85,7 +95,8 @@ html,body{{margin:0;background:#0a0908;}}
 .pv-head{{position:absolute;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:22px 32px;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;}}
 .pv-head img{{height:40px;mix-blend-mode:screen;display:block;}}
 .pv-head img.wtr-logo{{height:76px;mix-blend-mode:normal;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6));}}
-@media(max-width:760px){{.pv-head img.wtr-logo{{height:58px;}}}}
+.pv-head img.badge{{height:66px;mix-blend-mode:normal;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6));}}
+@media(max-width:760px){{.pv-head img.wtr-logo{{height:58px;}}.pv-head img.badge{{height:52px;}}}}
 .pv-head nav{{display:flex;gap:30px;align-items:center;}}
 .pv-head a{{color:#d9d2c4;text-decoration:none;}}
 .pv-head .bk{{border:1px solid #c9a84c;color:#ecd69b;padding:14px 20px;}}
@@ -96,19 +107,19 @@ html,body{{margin:0;background:#0a0908;}}
 .pv-dir button[aria-pressed=true]{{background:#c9a84c;color:#0a0908;}}
 .pv-dir span{{padding:12px 12px;color:#aaa395;}}
 </style></head><body>
-<div class="pv-head"><a href="#" id="pv-logo"><img src="{LOGO}" alt="Jody Friedman" data-jf="{LOGO}" data-wtr="{wtr_logo}"></a>
+<div class="pv-head"><a href="#" id="pv-logo"><img src="{LOGO}" alt="Jody Friedman" data-jf="{LOGO}" data-wtr="{wtr_logo}" data-b1="{badges[1]}" data-b2="{badges[2]}" data-b3="{badges[3]}"></a>
 <nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a><a href="https://www.wrecktheroom.com/coaching">Work With Me</a><a href="https://www.wrecktheroom.com/blog">Blog</a>
 <a class="bk" href="#two-step" data-target="#two-step" data-toggle="modal">Book Jody to speak</a></nav></div>
 <style>{css}</style>
 {body}
 <div class="modal two-step" id="two-step"><div class="modal__content">{PREVIEW_FORM}</div></div>
 <div class="pv-dir" role="group" aria-label="Design direction"><span>Direction</span>
-<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="false">JF</button><button data-l="wtr" aria-pressed="true">Wreck the Room</button></div>
+<button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="false">JF</button><button data-l="wtr" aria-pressed="false">Full</button><button data-l="b1" aria-pressed="false">Badge 1</button><button data-l="b2" aria-pressed="true">Badge 2</button><button data-l="b3" aria-pressed="false">Badge 3</button></div>
 <script>{js}
 wtrInit(document.getElementById('wtr'));
-function setLogo(k){{var i=document.querySelector('#pv-logo img');i.src=i.dataset[k];i.className=k==='wtr'?'wtr-logo':'';i.alt=k==='wtr'?'Wreck the Room':'Jody Friedman';
+function setLogo(k){{var i=document.querySelector('#pv-logo img');i.src=i.dataset[k];i.className=k==='wtr'?'wtr-logo':(k==='jf'?'':'badge');i.alt=k==='jf'?'Jody Friedman':'Wreck the Room';
 [].forEach.call(document.querySelectorAll('.pv-dir [data-l]'),function(x){{x.setAttribute('aria-pressed',x.dataset.l===k);}});}}
-setLogo('wtr');
+setLogo('b2');
 document.querySelector('.pv-dir').addEventListener('click',function(e){{var b=e.target.closest('button');if(!b)return;
 if(b.dataset.l){{setLogo(b.dataset.l);return;}}
 document.getElementById('wtr').setAttribute('data-dir',b.dataset.d);

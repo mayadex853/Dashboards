@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--ARTIFACT-START-->
+<title>Collaborate Music Productions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Collaborate Music Productions is the trailer label behind SoundBreakers: epic originals and re-imagined covers for trailers, promos and ads, plus music supervision and clearance.">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: a darkened screening room lit by gold, with the label's purple dragon-scale armor as its signature surface. Full-bleed bands, a poster wall as the hero, gold used like a projector beam (rarely, and only where the eye should land). */
+:root{
+  --ink:#08080b;        /* page ground, the dark theatre */
+  --stage:#111015;      /* raised bands */
+  --slate:#18161c;      /* cards, slates */
+  --gold:#d6b25e;       /* the logo's gold */
+  --gold-hi:#f4dc97;    /* highlight on gold */
+  --fg:#efe9dc;         /* warm screen white */
+  --mute:#a49d8e;       /* secondary text */
+  --line:rgba(214,178,94,.22);
+  --royal:#2a0f45;      /* dragon-scale purple */
+  --royal-hi:#5b2a8c;
+  --display:'Cinzel','Trajan Pro',Georgia,serif;
+  --body:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;
+  --label:'Archivo Narrow','Arial Narrow',Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--fg);font:400 17px/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:.02em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(72px,10vw,128px)}
+.band.raised{background:var(--stage)}
+.eyebrow{font:600 13px/1 var(--label);letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.h2{font-size:clamp(34px,5vw,60px)}
+.lede{color:var(--mute);max-width:62ch;font-size:18px}
+.head{display:grid;gap:18px;margin-bottom:clamp(36px,5vw,56px)}
+.gold{color:var(--gold-hi)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;font:700 14px/1 var(--label);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);color:var(--fg);transition:background .25s,color .25s}
+.btn:hover{background:var(--gold);color:var(--ink)}
+.btn.solid{background:var(--gold);color:var(--ink)}
+.btn.solid:hover{background:var(--gold-hi)}
+.textlink{font:600 14px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px}
+.textlink:hover{border-color:var(--gold-hi)}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(8,8,11,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;height:92px}
+.nav-logo{justify-self:center}
+.nav-logo img{height:51px;width:auto}
+.nav-side{display:flex;align-items:center;gap:28px}
+.nav-side.end{justify-content:flex-end}
+.nav-side a{font:600 13px/1 var(--label);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--mute)}
+.nav-side a:hover{color:var(--fg)}
+.nav-side .btn{padding:12px 20px;font-size:12px;color:var(--fg)}
+@media (max-width:1100px){.nav-side{gap:20px}.nav-side a{letter-spacing:.14em}}
+@media (max-width:960px){.nav-side a:not(.btn){display:none}}
+@media (max-width:420px){.nav .wrap{height:74px;gap:10px}.nav-logo img{height:34px}.nav-side .btn{padding:10px 12px;letter-spacing:.12em}}
+
+/* HERO: a wall of real one-sheets, dimmed like house lights going down */
+.hero{position:relative;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--line)}
+.scales{background-color:var(--royal);background-image:url("img/scales.jpg");background-size:cover;background-repeat:no-repeat;background-position:center 30%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 46% 50% at 50% 50%,rgba(8,8,11,.62),rgba(8,8,11,.18) 100%),linear-gradient(180deg,transparent 82%,var(--ink))}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,rgba(244,220,151,.16) 50%,transparent 70%);mix-blend-mode:screen;animation:beam 9s ease-in-out infinite}
+@keyframes beam{0%,100%{transform:translateX(-30%)}50%{transform:translateX(30%)}}
+.hero-in{padding-block:clamp(52px,6.5vw,92px) clamp(64px,9vw,110px);text-align:center;display:grid;justify-items:center;gap:26px}
+.hero-emblem{width:clamp(84px,9vw,120px);height:auto;filter:drop-shadow(0 0 28px rgba(214,178,94,.45)) drop-shadow(0 8px 24px rgba(0,0,0,.8));animation:glint 6s ease-in-out infinite;margin-bottom:-6px}
+@keyframes glint{0%,100%{filter:drop-shadow(0 0 22px rgba(214,178,94,.35)) drop-shadow(0 8px 24px rgba(0,0,0,.8))}50%{filter:drop-shadow(0 0 40px rgba(244,220,151,.6)) drop-shadow(0 8px 24px rgba(0,0,0,.8))}}
+.est{font:600 12px/1 var(--label);letter-spacing:.42em;text-transform:uppercase;color:var(--fg);opacity:.8;margin-top:-12px;display:flex;align-items:center;gap:14px}
+.est::before,.est::after{content:"";width:28px;height:1px;background:var(--gold)}
+.hero-eb{font-size:clamp(12px,1.3vw,15px);line-height:1.6;max-width:62ch;text-shadow:0 2px 12px #000}
+.btn.big{padding:20px 44px;font-size:16px;letter-spacing:.28em}
+.btn .play{width:0;height:0;border-left:11px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.hero h1{font-size:clamp(40px,7.2vw,96px);max-width:14ch;text-shadow:0 4px 30px #000}
+.hero .lede{color:#d9d2c3;text-align:center;font-size:clamp(17px,1.6vw,20px);text-shadow:0 2px 16px #000}
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:6px}
+.hero .textlink{margin-top:4px}
+
+/* MARQUEE of networks */
+.marq{border-bottom:1px solid var(--line);background:var(--stage);overflow:hidden;padding-block:22px}
+.marq-k{text-align:center;font:600 12px/1 var(--label);letter-spacing:.34em;color:var(--mute);text-transform:uppercase;margin-bottom:14px}
+.marq-track{display:flex;width:max-content;animation:scroll 40s linear infinite}
+.marq-track span{font:600 clamp(20px,2.4vw,28px)/1 var(--display);letter-spacing:.08em;color:var(--fg);white-space:nowrap;padding:0 26px;display:flex;align-items:center;gap:52px}
+.marq-track span::after{content:"";width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* LISTEN */
+.pl-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.pl-tab{font:700 13px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--mute);background:transparent;border:1px solid var(--line);padding:14px 20px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.pl-tab:hover{color:var(--fg);border-color:var(--gold)}
+.pl-tab[aria-selected="true"]{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.pl-panel{display:grid;gap:16px}
+.pl-desc{color:var(--mute)}
+.pl-frame{position:relative;min-height:560px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(42,15,69,.35),var(--stage))}
+.pl-frame::before{content:"Loading the player\2026  If it doesn\2019t appear, open the playlist in DISCO below.";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--mute);font-size:15px}
+.pl-frame iframe{position:relative;display:block;width:100%;height:560px;border:0}
+.pl-more{margin-top:26px}
+.inline{color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+/* PLACEMENTS: one-sheets + slates for campaigns that have no poster */
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{position:relative;margin:0;aspect-ratio:2/3;overflow:hidden;background:var(--slate);border:1px solid rgba(255,255,255,.06)}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s}
+.card:hover img{transform:scale(1.05);filter:brightness(.55)}
+.card figcaption{position:absolute;inset:auto 0 0 0;padding:44px 12px 12px;background:linear-gradient(transparent,rgba(5,5,7,.94) 45%);display:grid;gap:3px}
+.tag{font:700 11px/1.2 var(--label);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi)}
+.card strong{font:600 clamp(16px,1.6vw,21px)/1.15 var(--display);color:var(--fg)}
+.card small{font-size:13px;line-height:1.35;color:var(--mute)}
+.card .trk{display:block;font-size:14px;line-height:1.35;color:var(--gold-hi);margin-top:2px}
+.slate .trk{font-size:15px}
+a.card{text-decoration:none}
+.next{border-style:dashed;background:transparent;transition:border-color .25s}
+.next:hover{border-color:var(--gold-hi)}
+.next .slate-title{color:var(--gold-hi)}
+@media (max-width:640px){.next{grid-column:span 2;aspect-ratio:auto;min-height:170px}}
+/* slate = a clapperboard-style title card */
+.slate{display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px;background:linear-gradient(160deg,#1d1a20,#0e0d11);border:1px solid var(--line)}
+.slate-top{display:flex;justify-content:space-between;font:700 10px/1 var(--label);letter-spacing:.2em;color:var(--mute);text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.slate-top::before{content:"";flex:0 0 46px;height:10px;background:repeating-linear-gradient(-45deg,var(--gold) 0 6px,transparent 6px 12px)}
+.slate-title{font:600 clamp(22px,2.6vw,36px)/1.05 var(--display);color:var(--fg)}
+.slate .tag{display:block;margin-bottom:8px}
+.slate small{font-size:13px;color:var(--mute)}
+.logo{justify-content:center;align-items:center;background:radial-gradient(ellipse at 50% 40%,#221d29,#0e0d11 75%)}
+.logo .net-logo{width:72%;height:auto;max-height:30%;object-fit:contain;transform:translateY(-30%)}
+.card.logo:hover .net-logo{transform:translateY(-30%) scale(1.04);filter:none}
+.grid-note{margin-top:22px;font-size:14px;color:var(--mute)}
+
+/* REEL */
+.reel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:1000px){.reel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.reel{grid-template-columns:1fr}}
+.clip{text-decoration:none;display:grid;gap:10px}
+.clip-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--slate);border:1px solid rgba(255,255,255,.06)}
+.clip-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s;filter:brightness(.8)}
+.clip:hover .clip-img img{transform:scale(1.05);filter:brightness(1)}
+.clip-img::after{content:"";position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border:1px solid var(--gold-hi);border-radius:50%;background:rgba(8,8,11,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23f4dc97'/%3E%3C/svg%3E") center/26px no-repeat;transition:transform .3s}
+.clip:hover .clip-img::after{transform:scale(1.1)}
+.clip b{font:600 17px/1.2 var(--display);color:var(--fg)}
+.clip span{font-size:14px;color:var(--mute);line-height:1.4}
+
+/* SOUNDBREAKERS */
+.sb-band{position:relative;isolation:isolate}
+.sb-band::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(8,8,11,.82) 0%,rgba(8,8,11,.45) 50%,rgba(8,8,11,.75) 100%)}
+.sb>div:first-child{container-type:inline-size;min-width:0}
+.sb{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,6vw,90px);align-items:start}
+@media (max-width:900px){.sb{grid-template-columns:1fr}}
+.sb-mark{font:700 clamp(30px,11.5cqi,110px)/.95 var(--display);white-space:nowrap;letter-spacing:.01em;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,#8a6a28);-webkit-background-clip:text;background-clip:text;color:transparent;margin-block:14px 24px}
+.sb p+p{margin-top:16px}
+.sb .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.tracks{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.tracks li{display:grid;grid-template-columns:minmax(0,1fr) auto;position:relative;gap:4px 20px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.tracks b{font:600 19px/1.25 var(--display);color:var(--fg)}
+.tracks em{font-style:normal;font-size:14px;color:var(--mute);grid-column:1}
+.tracks .tag{grid-column:2;grid-row:1/span 2;align-self:center;text-align:right}
+@media (max-width:480px){.tracks li{grid-template-columns:1fr}.tracks .tag{grid-column:1;grid-row:auto;text-align:left}}
+
+.covers-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin:clamp(56px,7vw,88px) 0 20px;padding-top:28px;border-top:1px solid var(--line)}
+.covers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.covers{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:480px){.covers{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cover{position:relative;display:block;padding:0;border:0;background:none;cursor:default;transition:transform .3s}
+button.cover{cursor:pointer}
+button.cover:hover{transform:translateY(-4px)}
+.covers img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.cover .i-play{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:var(--gold);opacity:0;transform:scale(.8);transition:.25s}
+.cover .i-play::before{border-left-color:var(--ink)}
+button.cover:hover .i-play,button.cover:focus-visible .i-play,button.cover.on .i-play{opacity:1;transform:none}
+/* SERVICES: the two ways in */
+.ways{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:800px){.ways{grid-template-columns:1fr}}
+.way{padding:clamp(28px,4vw,48px);border:1px solid var(--line);background:linear-gradient(180deg,rgba(214,178,94,.06),transparent 60%);display:flex;flex-direction:column;gap:18px}
+.way h3{font-size:clamp(28px,3.2vw,40px)}
+.way ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;color:var(--mute);flex:1}
+.way li{padding-left:22px;position:relative}
+.way li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.way .btn{align-self:flex-start}
+
+/* SUPERVISION */
+.sup-row{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px;margin-bottom:clamp(48px,6vw,72px)}
+.sup-row .card figcaption{padding:34px 10px 10px}
+.sup-row .card strong{font-size:clamp(13px,1.05vw,15px);overflow-wrap:anywhere}
+.sup-row .tag{font-size:10px;letter-spacing:.14em}
+@media (max-width:1000px){.sup-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:480px){.sup-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.sup-row .card strong{font-size:13px}.sup-row .card small{display:none}}
+.people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.people{grid-template-columns:1fr}}
+.person{border:1px solid var(--line);padding:clamp(26px,3.5vw,42px);background:var(--ink);min-width:0}
+.person-head{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.mono{flex:0 0 72px;width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--gold);padding:3px;background:var(--ink)}
+.person h3{font-size:clamp(26px,2.8vw,34px)}
+.role{font:600 12px/1.4 var(--label);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+.creds{list-style:none;margin:0;padding:0}
+.creds li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07);align-items:baseline}
+.creds li:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.creds b{font-weight:600;color:var(--fg)}
+.creds b i{font-style:normal;font-weight:400;color:var(--mute);font-size:14px;margin-left:8px}
+.creds span{font:600 12px/1.3 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:right;white-space:nowrap}
+@media (max-width:480px){.creds li{grid-template-columns:1fr;gap:2px}.creds span{text-align:left}}
+.person .more{margin-top:20px;font-size:14px;color:var(--mute)}
+
+.brands{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 24px;padding-block:22px;margin-bottom:28px;border-block:1px solid var(--line)}
+.brands p{font:600 clamp(17px,1.8vw,22px)/1.4 var(--display);letter-spacing:.04em;color:var(--fg)}
+/* ABOUT */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,6vw,90px)}
+@media (max-width:900px){.about{grid-template-columns:1fr}}
+.about-quote{font:600 clamp(32px,4.4vw,56px)/1.08 var(--display);margin-block:16px 26px}
+.about p+p{margin-top:16px}
+.about p{color:#cfc8b8}
+.bios{display:grid;gap:34px;align-content:start}
+.bio h3{font-size:28px}
+.bio p{margin-top:12px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.badge{font-size:13px;color:var(--fg);padding:8px 14px;border:1px solid var(--line);border-radius:40px;text-decoration:none}
+.badge b{color:var(--gold-hi);font-weight:600}
+
+.photo{margin:34px 0 0;max-width:460px}
+.photo img{width:100%;height:auto;border:1px solid var(--line);filter:saturate(.9)}
+.photo figcaption{margin-top:10px;font-size:13px;color:var(--mute)}
+/* CONTACT */
+.contact{text-align:center;position:relative;overflow:hidden;isolation:isolate}
+.contact::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 55% 70% at 50% 100%,rgba(214,178,94,.18),transparent 70%),linear-gradient(180deg,var(--ink),rgba(8,8,11,.55) 30%,rgba(8,8,11,.55) 70%,var(--ink))}
+.contact-emblem{width:72px;height:auto;filter:drop-shadow(0 0 22px rgba(214,178,94,.4))}
+.contact .wrap{display:grid;justify-items:center;gap:22px}
+.contact h2{font-size:clamp(38px,6vw,76px);max-width:15ch}
+.contact .lede{text-align:center}
+.email{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:8px}
+.email code{font:600 clamp(20px,3vw,32px)/1.2 var(--body);color:var(--gold-hi);user-select:all;overflow-wrap:anywhere}
+.copy{font:700 12px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--mute);border:1px solid var(--line);padding:10px 14px;cursor:pointer}
+.copy:hover{color:var(--fg);border-color:var(--gold)}
+.brief{color:var(--mute);font-size:15px;max-width:56ch}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding-block:36px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+footer img{height:22px;width:auto}
+footer nav{display:flex;flex-wrap:wrap;gap:22px}
+footer a,footer p{font:600 12px/1.4 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--mute);text-decoration:none}
+footer a:hover{color:var(--fg)}
+
+/* PLAYER: always docked at the bottom, like a transport bar */
+.i-play,.i-prev,.i-next,.i-film,.i-pause{display:inline-grid;place-items:center;position:relative;flex:none}
+.i-play::before{content:"";border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:2px}
+.i-pause::before{content:"";width:10px;height:12px;border-left:3px solid currentColor;border-right:3px solid currentColor}
+.i-prev::before,.i-next::before{content:"";border-top:6px solid transparent;border-bottom:6px solid transparent}
+.i-prev::before{border-right:9px solid currentColor;box-shadow:-3px 0 0 -0px currentColor}
+.i-next::before{border-left:9px solid currentColor;box-shadow:3px 0 0 0 currentColor}
+.i-film::before{content:"";width:12px;height:9px;border:2px solid currentColor;border-radius:2px}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.player{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(10,8,14,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);transform:translateY(0);transition:box-shadow .3s}
+.player.live{box-shadow:0 -10px 40px rgba(91,42,140,.35)}
+.pl-wave{height:22px;cursor:pointer;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));margin-top:-11px}
+.pl-wave canvas{display:block;width:100%;height:22px}
+.pl-bar{display:flex;align-items:center;gap:16px;max-width:1240px;margin:0 auto;padding:6px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.pl-art{width:52px;height:52px;object-fit:cover;border:1px solid var(--line);flex:none}
+.pl-meta{min-width:0;flex:1;display:grid}
+.pl-meta b{font:600 16px/1.25 var(--display);color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-meta span{font-size:13px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-ctrls{display:flex;align-items:center;gap:6px}
+.pl-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:0;background:transparent;color:var(--fg);cursor:pointer}
+.pl-btn:hover{color:var(--gold-hi)}
+.pl-main{width:48px;height:48px;background:var(--gold);color:var(--ink)}
+.pl-main:hover{background:var(--gold-hi);color:var(--ink)}
+.pl-time{font:600 13px/1 var(--label);letter-spacing:.08em;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pl-license{font:700 12px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);padding:11px 14px;white-space:nowrap}
+.pl-license:hover{border-color:var(--gold-hi)}
+@media (max-width:760px){.pl-license,.pl-time{display:none}.pl-bar{gap:12px}.pl-art{width:44px;height:44px}.pl-btn{width:36px;height:36px}}
+@media (max-width:400px){#pl-prev{display:none}}
+
+/* card actions */
+.card-acts{position:absolute;inset:0 0 auto 0;z-index:2;display:flex;flex-wrap:wrap;gap:8px;padding:12px;opacity:0;transform:translateY(-6px);transition:.25s}
+.has-acts:hover .card-acts,.has-acts:focus-within .card-acts{opacity:1;transform:none}
+@media (hover:none){.card-acts{opacity:1;transform:none}}
+.act{display:inline-flex;align-items:center;gap:8px;font:700 11px/1 var(--label);letter-spacing:.16em;text-transform:uppercase;padding:9px 12px;border:1px solid var(--gold);background:rgba(8,8,11,.78);color:var(--fg);cursor:pointer;transition:background .2s,color .2s}
+.act:hover{background:var(--gold);color:var(--ink)}
+.act .i-play::before{border-left-width:8px;border-top-width:5px;border-bottom-width:5px}
+.has-acts:hover img{transform:scale(1.05);filter:brightness(.55)}
+.card.playing{outline:2px solid var(--gold);outline-offset:-2px}
+
+/* signature track play buttons */
+.tracks li.playable{padding-left:52px}
+.tplay{position:absolute;left:0;top:50%;margin-top:-18px;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold-hi);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.tplay:hover,.playable.on .tplay{background:var(--gold);color:var(--ink)}
+.playable.on b{color:var(--gold-hi)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(4,3,6,.9);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb-inner{position:relative;width:min(1100px,100%)}
+.lb-frame{aspect-ratio:16/9;max-width:100%;background:#000;border:1px solid var(--line)}
+.lb-frame iframe{width:100%;height:100%;border:0;display:block}
+.lb-close{position:absolute;right:0;top:-48px;width:40px;height:40px;font-size:30px;line-height:1;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.lb-close:hover{border-color:var(--gold-hi)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+<!--BODY-->
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <nav class="nav-side" aria-label="Main">
+      <a href="#placements">Placements</a>
+      <a href="#reel">Trailers</a>
+      <a href="#soundbreakers">SoundBreakers</a>
+    </nav>
+    <a class="nav-logo" href="#top" aria-label="Collaborate Music Productions home"><img src="img/logo.png" alt="Collaborate Music Productions" width="285" height="51"></a>
+    <nav class="nav-side end" aria-label="More">
+      <a href="#supervision">Supervision</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="btn" href="#listen">Listen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero scales">
+  <div class="wrap hero-in">
+    <img class="hero-emblem" src="img/emblem.png" alt="" width="200" height="200">
+    <span class="est">Est. 2015</span>
+    <span class="eyebrow hero-eb">Reimagined Covers &amp; Remixed Originals for Trailers &amp; Ads</span>
+    <h1>Forged for the <span class="gold">big screen</span></h1>
+    <p class="lede">Epic originals and re-imagined covers heard in campaigns for Netflix, Hulu, ABC, CBS, Sony Pictures, Angel Studios, ESPN and WWE.</p>
+    <div class="hero-cta">
+      <a class="btn solid big" href="#listen" data-start><span class="play" aria-hidden="true"></span>Listen</a>
+    </div>
+    <a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Search the catalog on DISCO &rarr;</a>
+  </div>
+</section>
+
+<div class="marq" aria-label="Networks and studios">
+  <div class="marq-k">Heard in campaigns for</div>
+  <div class="marq-track">
+    <span>Netflix</span><span>Hulu</span><span>ABC</span><span>CBS</span><span>Sony Pictures</span><span>Angel Studios</span><span>ESPN</span><span>Formula 1</span><span>MTV</span><span>WWE</span>
+    <span aria-hidden="true">Netflix</span><span aria-hidden="true">Hulu</span><span aria-hidden="true">ABC</span><span aria-hidden="true">CBS</span><span aria-hidden="true">Sony Pictures</span><span aria-hidden="true">Angel Studios</span><span aria-hidden="true">ESPN</span><span aria-hidden="true">Formula 1</span><span aria-hidden="true">MTV</span><span aria-hidden="true">WWE</span>
+  </div>
+</div>
+
+<section class="band listen" id="listen">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Listen</span>
+      <h2 class="h2">Hear the catalog</h2>
+      <p class="lede">Stream our playlists right here. Hear something for your campaign? <a class="inline" href="#contact">Reach out to license it or for a custom edit for your project.</a></p>
+    </div>
+    <div class="pl-tabs" role="tablist" aria-label="Playlists">
+      <button class="pl-tab" type="button" role="tab" id="tab-covers" aria-controls="pl-covers" aria-selected="true">Re-Imagined Covers</button>
+      <button class="pl-tab" type="button" role="tab" id="tab-originals" aria-controls="pl-originals" aria-selected="false">SoundBreakers Originals</button>
+      <button class="pl-tab" type="button" role="tab" id="tab-holidays" aria-controls="pl-holidays" aria-selected="false">Haunted Holidays</button>
+    </div>
+    <div class="pl-panel" role="tabpanel" id="pl-covers" aria-labelledby="tab-covers">
+      <p class="pl-desc">Classic songs rebuilt with trailer-sized builds, drops and hits.</p>
+      <div class="pl-frame" data-src="https://collaborate-music-productions.disco.ac/e/p/9594225?download=false&amp;s=BES-wfYG5CBQE4qftmphCw5I-7M%3ANgGtjp8w&amp;artwork=true&amp;theme=dark&amp;color=%23d6b25e"></div>
+      <a class="textlink" href="https://collaborate-music-productions.disco.ac/e/p/9594225?download=false&amp;s=BES-wfYG5CBQE4qftmphCw5I-7M%3ANgGtjp8w" target="_blank" rel="noopener">Open Re-Imagined Covers in DISCO &rarr;</a>
+    </div>
+    <div class="pl-panel" role="tabpanel" id="pl-originals" aria-labelledby="tab-originals" hidden>
+      <p class="pl-desc">Original epic tracks and remixes from our house artist.</p>
+      <div class="pl-frame" data-src="https://collaborate-music-productions.disco.ac/e/p/9594253?download=false&amp;s=-lS_QZrUQ8B9Rav2LNaajN18YwA%3AtIZbMc9N&amp;artwork=true&amp;theme=dark&amp;color=%23d6b25e"></div>
+      <a class="textlink" href="https://collaborate-music-productions.disco.ac/e/p/9594253?download=false&amp;s=-lS_QZrUQ8B9Rav2LNaajN18YwA%3AtIZbMc9N" target="_blank" rel="noopener">Open SoundBreakers Originals in DISCO &rarr;</a>
+    </div>
+    <div class="pl-panel" role="tabpanel" id="pl-holidays" aria-labelledby="tab-holidays" hidden>
+      <p class="pl-desc">Dark, twisted holiday classics for horror and seasonal campaigns.</p>
+      <div class="pl-frame" data-src="https://collaborate-music-productions.disco.ac/e/p/9594269?download=false&amp;s=HlRsduRKrW6KKRxhoXEajGXwdKo%3AypV0ICMh&amp;artwork=true&amp;theme=dark&amp;color=%23d6b25e"></div>
+      <a class="textlink" href="https://collaborate-music-productions.disco.ac/e/p/9594269?download=false&amp;s=HlRsduRKrW6KKRxhoXEajGXwdKo%3AypV0ICMh" target="_blank" rel="noopener">Open Haunted Holidays in DISCO &rarr;</a>
+    </div>
+    <p class="pl-more"><a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Search the full catalog on DISCO &rarr;</a></p>
+  </div>
+</section>
+
+<section class="band" id="placements">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Featured Placements</span>
+      <h2 class="h2">Now playing</h2>
+      <p class="lede">Trailers, promos, spots and in-show uses for the biggest names in film, TV and sports.</p>
+    </div>
+    <div class="grid">
+      <figure class="card has-acts"><img src="img/runner.jpg" alt="Runner poster"><div class="card-acts"><button class="act" type="button" data-play="midnight-rider" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Feature Film</span><strong>Runner</strong><small>Angel Studios</small><span class="trk">&ldquo;Midnight Rider&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/wwe-unreal.jpg" alt="WWE: Unreal poster"><figcaption><span class="tag">Series</span><strong>WWE: Unreal</strong><small>Netflix</small><span class="trk">&ldquo;My Way&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/gunpowder-milkshake.jpg" alt="Gunpowder Milkshake poster"><div class="card-acts"><button class="act" type="button" data-video="yt:YLMT5uXjFLY" aria-label="Watch the trailer"><span class="i-film" aria-hidden="true"></span>Watch trailer</button><button class="act" type="button" data-play="bad-to-the-bone" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Trailer</span><strong>Gunpowder Milkshake</strong><small>Netflix</small><span class="trk">&ldquo;Bad to the Bone&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/doctor-odyssey.jpg" alt="Doctor Odyssey poster"><div class="card-acts"><button class="act" type="button" data-play="sh-boom" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Promos</span><strong>Doctor Odyssey</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/the-bachelor.jpg" alt="The Bachelor poster"><figcaption><span class="tag">In Show</span><strong>The Bachelor</strong><small>ABC</small><span class="trk">&ldquo;Sea of Love&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/fantasy-island.jpg" alt="Fantasy Island poster"><div class="card-acts"><button class="act" type="button" data-video="yt:Yvc1USis5RU" aria-label="Watch the trailer"><span class="i-film" aria-hidden="true"></span>Watch trailer</button><button class="act" type="button" data-play="sh-boom" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Trailer</span><strong>Fantasy Island</strong><small>Sony Pictures</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card slate logo has-acts"><img class="net-logo" src="img/espn.svg" alt="ESPN"><div class="card-acts"><button class="act" type="button" data-play="feel-good-inc" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Promo</span><strong>F1 Racing</strong><small>ESPN</small><span class="trk">&ldquo;Feel Good Inc.&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/big-sky.jpg" alt="Big Sky poster"><div class="card-acts"><button class="act" type="button" data-video="yt:kctllffgbsU" aria-label="Watch the trailer"><span class="i-film" aria-hidden="true"></span>Watch trailer</button><button class="act" type="button" data-play="sh-boom" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">S1 Promo</span><strong>Big Sky</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card slate logo has-acts"><img class="net-logo" src="img/espn.svg" alt="ESPN"><div class="card-acts"><button class="act" type="button" data-video="yt:ekZYfIqxNpw" aria-label="Watch the promo"><span class="i-film" aria-hidden="true"></span>Watch promo</button><button class="act" type="button" data-play="the-best" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Promo</span><strong>NCAA on ESPN</strong><small>ESPN &middot; ACC Network</small><span class="trk">&ldquo;The Best&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/the-handmaid-s-tale.jpg" alt="The Handmaid's Tale poster"><div class="card-acts"><button class="act" type="button" data-video="yt:dVLiDETfx1c" aria-label="Watch the trailer"><span class="i-film" aria-hidden="true"></span>Watch trailer</button><button class="act" type="button" data-play="pure-as-snow" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">S1 Trailer</span><strong>The Handmaid&rsquo;s Tale</strong><small>Hulu</small><span class="trk">&ldquo;Pure As Snow (Mike Raznick Remix)&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/star-trek-picard.jpg" alt="Star Trek: Picard poster"><div class="card-acts"><button class="act" type="button" data-video="vm:387810702" aria-label="Watch the trailer"><span class="i-film" aria-hidden="true"></span>Watch trailer</button><button class="act" type="button" data-play="blue-skies" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">S1 Promo</span><strong>Star Trek: Picard</strong><small>CBS</small><span class="trk">&ldquo;Blue Skies (Teaser Mix)&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/haunt.jpg" alt="Haunt poster"><div class="card-acts"><button class="act" type="button" data-video="yt:alxOPMQVOHs" aria-label="Watch the trailer"><span class="i-film" aria-hidden="true"></span>Watch trailer</button><button class="act" type="button" data-play="creepy-cradle" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">Trailer</span><strong>Haunt</strong><small>Momentum Pictures</small><span class="trk">&ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/set-it-up.jpg" alt="Set It Up poster"><div class="card-acts"><button class="act" type="button" data-video="yt:NJpi1MDPSVU" aria-label="Watch the scene"><span class="i-film" aria-hidden="true"></span>Watch scene</button></div><figcaption><span class="tag">In Film</span><strong>Set It Up</strong><small>Netflix</small><span class="trk">&ldquo;Come Go With Me&rdquo;</span></figcaption></figure>
+      <figure class="card has-acts"><img src="img/the-challenge.jpg" alt="The Challenge poster"><div class="card-acts"><button class="act" type="button" data-play="too-far-gone" aria-label="Play the song"><span class="i-play" aria-hidden="true"></span>Play song</button></div><figcaption><span class="tag">In Program</span><strong>The Challenge</strong><small>MTV</small><span class="trk">&ldquo;No Surprises&rdquo; &amp; &ldquo;Too Far Gone&rdquo;</span></figcaption></figure>
+      <a class="card slate next" href="#contact"><div class="slate-top">Your Campaign</div><div><span class="tag">Coming Soon</span><div class="slate-title">Your trailer here</div></div><span class="trk">Tell us about your cut &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band raised" id="reel">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Reel</span>
+      <h2 class="h2">Watch it land</h2>
+      <p class="lede">Hear our music in the final cut.</p>
+    </div>
+    <div class="reel">
+      <a class="clip" href="https://www.youtube.com/watch?v=dVLiDETfx1c" target="_blank" rel="noopener" data-video="yt:dVLiDETfx1c"><div class="clip-img"><img src="img/yt-dVLiDETfx1c.jpg" alt=""></div><b>The Handmaid&rsquo;s Tale</b><span>Season 1 trailer &middot; &ldquo;Pure As Snow (Mike Raznick Remix)&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=YLMT5uXjFLY" target="_blank" rel="noopener" data-video="yt:YLMT5uXjFLY"><div class="clip-img"><img src="img/yt-YLMT5uXjFLY.jpg" alt=""></div><b>Gunpowder Milkshake</b><span>Official trailer &middot; &ldquo;Bad to the Bone&rdquo;</span></a>
+      <a class="clip" href="https://vimeo.com/387810702" target="_blank" rel="noopener" data-video="vm:387810702"><div class="clip-img"><img src="img/vm-picard.jpg" alt=""></div><b>Star Trek: Picard</b><span>&ldquo;Blue Skies&rdquo; trailer</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=alxOPMQVOHs" target="_blank" rel="noopener" data-video="yt:alxOPMQVOHs"><div class="clip-img"><img src="img/yt-alxOPMQVOHs.jpg" alt=""></div><b>Haunt</b><span>Trailer &middot; &ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=Yvc1USis5RU" target="_blank" rel="noopener" data-video="yt:Yvc1USis5RU"><div class="clip-img"><img src="img/yt-Yvc1USis5RU.jpg" alt=""></div><b>Fantasy Island</b><span>International trailer &middot; &ldquo;Sh-Boom&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=kctllffgbsU" target="_blank" rel="noopener" data-video="yt:kctllffgbsU"><div class="clip-img"><img src="img/yt-kctllffgbsU.jpg" alt=""></div><b>Big Sky</b><span>Cast teaser promo &middot; &ldquo;Sh-Boom&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=NJpi1MDPSVU" target="_blank" rel="noopener" data-video="yt:NJpi1MDPSVU"><div class="clip-img"><img src="img/yt-NJpi1MDPSVU.jpg" alt=""></div><b>Set It Up</b><span>Netflix film scene &middot; &ldquo;Come Go With Me&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=ekZYfIqxNpw" target="_blank" rel="noopener" data-video="yt:ekZYfIqxNpw"><div class="clip-img"><img src="img/yt-ekZYfIqxNpw.jpg" alt=""></div><b>NCAA on ESPN</b><span>ACC Network promo &middot; &ldquo;The Best&rdquo; (SoundBreakers Remix)</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band sb-band scales" id="soundbreakers">
+  <div class="wrap sb">
+    <div>
+      <span class="eyebrow">Our Artist</span>
+      <div class="sb-mark">SoundBreakers</div>
+      <p class="lede">SoundBreakers is the Collaborate house artist. We team up with leading trailer composers, producers, musicians and vocalists to write epic originals and re-imagine classic songs for picture.</p>
+      <p class="lede">Every track is produced with the builds, drops and hits that trailer editors cut to, with stems and alternate versions ready when you need them.</p>
+      <div class="actions">
+        <a class="btn solid" href="#listen">Listen</a>
+        <a class="btn" href="#listen" data-tab="originals">Hear the originals</a>
+      </div>
+    </div>
+    <ul class="tracks" aria-label="Signature tracks">
+      <li class="playable" data-play="sh-boom"><button class="tplay" type="button" data-play="sh-boom" aria-label="Play Sh-Boom (Life Could Be a Dream)"><span class="i-play" aria-hidden="true"></span></button><b>Sh-Boom (Life Could Be a Dream)</b><em>Re-imagined cover of The Chords classic</em><span class="tag">Fantasy Island &middot; Big Sky &middot; Doctor Odyssey</span></li>
+      <li class="playable" data-play="midnight-rider"><button class="tplay" type="button" data-play="midnight-rider" aria-label="Play Midnight Rider"><span class="i-play" aria-hidden="true"></span></button><b>Midnight Rider</b><em>Re-imagined cover</em><span class="tag">Runner</span></li>
+      <li><b>My Way</b><em>Re-imagined cover</em><span class="tag">WWE: Unreal</span></li>
+      <li class="playable" data-play="bad-to-the-bone"><button class="tplay" type="button" data-play="bad-to-the-bone" aria-label="Play Bad to the Bone"><span class="i-play" aria-hidden="true"></span></button><b>Bad to the Bone</b><em>Re-imagined cover</em><span class="tag">Gunpowder Milkshake</span></li>
+      <li class="playable" data-play="pure-as-snow"><button class="tplay" type="button" data-play="pure-as-snow" aria-label="Play Pure As Snow (Mike Raznick Remix)"><span class="i-play" aria-hidden="true"></span></button><b>Pure As Snow (Mike Raznick Remix)</b><em>feat. I Hate You Just Kidding &amp; the El Rancho Children&rsquo;s Chorus &middot; a Collaborate original</em><span class="tag">The Handmaid&rsquo;s Tale</span></li>
+      <li class="playable" data-play="feel-good-inc"><button class="tplay" type="button" data-play="feel-good-inc" aria-label="Play Feel Good Inc."><span class="i-play" aria-hidden="true"></span></button><b>Feel Good Inc.</b><em>Re-imagined cover</em><span class="tag">F1 Racing on ESPN</span></li>
+      <li class="playable" data-play="the-best"><button class="tplay" type="button" data-play="the-best" aria-label="Play The Best"><span class="i-play" aria-hidden="true"></span></button><b>The Best</b><em>AWOLNATION, SoundBreakers Remix</em><span class="tag">NCAA on ESPN</span></li>
+      <li class="playable" data-play="creepy-cradle"><button class="tplay" type="button" data-play="creepy-cradle" aria-label="Play Creepy Cradle"><span class="i-play" aria-hidden="true"></span></button><b>Creepy Cradle</b><em>feat. Jude Rivers &middot; a Collaborate original</em><span class="tag">Haunt</span></li>
+    </ul>
+  </div>
+  <div class="wrap">
+    <div class="covers-head"><span class="eyebrow">Latest releases</span><a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Hear them all on DISCO &rarr;</a></div>
+    <div class="covers">
+      <button class="cover" type="button" data-play="bad-to-the-bone" aria-label="Play Bad to the Bone"><img src="img/sb-bad-to-the-bone.jpg" alt="SoundBreakers &ndash; Bad to the Bone" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="midnight-rider" aria-label="Play Midnight Rider"><img src="img/sb-midnight-rider.jpg" alt="SoundBreakers &ndash; Midnight Rider" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="feel-good-inc" aria-label="Play Feel Good Inc."><img src="img/sb-feel-good-inc.jpg" alt="SoundBreakers &ndash; Feel Good Inc." width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="goodbye-blue-sky" aria-label="Play Goodbye Blue Sky"><img src="img/sb-goodbye-blue-sky.jpg" alt="SoundBreakers &ndash; Goodbye Blue Sky" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="fake-empire" aria-label="Play Fake Empire"><img src="img/sb-fake-empire.jpg" alt="SoundBreakers &ndash; Fake Empire" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <span class="cover"><img src="img/sb-champagne-supernova.jpg" alt="SoundBreakers &ndash; Champagne Supernova" width="300" height="300"></span>
+      <button class="cover" type="button" data-play="virtual-insanity" aria-label="Play Virtual Insanity"><img src="img/sb-virtual-insanity.jpg" alt="SoundBreakers &ndash; Virtual Insanity" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <span class="cover"><img src="img/sb-the-end.jpg" alt="SoundBreakers &ndash; The End (Destroyboy Remix)" width="300" height="300"></span>
+      <button class="cover" type="button" data-play="king-volcano" aria-label="Play King Volcano"><img src="img/sb-king-volcano.jpg" alt="SoundBreakers &ndash; King Volcano" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="sober" aria-label="Play Sober"><img src="img/sb-sober.jpg" alt="SoundBreakers &ndash; Sober" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="blue-christmas" aria-label="Play Blue Christmas"><img src="img/sb-blue-christmas.jpg" alt="SoundBreakers &ndash; Blue Christmas" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="cover" type="button" data-play="have-yourself" aria-label="Play Have Yourself a Merry Little Christmas"><img src="img/sb-have-yourself.jpg" alt="SoundBreakers &ndash; Have Yourself a Merry Little Christmas" width="300" height="300"><span class="i-play" aria-hidden="true"></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="band raised" id="services">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Work With Us</span>
+      <h2 class="h2">Two ways in</h2>
+    </div>
+    <div class="ways">
+      <div class="way">
+        <span class="eyebrow">Off the shelf</span>
+        <h3>License a Master</h3>
+        <ul>
+          <li>Trailer-ready originals and covers, searchable on DISCO</li>
+          <li>Stems and alternate versions for your edit</li>
+          <li>Quick quotes and clearance handled by our team</li>
+        </ul>
+        <a class="btn solid" href="#contact" data-subject="Master License Request">Request a license</a>
+      </div>
+      <div class="way">
+        <span class="eyebrow">Built for your cut</span>
+        <h3>Custom Music</h3>
+        <ul>
+          <li>Original tracks or re-imagined covers made for your campaign</li>
+          <li>For trailer houses, ad agencies, networks and studios</li>
+          <li>Top trailer composers, producers and vocalists on every project</li>
+        </ul>
+        <a class="btn" href="#contact" data-subject="Custom Music Inquiry">Start a custom project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="supervision">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Music Supervision &amp; Clearance</span>
+      <h2 class="h2">We also find and clear the music</h2>
+      <p class="lede">Music supervising since 2008, we find and clear music for film, television, trailers, web series and brands, from the search and pitch to negotiating, licensing and cue sheets.</p>
+    </div>
+    <div class="sup-row">
+      <figure class="card"><img src="img/the-bachelor.jpg" alt="The Bachelor poster"><figcaption><span class="tag">Supervision</span><strong>The Bachelor</strong><small>ABC</small></figcaption></figure>
+      <figure class="card"><img src="img/the-golden-bachelor.jpg" alt="The Golden Bachelor poster"><figcaption><span class="tag">Supervision</span><strong>The Golden Bachelor</strong><small>ABC</small></figcaption></figure>
+      <figure class="card"><img src="img/bachelor-in-paradise.jpg" alt="Bachelor in Paradise poster"><figcaption><span class="tag">Supervision</span><strong>Bachelor in Paradise</strong><small>ABC</small></figcaption></figure>
+      <figure class="card"><img src="img/dexter-resurrection.jpg" alt="Dexter: Resurrection poster"><figcaption><span class="tag">Coordination</span><strong>Dexter: Resurrection</strong><small>Showtime</small></figcaption></figure>
+      <figure class="card"><img src="img/griselda.jpg" alt="Griselda poster"><figcaption><span class="tag">Clearance</span><strong>Griselda</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/barry.jpg" alt="Barry poster"><figcaption><span class="tag">Clearance</span><strong>Barry</strong><small>HBO</small></figcaption></figure>
+      <figure class="card"><img src="img/painkiller.jpg" alt="Painkiller poster"><figcaption><span class="tag">Clearance</span><strong>Painkiller</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/outer-banks.jpg" alt="Outer Banks poster"><figcaption><span class="tag">Clearance</span><strong>Outer Banks</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/mrs-davis.jpg" alt="Mrs. Davis poster"><figcaption><span class="tag">Clearance</span><strong>Mrs. Davis</strong><small>Peacock</small></figcaption></figure>
+      <figure class="card"><img src="img/there-s-someone-inside-your-house.jpg" alt="There’s Someone Inside Your House poster"><figcaption><span class="tag">Coordination</span><strong>There&rsquo;s Someone Inside Your House</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/night-teeth.jpg" alt="Night Teeth poster"><figcaption><span class="tag">Coordination</span><strong>Night Teeth</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/won-t-you-be-my-neighbor.jpg" alt="Won’t You Be My Neighbor? poster"><figcaption><span class="tag">Supervision</span><strong>Won&rsquo;t You Be My Neighbor?</strong><small>Focus Features</small></figcaption></figure>
+      <figure class="card"><img src="img/ugly-delicious.jpg" alt="Ugly Delicious poster"><figcaption><span class="tag">Supervision</span><strong>Ugly Delicious</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/they-ll-love-me-when-i-m-dead.jpg" alt="They’ll Love Me When I’m Dead poster"><figcaption><span class="tag">Supervision</span><strong>They&rsquo;ll Love Me When I&rsquo;m Dead</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/the-music-of-strangers.jpg" alt="The Music of Strangers poster"><figcaption><span class="tag">Supervision</span><strong>The Music of Strangers</strong><small>HBO</small></figcaption></figure>
+      <figure class="card"><img src="img/breakfast-lunch-dinner.jpg" alt="Breakfast, Lunch & Dinner poster"><figcaption><span class="tag">Supervision</span><strong>Breakfast, Lunch &amp; Dinner</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/snowfall.jpg" alt="Snowfall poster"><figcaption><span class="tag">Clearance</span><strong>Snowfall</strong><small>FX</small></figcaption></figure>
+      <figure class="card"><img src="img/trinkets.jpg" alt="Trinkets poster"><figcaption><span class="tag">Clearance</span><strong>Trinkets</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/fear-inc.jpg" alt="Fear, Inc. poster"><figcaption><span class="tag">Supervision</span><strong>Fear, Inc.</strong><small>Hulu</small></figcaption></figure>
+      <figure class="card"><img src="img/strangers.jpg" alt="Strangers poster"><figcaption><span class="tag">Clearance</span><strong>Strangers</strong><small>Facebook Watch</small></figcaption></figure>
+      <figure class="card"><img src="img/fleishman-is-in-trouble.jpg" alt="Fleishman Is in Trouble poster"><figcaption><span class="tag">Clearance</span><strong>Fleishman Is in Trouble</strong><small>FX</small></figcaption></figure>
+      <figure class="card"><img src="img/tell-me-lies.jpg" alt="Tell Me Lies poster"><figcaption><span class="tag">Clearance</span><strong>Tell Me Lies</strong><small>Hulu</small></figcaption></figure>
+      <figure class="card"><img src="img/the-peripheral.jpg" alt="The Peripheral poster"><figcaption><span class="tag">Clearance</span><strong>The Peripheral</strong><small>Prime Video</small></figcaption></figure>
+      <figure class="card"><img src="img/check-it.jpg" alt="Check It poster"><figcaption><span class="tag">Supervision</span><strong>Check It</strong><small>Amazon</small></figcaption></figure>
+    </div>
+
+    <div class="brands"><span class="eyebrow">Brand work</span><p>HP &middot; Samsung &middot; Smirnoff &middot; Dunkin&rsquo; &middot; ASICS &middot; Bumble and bumble &middot; Ken Block&rsquo;s Gymkhana</p></div>
+    <div class="people">
+      <article class="person" id="jenn">
+        <div class="person-head"><img class="mono" src="img/jenn.jpg" alt="Jennifer Lanchart" width="72" height="72"><div><h3>Jennifer Lanchart</h3><div class="role">Co-Founder &middot; Founder, Syncalicious Music</div></div></div>
+        <ul class="creds">
+          <li><b>The Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>Bachelor in Paradise<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>Westermann<i>Pentimenti Productions</i></b><span>Music Supervisor</span></li>
+          <li><b>There&rsquo;s Someone Inside Your House<i>Netflix</i></b><span>Music Coordinator</span></li>
+          <li><b>Drunk Bus<i>Amazon</i></b><span>Music Supervisor</span></li>
+          <li><b>They&rsquo;ll Love Me When I&rsquo;m Dead<i>Netflix</i></b><span>Music Supervisor</span></li>
+          <li><b>Won&rsquo;t You Be My Neighbor?<i>Focus Features</i></b><span>Music Supervisor</span></li>
+          <li><b>The Music of Strangers<i>HBO</i></b><span>Music Supervisor</span></li>
+          <li><b>Shaun White Special<i>NBC</i></b><span>Music Coordinator</span></li>
+          <li><b>Smirnoff<i>Broadcast &amp; web</i></b><span>Music Supervisor</span></li>
+        </ul>
+        <p class="more">Music supervising since 2008, with more than 40 projects across film, TV, web series and advertising.</p>
+      </article>
+      <article class="person" id="jody">
+        <div class="person-head"><img class="mono" src="img/jody.jpg" alt="Jody Friedman" width="72" height="72"><div><h3>Jody Friedman</h3><div class="role">Co-Founder &middot; Founder, HD Music Now</div></div></div>
+        <ul class="creds">
+          <li><b>The Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>Bachelor in Paradise<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>Dexter: Resurrection<i>Showtime</i></b><span>Music Coordinator</span></li>
+          <li><b>Griselda<i>Netflix</i></b><span>Music Clearance</span></li>
+          <li><b>Barry<i>HBO</i></b><span>Music Clearance</span></li>
+          <li><b>Painkiller<i>Netflix</i></b><span>Music Clearance</span></li>
+          <li><b>Outer Banks<i>Netflix</i></b><span>Music Clearance</span></li>
+          <li><b>Mrs. Davis<i>Peacock</i></b><span>Music Clearance</span></li>
+          <li><b>Won&rsquo;t You Be My Neighbor?<i>Focus Features</i></b><span>Music Supervisor</span></li>
+        </ul>
+        <p class="more">Plus 30+ more projects in supervision, clearance and coordination. <a class="textlink" href="https://www.imdb.com/name/nm3112237/" target="_blank" rel="noopener">IMDb</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band raised" id="about">
+  <div class="wrap about">
+    <div>
+      <span class="eyebrow">About Collaborate &middot; Est. 2015</span>
+      <p class="about-quote">Two music supervisors who <span class="gold">make the music</span> they wish they could find.</p>
+      <p>Collaborate Music Productions was founded in Los Angeles by industry veterans Jennifer Lanchart and Jody Friedman to create high-end original music and re-imagined covers for every kind of media, with a focus on film trailers.</p>
+      <p>We produce records with well-known trailer composers, producers, musicians and vocalists, and release them through our artist SoundBreakers. Because we also work as music supervisors, we know what an editor needs from a track before the first note is written.</p>
+      <figure class="photo"><img src="img/jenn-jody.jpg" alt="Jennifer Lanchart and Jody Friedman" width="800" height="804"><figcaption>Jenn and Jody at the Guild of Music Supervisors&rsquo; State of Music in Media conference</figcaption></figure>
+    </div>
+    <div class="bios">
+      <div class="bio">
+        <h3>Jennifer Lanchart</h3>
+        <div class="role">Co-Founder &middot; Music Supervisor &middot; Songwriter</div>
+        <p>Jenn has been a music supervisor since 2008, with credits across Netflix, HBO, Amazon, ABC, NBC and Focus Features, plus brand campaigns for Smirnoff, Samsung and HP. As a songwriter she co-wrote the SoundBreakers original &ldquo;Creepy Cradle,&rdquo; featured in the trailer for Eli Roth&rsquo;s <em>Haunt</em>.</p>
+        <div class="badges"><span class="badge"><b>Founder</b> of Syncalicious Music</span></div>
+      </div>
+      <div class="bio">
+        <h3>Jody Friedman</h3>
+        <div class="role">Co-Founder &middot; Songwriter &middot; Producer</div>
+        <p>Jody has spent more than twenty years as a sync agent pitching music and more than twenty years as a music supervisor searching for it. As a songwriter and producer, his songs have landed in <em>Law &amp; Order: Organized Crime</em>, <em>Murdaugh: Death in the Family</em>, CBS&rsquo;s <em>Evil</em> and Hulu&rsquo;s <em>The Handmaid&rsquo;s Tale</em> trailer campaign.</p>
+        <div class="badges">
+          <span class="badge"><b>#1 Best-Selling Author</b> of <i>The Sync Placement Formula</i></span>
+          <a class="badge" href="https://hdmusicnow.com" target="_blank" rel="noopener"><b>Founder</b> of HD Music Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band contact scales" id="contact">
+  <div class="wrap">
+    <img class="contact-emblem" src="img/emblem.png" alt="" width="200" height="200">
+    <span class="eyebrow">Let&rsquo;s Talk</span>
+    <h2>Make your trailer <span class="gold">unforgettable.</span></h2>
+    <p class="lede">License a master or bring us in on custom music for your trailer, promo or ad campaign.</p>
+    <div class="email"><code id="email-addr">music@collaboratemusic.com</code><button class="copy" id="copy-email" type="button">Copy</button></div>
+    <div class="hero-cta">
+      <a class="btn solid" href="mailto:music@collaboratemusic.com?subject=Master%20License%20Request">License a Master</a>
+      <a class="btn" href="mailto:music@collaboratemusic.com?subject=Custom%20Music%20Inquiry">Custom Music</a>
+    </div>
+    <p class="brief">To get a quote faster, include the project, the media and territory, your air date and the track or the kind of sound you need.</p>
+  </div>
+</section>
+</main>
+
+<div class="player" id="player" aria-label="Music player">
+  <div class="pl-wave" id="pl-wave" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><canvas id="pl-canvas"></canvas></div>
+  <div class="pl-bar">
+    <img class="pl-art" id="pl-art" src="img/art/midnight-rider.jpg" alt="" width="52" height="52">
+    <div class="pl-meta"><b id="pl-title">Midnight Rider</b><span id="pl-sub">SoundBreakers &middot; Heard in Runner</span></div>
+    <div class="pl-ctrls">
+      <button class="pl-btn" id="pl-prev" type="button" aria-label="Previous track"><span class="i-prev" aria-hidden="true"></span></button>
+      <button class="pl-btn pl-main" id="pl-play" type="button" aria-label="Play"><span class="i-play" aria-hidden="true"></span></button>
+      <button class="pl-btn" id="pl-next" type="button" aria-label="Next track"><span class="i-next" aria-hidden="true"></span></button>
+    </div>
+    <span class="pl-time" id="pl-time">0:00 / 0:00</span>
+    <a class="pl-license" href="#contact">License this track</a>
+  </div>
+  <audio id="pl-audio" preload="none"></audio>
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <div class="lb-inner" role="dialog" aria-modal="true" aria-label="Trailer">
+    <button class="lb-close" id="lb-close" type="button" aria-label="Close trailer">&times;</button>
+    <div class="lb-frame" id="lb-frame"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo.png" alt="Collaborate Music Productions" width="123" height="22">
+    <nav aria-label="Social">
+      <a href="https://www.instagram.com/soundbreakers" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/collaboratemusic" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">DISCO Catalog</a>
+    </nav>
+    <p>Est. 2015 &middot; Los Angeles, CA &middot; &copy; <span id="yr">2026</span> Collaborate Music Productions</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.pl-tab'));
+  function load(panel){var f=panel.querySelector('.pl-frame');if(f&&!f.firstChild){var i=document.createElement('iframe');i.src=f.getAttribute('data-src');i.title=panel.id.replace('pl-','')+' playlist';i.setAttribute('allowfullscreen','');f.appendChild(i)}}
+  function pick(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);var p=document.getElementById(x.getAttribute('aria-controls'));p.hidden=!on;if(on)load(p)})}
+  tabs.forEach(function(t){t.addEventListener('click',function(){pick(t)})});
+  if(tabs[0])load(document.getElementById(tabs[0].getAttribute('aria-controls')));
+  [].slice.call(document.querySelectorAll('[data-tab]')).forEach(function(a){a.addEventListener('click',function(){var t=document.getElementById('tab-'+a.getAttribute('data-tab'));if(t)pick(t)})});
+
+  /* ---------- bottom player ---------- */
+  var TRACKS=[{"id":"midnight-rider","t":"Midnight Rider","a":"SoundBreakers","h":"Runner","d":120,"w":[0.77,0.61,0.66,0.76,0.63,0.69,0.74,0.55,0.48,0.6,0.63,0.44,0.45,0.56,0.77,0.74,0.81,0.93,1.0,0.93,0.83,0.91,0.5,0.82,0.38,0.15,0.44,0.74,0.62,0.66,0.65,0.76,0.66,0.74,0.64,0.8,0.74,0.67,0.77,0.64,0.79,0.79,0.74,0.34,0.15,0.43,0.76,0.73,0.81,0.62,0.75,0.71,0.75,0.76,0.76,0.75,0.7,0.71,0.69,0.76,0.75,0.71,0.71,0.77,0.79,0.72,0.77,0.72,0.76,0.74,0.79,0.76,0.79,0.74,0.66,0.57,0.56,0.44,0.9,0.89,0.82,0.82,0.79,0.76,0.28,0.11,0.02,0.0,0.0,0.0]},{"id":"sh-boom","t":"Sh-Boom (Life Could Be a Dream)","a":"SoundBreakers","h":"Fantasy Island \u00b7 Big Sky \u00b7 Doctor Odyssey","d":131,"w":[0.1,0.09,0.09,0.07,0.09,0.03,0.1,0.11,0.09,0.11,0.08,0.04,0.25,0.27,0.29,0.44,0.25,0.21,0.31,0.25,0.16,0.29,0.25,0.11,0.75,0.52,0.51,0.54,0.5,0.54,0.58,0.59,0.56,0.6,0.71,0.55,0.51,0.51,0.76,0.36,0.29,0.82,0.38,0.74,0.53,0.39,0.73,0.36,0.26,0.81,0.4,0.66,0.79,0.45,0.79,0.38,0.41,0.74,0.41,0.27,0.76,0.42,0.46,0.37,0.39,0.56,0.5,0.46,0.49,0.44,0.24,0.77,0.79,0.78,0.8,0.81,0.81,0.76,0.81,0.86,0.86,0.93,0.88,0.94,0.99,1.0,0.87,0.22,0.04,0.01]},{"id":"bad-to-the-bone","t":"Bad to the Bone (Epic Trailer Version)","a":"SoundBreakers","h":"Gunpowder Milkshake","d":128,"w":[0.74,0.49,0.56,0.6,0.66,0.49,0.48,0.71,0.63,0.39,0.52,0.75,0.58,0.48,0.44,0.76,0.58,0.49,0.57,0.79,0.65,0.63,0.6,0.64,0.46,0.93,0.9,0.85,0.88,0.84,0.88,0.94,0.89,0.93,0.92,0.87,0.91,0.85,0.94,0.91,0.92,0.89,0.23,0.19,0.21,0.81,0.81,0.93,0.94,0.91,0.86,0.97,0.87,0.96,0.85,0.89,0.94,0.95,0.92,0.91,0.9,0.91,0.91,0.93,0.86,0.99,0.94,0.84,0.89,0.93,0.91,0.99,0.87,1.0,0.69,0.54,0.6,0.71,0.57,0.49,0.54,0.77,0.37,0.49,0.51,0.4,0.07,0.01,0.0,0.0]},{"id":"pure-as-snow","t":"Pure As Snow (Mike Raznick Remix)","a":"SoundBreakers feat. I Hate You Just Kidding","h":"The Handmaid\u2019s Tale","d":180,"w":[0.39,0.35,0.46,0.34,0.37,0.4,0.4,0.44,0.31,0.49,0.34,0.48,0.41,0.36,0.43,0.46,0.36,0.36,0.48,0.25,0.34,0.43,0.41,0.39,0.58,0.56,0.44,0.4,0.41,0.56,0.42,0.54,0.54,0.5,0.49,0.64,0.5,0.42,0.48,0.51,0.56,0.6,0.51,0.41,0.63,0.51,0.49,0.57,0.57,0.49,0.52,0.56,0.69,1.0,0.39,0.91,0.68,0.78,0.55,0.86,0.76,0.69,0.81,0.61,0.71,0.59,0.9,0.79,0.81,0.94,0.86,0.78,0.73,0.83,0.79,0.84,0.87,0.74,0.8,0.73,0.83,0.8,0.87,0.88,0.89,0.82,0.29,0.16,0.2,0.0]},{"id":"feel-good-inc","t":"Feel Good Inc. (SoundBreakers Remix)","a":"SoundBreakers x Johanna Is Eye","h":"F1 Racing on ESPN","d":194,"w":[0.61,0.21,0.16,0.2,0.61,0.45,0.34,0.42,0.69,0.46,0.41,0.61,0.71,0.59,0.57,0.7,0.32,0.31,0.31,0.24,0.34,0.42,0.76,0.49,0.72,0.75,0.48,0.78,0.57,0.69,0.68,0.78,0.79,0.73,0.84,0.66,0.73,0.79,0.82,0.85,0.86,0.67,0.96,0.81,0.89,0.89,0.71,0.91,0.69,0.89,0.91,0.84,0.9,0.82,0.9,0.9,0.77,0.67,0.53,0.51,0.74,0.78,0.73,0.56,0.79,0.93,0.8,0.89,0.84,0.91,0.84,0.81,0.86,0.86,0.94,0.86,0.66,0.99,0.86,0.89,0.89,0.84,0.97,0.92,1.0,0.84,0.89,0.37,0.06,0.0]},{"id":"the-best","t":"The Best (SoundBreakers Remix)","a":"AWOLNATION","h":"NCAA on ESPN","d":177,"w":[0.42,0.2,0.21,0.19,0.46,0.37,0.22,0.17,0.26,0.64,0.26,0.79,0.27,0.84,0.37,0.31,0.59,0.83,0.67,0.39,0.4,0.71,0.76,0.22,0.56,0.31,0.67,0.44,0.76,0.56,0.69,0.69,0.62,0.76,0.81,0.88,0.76,0.81,1.0,0.81,0.84,0.67,0.69,0.65,0.74,0.81,0.83,0.76,0.91,0.8,0.99,0.97,0.99,0.96,0.89,0.89,0.31,0.84,0.69,0.75,0.77,0.82,0.77,0.76,0.81,0.75,0.81,0.83,0.84,0.86,0.83,0.81,0.88,0.78,0.81,0.77,0.64,0.68,0.72,0.84,0.61,0.44,0.29,0.24,0.48,0.37,0.09,0.01,0.0,0.0]},{"id":"blue-skies","t":"Blue Skies","a":"SoundBreakers","h":"Star Trek: Picard","d":149,"w":[0.01,0.05,0.04,0.05,0.03,0.04,0.06,0.06,0.04,0.04,0.64,0.26,0.25,0.25,0.26,0.26,0.19,0.21,0.24,0.95,0.93,0.87,0.86,0.83,0.82,0.86,0.94,0.72,0.91,0.84,0.79,0.86,0.86,0.81,0.86,0.86,0.84,0.81,0.77,0.79,0.85,0.87,0.83,0.81,0.89,0.83,0.87,0.93,0.81,0.85,0.93,0.8,0.84,0.79,1.0,0.81,0.74,0.79,0.76,0.87,0.73,0.79,0.75,0.75,0.66,0.71,0.67,0.68,0.65,0.66,0.73,0.65,0.65,0.72,0.71,0.66,0.69,0.65,0.65,0.64,0.59,0.12,0.16,0.06,0.14,0.12,0.13,0.07,0.02,0.01]},{"id":"creepy-cradle","t":"Creepy Cradle","a":"SoundBreakers feat. Jude Rivers","h":"Haunt","d":96,"w":[0.09,0.1,0.13,0.07,0.12,0.11,0.06,0.11,0.06,0.01,0.01,0.19,0.21,0.03,0.13,0.19,0.15,0.19,0.24,0.14,0.17,0.07,0.1,0.14,0.08,0.18,0.03,0.2,0.19,0.36,0.4,0.44,0.97,0.56,0.41,0.37,0.5,0.92,0.61,0.4,0.35,0.25,0.39,0.35,0.34,0.95,0.42,0.28,0.94,0.81,0.39,0.18,0.94,0.58,0.83,0.59,0.94,0.61,0.89,0.71,0.97,0.64,0.33,0.15,0.06,0.93,0.72,0.92,0.68,0.9,0.73,0.94,0.93,0.78,0.37,0.29,0.36,0.25,0.93,0.45,0.12,0.09,0.06,0.11,0.07,0.2,1.0,0.46,0.12,0.01]},{"id":"too-far-gone","t":"Too Far Gone","a":"SoundBreakers feat. Will Champlin","h":"The Challenge","d":133,"w":[0.03,0.04,0.61,0.34,0.16,0.1,0.09,0.2,0.19,0.14,0.14,0.53,0.31,0.16,0.16,0.13,0.31,0.22,0.77,0.48,0.38,0.36,0.34,0.36,0.34,0.35,0.36,0.53,0.59,0.28,0.39,0.39,0.39,0.28,0.36,0.31,0.24,0.9,0.58,0.83,0.57,0.83,0.83,0.65,0.76,0.63,0.82,0.77,0.65,0.74,0.72,1.0,0.66,0.56,0.67,0.73,0.44,0.16,0.09,0.9,0.58,0.77,0.61,0.89,0.79,0.59,0.72,0.76,0.93,0.94,0.75,0.7,0.71,0.69,0.34,0.86,0.8,0.84,0.3,0.26,0.44,0.16,0.09,0.05,0.03,0.02,0.01,0.01,0.0,0.0]},{"id":"goodbye-blue-sky","t":"Goodbye Blue Sky","a":"SoundBreakers feat. Will Champlin","h":"","d":162,"w":[0.54,0.28,0.57,0.39,0.5,0.53,0.29,0.56,0.36,0.41,0.35,0.26,0.14,0.13,0.47,0.37,0.23,0.46,0.38,0.52,0.31,0.49,0.46,0.38,0.44,0.35,0.46,0.38,0.42,0.52,0.81,0.65,0.61,0.67,0.73,0.65,0.66,0.81,0.71,0.68,0.73,0.74,0.73,0.81,0.55,0.49,0.75,0.39,0.81,0.6,0.64,0.85,1.0,0.72,0.73,0.71,0.69,0.7,0.71,0.73,0.71,0.39,0.74,0.59,0.77,0.66,0.84,0.68,0.71,0.67,0.79,0.77,0.83,0.74,0.7,0.34,0.68,0.81,0.84,0.84,0.84,0.78,0.69,0.11,0.59,0.51,0.14,0.05,0.01,0.0]},{"id":"fake-empire","t":"Fake Empire (SoundBreakers Remix)","a":"Molly Tuttle","h":"","d":185,"w":[0.4,0.16,0.11,0.29,0.21,0.26,0.14,0.22,0.26,0.2,0.07,0.26,0.25,0.28,0.39,0.54,0.59,0.55,0.55,0.42,0.46,0.3,0.52,0.47,0.66,0.39,0.56,0.48,0.53,0.44,0.53,0.49,0.54,0.49,0.85,0.54,0.7,0.68,0.74,0.56,0.71,0.68,0.82,0.31,0.29,0.76,0.49,1.0,0.73,0.76,0.81,0.84,0.66,0.79,0.68,0.81,0.38,0.14,0.31,0.26,0.39,0.59,0.46,0.64,0.57,0.41,0.85,0.71,0.75,0.69,0.79,0.66,0.76,0.78,0.84,0.74,0.75,0.77,0.69,0.76,0.79,0.93,0.44,0.25,0.22,0.39,0.13,0.03,0.0,0.0]},{"id":"virtual-insanity","t":"Virtual Insanity","a":"SoundBreakers","h":"","d":159,"w":[0.73,0.46,0.26,0.36,0.59,0.71,0.69,0.43,0.39,0.29,0.46,0.69,0.59,0.48,0.4,0.41,0.41,0.71,0.61,0.4,0.43,0.4,0.44,0.48,0.06,0.36,0.38,0.43,0.38,0.38,0.46,1.0,0.96,0.87,0.54,0.51,0.51,0.52,0.51,0.5,0.54,0.56,0.52,0.56,0.53,0.94,0.54,0.25,0.59,0.52,0.65,0.59,0.51,0.55,0.56,0.51,0.62,0.56,0.59,0.69,0.61,0.52,0.57,0.51,0.58,0.59,0.59,0.57,0.57,0.54,0.56,0.58,0.57,0.59,0.54,0.55,0.61,0.54,0.59,0.58,0.64,0.49,0.43,0.29,0.56,0.59,0.54,0.17,0.01,0.0]},{"id":"king-volcano","t":"King Volcano","a":"SoundBreakers feat. Young Spirit","h":"","d":137,"w":[0.71,0.36,0.14,0.15,0.28,0.72,0.73,0.36,0.16,0.18,0.29,0.75,0.61,0.36,0.29,0.34,0.31,0.79,0.57,0.36,0.19,0.21,0.28,0.34,0.36,0.48,0.92,0.62,0.94,0.96,0.56,0.95,0.94,0.96,0.76,0.92,0.98,0.72,1.0,0.54,0.2,0.05,0.06,0.14,0.31,0.49,0.0,1.0,1.0,0.79,0.99,0.94,0.83,0.96,0.8,0.76,0.91,0.86,0.82,0.89,0.95,0.78,0.98,0.91,0.91,0.88,0.93,0.98,0.8,0.89,0.99,0.77,0.85,0.9,0.84,0.86,0.85,0.4,0.31,0.74,0.51,0.42,0.16,0.1,0.07,0.05,0.01,0.01,0.0,0.0]},{"id":"sober","t":"Sober","a":"SoundBreakers feat. Deraj","h":"","d":198,"w":[0.56,0.69,0.46,0.37,0.72,0.37,0.54,0.69,0.38,0.63,0.57,0.41,0.66,0.37,0.56,0.61,0.59,0.43,0.55,0.46,0.36,0.76,0.62,0.69,0.64,0.74,0.8,0.71,0.72,0.81,0.71,0.69,0.74,0.59,0.74,0.64,0.7,0.66,0.69,0.65,0.69,0.66,0.7,0.64,0.59,0.5,0.63,0.66,0.88,0.73,0.78,0.76,0.74,0.76,0.69,0.7,0.81,0.78,0.91,0.91,0.7,0.58,0.81,0.93,0.81,0.83,0.41,0.81,0.45,0.68,0.72,0.67,0.7,0.82,0.86,0.81,0.88,0.89,0.86,0.3,0.97,1.0,0.95,0.59,0.5,0.29,0.06,0.43,0.14,0.02]},{"id":"blue-christmas","t":"Blue Christmas","a":"SoundBreakers","h":"","d":156,"w":[0.04,0.08,0.06,0.05,0.05,0.06,0.06,0.07,0.07,0.06,0.06,0.06,0.07,0.06,0.06,0.06,0.06,0.06,0.05,0.04,0.33,0.27,0.11,0.09,0.11,0.15,0.19,0.35,0.26,0.29,0.26,0.27,0.74,0.53,0.37,0.26,0.25,0.83,0.49,0.29,0.28,0.31,0.83,0.54,0.29,0.27,0.34,0.32,0.52,0.38,0.14,0.22,0.51,0.52,0.52,0.54,0.71,0.54,0.49,0.5,0.49,0.67,0.34,0.54,0.54,0.48,0.61,0.68,0.87,0.97,0.86,1.0,0.93,0.94,0.85,0.98,0.83,0.76,0.81,0.92,0.87,0.13,0.44,0.36,0.24,0.1,0.04,0.01,0.01,0.0]},{"id":"have-yourself","t":"Have Yourself a Merry Little Christmas","a":"SoundBreakers","h":"","d":172,"w":[0.61,0.44,0.1,0.08,0.09,0.08,0.67,0.51,0.14,0.09,0.09,0.06,0.08,0.72,0.86,0.41,0.44,0.46,0.35,0.26,0.86,0.71,0.71,0.79,0.99,0.79,0.53,0.78,0.74,0.67,0.56,0.61,0.64,0.61,0.73,0.59,0.64,0.66,0.56,1.0,0.69,0.92,0.83,0.68,0.91,0.66,0.81,0.74,0.72,0.71,0.55,0.71,0.69,0.54,0.74,0.44,0.11,0.76,0.82,0.79,0.78,0.9,0.77,0.63,0.74,0.72,0.72,0.68,0.78,0.73,0.64,0.77,0.78,0.84,0.77,0.8,0.59,0.18,0.11,0.73,0.73,0.8,0.76,0.53,0.34,0.69,0.23,0.04,0.01,0.0]}];
+  var A=document.getElementById('pl-audio'),P=document.getElementById('player'),cv=document.getElementById('pl-canvas'),wave=document.getElementById('pl-wave');
+  var playBtn=document.getElementById('pl-play'),cur=0,loaded=-1;
+  var css=getComputedStyle(document.documentElement),GOLD=css.getPropertyValue('--gold').trim()||'#d6b25e',DIM='rgba(239,233,220,.22)';
+  function idx(id){for(var i=0;i<TRACKS.length;i++)if(TRACKS[i].id===id)return i;return 0}
+  function fmt(t){t=Math.max(0,Math.floor(t||0));return Math.floor(t/60)+':'+('0'+t%60).slice(-2)}
+  function draw(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;if(!r.width)return;cv.width=r.width*d;cv.height=r.height*d;var c=cv.getContext('2d');c.scale(d,d);
+    var w=TRACKS[cur].w,n=w.length,bw=r.width/n,dur=A.duration||TRACKS[cur].d,prog=dur?(A.currentTime/dur):0;
+    for(var i=0;i<n;i++){var h=Math.max(2,w[i]*(r.height-4));c.fillStyle=(i/n)<prog?GOLD:DIM;c.fillRect(i*bw+bw*.18,(r.height-h)/2,bw*.64,h)}
+    wave.setAttribute('aria-valuenow',Math.round(prog*100))}
+  function ui(){var t=TRACKS[cur];document.getElementById('pl-title').textContent=t.t;
+    document.getElementById('pl-sub').textContent=t.a+(t.h?' \u00b7 Heard in '+t.h:'');
+    document.getElementById('pl-art').src='img/art/'+t.id+'.jpg';
+    var on=!A.paused;playBtn.innerHTML='<span class="'+(on?'i-pause':'i-play')+'" aria-hidden="true"></span>';playBtn.setAttribute('aria-label',on?'Pause':'Play');
+    P.classList.toggle('live',on);
+    [].slice.call(document.querySelectorAll('[data-play]')).forEach(function(el){var me=el.getAttribute('data-play')===t.id&&on;el.classList.toggle('on',me);var card=el.closest('.card');if(card&&el.classList.contains('act'))card.classList.toggle('playing',me)});
+    document.getElementById('pl-time').textContent=fmt(A.currentTime)+' / '+fmt(A.duration||t.d);draw()}
+  function play(i){if(i!==undefined&&i!==cur){cur=(i+TRACKS.length)%TRACKS.length}
+    if(loaded!==cur){A.src='audio/'+TRACKS[cur].id+'.mp3';loaded=cur}
+    var pr=A.play();if(pr&&pr.catch)pr.catch(function(){});ui()}
+  function toggle(id){var i=idx(id);if(i===cur&&loaded===cur&&!A.paused){A.pause()}else{play(i)}}
+  playBtn.addEventListener('click',function(){if(A.paused)play();else A.pause()});
+  document.getElementById('pl-next').addEventListener('click',function(){play(cur+1)});
+  document.getElementById('pl-prev').addEventListener('click',function(){if(A.currentTime>3){A.currentTime=0}else play(cur-1)});
+  A.addEventListener('timeupdate',ui);A.addEventListener('play',ui);A.addEventListener('pause',ui);A.addEventListener('loadedmetadata',ui);
+  A.addEventListener('ended',function(){play(cur+1)});
+  function seek(x){var r=wave.getBoundingClientRect(),f=Math.min(1,Math.max(0,(x-r.left)/r.width));if(loaded!==cur){play()}var go=function(){if(A.duration)A.currentTime=f*A.duration;ui()};if(A.duration)go();else A.addEventListener('loadedmetadata',go,{once:true})}
+  wave.addEventListener('click',function(e){seek(e.clientX)});
+  wave.addEventListener('keydown',function(e){if(!A.duration)return;if(e.key==='ArrowRight')A.currentTime=Math.min(A.duration,A.currentTime+5);if(e.key==='ArrowLeft')A.currentTime=Math.max(0,A.currentTime-5)});
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-play]');if(b&&!b.matches('li')){e.preventDefault();toggle(b.getAttribute('data-play'))}
+    var st=e.target.closest('[data-start]');if(st){play()}});
+  window.addEventListener('resize',draw);ui();
+
+  /* ---------- trailer lightbox ---------- */
+  var LB=document.getElementById('lightbox'),LF=document.getElementById('lb-frame'),wasPlaying=false;
+  function openVideo(v){var k=v.split(':'),src=k[0]==='vm'?'https://player.vimeo.com/video/'+k[1]+'?autoplay=1':'https://www.youtube-nocookie.com/embed/'+k[1]+'?autoplay=1&rel=0&modestbranding=1';
+    wasPlaying=!A.paused;A.pause();LF.innerHTML='';var f=document.createElement('iframe');f.src=src;f.allow='autoplay; fullscreen; picture-in-picture';f.setAttribute('allowfullscreen','');f.title='Trailer';LF.appendChild(f);LB.hidden=false;document.getElementById('lb-close').focus()}
+  function closeVideo(){LB.hidden=true;LF.innerHTML='';if(wasPlaying)play()}
+  document.addEventListener('click',function(e){var v=e.target.closest('[data-video]');if(v){e.preventDefault();openVideo(v.getAttribute('data-video'))}});
+  document.getElementById('lb-close').addEventListener('click',closeVideo);
+  LB.addEventListener('click',function(e){if(e.target===LB)closeVideo()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!LB.hidden)closeVideo()});
+  var y=document.getElementById('yr'); if(y) y.textContent=new Date().getFullYear();
+  var b=document.getElementById('copy-email'), addr='music@collaboratemusic.com';
+  if(b) b.addEventListener('click',function(){
+    function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1800)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email-addr'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
+    try{navigator.clipboard.writeText(addr).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+</script>
+<!--ARTIFACT-END-->
+</body>
+</html>

@@ -1,0 +1,1339 @@
+[
+ {
+  "title": "Saturday Night Live",
+  "slug": "saturday-night-live",
+  "kind": "TV Series",
+  "net": "NBC",
+  "group": "placement"
+ },
+ {
+  "title": "Breaking Bad",
+  "slug": "breaking-bad",
+  "kind": "TV Series",
+  "net": "AMC",
+  "group": "placement"
+ },
+ {
+  "title": "Avengers: Endgame",
+  "slug": "avengers-endgame",
+  "kind": "Trailer",
+  "net": "Marvel",
+  "group": "placement"
+ },
+ {
+  "title": "Nope",
+  "slug": "nope",
+  "kind": "Feature Film",
+  "net": "Universal",
+  "group": "placement"
+ },
+ {
+  "title": "Mad Max: Fury Road",
+  "slug": "mad-max-fury-road",
+  "kind": "Trailer",
+  "net": "Warner Bros.",
+  "group": "placement"
+ },
+ {
+  "title": "The Fall Guy",
+  "slug": "the-fall-guy",
+  "kind": "Feature Film",
+  "net": "Universal",
+  "group": "placement"
+ },
+ {
+  "title": "Superman",
+  "slug": "superman",
+  "kind": "Trailer",
+  "net": "Warner Bros. / DC",
+  "group": "placement"
+ },
+ {
+  "title": "Better Call Saul",
+  "slug": "better-call-saul",
+  "kind": "TV Series",
+  "net": "AMC",
+  "group": "placement"
+ },
+ {
+  "title": "Dexter",
+  "slug": "dexter",
+  "kind": "TV Series",
+  "net": "Showtime",
+  "group": "placement"
+ },
+ {
+  "title": "What We Do in the Shadows",
+  "slug": "what-we-do-in-the-shadows",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "Hacks",
+  "slug": "hacks",
+  "kind": "TV Series",
+  "net": "HBO Max",
+  "group": "placement"
+ },
+ {
+  "title": "Atlanta",
+  "slug": "atlanta",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "Captain Marvel",
+  "slug": "captain-marvel",
+  "kind": "Trailer",
+  "net": "Marvel",
+  "group": "placement"
+ },
+ {
+  "title": "The Trial of the Chicago 7",
+  "slug": "the-trial-of-the-chicago-7",
+  "kind": "Feature Film",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Daredevil: Born Again",
+  "slug": "daredevil-born-again",
+  "kind": "TV Series",
+  "net": "Disney+",
+  "group": "placement"
+ },
+ {
+  "title": "Nomadland",
+  "slug": "nomadland",
+  "kind": "Trailer",
+  "net": "Searchlight",
+  "group": "placement"
+ },
+ {
+  "title": "The Handmaid's Tale",
+  "slug": "the-handmaid-s-tale",
+  "kind": "Trailer",
+  "net": "Hulu",
+  "group": "placement"
+ },
+ {
+  "title": "Grey's Anatomy",
+  "slug": "grey-s-anatomy",
+  "kind": "TV Series",
+  "net": "ABC",
+  "group": "placement"
+ },
+ {
+  "title": "American Horror Story",
+  "slug": "american-horror-story",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "True Blood",
+  "slug": "true-blood",
+  "kind": "TV Series",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Venom",
+  "slug": "venom",
+  "kind": "Trailer",
+  "net": "Sony",
+  "group": "placement"
+ },
+ {
+  "title": "Big Little Lies",
+  "slug": "big-little-lies",
+  "kind": "Trailer",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Shameless",
+  "slug": "shameless",
+  "kind": "TV Series",
+  "net": "Showtime",
+  "group": "placement"
+ },
+ {
+  "title": "Pose",
+  "slug": "pose",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "Dallas Buyers Club",
+  "slug": "dallas-buyers-club",
+  "kind": "Feature Film",
+  "net": "Focus Features",
+  "group": "placement"
+ },
+ {
+  "title": "Murder on the Orient Express",
+  "slug": "murder-on-the-orient-express",
+  "kind": "Trailer",
+  "net": "20th Century Fox",
+  "group": "placement"
+ },
+ {
+  "title": "Beauty and the Beast",
+  "slug": "beauty-and-the-beast",
+  "kind": "Trailer",
+  "net": "Disney",
+  "group": "placement"
+ },
+ {
+  "title": "Star Trek: Picard",
+  "slug": "star-trek-picard",
+  "kind": "Trailer",
+  "net": "Paramount+",
+  "group": "placement"
+ },
+ {
+  "title": "Snowpiercer",
+  "slug": "snowpiercer",
+  "kind": "TV Series",
+  "net": "TNT",
+  "group": "placement"
+ },
+ {
+  "title": "Ray Donovan",
+  "slug": "ray-donovan",
+  "kind": "TV Series",
+  "net": "Showtime",
+  "group": "placement"
+ },
+ {
+  "title": "Law & Order: Organized Crime",
+  "slug": "law-order-organized-crime",
+  "kind": "TV Series",
+  "net": "NBC",
+  "group": "placement"
+ },
+ {
+  "title": "Agents of S.H.I.E.L.D.",
+  "slug": "agents-of-s-h-i-e-l-d",
+  "kind": "TV Series",
+  "net": "ABC",
+  "group": "placement"
+ },
+ {
+  "title": "The Fall of the House of Usher",
+  "slug": "the-fall-of-the-house-of-usher",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Spirited",
+  "slug": "spirited",
+  "kind": "Feature Film",
+  "net": "Apple TV+",
+  "group": "placement"
+ },
+ {
+  "title": "The Pacific",
+  "slug": "the-pacific",
+  "kind": "TV Series",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Big Love",
+  "slug": "big-love",
+  "kind": "TV Series",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Weeds",
+  "slug": "weeds",
+  "kind": "TV Series",
+  "net": "Showtime",
+  "group": "placement"
+ },
+ {
+  "title": "Eastbound & Down",
+  "slug": "eastbound-down",
+  "kind": "TV Series",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Halt and Catch Fire",
+  "slug": "halt-and-catch-fire",
+  "kind": "TV Series",
+  "net": "AMC",
+  "group": "placement"
+ },
+ {
+  "title": "Resident Alien",
+  "slug": "resident-alien",
+  "kind": "TV Series",
+  "net": "Syfy",
+  "group": "placement"
+ },
+ {
+  "title": "Interior Chinatown",
+  "slug": "interior-chinatown",
+  "kind": "TV Series",
+  "net": "Hulu",
+  "group": "placement"
+ },
+ {
+  "title": "Somebody Somewhere",
+  "slug": "somebody-somewhere",
+  "kind": "TV Series",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Are You There God? It's Me, Margaret.",
+  "slug": "are-you-there-god-it-s-me-margaret",
+  "kind": "Feature Film",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "Murdaugh: Death in the Family",
+  "slug": "murdaugh-death-in-the-family",
+  "kind": "TV Series",
+  "net": "Lifetime",
+  "group": "placement"
+ },
+ {
+  "title": "Tomb Raider: The Legend of Lara Croft",
+  "slug": "tomb-raider-the-legend-of-lara-croft",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Hit-Monkey",
+  "slug": "hit-monkey",
+  "kind": "TV Series",
+  "net": "Hulu",
+  "group": "placement"
+ },
+ {
+  "title": "Kim's Convenience",
+  "slug": "kim-s-convenience",
+  "kind": "TV Series",
+  "net": "CBC / Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "How I Met Your Father",
+  "slug": "how-i-met-your-father",
+  "kind": "TV Series",
+  "net": "Hulu",
+  "group": "placement"
+ },
+ {
+  "title": "Them",
+  "slug": "them",
+  "kind": "TV Series",
+  "net": "Prime Video",
+  "group": "placement"
+ },
+ {
+  "title": "Tuca & Bertie",
+  "slug": "tuca-bertie",
+  "kind": "TV Series",
+  "net": "Adult Swim",
+  "group": "placement"
+ },
+ {
+  "title": "The Vince Staples Show",
+  "slug": "the-vince-staples-show",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Selling the OC",
+  "slug": "selling-the-oc",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Love Story",
+  "slug": "love-story",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "The Vampire Diaries",
+  "slug": "the-vampire-diaries",
+  "kind": "TV Series",
+  "net": "The CW",
+  "group": "placement"
+ },
+ {
+  "title": "Red Sparrow",
+  "slug": "red-sparrow",
+  "kind": "Trailer",
+  "net": "20th Century Fox",
+  "group": "placement"
+ },
+ {
+  "title": "The Undoing",
+  "slug": "the-undoing",
+  "kind": "Trailer",
+  "net": "HBO",
+  "group": "placement"
+ },
+ {
+  "title": "Friends with Benefits",
+  "slug": "friends-with-benefits",
+  "kind": "Feature Film",
+  "net": "Sony",
+  "group": "placement"
+ },
+ {
+  "title": "American Reunion",
+  "slug": "american-reunion",
+  "kind": "Feature Film",
+  "net": "Universal",
+  "group": "placement"
+ },
+ {
+  "title": "Dolphin Tale",
+  "slug": "dolphin-tale",
+  "kind": "Feature Film",
+  "net": "Warner Bros.",
+  "group": "placement"
+ },
+ {
+  "title": "Street Fighter",
+  "slug": "street-fighter",
+  "kind": "Feature Film",
+  "net": "Paramount",
+  "group": "placement"
+ },
+ {
+  "title": "Spider-Noir",
+  "slug": "spider-noir",
+  "kind": "Trailer",
+  "net": "Prime Video",
+  "group": "placement"
+ },
+ {
+  "title": "John Carter",
+  "slug": "john-carter",
+  "kind": "Trailer",
+  "net": "Disney",
+  "group": "placement"
+ },
+ {
+  "title": "The Ballad of Buster Scruggs",
+  "slug": "the-ballad-of-buster-scruggs",
+  "kind": "Trailer",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Destroyer",
+  "slug": "destroyer",
+  "kind": "Feature Film",
+  "net": "Annapurna",
+  "group": "placement"
+ },
+ {
+  "title": "Bridget Jones's Baby",
+  "slug": "bridget-jones-s-baby",
+  "kind": "Trailer",
+  "net": "Universal",
+  "group": "placement"
+ },
+ {
+  "title": "Instant Family",
+  "slug": "instant-family",
+  "kind": "Trailer",
+  "net": "Paramount",
+  "group": "placement"
+ },
+ {
+  "title": "Daddy's Home",
+  "slug": "daddy-s-home",
+  "kind": "Trailer",
+  "net": "Paramount",
+  "group": "placement"
+ },
+ {
+  "title": "Rock of Ages",
+  "slug": "rock-of-ages",
+  "kind": "Trailer",
+  "net": "Warner Bros.",
+  "group": "placement"
+ },
+ {
+  "title": "Goliath",
+  "slug": "goliath",
+  "kind": "TV Series",
+  "net": "Amazon",
+  "group": "placement"
+ },
+ {
+  "title": "NOS4A2",
+  "slug": "nos4a2",
+  "kind": "TV Series",
+  "net": "AMC",
+  "group": "placement"
+ },
+ {
+  "title": "Damages",
+  "slug": "damages",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "9-1-1",
+  "slug": "9-1-1",
+  "kind": "TV Series",
+  "net": "FOX",
+  "group": "placement"
+ },
+ {
+  "title": "Banshee",
+  "slug": "banshee",
+  "kind": "TV Series",
+  "net": "Cinemax",
+  "group": "placement"
+ },
+ {
+  "title": "Zoey's Extraordinary Playlist",
+  "slug": "zoey-s-extraordinary-playlist",
+  "kind": "TV Series",
+  "net": "NBC",
+  "group": "placement"
+ },
+ {
+  "title": "Looking for Alaska",
+  "slug": "looking-for-alaska",
+  "kind": "TV Series",
+  "net": "Hulu",
+  "group": "placement"
+ },
+ {
+  "title": "Riverdale",
+  "slug": "riverdale",
+  "kind": "TV Series",
+  "net": "The CW",
+  "group": "placement"
+ },
+ {
+  "title": "Migration",
+  "slug": "migration",
+  "kind": "Trailer",
+  "net": "Universal",
+  "group": "placement"
+ },
+ {
+  "title": "Fantasy Island",
+  "slug": "fantasy-island",
+  "kind": "Trailer",
+  "net": "Sony / Blumhouse",
+  "group": "placement"
+ },
+ {
+  "title": "Station 19",
+  "slug": "station-19",
+  "kind": "TV Series",
+  "net": "ABC",
+  "group": "placement"
+ },
+ {
+  "title": "Magnum P.I.",
+  "slug": "magnum-p-i",
+  "kind": "TV Series",
+  "net": "NBC",
+  "group": "placement"
+ },
+ {
+  "title": "SEAL Team",
+  "slug": "seal-team",
+  "kind": "TV Series",
+  "net": "CBS",
+  "group": "placement"
+ },
+ {
+  "title": "The Rookie",
+  "slug": "the-rookie",
+  "kind": "TV Series",
+  "net": "ABC",
+  "group": "placement"
+ },
+ {
+  "title": "Selling Sunset",
+  "slug": "selling-sunset",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Little America",
+  "slug": "little-america",
+  "kind": "TV Series",
+  "net": "Apple TV+",
+  "group": "placement"
+ },
+ {
+  "title": "Better Things",
+  "slug": "better-things",
+  "kind": "TV Series",
+  "net": "FX",
+  "group": "placement"
+ },
+ {
+  "title": "iZombie",
+  "slug": "izombie",
+  "kind": "TV Series",
+  "net": "The CW",
+  "group": "placement"
+ },
+ {
+  "title": "Private Practice",
+  "slug": "private-practice",
+  "kind": "TV Series",
+  "net": "ABC",
+  "group": "placement"
+ },
+ {
+  "title": "Hart of Dixie",
+  "slug": "hart-of-dixie",
+  "kind": "TV Series",
+  "net": "The CW",
+  "group": "placement"
+ },
+ {
+  "title": "The Killing",
+  "slug": "the-killing",
+  "kind": "TV Series",
+  "net": "AMC",
+  "group": "placement"
+ },
+ {
+  "title": "Outcast",
+  "slug": "outcast",
+  "kind": "TV Series",
+  "net": "Cinemax",
+  "group": "placement"
+ },
+ {
+  "title": "Wu Assassins",
+  "slug": "wu-assassins",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Victorious",
+  "slug": "victorious",
+  "kind": "TV Series",
+  "net": "Nickelodeon",
+  "group": "placement"
+ },
+ {
+  "title": "The Tick",
+  "slug": "the-tick",
+  "kind": "TV Series",
+  "net": "Amazon",
+  "group": "placement"
+ },
+ {
+  "title": "Search Party",
+  "slug": "search-party",
+  "kind": "TV Series",
+  "net": "TBS / HBO Max",
+  "group": "placement"
+ },
+ {
+  "title": "Keeping Up with the Kardashians",
+  "slug": "keeping-up-with-the-kardashians",
+  "kind": "TV Series",
+  "net": "E!",
+  "group": "placement"
+ },
+ {
+  "title": "Sistas",
+  "slug": "sistas",
+  "kind": "TV Series",
+  "net": "BET",
+  "group": "placement"
+ },
+ {
+  "title": "Three Women",
+  "slug": "three-women",
+  "kind": "TV Series",
+  "net": "Starz",
+  "group": "placement"
+ },
+ {
+  "title": "Animal Control",
+  "slug": "animal-control",
+  "kind": "TV Series",
+  "net": "FOX",
+  "group": "placement"
+ },
+ {
+  "title": "Alert: Missing Persons Unit",
+  "slug": "alert-missing-persons-unit",
+  "kind": "TV Series",
+  "net": "FOX",
+  "group": "placement"
+ },
+ {
+  "title": "Sirens",
+  "slug": "sirens",
+  "kind": "TV Series",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "Lopez vs Lopez",
+  "slug": "lopez-vs-lopez",
+  "kind": "TV Series",
+  "net": "NBC",
+  "group": "placement"
+ },
+ {
+  "title": "Call Me Kat",
+  "slug": "call-me-kat",
+  "kind": "TV Series",
+  "net": "FOX",
+  "group": "placement"
+ },
+ {
+  "title": "The Way Home",
+  "slug": "the-way-home",
+  "kind": "TV Series",
+  "net": "Hallmark",
+  "group": "placement"
+ },
+ {
+  "title": "Homicide: Life on the Street",
+  "slug": "homicide-life-on-the-street",
+  "kind": "TV Series",
+  "net": "NBC",
+  "group": "placement"
+ },
+ {
+  "title": "Imperfect Women",
+  "slug": "imperfect-women",
+  "kind": "TV Series",
+  "net": "Apple TV+",
+  "group": "placement"
+ },
+ {
+  "title": "Widow's Bay",
+  "slug": "widow-s-bay",
+  "kind": "TV Series",
+  "net": "Apple TV+",
+  "group": "placement"
+ },
+ {
+  "title": "Parental Guidance",
+  "slug": "parental-guidance",
+  "kind": "Feature Film",
+  "net": "20th Century Fox",
+  "group": "placement"
+ },
+ {
+  "title": "Baggage Claim",
+  "slug": "baggage-claim",
+  "kind": "Feature Film",
+  "net": "Fox Searchlight",
+  "group": "placement"
+ },
+ {
+  "title": "Parker",
+  "slug": "parker",
+  "kind": "Feature Film",
+  "net": "FilmDistrict",
+  "group": "placement"
+ },
+ {
+  "title": "Dinner for Schmucks",
+  "slug": "dinner-for-schmucks",
+  "kind": "Feature Film",
+  "net": "Paramount",
+  "group": "placement"
+ },
+ {
+  "title": "Mother's Day",
+  "slug": "mother-s-day",
+  "kind": "Feature Film",
+  "net": "Open Road",
+  "group": "placement"
+ },
+ {
+  "title": "The Bounty Hunter",
+  "slug": "the-bounty-hunter",
+  "kind": "Feature Film",
+  "net": "Sony",
+  "group": "placement"
+ },
+ {
+  "title": "Morris from America",
+  "slug": "morris-from-america",
+  "kind": "Feature Film",
+  "net": "A24",
+  "group": "placement"
+ },
+ {
+  "title": "The Burnt Orange Heresy",
+  "slug": "the-burnt-orange-heresy",
+  "kind": "Feature Film",
+  "net": "Sony Pictures Classics",
+  "group": "placement"
+ },
+ {
+  "title": "The Front Room",
+  "slug": "the-front-room",
+  "kind": "Feature Film",
+  "net": "A24",
+  "group": "placement"
+ },
+ {
+  "title": "It's What's Inside",
+  "slug": "it-s-what-s-inside",
+  "kind": "Indie Film",
+  "net": "Netflix",
+  "group": "placement"
+ },
+ {
+  "title": "The Sheep Detectives",
+  "slug": "the-sheep-detectives",
+  "kind": "Feature Film",
+  "net": "MGM",
+  "group": "placement"
+ },
+ {
+  "title": "Not Without Hope",
+  "slug": "not-without-hope",
+  "kind": "Feature Film",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "Landscape with Invisible Hand",
+  "slug": "landscape-with-invisible-hand",
+  "kind": "Trailer",
+  "net": "MGM",
+  "group": "placement"
+ },
+ {
+  "title": "The End of Oak Street",
+  "slug": "the-end-of-oak-street",
+  "kind": "Trailer",
+  "net": "Warner Bros.",
+  "group": "placement"
+ },
+ {
+  "title": "Stronger",
+  "slug": "stronger",
+  "kind": "Trailer",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "American Ultra",
+  "slug": "american-ultra",
+  "kind": "Trailer",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "The Goldfinch",
+  "slug": "the-goldfinch",
+  "kind": "Trailer",
+  "net": "Warner Bros.",
+  "group": "placement"
+ },
+ {
+  "title": "Captive State",
+  "slug": "captive-state",
+  "kind": "Trailer",
+  "net": "Focus Features",
+  "group": "placement"
+ },
+ {
+  "title": "Boy Erased",
+  "slug": "boy-erased",
+  "kind": "Trailer",
+  "net": "Focus Features",
+  "group": "placement"
+ },
+ {
+  "title": "The High Note",
+  "slug": "the-high-note",
+  "kind": "Trailer",
+  "net": "Focus Features",
+  "group": "placement"
+ },
+ {
+  "title": "Ben Is Back",
+  "slug": "ben-is-back",
+  "kind": "Trailer",
+  "net": "Roadside Attractions",
+  "group": "placement"
+ },
+ {
+  "title": "Uncle Drew",
+  "slug": "uncle-drew",
+  "kind": "Trailer",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "The Age of Adaline",
+  "slug": "the-age-of-adaline",
+  "kind": "Trailer",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "Leave No Trace",
+  "slug": "leave-no-trace",
+  "kind": "Trailer",
+  "net": "Bleecker Street",
+  "group": "placement"
+ },
+ {
+  "title": "Daddy's Home 2",
+  "slug": "daddy-s-home-2",
+  "kind": "Trailer",
+  "net": "Paramount",
+  "group": "placement"
+ },
+ {
+  "title": "Chappaquiddick",
+  "slug": "chappaquiddick",
+  "kind": "Trailer",
+  "net": "Entertainment Studios",
+  "group": "placement"
+ },
+ {
+  "title": "Dexter: Resurrection",
+  "slug": "dexter-resurrection",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Jay-Z in 8",
+  "slug": "jay-z-in-8",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "The Golden Bachelor",
+  "slug": "the-golden-bachelor",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Bachelor in Paradise",
+  "slug": "bachelor-in-paradise",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "The Bachelor",
+  "slug": "the-bachelor",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Barry",
+  "slug": "barry",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Griselda",
+  "slug": "griselda",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Painkiller",
+  "slug": "painkiller",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Outer Banks",
+  "slug": "outer-banks",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Won't You Be My Neighbor?",
+  "slug": "won-t-you-be-my-neighbor",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Fleishman Is in Trouble",
+  "slug": "fleishman-is-in-trouble",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "The Peripheral",
+  "slug": "the-peripheral",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Bodkin",
+  "slug": "bodkin",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Mrs. Davis",
+  "slug": "mrs-davis",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Kandahar",
+  "slug": "kandahar",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "The Burial",
+  "slug": "the-burial",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Snowfall",
+  "slug": "snowfall",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Tell Me Lies",
+  "slug": "tell-me-lies",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Dear Edward",
+  "slug": "dear-edward",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Echo 3",
+  "slug": "echo-3",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Velma",
+  "slug": "velma",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Night Teeth",
+  "slug": "night-teeth",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "There's Someone Inside Your House",
+  "slug": "there-s-someone-inside-your-house",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Ugly Delicious",
+  "slug": "ugly-delicious",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Trinkets",
+  "slug": "trinkets",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "The Music of Strangers",
+  "slug": "the-music-of-strangers",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Have a Good Trip",
+  "slug": "have-a-good-trip-adventures-in-psychedelics",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "The Watchful Eye",
+  "slug": "the-watchful-eye",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Devil in Ohio",
+  "slug": "devil-in-ohio",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Waiting for the Drop",
+  "slug": "waiting-for-the-drop",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Breakfast, Lunch & Dinner",
+  "slug": "breakfast-lunch-dinner",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Ingress: The Animation",
+  "slug": "ingress-the-animation",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "They'll Love Me When I'm Dead",
+  "slug": "they-ll-love-me-when-i-m-dead",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Three Women",
+  "slug": "three-women",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Tapawingo",
+  "slug": "tapawingo",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Ethan Bloom",
+  "slug": "ethan-bloom",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Strangers",
+  "slug": "strangers",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Chillerama",
+  "slug": "chillerama",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "First Blush",
+  "slug": "first-blush",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Fear, Inc.",
+  "slug": "fear-inc",
+  "kind": "",
+  "net": "",
+  "group": "supervision"
+ },
+ {
+  "title": "Jobs",
+  "slug": "jobs",
+  "kind": "Feature Film",
+  "net": "Open Road",
+  "group": "placement"
+ },
+ {
+  "title": "Addicted",
+  "slug": "addicted",
+  "kind": "Trailer",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "Boo 2! A Madea Halloween",
+  "slug": "boo-2-a-madea-halloween",
+  "kind": "Trailer",
+  "net": "Lionsgate",
+  "group": "placement"
+ },
+ {
+  "title": "Call of Duty: Advanced Warfare",
+  "slug": "call-of-duty-advanced-warfare",
+  "kind": "Video Game",
+  "net": "Activision",
+  "group": "placement"
+ },
+ {
+  "title": "Daniel Isn't Real",
+  "slug": "daniel-isn-t-real",
+  "kind": "Feature Film",
+  "net": "Samuel Goldwyn",
+  "group": "placement"
+ },
+ {
+  "title": "Deliver Us from Evil",
+  "slug": "deliver-us-from-evil",
+  "kind": "Trailer",
+  "net": "Sony / Screen Gems",
+  "group": "placement"
+ },
+ {
+  "title": "Destiny",
+  "slug": "destiny",
+  "kind": "Video Game",
+  "net": "Bungie",
+  "group": "placement"
+ },
+ {
+  "title": "Donnybrook",
+  "slug": "donnybrook",
+  "kind": "Feature Film",
+  "net": "IFC Films",
+  "group": "placement"
+ },
+ {
+  "title": "Earth to Echo",
+  "slug": "earth-to-echo",
+  "kind": "Trailer",
+  "net": "Relativity",
+  "group": "placement"
+ },
+ {
+  "title": "Everything Must Go",
+  "slug": "everything-must-go",
+  "kind": "Feature Film",
+  "net": "Roadside Attractions",
+  "group": "placement"
+ },
+ {
+  "title": "Everything, Everything",
+  "slug": "everything-everything",
+  "kind": "Trailer",
+  "net": "Warner Bros. / MGM",
+  "group": "placement"
+ },
+ {
+  "title": "Far Cry 3",
+  "slug": "far-cry-3",
+  "kind": "Video Game",
+  "net": "Ubisoft",
+  "group": "placement"
+ },
+ {
+  "title": "Grimsby",
+  "slug": "grimsby",
+  "kind": "Trailer",
+  "net": "Sony",
+  "group": "placement"
+ },
+ {
+  "title": "Hit and Run",
+  "slug": "hit-and-run",
+  "kind": "Feature Film",
+  "net": "Open Road",
+  "group": "placement"
+ },
+ {
+  "title": "Hitman",
+  "slug": "hitman",
+  "kind": "Video Game",
+  "net": "IO Interactive",
+  "group": "placement"
+ },
+ {
+  "title": "Life Itself",
+  "slug": "life-itself",
+  "kind": "Trailer",
+  "net": "Amazon Studios",
+  "group": "placement"
+ },
+ {
+  "title": "The Elephant Queen",
+  "slug": "the-elephant-queen",
+  "kind": "Trailer",
+  "net": "Apple TV+",
+  "group": "placement"
+ },
+ {
+  "title": "The Joneses",
+  "slug": "the-joneses",
+  "kind": "Feature Film",
+  "net": "Roadside Attractions",
+  "group": "placement"
+ },
+ {
+  "title": "Titanfall 2",
+  "slug": "titanfall-2",
+  "kind": "Trailer",
+  "net": "EA / Respawn",
+  "group": "placement"
+ }
+]

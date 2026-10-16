@@ -68,6 +68,14 @@ export default function EnvelopePage({ params, searchParams }) {
   const isTurn = (r) => view.waitingOn.includes(r);
   const me = view.waitingOn.find((r) => r.is_me);
   const nextOther = view.waitingOn.find((r) => !r.is_me);
+  // Latest delivery attempt per recipient who is up next; flag the ones that failed
+  const emailFailures = view.waitingOn
+    .filter((r) => !r.is_me)
+    .map((r) => {
+      const last = [...events].reverse().find((ev) => ev.recipient_id === r.id && ["sent", "reminder_sent"].includes(ev.type));
+      return last && last.detail?.emailed === false ? { name: r.name, reason: last.detail.email_error } : null;
+    })
+    .filter(Boolean);
   const ordered = [...recipients].sort((a, b) => (a.kind === "cc") - (b.kind === "cc") || a.routing_order - b.routing_order);
 
   const recipientStatus = (r) => {
@@ -103,6 +111,15 @@ export default function EnvelopePage({ params, searchParams }) {
           </div>
         </div>
       </div>
+
+      {emailFailures.length > 0 && (
+        <div className="error" style={{ marginBottom: 16 }}>
+          <b>Email wasn't delivered</b> to {emailFailures.map((f) => f.name).join(", ")}: {emailFailures[0].reason || "unknown error"}.
+          <div className="small" style={{ marginTop: 4 }}>
+            Use <b>Copy signing link</b> below to share it another way, or fix email (see My signature & info → Send me a test email) and click <b>Resend</b>.
+          </div>
+        </div>
+      )}
 
       <div className="card" style={{ marginBottom: 16 }}>
         <h2>Recipients</h2>

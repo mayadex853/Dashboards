@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import * as db from "@/lib/db";
 import { route, httpError } from "@/lib/http";
-import { recipientByToken, isTurn, logEvent, submitSignature, clientInfo, getProfile } from "@/lib/envelopes";
+import { recipientByToken, isTurn, logEvent, submitSignature, clientInfo, getProfile, notifyStopped } from "@/lib/envelopes";
 import { sendEmail, emailLayout } from "@/lib/email";
 import { SESSION_COOKIE, verifySessionValue } from "@/lib/session";
 
@@ -46,6 +46,7 @@ export const POST = route(async (req, { token }) => {
   if (body.action === "decline") {
     await db.update("envelopes", env.id, { status: "declined" });
     await logEvent(env.id, "declined", { recipient_id: r.id, detail: { reason: body.reason || "" }, ...info });
+    await notifyStopped(env, { reason: "declined", by: r });
     if (process.env.MAIL_FROM)
       await sendEmail({
         to: process.env.MAIL_FROM,

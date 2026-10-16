@@ -1,6 +1,6 @@
 import * as db from "@/lib/db";
 import { route, httpError } from "@/lib/http";
-import { sendEnvelope, notifyRecipient, recipientsFor, logEvent, newToken, hashToken, appUrl } from "@/lib/envelopes";
+import { sendEnvelope, notifyRecipient, recipientsFor, logEvent, newToken, hashToken, appUrl, notifyStopped } from "@/lib/envelopes";
 
 // POST { action: "send" | "remind" | "link" | "void", recipient_id? }
 export const POST = route(async (req, { id }) => {
@@ -31,6 +31,7 @@ export const POST = route(async (req, { id }) => {
     for (const x of await recipientsFor(id)) await db.update("recipients", x.id, { token_hash: null });
     await db.update("envelopes", id, { status: "voided", voided_at: new Date().toISOString() });
     await logEvent(id, "voided");
+    await notifyStopped(env, { reason: "voided" });
     return { ok: true };
   }
   throw httpError("Unknown action");

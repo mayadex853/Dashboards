@@ -45,6 +45,11 @@ def _min(css):
     return re.sub(r"\s*\n\s*", "", css).strip()
 
 
+def track_count():
+    """Every licensable track: each main mix plus its alternate versions."""
+    return sum(len(t["v"]) for f in (HERE / "tracks").glob("*.json") for t in json.loads(f.read_text())["tracks"])
+
+
 def find_index():
     """Compact search index for the mood finder, built from tracks/*.json."""
     vocab, vi, albums = [], {}, {}
@@ -79,7 +84,7 @@ def site_data(base, fallback, preview, audio="", tracks=""):
         "albumCats": data.ALBUM_CATS, "placeCats": data.PLACEMENT_CATS, "catsEs": data.CATS_ES,
         "networks": data.NETWORKS, "genres": data.GENRES,
         "pos": data.PHOTO_POS, "base": base, "fallback": fallback, "sheet": SHEET_ID, "preview": preview, "audio": audio, "tracksBase": tracks, "tracksFallback": TRACKS_FALLBACK,
-        "email": ["music", "ochomusicgroup.com"], "find": find_index(),
+        "email": ["music", "ochomusicgroup.com"], "find": find_index(), "trackCount": track_count(),
     }
 
 
@@ -287,7 +292,7 @@ CSS = r"""
 .o-fcard h3{font-size:44px !important;margin-bottom:8px;}
 .o-role{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);margin-bottom:16px;}
 .o-fcard p{font-size:15px;margin:0;}
-.o-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:30px;}
+.o-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:30px;}
 .o-stat{background:#0a070e;padding:34px 26px;}
 .o-stat b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:72px;line-height:.95;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .o-stat span{display:block;font-size:13px;line-height:1.5;margin-top:8px;}
@@ -341,7 +346,7 @@ CSS = r"""
 .o-phero h1{font-size:clamp(70px,12vw,190px) !important;line-height:.84 !important;}
 .o-phero p{max-width:620px;font-size:19px;margin-top:26px;}
 .o-phero .o-glow{opacity:.8;}
-.o-count{position:absolute;right:28px;bottom:70px;text-align:right;}
+.o-count{display:flex;gap:48px;margin-top:38px;}
 .o-count b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:120px;line-height:.85;color:transparent;-webkit-text-stroke:2px var(--cy);}
 .o-count span{font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:var(--cy);}
 
@@ -561,6 +566,7 @@ CSS = r"""
   .o-fcard figure{height:300px;}
   .o-fcard figure::after{background:linear-gradient(180deg,transparent 60%,#000);}
   .o-stats{grid-template-columns:1fr 1fr;}
+  .o-stat:last-child:nth-child(odd){grid-column:span 2;}
 }
 @media(max-width:900px){
   .o-links{position:fixed;top:0;left:0;right:0;bottom:0;flex-direction:column;justify-content:center;gap:26px;background:rgba(7,5,10,.97);
@@ -610,6 +616,7 @@ CSS = r"""
   .o-hero h1{font-size:50px !important;line-height:.92 !important;}
   .o-agrid>*{min-width:0;}
   .o-pillars,.o-stats{grid-template-columns:1fr;}
+  .o-stat:last-child:nth-child(odd){grid-column:auto;}
   .o-sounds{grid-template-columns:1fr 1fr;}
   .o-flow{height:400px;}
   .o-fi{width:240px;height:240px;margin-left:-120px;}
@@ -876,7 +883,7 @@ function home(){
   var lines=t.hero_lines.map(function(l,i){return '<span class="o-rl'+(i===0?' on':'')+'">'+l+'</span>';}).join('');
   var eq='';for(var i=0;i<14;i++)eq+='<i style="animation-delay:'+(-(i*137%1000)/1000).toFixed(2)+'s;animation-duration:'+(0.6+(i*53%50)/100).toFixed(2)+'s"></i>';
   var pills=t.pillars.map(function(p,i){return '<div class="o-pill o-reveal" style="transition-delay:'+(i*.1)+'s"><span class="o-pill-n">0'+(i+1)+'</span><h3>'+p[0]+'</h3><p>'+p[1]+'</p></div>';}).join('');
-  var stats=t.stats.map(function(s){return '<div class="o-stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>';}).join('');
+  var stats=(D.trackCount?[[D.trackCount,t.tracks_stat]]:[]).concat(t.stats).map(function(s){return '<div class="o-stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>';}).join('');
   return '<header class="o-hero"><div class="o-wall" aria-hidden="true"></div><div class="o-shade"></div><div class="o-sunset"></div><div class="o-glow"></div>'+
   '<div class="o-hero-in"><div class="o-eq o-up" aria-hidden="true">'+eq+'</div>'+
   '<span class="o-eb o-up o-rot" style="margin-bottom:26px" aria-live="polite">'+lines+'</span>'+
@@ -928,7 +935,7 @@ function about(){
 }
 function albumsPage(){
   return '<header class="o-phero"><div class="o-glow"></div><div class="o-wrap"><span class="o-eb o-up">'+t.albums_page_eb+'</span><h1 class="o-up" style="animation-delay:.15s">'+t.albums_page_h1+'</h1><p class="o-up" style="animation-delay:.3s">'+t.albums_page_p+'</p>'+
-  '<div class="o-count o-up" style="animation-delay:.45s"><b data-block="acount">'+D.albums.length+'</b><span>'+t.albums_count+'</span></div></div></header>'+
+  '<div class="o-count o-up" style="animation-delay:.45s">'+(D.trackCount?'<div><b>'+D.trackCount+'</b><span>'+t.tracks_count+'</span></div>':'')+'<div><b data-block="acount">'+D.albums.length+'</b><span>'+t.albums_count+'</span></div></div></div></header>'+
   finder(true)+'<section style="padding:0 0 90px"><div class="o-wrap"><div class="o-tools"><div class="o-chips" data-block="achips">'+chips(D.albumCats,D.albums)+'</div></div>'+
   '<div class="o-agrid2" data-block="agrid">'+agrid()+'</div></div></section>'+tape()+doors()+contact();
 }

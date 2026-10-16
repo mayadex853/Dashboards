@@ -38,3 +38,23 @@ python3 build.py   # writes preview.html, kajabi-embed.html, wtr.js
 ```
 
 Images are served from the site's existing Kajabi uploads. Testimonial videos play from the same Vimeo and Wistia IDs the current page uses.
+
+## Credits page (wrecktheroom.com/credits)
+
+`build_credits.py` builds the credits page from the same Google Sheet that feeds hdmusicnow.com ("HD Music Now – Website Credits"), so editing the sheet updates both sites. The page reads the sheet live; `data/credits.json` is a snapshot that renders instantly and is used if the sheet can't be reached.
+
+- **Projects** (Section `Project`) are Jody's own credits. Any credit whose role mentions "Producer" (Ethan Bloom) leads the grid with a Producer tag, and the featured Ethan Bloom section sits above it.
+- **Placements** (Section `Placement`) are shown as music placed through HD Music Now, with the poster marquee and category tabs.
+- Posters come from `hdmn-homepage/posters/` on GitHub Pages.
+
+```bash
+python3 build_credits.py            # refresh the snapshot from the sheet and rebuild
+python3 build_credits.py --offline  # rebuild from the saved snapshot
+```
+
+The Kajabi page is a landing page with the slug `credits`, holding one Custom Code block:
+
+```html
+<div id="wtr-credits-mount"></div>
+<script src="https://mayadex853.github.io/Dashboards/wtr-homepage/credits.js"></script>
+```

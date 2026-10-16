@@ -122,8 +122,11 @@ export async function notifyRecipient(env, r, { reminder = false } = {}) {
       note: "This link is unique to you. Do not forward this email.",
     }),
   });
-  await logEvent(env.id, reminder ? "reminder_sent" : "sent", { recipient_id: r.id, detail: { email: r.email, emailed: mail.sent } });
-  return { recipient_id: r.id, name: r.name, email: r.email, link, emailed: mail.sent };
+  await logEvent(env.id, reminder ? "reminder_sent" : "sent", {
+    recipient_id: r.id,
+    detail: { email: r.email, emailed: mail.sent, ...(mail.sent ? {} : { email_error: mail.reason }) },
+  });
+  return { recipient_id: r.id, name: r.name, email: r.email, link, emailed: mail.sent, emailError: mail.sent ? null : mail.reason };
 }
 
 export async function sendEnvelope(envelopeId) {
@@ -177,7 +180,64 @@ export async function submitSignature(env, r, values, { ip, user_agent, localDat
   // Keep the link valid so the signer can view/download their copy (signing again is blocked by status)
   await db.update("recipients", r.id, { status: "signed", signed_at: now, ip, user_agent });
   await logEvent(env.id, "signed", { recipient_id: r.id, ip, user_agent, detail: { name: r.name, email: r.email } });
-  return advance(env.id);
+  await advance(env.id);
+  await notifyProgress(env.id, r);
+}
+
+/**
+ * DocuSign-style progress emails after someone signs:
+ * the signer gets a confirmation, and the sender hears who signed and who's next.
+ * (When the last person signs, the completion email to everyone covers it.)
+ */
+async function notifyProgress(envelopeId, signer) {
+  const env = await db.get("envelopes", envelopeId);
+  if (env.status === "completed") return;
+  const recs = await recipientsFor(envelopeId);
+  const pending = recs.filter((x) => x.kind !== "cc" && x.status !== "signed");
+  const order = pending.length ? Math.min(...pending.map((x) => x.routing_order)) : null;
+  const next = pending.filter((x) => x.routing_order === order);
+  const nextNames = next.map((x) => (x.is_me ? "you" : x.name)).join(" and ");
+  const nextForSigner = next.map((x) => (x.is_me ? process.env.MAIL_FROM_NAME || "the sender" : x.name)).join(" and ");
+  const link = `${appUrl()}/envelopes/${env.id}`;
+
+  if (!signer.is_me) {
+    await sendEmail({
+      to: signer.email,
+      subject: `You signed: ${env.title}`,
+      html: emailLayout({
+        heading: "Thanks for signing",
+        intro: `Hi ${signer.name},\n\nYou've signed "${env.title}". ${nextForSigner ? `It's now with ${nextForSigner}.` : ""} You'll receive the completed document by email once everyone has signed.`,
+      }),
+    });
+    if (process.env.MAIL_FROM) {
+      await sendEmail({
+        to: process.env.MAIL_FROM,
+        subject: `${signer.name} signed: ${env.title}`,
+        html: emailLayout({
+          heading: `${signer.name} signed "${env.title}"`,
+          intro: nextNames ? `Next up: ${nextNames}.` : "Waiting for the remaining signers.",
+          buttonText: next.some((x) => x.is_me) ? "Open and sign" : "View status",
+          buttonUrl: next.some((x) => x.is_me) ? `${link}?sign=1` : link,
+        }),
+      });
+    }
+  }
+}
+
+/** Tell everyone already involved that the envelope was voided or declined. */
+export async function notifyStopped(env, { reason, by }) {
+  const recs = await recipientsFor(env.id);
+  const involved = recs.filter((x) => x.kind !== "cc" && x.status !== "pending" && x.id !== by?.id && !x.is_me);
+  for (const x of involved) {
+    await sendEmail({
+      to: x.email,
+      subject: `${reason === "declined" ? "Declined" : "Voided"}: ${env.title}`,
+      html: emailLayout({
+        heading: reason === "declined" ? `${by?.name || "A recipient"} declined to sign` : "This document was voided",
+        intro: `"${env.title}" is no longer active, so no further action is needed from you.`,
+      }),
+    });
+  }
 }
 
 export async function completeEnvelope(envelopeId) {

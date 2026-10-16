@@ -1017,7 +1017,7 @@ function isCur(id,ti,vi){return P.cur&&P.cur.id===id&&P.cur.t===ti&&P.cur.v===vi
 function tinfo(tr){
   var dl=[[t.composer,tr.comp],[t.publisher,tr.pub],[t.tempo,tr.bpm?tr.bpm+' BPM':''],[t.key,tr.key]].filter(function(x){return x[1];});
   var h=(tr.desc?'<p>'+esc(tr.desc)+'</p>':'')+(dl.length?'<dl>'+dl.map(function(x){return '<div><dt>'+x[0]+'</dt><dd>'+esc(x[1])+'</dd></div>';}).join('')+'</dl>':'')+
-    (tr.tags&&tr.tags.length?'<div class="o-tags">'+tr.tags.map(function(g){return '<span>'+esc(g)+'</span>';}).join('')+'</div>':'');
+    (tr.tags&&tr.tags.length?'<div class="o-tags">'+tr.tags.slice(0,18).map(function(g){return '<span>'+esc(g)+'</span>';}).join('')+'</div>':'');
   return h;}
 function tinfoToggle(b){var p=b.closest('.o-tg').querySelector('.o-info');p.hidden=!p.hidden;b.setAttribute('aria-expanded',!p.hidden);}
 function tlist(id,d){

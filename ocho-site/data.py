@@ -445,16 +445,6 @@ SYNONYMS = {
 }
 FIND_STOP = "a an and the for of with to in on music song songs track tracks scene de la el los las y con para en un una musica cancion canciones tema temas escena".split()
 
-# Albums with no APM mood tags yet get album-level keywords so the finder can still place them.
-# Replace with real tags once their APM metadata sheets arrive.
-ALBUM_KW = {
-    "OCHO-0001": "rap hip hop urban street cuban tropical dance party fun",
-    "OCHO-0002": "salsa pop tropical dance romance romantic love heartbroken feel good party",
-    "OCHO-0003": "rap hip hop urban street cuban tropical dance party fun",
-    "OCHO-0004": "salsa pop tropical dance romance romantic love feel good party",
-    "OCHO-0005": "urban cuban miami descarga rhythms dance party energetic",
-    "OCHO-0006": "brass urban crime gangster action tense intrigue western powerful confident epic",
-    "OCHO-0007": "caribbean tropical sunset travel beach leisure lifestyle calm sultry romance night",
-    "OCHO-0008": "spanish guitar flamenco western desert cinematic melancholy lonely romance tense",
-    "OCHO-0013": "tumbados corridos banda trap hip hop immigration struggle crime narco party determined",
-}
+# Album-level search keywords for albums whose tracks have no APM mood tags yet ({ALBUM-ID: "words"}).
+# Every album is tagged as of the full APM export; add an entry here for a new album until its sheet arrives.
+ALBUM_KW = {}

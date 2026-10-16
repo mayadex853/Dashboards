@@ -25,6 +25,8 @@ import sys
 import unicodedata
 from pathlib import Path
 
+from apm_meta import tags  # cleaned APM facets, shared with apm_meta.py
+
 HERE = Path(__file__).parent
 WORK = Path(sys.argv[1])
 OUT = HERE / "tracks"
@@ -76,16 +78,6 @@ def rms_wave(mp3, n=POINTS):
     wave = [round(100 * (v / mx) ** 1.4) for v in out]
     cache.write_text(json.dumps(wave))
     return wave
-
-
-def tags(facets, n=18):
-    """'Main;RealityTV,Unscripted;FilmScore/Orchestral;Tense' -> ['Reality TV, Unscripted', 'Film Score / Orchestral', 'Tense']"""
-    out = {}
-    for f in facets.split(";"):
-        f = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", f.strip()).replace(",", ", ").replace("/", " / ")
-        if f and f.lower() not in ("main", "alt") and f.lower() not in out:
-            out[f.lower()] = f
-    return list(out.values())[:n]
 
 
 def key_name(k):

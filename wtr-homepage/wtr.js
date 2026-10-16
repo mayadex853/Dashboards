@@ -50,7 +50,8 @@
   /* ---- smooth in-page scroll ---- */
   function go(id){
     var t=document.getElementById(id);if(!t)return;
-    var y=t.getBoundingClientRect().top+window.pageYOffset-40;
+    var hd=document.querySelector('#section-header .header, #section-header header, #section-header > *'),hh=hd?hd.getBoundingClientRect().height:0; // Kajabi's sticky header
+    var y=t.getBoundingClientRect().top+window.pageYOffset-Math.max(40,Math.min(hh,160)+20);
     window.scrollTo({top:y,behavior:reduce?'auto':'smooth'});
   }
   root.addEventListener('click',function(e){

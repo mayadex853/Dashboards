@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--ARTIFACT-START-->
+<title>Collaborate Music Productions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Collaborate Music Productions is the trailer label behind SoundBreakers: epic originals and re-imagined covers for trailers, promos and ads, plus music supervision and clearance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: a darkened screening room lit by gold, with the label's purple dragon-scale armor as its signature surface. Full-bleed bands, a poster wall as the hero, gold used like a projector beam (rarely, and only where the eye should land). */
+:root{
+  --ink:#08080b;        /* page ground, the dark theatre */
+  --stage:#111015;      /* raised bands */
+  --slate:#18161c;      /* cards, slates */
+  --gold:#d6b25e;       /* the logo's gold */
+  --gold-hi:#f4dc97;    /* highlight on gold */
+  --fg:#efe9dc;         /* warm screen white */
+  --mute:#a49d8e;       /* secondary text */
+  --line:rgba(214,178,94,.22);
+  --royal:#2a0f45;      /* dragon-scale purple */
+  --royal-hi:#5b2a8c;
+  --display:'Cinzel','Trajan Pro',Georgia,serif;
+  --body:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;
+  --label:'Archivo Narrow','Arial Narrow',Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--fg);font:400 17px/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:.02em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(72px,10vw,128px)}
+.band.raised{background:var(--stage)}
+.eyebrow{font:600 13px/1 var(--label);letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.h2{font-size:clamp(34px,5vw,60px)}
+.lede{color:var(--mute);max-width:62ch;font-size:18px}
+.head{display:grid;gap:18px;margin-bottom:clamp(36px,5vw,56px)}
+.gold{color:var(--gold-hi)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;font:700 14px/1 var(--label);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);color:var(--fg);transition:background .25s,color .25s}
+.btn:hover{background:var(--gold);color:var(--ink)}
+.btn.solid{background:var(--gold);color:var(--ink)}
+.btn.solid:hover{background:var(--gold-hi)}
+.textlink{font:600 14px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px}
+.textlink:hover{border-color:var(--gold-hi)}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(8,8,11,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;height:84px}
+.nav-logo{justify-self:center}
+.nav-logo img{height:42px;width:auto}
+.nav-side{display:flex;align-items:center;gap:28px}
+.nav-side.end{justify-content:flex-end}
+.nav-side a{font:600 13px/1 var(--label);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--mute)}
+.nav-side a:hover{color:var(--fg)}
+.nav-side .btn{padding:12px 20px;font-size:12px;color:var(--fg)}
+@media (max-width:1100px){.nav-side{gap:20px}.nav-side a{letter-spacing:.14em}}
+@media (max-width:960px){.nav-side a:not(.btn){display:none}}
+@media (max-width:420px){.nav .wrap{height:70px;gap:10px}.nav-logo img{height:28px}.nav-side .btn{padding:10px 12px;letter-spacing:.12em}}
+
+/* HERO: a wall of real one-sheets, dimmed like house lights going down */
+.hero{position:relative;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--line)}
+.scales{background-color:var(--royal);background-image:url("img/scales.jpg");background-size:cover;background-repeat:no-repeat;background-position:center 30%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 46% 50% at 50% 50%,rgba(8,8,11,.62),rgba(8,8,11,.18) 100%),linear-gradient(180deg,transparent 82%,var(--ink))}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,rgba(244,220,151,.16) 50%,transparent 70%);mix-blend-mode:screen;animation:beam 9s ease-in-out infinite}
+@keyframes beam{0%,100%{transform:translateX(-30%)}50%{transform:translateX(30%)}}
+.hero-in{padding-block:clamp(80px,12vw,150px) clamp(64px,9vw,110px);text-align:center;display:grid;justify-items:center;gap:26px}
+.hero-eb{font-size:clamp(12px,1.3vw,15px);line-height:1.6;max-width:62ch;text-shadow:0 2px 12px #000}
+.btn.big{padding:20px 44px;font-size:16px;letter-spacing:.28em}
+.btn .play{width:0;height:0;border-left:11px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.hero h1{font-size:clamp(40px,7.2vw,96px);max-width:14ch;text-shadow:0 4px 30px #000}
+.hero .lede{color:#d9d2c3;text-align:center;font-size:clamp(17px,1.6vw,20px);text-shadow:0 2px 16px #000}
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:6px}
+.hero .textlink{margin-top:4px}
+
+/* MARQUEE of networks */
+.marq{border-bottom:1px solid var(--line);background:var(--stage);overflow:hidden;padding-block:22px}
+.marq-k{text-align:center;font:600 12px/1 var(--label);letter-spacing:.34em;color:var(--mute);text-transform:uppercase;margin-bottom:14px}
+.marq-track{display:flex;width:max-content;animation:scroll 40s linear infinite}
+.marq-track span{font:600 clamp(20px,2.4vw,28px)/1 var(--display);letter-spacing:.08em;color:var(--fg);white-space:nowrap;padding:0 26px;display:flex;align-items:center;gap:52px}
+.marq-track span::after{content:"";width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* LISTEN */
+.pl-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.pl-tab{font:700 13px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--mute);background:transparent;border:1px solid var(--line);padding:14px 20px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.pl-tab:hover{color:var(--fg);border-color:var(--gold)}
+.pl-tab[aria-selected="true"]{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.pl-panel{display:grid;gap:16px}
+.pl-desc{color:var(--mute)}
+.pl-frame{position:relative;min-height:560px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(42,15,69,.35),var(--stage))}
+.pl-frame::before{content:"Loading the player\2026  If it doesn\2019t appear, open the playlist in DISCO below.";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--mute);font-size:15px}
+.pl-frame iframe{position:relative;display:block;width:100%;height:560px;border:0}
+.pl-more{margin-top:26px}
+.inline{color:var(--gold-hi);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+/* PLACEMENTS: one-sheets + slates for campaigns that have no poster */
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{position:relative;margin:0;aspect-ratio:2/3;overflow:hidden;background:var(--slate);border:1px solid rgba(255,255,255,.06)}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s}
+.card:hover img{transform:scale(1.05);filter:brightness(.55)}
+.card figcaption{position:absolute;inset:auto 0 0 0;padding:44px 12px 12px;background:linear-gradient(transparent,rgba(5,5,7,.94) 45%);display:grid;gap:3px}
+.tag{font:700 11px/1.2 var(--label);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi)}
+.card strong{font:600 clamp(16px,1.6vw,21px)/1.15 var(--display);color:var(--fg)}
+.card small{font-size:13px;line-height:1.35;color:var(--mute)}
+.card .trk{display:block;font-size:14px;line-height:1.35;color:var(--gold-hi);margin-top:2px}
+.slate .trk{font-size:15px}
+a.card{text-decoration:none}
+.next{border-style:dashed;background:transparent;transition:border-color .25s}
+.next:hover{border-color:var(--gold-hi)}
+.next .slate-title{color:var(--gold-hi)}
+@media (max-width:640px){.next{grid-column:span 2;aspect-ratio:auto;min-height:170px}}
+/* slate = a clapperboard-style title card */
+.slate{display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px;background:linear-gradient(160deg,#1d1a20,#0e0d11);border:1px solid var(--line)}
+.slate-top{display:flex;justify-content:space-between;font:700 10px/1 var(--label);letter-spacing:.2em;color:var(--mute);text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.slate-top::before{content:"";flex:0 0 46px;height:10px;background:repeating-linear-gradient(-45deg,var(--gold) 0 6px,transparent 6px 12px)}
+.slate-title{font:600 clamp(22px,2.6vw,36px)/1.05 var(--display);color:var(--fg)}
+.slate .tag{display:block;margin-bottom:8px}
+.slate small{font-size:13px;color:var(--mute)}
+.logo{justify-content:center;align-items:center;background:radial-gradient(ellipse at 50% 40%,#221d29,#0e0d11 75%)}
+.logo .net-logo{width:72%;height:auto;max-height:30%;object-fit:contain;transform:translateY(-30%)}
+.card.logo:hover .net-logo{transform:translateY(-30%) scale(1.04);filter:none}
+.grid-note{margin-top:22px;font-size:14px;color:var(--mute)}
+
+/* REEL */
+.reel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.reel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.reel{grid-template-columns:1fr}}
+.clip{text-decoration:none;display:grid;gap:10px}
+.clip-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--slate);border:1px solid rgba(255,255,255,.06)}
+.clip-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s;filter:brightness(.8)}
+.clip:hover .clip-img img{transform:scale(1.05);filter:brightness(1)}
+.clip-img::after{content:"";position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border:1px solid var(--gold-hi);border-radius:50%;background:rgba(8,8,11,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23f4dc97'/%3E%3C/svg%3E") center/26px no-repeat;transition:transform .3s}
+.clip:hover .clip-img::after{transform:scale(1.1)}
+.clip b{font:600 17px/1.2 var(--display);color:var(--fg)}
+.clip span{font-size:14px;color:var(--mute);line-height:1.4}
+
+/* SOUNDBREAKERS */
+.sb-band{position:relative;isolation:isolate}
+.sb-band::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(8,8,11,.82) 0%,rgba(8,8,11,.45) 50%,rgba(8,8,11,.75) 100%)}
+.sb>div:first-child{container-type:inline-size;min-width:0}
+.sb{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,6vw,90px);align-items:start}
+@media (max-width:900px){.sb{grid-template-columns:1fr}}
+.sb-mark{font:700 clamp(30px,11.5cqi,110px)/.95 var(--display);white-space:nowrap;letter-spacing:.01em;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,#8a6a28);-webkit-background-clip:text;background-clip:text;color:transparent;margin-block:14px 24px}
+.sb p+p{margin-top:16px}
+.sb .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.tracks{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.tracks li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.tracks b{font:600 19px/1.25 var(--display);color:var(--fg)}
+.tracks em{font-style:normal;font-size:14px;color:var(--mute);grid-column:1}
+.tracks .tag{grid-column:2;grid-row:1/span 2;align-self:center;text-align:right}
+@media (max-width:480px){.tracks li{grid-template-columns:1fr}.tracks .tag{grid-column:1;grid-row:auto;text-align:left}}
+
+.covers-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin:clamp(56px,7vw,88px) 0 20px;padding-top:28px;border-top:1px solid var(--line)}
+.covers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.covers{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:480px){.covers{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.covers img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,.6);transition:transform .3s}
+.covers img:hover{transform:translateY(-4px)}
+/* SERVICES: the two ways in */
+.ways{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:800px){.ways{grid-template-columns:1fr}}
+.way{padding:clamp(28px,4vw,48px);border:1px solid var(--line);background:linear-gradient(180deg,rgba(214,178,94,.06),transparent 60%);display:flex;flex-direction:column;gap:18px}
+.way h3{font-size:clamp(28px,3.2vw,40px)}
+.way ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;color:var(--mute);flex:1}
+.way li{padding-left:22px;position:relative}
+.way li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.way .btn{align-self:flex-start}
+
+/* SUPERVISION */
+.sup-row{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px;margin-bottom:clamp(48px,6vw,72px)}
+@media (max-width:1000px){.sup-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:480px){.sup-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.people{grid-template-columns:1fr}}
+.person{border:1px solid var(--line);padding:clamp(26px,3.5vw,42px);background:var(--ink);min-width:0}
+.person-head{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.mono{flex:0 0 72px;width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--gold);padding:3px;background:var(--ink)}
+.person h3{font-size:clamp(26px,2.8vw,34px)}
+.role{font:600 12px/1.4 var(--label);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+.creds{list-style:none;margin:0;padding:0}
+.creds li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07);align-items:baseline}
+.creds li:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.creds b{font-weight:600;color:var(--fg)}
+.creds b i{font-style:normal;font-weight:400;color:var(--mute);font-size:14px;margin-left:8px}
+.creds span{font:600 12px/1.3 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:right;white-space:nowrap}
+@media (max-width:480px){.creds li{grid-template-columns:1fr;gap:2px}.creds span{text-align:left}}
+.person .more{margin-top:20px;font-size:14px;color:var(--mute)}
+
+.brands{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 24px;padding-block:22px;margin-bottom:28px;border-block:1px solid var(--line)}
+.brands p{font:600 clamp(17px,1.8vw,22px)/1.4 var(--display);letter-spacing:.04em;color:var(--fg)}
+/* ABOUT */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,6vw,90px)}
+@media (max-width:900px){.about{grid-template-columns:1fr}}
+.about-quote{font:600 clamp(32px,4.4vw,56px)/1.08 var(--display);margin-block:16px 26px}
+.about p+p{margin-top:16px}
+.about p{color:#cfc8b8}
+.bios{display:grid;gap:34px;align-content:start}
+.bio h3{font-size:28px}
+.bio p{margin-top:12px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.badge{font-size:13px;color:var(--fg);padding:8px 14px;border:1px solid var(--line);border-radius:40px;text-decoration:none}
+.badge b{color:var(--gold-hi);font-weight:600}
+
+.photo{margin:34px 0 0;max-width:460px}
+.photo img{width:100%;height:auto;border:1px solid var(--line);filter:saturate(.9)}
+.photo figcaption{margin-top:10px;font-size:13px;color:var(--mute)}
+/* CONTACT */
+.contact{text-align:center;position:relative;overflow:hidden;isolation:isolate}
+.contact::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 55% 70% at 50% 100%,rgba(214,178,94,.18),transparent 70%),linear-gradient(180deg,var(--ink),rgba(8,8,11,.55) 30%,rgba(8,8,11,.55) 70%,var(--ink))}
+.contact .wrap{display:grid;justify-items:center;gap:22px}
+.contact h2{font-size:clamp(38px,6vw,76px);max-width:15ch}
+.contact .lede{text-align:center}
+.email{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:8px}
+.email code{font:600 clamp(20px,3vw,32px)/1.2 var(--body);color:var(--gold-hi);user-select:all;overflow-wrap:anywhere}
+.copy{font:700 12px/1 var(--label);letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--mute);border:1px solid var(--line);padding:10px 14px;cursor:pointer}
+.copy:hover{color:var(--fg);border-color:var(--gold)}
+.brief{color:var(--mute);font-size:15px;max-width:56ch}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding-block:36px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+footer img{height:22px;width:auto}
+footer nav{display:flex;flex-wrap:wrap;gap:22px}
+footer a,footer p{font:600 12px/1.4 var(--label);letter-spacing:.18em;text-transform:uppercase;color:var(--mute);text-decoration:none}
+footer a:hover{color:var(--fg)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+<!--BODY-->
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <nav class="nav-side" aria-label="Main">
+      <a href="#placements">Placements</a>
+      <a href="#reel">Trailers</a>
+      <a href="#soundbreakers">SoundBreakers</a>
+    </nav>
+    <a class="nav-logo" href="#top" aria-label="Collaborate Music Productions home"><img src="img/logo.png" alt="Collaborate Music Productions" width="235" height="42"></a>
+    <nav class="nav-side end" aria-label="More">
+      <a href="#supervision">Supervision</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="btn" href="#listen">Listen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero scales">
+  <div class="wrap hero-in">
+    <span class="eyebrow hero-eb">Reimagined Covers &amp; Remixed Originals for Trailers &amp; Ads</span>
+    <h1>Forged for the <span class="gold">big screen</span></h1>
+    <p class="lede">Epic originals and re-imagined covers heard in campaigns for Netflix, Hulu, ABC, CBS, Sony Pictures, Angel Studios, ESPN and WWE.</p>
+    <div class="hero-cta">
+      <a class="btn solid big" href="#listen"><span class="play" aria-hidden="true"></span>Listen</a>
+    </div>
+    <a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Search the catalog on DISCO &rarr;</a>
+  </div>
+</section>
+
+<div class="marq" aria-label="Networks and studios">
+  <div class="marq-k">Heard in campaigns for</div>
+  <div class="marq-track">
+    <span>Netflix</span><span>Hulu</span><span>ABC</span><span>CBS</span><span>Sony Pictures</span><span>Angel Studios</span><span>ESPN</span><span>Formula 1</span><span>MTV</span><span>WWE</span>
+    <span aria-hidden="true">Netflix</span><span aria-hidden="true">Hulu</span><span aria-hidden="true">ABC</span><span aria-hidden="true">CBS</span><span aria-hidden="true">Sony Pictures</span><span aria-hidden="true">Angel Studios</span><span aria-hidden="true">ESPN</span><span aria-hidden="true">Formula 1</span><span aria-hidden="true">MTV</span><span aria-hidden="true">WWE</span>
+  </div>
+</div>
+
+<section class="band listen" id="listen">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Listen</span>
+      <h2 class="h2">Hear the catalog</h2>
+      <p class="lede">Stream our playlists right here. Hear something for your campaign? <a class="inline" href="#contact">Reach out to license it.</a></p>
+    </div>
+    <div class="pl-tabs" role="tablist" aria-label="Playlists">
+      <button class="pl-tab" type="button" role="tab" id="tab-covers" aria-controls="pl-covers" aria-selected="true">Re-Imagined Covers</button>
+      <button class="pl-tab" type="button" role="tab" id="tab-originals" aria-controls="pl-originals" aria-selected="false">SoundBreakers Originals</button>
+      <button class="pl-tab" type="button" role="tab" id="tab-holidays" aria-controls="pl-holidays" aria-selected="false">Haunted Holidays</button>
+    </div>
+    <div class="pl-panel" role="tabpanel" id="pl-covers" aria-labelledby="tab-covers">
+      <p class="pl-desc">Classic songs rebuilt with trailer-sized builds, drops and hits.</p>
+      <div class="pl-frame" data-src="https://collaborate-music-productions.disco.ac/e/p/9594225?download=false&amp;s=BES-wfYG5CBQE4qftmphCw5I-7M%3ANgGtjp8w&amp;artwork=true&amp;theme=dark&amp;color=%23d6b25e"></div>
+      <a class="textlink" href="https://collaborate-music-productions.disco.ac/e/p/9594225?download=false&amp;s=BES-wfYG5CBQE4qftmphCw5I-7M%3ANgGtjp8w" target="_blank" rel="noopener">Open Re-Imagined Covers in DISCO &rarr;</a>
+    </div>
+    <div class="pl-panel" role="tabpanel" id="pl-originals" aria-labelledby="tab-originals" hidden>
+      <p class="pl-desc">Original epic tracks and remixes from our house artist.</p>
+      <div class="pl-frame" data-src="https://collaborate-music-productions.disco.ac/e/p/9594253?download=false&amp;s=-lS_QZrUQ8B9Rav2LNaajN18YwA%3AtIZbMc9N&amp;artwork=true&amp;theme=dark&amp;color=%23d6b25e"></div>
+      <a class="textlink" href="https://collaborate-music-productions.disco.ac/e/p/9594253?download=false&amp;s=-lS_QZrUQ8B9Rav2LNaajN18YwA%3AtIZbMc9N" target="_blank" rel="noopener">Open SoundBreakers Originals in DISCO &rarr;</a>
+    </div>
+    <div class="pl-panel" role="tabpanel" id="pl-holidays" aria-labelledby="tab-holidays" hidden>
+      <p class="pl-desc">Dark, twisted holiday classics for horror and seasonal campaigns.</p>
+      <div class="pl-frame" data-src="https://collaborate-music-productions.disco.ac/e/p/9594269?download=false&amp;s=HlRsduRKrW6KKRxhoXEajGXwdKo%3AypV0ICMh&amp;artwork=true&amp;theme=dark&amp;color=%23d6b25e"></div>
+      <a class="textlink" href="https://collaborate-music-productions.disco.ac/e/p/9594269?download=false&amp;s=HlRsduRKrW6KKRxhoXEajGXwdKo%3AypV0ICMh" target="_blank" rel="noopener">Open Haunted Holidays in DISCO &rarr;</a>
+    </div>
+    <p class="pl-more"><a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Search the full catalog on DISCO &rarr;</a></p>
+  </div>
+</section>
+
+<section class="band" id="placements">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Featured Placements</span>
+      <h2 class="h2">Now playing</h2>
+      <p class="lede">Trailers, promos, spots and in-show uses for the biggest names in film, TV and sports.</p>
+    </div>
+    <div class="grid">
+      <figure class="card"><img src="img/runner.jpg" alt="Runner poster"><figcaption><span class="tag">Feature Film</span><strong>Runner</strong><small>Angel Studios</small><span class="trk">&ldquo;Midnight Rider&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/wwe-unreal.jpg" alt="WWE: Unreal poster"><figcaption><span class="tag">Series</span><strong>WWE: Unreal</strong><small>Netflix</small><span class="trk">&ldquo;My Way&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/gunpowder-milkshake.jpg" alt="Gunpowder Milkshake poster"><figcaption><span class="tag">Trailer</span><strong>Gunpowder Milkshake</strong><small>Netflix</small><span class="trk">&ldquo;Bad to the Bone&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/doctor-odyssey.jpg" alt="Doctor Odyssey poster"><figcaption><span class="tag">Promos</span><strong>Doctor Odyssey</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/the-bachelor.jpg" alt="The Bachelor poster"><figcaption><span class="tag">In Show</span><strong>The Bachelor</strong><small>ABC</small><span class="trk">&ldquo;Sea of Love&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/fantasy-island.jpg" alt="Fantasy Island poster"><figcaption><span class="tag">Trailer</span><strong>Fantasy Island</strong><small>Sony Pictures</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card slate logo"><img class="net-logo" src="img/espn.svg" alt="ESPN"><figcaption><span class="tag">Promo</span><strong>F1 Racing</strong><small>ESPN</small><span class="trk">&ldquo;Feel Good Inc.&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/big-sky.jpg" alt="Big Sky poster"><figcaption><span class="tag">S1 Promo</span><strong>Big Sky</strong><small>ABC</small><span class="trk">&ldquo;Sh-Boom&rdquo;</span></figcaption></figure>
+      <figure class="card slate logo"><img class="net-logo" src="img/espn.svg" alt="ESPN"><figcaption><span class="tag">Promo</span><strong>NCAA on ESPN</strong><small>ESPN</small><span class="trk">&ldquo;The Best&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/the-handmaid-s-tale.jpg" alt="The Handmaid's Tale poster"><figcaption><span class="tag">S1 Trailer</span><strong>The Handmaid&rsquo;s Tale</strong><small>Hulu</small><span class="trk">&ldquo;Pure As Snow (Mike Raznick Remix)&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/star-trek-picard.jpg" alt="Star Trek: Picard poster"><figcaption><span class="tag">S1 Promo</span><strong>Star Trek: Picard</strong><small>CBS</small><span class="trk">&ldquo;Blue Skies (Teaser Mix)&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/haunt.jpg" alt="Haunt poster"><figcaption><span class="tag">Trailer</span><strong>Haunt</strong><small>Momentum Pictures</small><span class="trk">&ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></figcaption></figure>
+      <figure class="card"><img src="img/set-it-up.jpg" alt="Set It Up poster"><figcaption><span class="tag">In Film</span><strong>Set It Up</strong><small>Netflix</small><span class="trk">&ldquo;Come Go With Me&rdquo;</span></figcaption></figure>
+      <figure class="card"><img src="img/the-challenge.jpg" alt="The Challenge poster"><figcaption><span class="tag">In Program</span><strong>The Challenge</strong><small>MTV</small><span class="trk">&ldquo;No Surprises&rdquo; &amp; &ldquo;Too Far Gone&rdquo;</span></figcaption></figure>
+      <a class="card slate next" href="#contact"><div class="slate-top">Your Campaign</div><div><span class="tag">Coming Soon</span><div class="slate-title">Your trailer here</div></div><span class="trk">Tell us about your cut &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band raised" id="reel">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Reel</span>
+      <h2 class="h2">Watch it land</h2>
+      <p class="lede">Hear our music in the final cut.</p>
+    </div>
+    <div class="reel">
+      <a class="clip" href="https://www.youtube.com/watch?v=dVLiDETfx1c" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-dVLiDETfx1c.jpg" alt=""></div><b>The Handmaid&rsquo;s Tale</b><span>Season 1 trailer &middot; &ldquo;Pure As Snow (Mike Raznick Remix)&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=YLMT5uXjFLY" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-YLMT5uXjFLY.jpg" alt=""></div><b>Gunpowder Milkshake</b><span>Official trailer &middot; &ldquo;Bad to the Bone&rdquo;</span></a>
+      <a class="clip" href="https://vimeo.com/387810702" target="_blank" rel="noopener"><div class="clip-img"><img src="img/vm-picard.jpg" alt=""></div><b>Star Trek: Picard</b><span>&ldquo;Blue Skies&rdquo; trailer</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=alxOPMQVOHs" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-alxOPMQVOHs.jpg" alt=""></div><b>Haunt</b><span>Trailer &middot; &ldquo;Creepy Cradle&rdquo; feat. Jude Rivers</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=Yvc1USis5RU" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-Yvc1USis5RU.jpg" alt=""></div><b>Fantasy Island</b><span>International trailer &middot; &ldquo;Sh-Boom&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=kctllffgbsU" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-kctllffgbsU.jpg" alt=""></div><b>Big Sky</b><span>Cast teaser promo &middot; &ldquo;Sh-Boom&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=X-eRc9PF3TU" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-X-eRc9PF3TU.jpg" alt=""></div><b>Set It Up</b><span>Netflix &middot; &ldquo;Come Go With Me&rdquo;</span></a>
+      <a class="clip" href="https://www.youtube.com/watch?v=_w9HpUYfn80" target="_blank" rel="noopener"><div class="clip-img"><img src="img/yt-_w9HpUYfn80.jpg" alt=""></div><b>The Challenge: War of the Worlds</b><span>MTV red band trailer &middot; &ldquo;No Surprises&rdquo;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band sb-band scales" id="soundbreakers">
+  <div class="wrap sb">
+    <div>
+      <span class="eyebrow">Our Artist</span>
+      <div class="sb-mark">SoundBreakers</div>
+      <p class="lede">SoundBreakers is the Collaborate house artist. We team up with leading trailer composers, producers, musicians and vocalists to write epic originals and re-imagine classic songs for picture.</p>
+      <p class="lede">Every track is produced with the builds, drops and hits that trailer editors cut to, with stems and alternate versions ready when you need them.</p>
+      <div class="actions">
+        <a class="btn solid" href="#listen">Listen</a>
+        <a class="btn" href="#listen" data-tab="originals">Hear the originals</a>
+      </div>
+    </div>
+    <ul class="tracks" aria-label="Signature tracks">
+      <li><b>Sh-Boom (Life Could Be a Dream)</b><em>Re-imagined cover of The Chords classic</em><span class="tag">Fantasy Island &middot; Big Sky &middot; Doctor Odyssey</span></li>
+      <li><b>Midnight Rider</b><em>Re-imagined cover</em><span class="tag">Runner</span></li>
+      <li><b>My Way</b><em>Re-imagined cover</em><span class="tag">WWE: Unreal</span></li>
+      <li><b>Bad to the Bone</b><em>Re-imagined cover</em><span class="tag">Gunpowder Milkshake</span></li>
+      <li><b>Pure As Snow (Mike Raznick Remix)</b><em>feat. I Hate You Just Kidding &amp; the El Rancho Children&rsquo;s Chorus &middot; a Collaborate original</em><span class="tag">The Handmaid&rsquo;s Tale</span></li>
+      <li><b>Feel Good Inc.</b><em>Re-imagined cover</em><span class="tag">F1 Racing on ESPN</span></li>
+      <li><b>The Best</b><em>Re-imagined cover</em><span class="tag">NCAA on ESPN</span></li>
+      <li><b>Creepy Cradle</b><em>feat. Jude Rivers &middot; a Collaborate original</em><span class="tag">Haunt</span></li>
+    </ul>
+  </div>
+  <div class="wrap">
+    <div class="covers-head"><span class="eyebrow">Latest releases</span><a class="textlink" href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">Hear them all on DISCO &rarr;</a></div>
+    <div class="covers">
+      <img src="img/sb-bad-to-the-bone.jpg" alt="SoundBreakers &ndash; Bad to the Bone" width="300" height="300">
+      <img src="img/sb-midnight-rider.jpg" alt="SoundBreakers &ndash; Midnight Rider" width="300" height="300">
+      <img src="img/sb-feel-good-inc.jpg" alt="SoundBreakers &ndash; Feel Good Inc." width="300" height="300">
+      <img src="img/sb-goodbye-blue-sky.jpg" alt="SoundBreakers &ndash; Goodbye Blue Sky" width="300" height="300">
+      <img src="img/sb-fake-empire.jpg" alt="SoundBreakers &ndash; Fake Empire" width="300" height="300">
+      <img src="img/sb-champagne-supernova.jpg" alt="SoundBreakers &ndash; Champagne Supernova" width="300" height="300">
+      <img src="img/sb-virtual-insanity.jpg" alt="SoundBreakers &ndash; Virtual Insanity" width="300" height="300">
+      <img src="img/sb-the-end.jpg" alt="SoundBreakers &ndash; The End (Destroyboy Remix)" width="300" height="300">
+      <img src="img/sb-king-volcano.jpg" alt="SoundBreakers &ndash; King Volcano" width="300" height="300">
+      <img src="img/sb-sober.jpg" alt="SoundBreakers &ndash; Sober" width="300" height="300">
+      <img src="img/sb-blue-christmas.jpg" alt="SoundBreakers &ndash; Blue Christmas" width="300" height="300">
+      <img src="img/sb-have-yourself.jpg" alt="SoundBreakers &ndash; Have Yourself a Merry Little Christmas" width="300" height="300">
+    </div>
+  </div>
+</section>
+
+<section class="band raised" id="services">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Work With Us</span>
+      <h2 class="h2">Two ways in</h2>
+    </div>
+    <div class="ways">
+      <div class="way">
+        <span class="eyebrow">Off the shelf</span>
+        <h3>License a Master</h3>
+        <ul>
+          <li>Trailer-ready originals and covers, searchable on DISCO</li>
+          <li>Stems and alternate versions for your edit</li>
+          <li>Quick quotes and clearance handled by our team</li>
+        </ul>
+        <a class="btn solid" href="#contact" data-subject="Master License Request">Request a license</a>
+      </div>
+      <div class="way">
+        <span class="eyebrow">Built for your cut</span>
+        <h3>Custom Music</h3>
+        <ul>
+          <li>Original tracks or re-imagined covers made for your campaign</li>
+          <li>For trailer houses, ad agencies, networks and studios</li>
+          <li>Top trailer composers, producers and vocalists on every project</li>
+        </ul>
+        <a class="btn" href="#contact" data-subject="Custom Music Inquiry">Start a custom project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="supervision">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Music Supervision &amp; Clearance</span>
+      <h2 class="h2">We also find and clear the music</h2>
+      <p class="lede">Music supervising since 2008, we find and clear music for film, television, trailers, web series and brands, from the search and pitch to negotiating, licensing and cue sheets.</p>
+    </div>
+    <div class="sup-row">
+      <figure class="card"><img src="img/won-t-you-be-my-neighbor.jpg" alt="Won't You Be My Neighbor? poster"><figcaption><span class="tag">Supervision</span><strong>Won&rsquo;t You Be My Neighbor?</strong><small>Focus Features</small></figcaption></figure>
+      <figure class="card"><img src="img/ugly-delicious.jpg" alt="Ugly Delicious poster"><figcaption><span class="tag">Supervision</span><strong>Ugly Delicious</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/they-ll-love-me-when-i-m-dead.jpg" alt="They'll Love Me When I'm Dead poster"><figcaption><span class="tag">Supervision</span><strong>They&rsquo;ll Love Me When I&rsquo;m Dead</strong><small>Netflix</small></figcaption></figure>
+      <figure class="card"><img src="img/the-music-of-strangers.jpg" alt="The Music of Strangers poster"><figcaption><span class="tag">Supervision</span><strong>The Music of Strangers</strong><small>HBO</small></figcaption></figure>
+      <figure class="card"><img src="img/snowfall.jpg" alt="Snowfall poster"><figcaption><span class="tag">Clearance</span><strong>Snowfall</strong><small>FX</small></figcaption></figure>
+      <figure class="card"><img src="img/fear-inc.jpg" alt="Fear, Inc. poster"><figcaption><span class="tag">Supervision</span><strong>Fear, Inc.</strong><small>Hulu</small></figcaption></figure>
+      <figure class="card"><img src="img/strangers.jpg" alt="Strangers poster"><figcaption><span class="tag">Clearance</span><strong>Strangers</strong><small>Facebook Watch</small></figcaption></figure>
+      <figure class="card slate logo"><img class="net-logo" src="img/prime-video.svg" alt="Prime Video"><figcaption><span class="tag">Supervision</span><strong>Check It</strong><small>Amazon</small></figcaption></figure>
+    </div>
+
+    <div class="brands"><span class="eyebrow">Brand work</span><p>HP &middot; Samsung &middot; Smirnoff &middot; Dunkin&rsquo; &middot; ASICS &middot; Bumble and bumble &middot; Ken Block&rsquo;s Gymkhana</p></div>
+    <div class="people">
+      <article class="person" id="jenn">
+        <div class="person-head"><img class="mono" src="img/jenn.jpg" alt="Jennifer Lanchart" width="72" height="72"><div><h3>Jennifer Lanchart</h3><div class="role">Co-Founder &middot; Founder, Syncalicious Music</div></div></div>
+        <ul class="creds">
+          <li><b>The Bachelor<i>ABC</i></b><span>Music Dept.</span></li>
+          <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Dept.</span></li>
+          <li><b>Bachelor in Paradise<i>ABC</i></b><span>Music Dept.</span></li>
+          <li><b>Westermann<i>Pentimenti Productions</i></b><span>Music Supervisor</span></li>
+          <li><b>There&rsquo;s Someone Inside Your House<i>Netflix</i></b><span>Music Coordinator</span></li>
+          <li><b>Drunk Bus<i>Amazon</i></b><span>Music Supervisor</span></li>
+          <li><b>They&rsquo;ll Love Me When I&rsquo;m Dead<i>Netflix</i></b><span>Music Supervisor</span></li>
+          <li><b>Won&rsquo;t You Be My Neighbor?<i>Focus Features</i></b><span>Music Supervisor</span></li>
+          <li><b>The Music of Strangers<i>HBO</i></b><span>Music Supervisor</span></li>
+          <li><b>Shaun White Special<i>NBC</i></b><span>Music Coordinator</span></li>
+          <li><b>Smirnoff<i>Broadcast &amp; web</i></b><span>Music Supervisor</span></li>
+        </ul>
+        <p class="more">Music supervising since 2008, with more than 40 projects across film, TV, web series and advertising.</p>
+      </article>
+      <article class="person" id="jody">
+        <div class="person-head"><img class="mono" src="img/jody.jpg" alt="Jody Friedman" width="72" height="72"><div><h3>Jody Friedman</h3><div class="role">Co-Founder &middot; Founder, HD Music Now</div></div></div>
+        <ul class="creds">
+          <li><b>The Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>The Golden Bachelor<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>Bachelor in Paradise<i>ABC</i></b><span>Music Supervisor</span></li>
+          <li><b>Dexter: Resurrection<i>Showtime</i></b><span>Music Coordinator</span></li>
+          <li><b>Griselda<i>Netflix</i></b><span>Music Clearance</span></li>
+          <li><b>Barry<i>HBO</i></b><span>Music Clearance</span></li>
+          <li><b>Painkiller<i>Netflix</i></b><span>Music Clearance</span></li>
+          <li><b>Outer Banks<i>Netflix</i></b><span>Music Clearance</span></li>
+          <li><b>Mrs. Davis<i>Peacock</i></b><span>Music Clearance</span></li>
+          <li><b>Won&rsquo;t You Be My Neighbor?<i>Focus Features</i></b><span>Music Supervisor</span></li>
+        </ul>
+        <p class="more">Plus 30+ more projects in supervision, clearance and coordination. <a class="textlink" href="https://www.imdb.com/name/nm3112237/" target="_blank" rel="noopener">IMDb</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band raised" id="about">
+  <div class="wrap about">
+    <div>
+      <span class="eyebrow">About Collaborate</span>
+      <p class="about-quote">Two music supervisors who <span class="gold">make the music</span> they wish they could find.</p>
+      <p>Collaborate Music Productions was founded in Los Angeles by industry veterans Jennifer Lanchart and Jody Friedman to create high-end original music and re-imagined covers for every kind of media, with a focus on film trailers.</p>
+      <p>We produce records with well-known trailer composers, producers, musicians and vocalists, and release them through our artist SoundBreakers. Because we also work as music supervisors, we know what an editor needs from a track before the first note is written.</p>
+      <figure class="photo"><img src="img/jenn-jody.jpg" alt="Jennifer Lanchart and Jody Friedman" width="800" height="804"><figcaption>Jenn and Jody at the Guild of Music Supervisors&rsquo; State of Music in Media conference</figcaption></figure>
+    </div>
+    <div class="bios">
+      <div class="bio">
+        <h3>Jennifer Lanchart</h3>
+        <div class="role">Co-Founder &middot; Music Supervisor &middot; Songwriter</div>
+        <p>Jenn has been a music supervisor since 2008, with credits across Netflix, HBO, Amazon, ABC, NBC and Focus Features, plus brand campaigns for Smirnoff, Samsung and HP. As a songwriter she co-wrote the SoundBreakers original &ldquo;Creepy Cradle,&rdquo; featured in the trailer for Eli Roth&rsquo;s <em>Haunt</em>.</p>
+        <div class="badges"><span class="badge"><b>Founder</b> of Syncalicious Music</span></div>
+      </div>
+      <div class="bio">
+        <h3>Jody Friedman</h3>
+        <div class="role">Co-Founder &middot; Songwriter &middot; Producer</div>
+        <p>Jody has spent more than twenty years as a sync agent pitching music and more than twenty years as a music supervisor searching for it. As a songwriter and producer, his songs have landed in <em>Law &amp; Order: Organized Crime</em>, <em>Murdaugh: Death in the Family</em>, CBS&rsquo;s <em>Evil</em> and Hulu&rsquo;s <em>The Handmaid&rsquo;s Tale</em> trailer campaign.</p>
+        <div class="badges">
+          <span class="badge"><b>#1 Best-Selling Author</b> of <i>The Sync Placement Formula</i></span>
+          <a class="badge" href="https://hdmusicnow.com" target="_blank" rel="noopener"><b>Founder</b> of HD Music Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band contact scales" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Let&rsquo;s Talk</span>
+    <h2>Need the track that <span class="gold">sells the cut?</span></h2>
+    <p class="lede">License a master or bring us in on custom music for your trailer, promo or ad campaign.</p>
+    <div class="email"><code id="email-addr">music@collaboratemusic.com</code><button class="copy" id="copy-email" type="button">Copy</button></div>
+    <div class="hero-cta">
+      <a class="btn solid" href="mailto:music@collaboratemusic.com?subject=Master%20License%20Request">License a Master</a>
+      <a class="btn" href="mailto:music@collaboratemusic.com?subject=Custom%20Music%20Inquiry">Custom Music</a>
+    </div>
+    <p class="brief">To get a quote faster, include the project, the media and territory, your air date and the track or the kind of sound you need.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo.png" alt="Collaborate Music Productions" width="123" height="22">
+    <nav aria-label="Social">
+      <a href="https://www.instagram.com/soundbreakers" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/collaboratemusic" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://collaborate-music-productions.disco.ac/lib/6311" target="_blank" rel="noopener">DISCO Catalog</a>
+    </nav>
+    <p>Los Angeles, CA &middot; &copy; <span id="yr">2026</span> Collaborate Music Productions</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.pl-tab'));
+  function load(panel){var f=panel.querySelector('.pl-frame');if(f&&!f.firstChild){var i=document.createElement('iframe');i.src=f.getAttribute('data-src');i.title=panel.id.replace('pl-','')+' playlist';i.setAttribute('allowfullscreen','');f.appendChild(i)}}
+  function pick(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);var p=document.getElementById(x.getAttribute('aria-controls'));p.hidden=!on;if(on)load(p)})}
+  tabs.forEach(function(t){t.addEventListener('click',function(){pick(t)})});
+  if(tabs[0])load(document.getElementById(tabs[0].getAttribute('aria-controls')));
+  [].slice.call(document.querySelectorAll('[data-tab]')).forEach(function(a){a.addEventListener('click',function(){var t=document.getElementById('tab-'+a.getAttribute('data-tab'));if(t)pick(t)})});
+  var y=document.getElementById('yr'); if(y) y.textContent=new Date().getFullYear();
+  var b=document.getElementById('copy-email'), addr='music@collaboratemusic.com';
+  if(b) b.addEventListener('click',function(){
+    function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1800)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email-addr'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
+    try{navigator.clipboard.writeText(addr).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+</script>
+<!--ARTIFACT-END-->
+</body>
+</html>

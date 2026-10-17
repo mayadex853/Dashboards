@@ -71,3 +71,9 @@ The Kajabi page is a landing page with the slug `credits`, holding one Custom Co
 <div id="wtr-credits-mount"></div>
 <script src="https://mayadex853.github.io/Dashboards/wtr-homepage/credits.js"></script>
 ```
+
+## Site nav and Kajabi Code blocks
+
+Home, Speaking (`speaker2`), Work With Me (`coaching`), About and Credits all carry the same nav (`header_html` in `build.py`), set inside each page's Kajabi Code block. Kajabi's own header is hidden on those pages (on Home and Speaking it also has to be non-sticky, or Kajabi keeps showing it). `python3 kajabi_blocks.py <commit>` prints the Code-block HTML for each page, pinned to that commit.
+
+The blog uses Kajabi's own sections and header, styled through the site theme (Encore, 2159583678): Anton / Manrope fonts, gold buttons, cream post cards on black, and the header menu "Site Nav (matches custom pages)". The About page hides that site header and uses the shared nav instead.

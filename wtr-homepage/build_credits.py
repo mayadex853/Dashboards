@@ -15,6 +15,7 @@ Usage: python3 build_credits.py            (refreshes the snapshot from the shee
 import csv
 import io
 import json
+import os
 import sys
 import urllib.request
 from pathlib import Path
@@ -26,7 +27,8 @@ HERE = Path(__file__).parent
 SRC = HERE / "src"
 SNAPSHOT = HERE / "data" / "credits.json"
 SHEET_ID = "1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ"  # "HD Music Now – Website Credits"
-POSTERS = "https://mayadex853.github.io/Dashboards/hdmn-homepage/posters/"
+# Posters live on GitHub Pages (main). Before a merge, set WTR_POSTERS to a jsDelivr URL pinned to a commit.
+POSTERS = os.environ.get("WTR_POSTERS", "https://mayadex853.github.io/Dashboards/hdmn-homepage/posters/")
 LOGO = ("https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/"
         "2162751237/settings_images/47ed02-ebc5-250f-cdd2-17c278b4e31_JODY_LOGO_smaller.png")  # the site header logo
 

@@ -3845,7 +3845,7 @@
   "Detail": "Music Clearance",
   "Year": "2022",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "nothing-lasts-forever.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -3865,7 +3865,7 @@
   "Detail": "Song Composer",
   "Year": "2021",
   "Type": "TV Series",
-  "Poster": "",
+  "Poster": "evil.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -3885,7 +3885,7 @@
   "Detail": "Music Coordinator",
   "Year": "2021",
   "Type": "TV Series",
-  "Poster": "",
+  "Poster": "generation.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -3985,7 +3985,7 @@
   "Detail": "Music Clearance",
   "Year": "2017",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "limerence.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -4005,7 +4005,7 @@
   "Detail": "Music Supervisor",
   "Year": "2016",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "check-it.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -4045,7 +4045,7 @@
   "Detail": "Music Coordinator",
   "Year": "2013",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "cavemen.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -4065,7 +4065,7 @@
   "Detail": "Music Supervisor",
   "Year": "2011",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "dont-fade-away.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -4075,7 +4075,7 @@
   "Detail": "Music Supervisor",
   "Year": "2011",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "three-veils.jpg",
   "Carousel": "No",
   "Order": ""
  },
@@ -4085,7 +4085,7 @@
   "Detail": "Music Supervisor",
   "Year": "2010",
   "Type": "Film",
-  "Poster": "",
+  "Poster": "camp-hell.jpg",
   "Carousel": "No",
   "Order": ""
  },

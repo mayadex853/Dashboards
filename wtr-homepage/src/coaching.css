@@ -46,6 +46,9 @@
 .k-n{display:block;font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .k-opt.deep .k-n{color:var(--em);}
 .wtr .k-opt h3{font-size:clamp(30px,2.6vw,40px);margin-bottom:16px !important;}
+.k-mm span{display:block;white-space:nowrap;}
+.k-mm sup{font-size:.4em;vertical-align:top;position:relative;top:.3em;margin-left:.06em;letter-spacing:.04em;line-height:1;}
+.wtr .k-mm{line-height:1.08 !important;}
 .wtr .k-opt p{font-size:15.5px;margin:0 0 14px !important;}
 .wtr .k-opt .k-for{color:var(--ink);font-weight:500;}
 .k-opt blockquote{margin:6px 0 14px;font-family:var(--display);text-transform:uppercase;font-size:clamp(24px,2vw,30px);line-height:1.1;color:var(--gold2);}

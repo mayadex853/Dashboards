@@ -6,7 +6,6 @@
 .s-hero h1 em{font-style:normal;color:var(--em) !important;}
 .wtr .s-hero .w-hero-sub{font-size:clamp(17px,1.4vw,20px);margin-bottom:40px !important;}
 .s-hero .w-hero-sub b{color:var(--ink);}
-.s-hero .w-hero-img img{object-position:62% 40%;transform-origin:62% 55%;}
 .s-trust{display:flex !important;align-items:center;gap:28px !important;}
 .s-trust span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
 .s-trust img{height:46px;width:auto;opacity:.92;object-fit:contain;object-position:left center;max-width:100%;}
@@ -77,7 +76,7 @@
   .s-head{flex-direction:column;align-items:start;gap:18px;}
 }
 @media (max-width:760px){
-  .wtr .s-hero h1{font-size:clamp(44px,13vw,64px);}
+  .wtr .s-hero h1,.wtr[data-dir="brick"] .s-hero h1{font-size:clamp(34px,10.6vw,64px);}
   .s-trust{flex-direction:column;align-items:flex-start !important;gap:10px !important;}
   .s-trust img{height:auto;width:100%;}
   .s-steps{grid-template-columns:1fr;}

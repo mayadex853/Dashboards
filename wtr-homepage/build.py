@@ -24,6 +24,28 @@ SRC = HERE / "src"
 KAJABI = "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/"
 LOGO = KAJABI + "themes/2162751237/settings_images/47ed02-ebc5-250f-cdd2-17c278b4e31_JODY_LOGO_smaller.png"
 
+
+def header_html(book_href="https://www.wrecktheroom.com/speaker2", book_attrs="", logo=LOGO):
+    """Site nav used on the custom pages (Kajabi's own header is hidden on them).
+
+    book_href / book_attrs point the "Book Jody to speak" button at the right place for each page:
+    the booking section on home and speaking, Kajabi's booking pop-up (data-k-book) elsewhere.
+    """
+    return (
+        "<style>.wtr-hd{position:absolute;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;"
+        "padding:20px 32px;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase}"
+        ".wtr-hd img{width:150px;height:auto;display:block}"
+        ".wtr-hd nav{display:flex;gap:30px;align-items:center}.wtr-hd a{color:#d9d2c4 !important;text-decoration:none !important}"
+        ".wtr-hd .bk{border:1px solid #c9a84c;color:#ecd69b !important;padding:14px 20px}"
+        "@media(max-width:760px){.wtr-hd{padding:14px 20px}.wtr-hd img{width:120px}.wtr-hd nav a:not(.bk){display:none}"
+        ".wtr-hd .bk{padding:11px 12px;font-size:10px}}</style>"
+        f'<div class="wtr-hd"><a href="https://www.wrecktheroom.com/"><img src="{logo}" alt="Jody Friedman"></a>'
+        '<nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a>'
+        '<a href="https://www.wrecktheroom.com/credits">Credits</a><a href="https://www.wrecktheroom.com/coaching">Work With Me</a>'
+        '<a href="https://www.wrecktheroom.com/blog">Blog</a>'
+        f'<a class="bk" href="{book_href}"{book_attrs}>Book Jody to speak</a></nav></div>'
+    )
+
 # Copy of the live Kajabi booking form (same action and field names). Preview only: the live page uses
 # Kajabi's own form, which carries the security token this copy can't have.
 PREVIEW_FORM = """<form action="https://www.wrecktheroom.com/forms/2149142005/form_submissions" method="post" data-preview>

@@ -20,7 +20,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-from build import minify_css
+from build import minify_css, header_html
 from hdmn_clone import ethan_bloom
 
 HERE = Path(__file__).parent
@@ -41,21 +41,6 @@ def fetch_sheet():
     return [{k: (row.get(k) or "").strip() for k in keep} for row in rows if (row.get("Section") or "").strip()]
 
 
-def header_html(logo=LOGO):
-    """Header used on the custom pages (the Kajabi header is hidden on them)."""
-    return (
-        "<style>.wtr-hd{position:absolute;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;"
-        "padding:20px 32px;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase}"
-        ".wtr-hd img{width:150px;height:auto;display:block}"
-        ".wtr-hd nav{display:flex;gap:30px;align-items:center}.wtr-hd a{color:#d9d2c4 !important;text-decoration:none !important}"
-        ".wtr-hd .bk{border:1px solid #c9a84c;color:#ecd69b !important;padding:14px 20px}"
-        "@media(max-width:760px){.wtr-hd{padding:14px 20px}.wtr-hd img{width:120px}.wtr-hd nav a:not(.bk){display:none}"
-        ".wtr-hd .bk{padding:11px 12px;font-size:10px}}</style>"
-        f'<div class="wtr-hd"><a href="https://www.wrecktheroom.com/"><img src="{logo}" alt="Jody Friedman"></a>'
-        '<nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a>'
-        '<a href="https://www.wrecktheroom.com/credits">Credits</a><a href="https://www.wrecktheroom.com/coaching">Work With Me</a>'
-        '<a class="bk" href="https://www.wrecktheroom.com/speaker2">Book Jody to speak</a></nav></div>'
-    )
 
 
 def parts(data):

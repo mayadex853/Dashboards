@@ -28,22 +28,44 @@ LOGO = KAJABI + "themes/2162751237/settings_images/47ed02-ebc5-250f-cdd2-17c278b
 def header_html(book_href="https://www.wrecktheroom.com/speaker2", book_attrs="", logo=LOGO):
     """Site nav used on the custom pages (Kajabi's own header is hidden on them).
 
-    book_href / book_attrs point the "Book Jody to speak" button at the right place for each page:
+    Pinned to the top: transparent over the hero, dark once the page scrolls. On phones the links
+    move into a menu opened by the button beside "Book Jody to speak".
+    book_href / book_attrs point the booking button at the right place for each page:
     the booking section on home and speaking, Kajabi's booking pop-up (data-k-book) elsewhere.
     """
     return (
-        "<style>.wtr-hd{position:absolute;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;"
-        "padding:20px 32px;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase}"
-        ".wtr-hd img{width:150px;height:auto;display:block}"
+        "<style>html{scroll-padding-top:96px}"
+        ".wtr-hd{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;"
+        "padding:20px 32px;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;"
+        "transition:background .35s,padding .35s,box-shadow .35s}"
+        ".wtr-hd.sc{background:rgba(10,9,8,.94);padding-top:12px;padding-bottom:12px;box-shadow:0 1px 0 rgba(201,168,76,.22)}"
+        ".wtr-hd img{width:150px;height:auto;display:block;transition:width .35s}.wtr-hd.sc img{width:124px}"
         ".wtr-hd nav{display:flex;gap:30px;align-items:center}.wtr-hd a{color:#d9d2c4 !important;text-decoration:none !important}"
+        ".wtr-hd nav a:hover{color:#ecd69b !important}"
         ".wtr-hd .bk{border:1px solid #c9a84c;color:#ecd69b !important;padding:14px 20px}"
-        "@media(max-width:760px){.wtr-hd{padding:14px 20px}.wtr-hd img{width:120px}.wtr-hd nav a:not(.bk){display:none}"
-        ".wtr-hd .bk{padding:11px 12px;font-size:10px}}</style>"
+        ".wtr-hd .mb{display:none;background:none;border:1px solid rgba(201,168,76,.45);width:40px;height:38px;padding:0;cursor:pointer;position:relative}"
+        ".wtr-hd .mb i{position:absolute;left:10px;right:10px;height:1.5px;background:#ecd69b;transition:transform .3s,opacity .3s}"
+        ".wtr-hd .mb i:nth-child(1){top:12px}.wtr-hd .mb i:nth-child(2){top:18px}.wtr-hd .mb i:nth-child(3){top:24px}"
+        ".wtr-hd.open .mb i:nth-child(1){transform:translateY(6px) rotate(45deg)}.wtr-hd.open .mb i:nth-child(2){opacity:0}"
+        ".wtr-hd.open .mb i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}"
+        ".wtr-hd .r{display:flex;align-items:center;gap:10px}"
+        "@media(max-width:900px){.wtr-hd{padding:14px 20px}.wtr-hd.sc{padding-top:10px;padding-bottom:10px}.wtr-hd img,.wtr-hd.sc img{width:116px}"
+        ".wtr-hd .mb{display:block}.wtr-hd .bk{padding:11px 12px;font-size:10px}"
+        ".wtr-hd nav{position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;flex-direction:column;justify-content:center;gap:30px;"
+        "background:#0a0908;font-size:15px;letter-spacing:.24em;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}"
+        ".wtr-hd.open nav{opacity:1;visibility:visible}}</style>"
         f'<div class="wtr-hd"><a href="https://www.wrecktheroom.com/"><img src="{logo}" alt="Jody Friedman"></a>'
-        '<nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a>'
+        '<div class="r"><nav><a href="https://www.wrecktheroom.com/about">About</a><a href="https://www.wrecktheroom.com/speaker2">Speaking</a>'
         '<a href="https://www.wrecktheroom.com/credits">Credits</a><a href="https://www.wrecktheroom.com/coaching">Work With Me</a>'
-        '<a href="https://www.wrecktheroom.com/blog">Blog</a>'
-        f'<a class="bk" href="{book_href}"{book_attrs}>Book Jody to speak</a></nav></div>'
+        '<a href="https://www.wrecktheroom.com/blog">Blog</a></nav>'
+        f'<a class="bk" href="{book_href}"{book_attrs}>Book Jody to speak</a>'
+        '<button class="mb" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button></div></div>'
+        "<script>(function(){var h=document.querySelectorAll('.wtr-hd');h=h[h.length-1];if(!h||h.__w)return;h.__w=1;"
+        "var b=h.querySelector('.mb');function s(){h.classList.toggle('sc',window.pageYOffset>40);}"
+        "window.addEventListener('scroll',s,{passive:true});s();"
+        "b.addEventListener('click',function(){var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o);});"
+        "h.querySelector('nav').addEventListener('click',function(e){if(e.target.closest('a'))h.classList.remove('open');});"
+        "h.querySelector('.bk').addEventListener('click',function(){h.classList.remove('open');});})();</script>"
     )
 
 # Copy of the live Kajabi booking form (same action and field names). Preview only: the live page uses

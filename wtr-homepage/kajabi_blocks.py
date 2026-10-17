@@ -16,6 +16,7 @@ RESET = ("#section-{s} .container,#section-{s} .row,#section-{s} [class*=col-],#
 # lets the pinned framework section and other sticky elements work inside Kajabi's wrappers
 UNCLIP = "body:not(.stop-scroll--body){{overflow-x:clip !important;overflow-y:visible !important}}#section-{s} .block{{overflow:clip !important}}"
 BOOK_POPUP = ("#two-step", " data-k-book")
+CREDITS_SHA = "8c8d8159c426b92b283f40ddef947018af99f041"
 
 
 def style(*sections, unclip=True, extra=""):
@@ -38,6 +39,10 @@ def blocks(sha):
         # the About page is a website page, so the site header (used by the blog) is hidden here
         "about": style("wtr_about", extra="#section-header{display:none !important}") + '<div style="position:relative">'
                 + header_html(*BOOK_POPUP) + '<div id="wtr-about-mount"></div></div>' + src("about.js"),
+        # credits.js is pinned separately: it reads the live credits sheet, so it is only rebuilt on purpose
+        "credits": "<style>body{background:#0a0908 !important;margin:0}" + RESET.format(s="wtr_credits") + "</style>"
+                + '<div style="position:relative">' + header_html() + '<div id="wtr-credits-mount"></div></div>'
+                + f'<script src="{CDN.format(sha=CREDITS_SHA, file="credits.js")}"></script>',
     }
 
 

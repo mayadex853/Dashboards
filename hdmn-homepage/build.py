@@ -75,6 +75,37 @@ FINDER = [
     ("Other", "Tell us what you need", ""),
 ]
 
+# Ethan Bloom: Jody's feature as Producer & Music Supervisor (sources: Menemsha Films, festival listings)
+EB_TRAILER = "P_yeWY0b_RE"
+EB_SHOWTIMES = "https://www.menemshafilms.com/ethan-bloom"
+EB_FESTIVALS = [
+    "Miami Film Festival \u00b7 World Premiere", "Sedona International Film Festival \u00b7 Award Winner",
+    "Austin Film Festival", "Boston Jewish Film Festival", "San Diego Jewish Film Festival",
+    "Santa Barbara Jewish Film Festival", "Key Biscayne Film Festival", "Palm Springs Jewish Film Festival",
+    "East Bay International Jewish Film Festival", "New Jersey Jewish Film Festival", "Jewish Film Festival of Dallas",
+    "JFilm Festival Pittsburgh", "St. Louis Jewish Film Festival", "Lenore Marwil Jewish Film Festival (Detroit)",
+    "Boca Raton Jewish Film Festival", "Dayton Jewish International Film Festival", "Charlotte Jewish Film Festival",
+    "Cincinnati Jewish & Israeli Film Festival", "Nashville Jewish Film Festival", "New Hampshire Jewish Film Festival",
+    "Rehoboth Beach Jewish Film Festival", "Stowe Jewish Film Festival", "Wilmington Jewish Film Festival",
+    "Michiana Jewish Film Festival", "Fresno Jewish Film Series", "Jewish International Film Festival (Australia)",
+]
+EB_DELRAY_OPEN = "2026-04-03"  # Movies of Delray run start; the week count updates itself
+# (city, venue, ISO date or "", label, note) -- fallback; the live list is the sheet's "Screenings" tab
+EB_SCREENINGS = [
+    ("Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week"),
+    ("Los Angeles, CA", "Laemmle's Royal", "2026-10-21", "LA Premiere", "Q&A with Joshua Malina, Hank Greenspan & Mindy Sterling"),
+    ("Encino, CA", "Laemmle Town Center 5", "2026-10-22", "LA Premiere", "Q&A with Joshua Malina & Hank Greenspan"),
+    ("Somerville, MA", "Somerville Theatre", "2026-11-15", "Boston Jewish Film Festival", "Conversation with director Herschel Faber & star Hank Greenspan"),
+    ("Boston, MA", "West Newton Cinema", "2026-12-04", "Boston Opening", ""),
+    ("New York, NY", "New Plaza Cinema", "", "Coming Soon", ""),
+    ("More big cities", "", "", "Coming Soon", "Dates to be announced"),
+]
+EB_QUOTES = [
+    ("Paints a raw and authentic portrait of adolescence.", "The Austin Chronicle"),
+    ("A simple story, big heart, and a lasting impression.", "True View Reviews"),
+    ("5 stars for tweens and teens to Grandma and Grandpa.", "ACED Magazine"),
+]
+
 SUBPUBS = ["HDMN Royalty Music UK", "BMG", "Sonoton", "ViMusica", "Moodoofind", "Red Igloo", "Kouros",
            "Yellowgroove", "Miles of Musik", "Apollo Music"]
 
@@ -136,6 +167,8 @@ def build(base):
         return "".join(f"<li><span>{e(name)}</span><em>{e(note)}</em></li>" for name, note in items)
     speaking, press, features = li(STAGE), li(PRESS), li(FEATURES)
     all_slugs = ",".join(p["slug"] for p in MANIFEST)
+    eb_fest = _marquee(EB_FESTIVALS)
+    eb_quotes = "".join(f'<figure class="hd-eb-q hd-reveal"><blockquote>&ldquo;{e(q)}&rdquo;</blockquote><figcaption>{e(src)}</figcaption></figure>' for q, src in EB_QUOTES)
     finder = "".join(
         f'<button type="button" class="hd-fopt" data-label="{e(label)}" data-url="{e(url)}">'
         f'<b>{e(label)}</b><small>{e(dest)}</small><i>{"&#8599;" if url else "&rarr;"}</i></button>'
@@ -145,7 +178,7 @@ def build(base):
         css=_min(CSS), ticker=_marquee(CLIENTS), brands=_marquee(BRANDS), cards=cards, sup_cards=sup_cards,
         tabs=tabs, panels=panels, total="10,000+", total_n=10000, sup_rows=sup_rows,
         sup_total=len(SUPERVISION), labels=labels, subpubs=subpubs, speaking=speaking, press=press, features=features,
-        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL, finder=finder, sourceaudio=e(SOURCEAUDIO_URL),
+        catalog=e(CATALOG_URL), contact=CONTACT_ANCHOR, imdb=IMDB_URL, logo=LOGO_URL, finder=finder, eb_fest=eb_fest, eb_quotes=eb_quotes, eb_n=len(EB_FESTIVALS), eb_showtimes=EB_SHOWTIMES, eb_trailer=EB_TRAILER, eb_shows=e(json.dumps(EB_SCREENINGS)), eb_open=EB_DELRAY_OPEN, base=base, sourceaudio=e(SOURCEAUDIO_URL),
         js=JS.replace("__CONTACT__", CONTACT_ANCHOR).replace("__SHEET__", SHEET_ID).replace("__FALLBACK__", FALLBACK_BASE if base == CDN_BASE else "").replace("__BASE__", base).replace("__SLUGS__", all_slugs))
 
 
@@ -210,6 +243,75 @@ header.header{display:none !important;}
   .hd-nav-links a{padding:14px 12px;font-size:12px;letter-spacing:.2em;}
 }
 @media(max-width:380px){.hd-nav .hd-btn{display:none}.hd-nav-tog{margin-left:auto}}
+
+/* ETHAN BLOOM */
+.hd-ethan{position:relative;overflow:hidden;padding:140px 0 0;background:#06070b;}
+.hd-eb-bg{position:absolute;inset:0;background-size:cover;background-position:center 30%;opacity:.28;filter:saturate(1.1);}
+.hd-ethan::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,#06070b 8%,rgba(6,7,11,.75) 45%,rgba(6,7,11,.9)),linear-gradient(0deg,#06070b,transparent 40%);}
+.hd-eb-grid{position:relative;z-index:1;display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:center;}
+.hd-eb-play{display:block;position:relative;width:100%;padding:0;border:0;background:none;cursor:pointer;border-radius:6px;overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);transform:rotate(-2deg);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;}
+.hd-eb-play img{display:block;width:100%;height:auto;}
+.hd-eb-play:hover{transform:rotate(0) scale(1.02);box-shadow:0 50px 140px rgba(0,0,0,.8),0 0 80px rgba(177,75,244,.45);}
+.hd-eb-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(123,31,162,.88);color:#fff;font-size:30px;padding-left:6px;box-shadow:0 0 60px rgba(177,75,244,.8);transition:transform .3s;}
+.hd-eb-play:hover .hd-eb-playbtn{transform:translate(-50%,-50%) scale(1.12);}
+.hd-laurel{margin:34px auto 0;max-width:340px;text-align:center;position:relative;padding:18px 26px 16px;color:#f5e9c8;
+  border:1px solid rgba(217,196,138,.55);border-radius:4px;background:linear-gradient(180deg,rgba(217,196,138,.12),rgba(217,196,138,.02));}
+.hd-laurel::before{content:"\2605";position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:0 10px;background:#06070b;color:#d9c48a;font-size:16px;line-height:24px;}
+.hd-laurel span{display:block;font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#d9c48a;}
+.hd-laurel b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:30px;letter-spacing:.04em;line-height:1.05;margin:4px 0;color:#fff;}
+.hd-eb-copy .hd-h2{margin-bottom:8px;}
+.hd-eb-role{font-size:13px !important;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#e9d5ff;margin:0 0 26px;}
+.hd-eb-role b{color:#fff;}
+.hd-eb-log{font-size:20px;line-height:1.55;color:#d7dce5;max-width:640px;}
+.hd-eb-cred{font-size:14px;line-height:1.8;color:#8d95a5;margin:18px 0 30px;}
+.hd-eb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#1c2230;border:1px solid #1c2230;margin-bottom:34px;max-width:620px;}
+.hd-eb-stats div{background:#0b0d14;padding:20px 22px;}
+.hd-eb-stats b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:46px;line-height:1;color:#fff;}
+.hd-eb-stats span{font-size:12px;letter-spacing:.06em;color:#9aa3b2;}
+.hd-eb-shows{margin-top:30px;max-width:660px;}
+.hd-eb-la-k{display:block;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--vio2);margin-bottom:10px;}
+.hd-eb-shows ul{list-style:none;margin:0;padding:0;border-top:1px solid #1c2230;}
+.hd-eb-shows li{display:grid;grid-template-columns:118px 1fr;gap:4px 18px;padding:14px 0;border-bottom:1px solid #1c2230;align-items:baseline;}
+.hd-eb-shows .d{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;color:#fff;letter-spacing:.03em;}
+.hd-eb-shows .d small{display:block;font-family:Inter,sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;color:#9aa3b2;margin-top:4px;}
+.hd-eb-shows .w b{color:#fff;font-weight:700;font-size:15px;}
+.hd-eb-shows .w span{color:#c3c9d4;font-size:15px;}
+.hd-eb-shows .w em{display:inline-block;margin-left:8px;padding:3px 9px;border-radius:999px;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;background:rgba(177,75,244,.35);border:1px solid rgba(192,132,252,.5);vertical-align:2px;}
+.hd-eb-shows .w p{margin:4px 0 0;font-size:13px;color:#8d95a5;}
+.hd-eb-shows li.now .d{color:#4ade80;}
+.hd-eb-shows li.past{opacity:.5;}
+.hd-hero-eb{display:inline-flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin:0 auto 28px;padding:9px 12px 9px 9px;border-radius:999px;
+  background:rgba(8,9,14,.6);border:1px solid rgba(192,132,252,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#e5e7eb !important;font-size:13px;line-height:1.3;box-shadow:0 0 40px rgba(177,75,244,.25);transition:border-color .3s,box-shadow .3s,transform .3s;}
+.hd-hero-eb:hover{border-color:var(--vio2);box-shadow:0 0 60px rgba(177,75,244,.5);transform:translateY(-2px);}
+.hd-hero-eb-k{padding:6px 12px;border-radius:999px;background:var(--brand);color:#fff;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;}
+.hd-hero-eb-t b{color:#fff;}
+.hd-hero-eb-n{color:#e9d5ff;font-weight:600;}
+.hd-hero-eb i{font-style:normal;color:var(--vio2);}
+@media(max-width:600px){.hd-hero-eb{border-radius:18px;font-size:12px;padding:10px 12px;}.hd-hero-eb-n{width:100%;}.hd-eb-shows li{grid-template-columns:86px 1fr;gap:4px 12px;}}
+.hd-eb-fest .hd-track{animation-duration:220s;}
+.hd-eb-quotes{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:100px;}
+.hd-eb-q{margin:0;padding:30px 30px 26px;border:1px solid #1c2230;background:rgba(11,13,20,.8);border-radius:4px;}
+.hd-eb-q blockquote{margin:0 0 16px;font-family:'Bebas Neue',sans-serif;font-size:30px;line-height:1.1;letter-spacing:.01em;color:#fff;}
+.hd-eb-q figcaption{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--vio2);}
+.hd-eb-fest{position:relative;z-index:1;margin-top:90px;}
+.hd-trailer{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:16px;}
+.hd-trailer[hidden]{display:none;}
+.hd-tr-box{position:relative;width:min(1100px,100%);animation:hd-pop .35s cubic-bezier(.2,.8,.2,1);}
+.hd-tr-box .hd-f-x{top:-52px;right:0;}
+.hd-tr-frame{position:relative;padding-top:56.25%;background:#000;border-radius:10px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.8);}
+.hd-tr-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+@media(max-width:960px){
+  .hd-ethan{padding-top:90px;}
+  .hd-eb-grid{grid-template-columns:1fr;gap:40px;}
+  .hd-eb-poster{max-width:380px;margin:0 auto;}
+  .hd-eb-quotes{grid-template-columns:1fr;margin-top:60px;}
+  .hd-eb-stats b{font-size:36px;}
+  .hd-eb-stats div{padding:16px;}
+}
 
 /* FINDER */
 .hd-finder{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;}
@@ -502,6 +604,48 @@ a.hd-badge:hover{box-shadow:0 0 30px rgba(177,75,244,.5);}
 
 JS = r"""
 (function(){
+  /* Ethan Bloom: trailer pop-up */
+  var tr=document.getElementById('hd-trailer');
+  if(tr){
+    var frame=tr.querySelector('.hd-tr-frame'),trLast=null;
+    function trOpen(ev){ev.preventDefault();trLast=document.activeElement;
+      frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+frame.getAttribute('data-yt')+'?autoplay=1&rel=0" title="Ethan Bloom trailer" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+      tr.hidden=false;document.documentElement.style.overflow='hidden';setTimeout(function(){tr.querySelector('.hd-f-x').focus();},50);}
+    function trClose(){tr.hidden=true;frame.innerHTML='';document.documentElement.style.overflow='';if(trLast&&trLast.focus)trLast.focus();}
+    [].forEach.call(document.querySelectorAll('[data-hd-trailer]'),function(b){b.addEventListener('click',trOpen);});
+    tr.addEventListener('click',function(ev){if(ev.target.closest('[data-tclose]'))trClose();});
+    document.addEventListener('keydown',function(ev){if(!tr.hidden&&ev.key==='Escape')trClose();});
+  }
+  /* Ethan Bloom screenings: built-in list, replaced by the sheet's "Screenings" tab when it loads */
+  var shows=document.getElementById('hd-eb-shows');
+  if(shows){
+    var DAY=864e5,open=Date.parse(shows.getAttribute('data-open')+'T00:00:00Z'),week=Math.max(1,Math.floor((Date.now()-open)/(7*DAY)));
+    [].forEach.call(document.querySelectorAll('[data-eb-week]'),function(el){el.textContent=week;});
+    var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+    var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var toTime=function(v){if(!v)return null;var m=String(v).match(/(\d{4})[-,]\s*(\d{1,2})[-,]\s*(\d{1,2})/);if(!m)return null;
+      var mo=+m[2]-(/^Date\(/.test(v)?0:1);return Date.UTC(+m[1],mo,+m[3]);};
+    var renderShows=function(list){
+      var today=Date.now()-DAY*0.5,rank=function(x){return x.t==null?(/now/i.test(x.label)?0:3):(x.t>=today-DAY?1:4);};
+      list=list.filter(function(x){return x.city||x.venue;}).map(function(x,i){x.i=i;return x;});
+      list.sort(function(a,b){var ra=rank(a),rb=rank(b);if(ra!==rb)return ra-rb;if(ra===1)return a.t-b.t;if(ra===4)return b.t-a.t;return a.i-b.i;});
+      shows.querySelector('ul').innerHTML=list.map(function(x){var r=rank(x),d=x.t!=null?new Date(x.t):null,
+        dl=d?MON[d.getUTCMonth()]+' '+d.getUTCDate()+'<small>'+WD[d.getUTCDay()]+(r===4?' &middot; Played':'')+'</small>':(r===0?'Now<small>Playing</small>':'Soon<small>Coming</small>');
+        var note=String(x.note||'').replace(/\{week\}/g,week);
+        return '<li class="'+(r===0?'now':r===4?'past':'')+'"><div class="d">'+dl+'</div><div class="w"><b>'+esc(x.city)+'</b>'+(x.venue?' <span>&middot; '+esc(x.venue)+'</span>':'')+
+          (x.label&&!/^(now playing|coming soon)$/i.test(x.label)?'<em>'+esc(x.label)+'</em>':'')+(note?'<p>'+esc(note)+'</p>':'')+'</div></li>';}).join('');
+      var nx=list.filter(function(x){return rank(x)===1;})[0],hn=document.querySelector('[data-eb-next]');
+      if(hn&&nx){var nd=new Date(nx.t);hn.textContent='Next: '+(nx.label?nx.label+' \u00b7 ':'')+WD[nd.getUTCDay()]+', '+MON[nd.getUTCMonth()]+' '+nd.getUTCDate()+' \u00b7 '+nx.city;}
+    };
+    try{renderShows(JSON.parse(shows.getAttribute('data-shows')).map(function(r){return {city:r[0],venue:r[1],t:toTime(r[2]),label:r[3],note:r[4]};}));}catch(err){}
+    var scb='hdmnShows'+Date.now(),ss=document.createElement('script');
+    window[scb]=function(resp){try{var rows=(resp.table.rows||[]).map(function(row){var c=row.c||[],g=function(i){return c[i]&&c[i].v!=null?c[i].v:'';};
+        return {city:g(0),venue:g(1),t:toTime(g(2)),label:g(3),note:g(4)};});if(rows.length)renderShows(rows);}catch(err){}delete window[scb];ss.remove();};
+    ss.onerror=function(){ss.remove();};
+    ss.src='https://docs.google.com/spreadsheets/d/__SHEET__/gviz/tq?headers=1&sheet=Screenings&tqx=out:json;responseHandler:'+scb;
+    document.body.appendChild(ss);
+  }
+
   /* music finder: "Search Catalog" asks what they need, then routes them */
   var fd=document.getElementById('hd-finder');
   if(fd){
@@ -662,6 +806,7 @@ TEMPLATE = """<style>{css}</style>
   <a class="hd-nav-logo" href="#hd-top" aria-label="HD Music Now, back to top"><img src="{logo}" alt="" width="40" height="40"><span>HD Music Now</span></a>
   <div class="hd-nav-links" id="hd-nav-links">
     <a href="#hd-why">Why Us</a>
+    <a href="#hd-ethan">Ethan Bloom</a>
     <a href="#hd-credits">Credits</a>
     <a href="#hd-roster">Catalogs</a>
     <a href="#hd-deep">Specialty</a>
@@ -699,6 +844,7 @@ TEMPLATE = """<style>{css}</style>
   <div class="hd-wall" aria-hidden="true"></div>
   <div class="hd-shade"></div><div class="hd-glow"></div><div class="hd-beam"></div>
   <div class="hd-hero-in">
+    <a class="hd-hero-eb hd-up" href="#hd-ethan"><span class="hd-hero-eb-k">&#9733; Now in Theaters</span><span class="hd-hero-eb-t"><b>Ethan Bloom</b> &middot; Jody Friedman, Producer &amp; Music Supervisor</span><span class="hd-hero-eb-n" data-eb-next>Award-winning comedy &middot; See screenings</span><i>&rarr;</i></a>
     <span class="hd-eb hd-up hd-pain-line" aria-live="polite"><span class="hd-pl on">The director loves the temp. The budget doesn&rsquo;t.</span><span class="hd-pl">Locked cut. Uncleared song. Mix is Friday.</span><span class="hd-pl">47 libraries. 3 million tracks. Nothing fits.</span><span class="hd-pl">In a world where the deadline was yesterday&hellip;</span></span>
     <h1 class="hd-grad hd-up" style="animation-delay:.2s">Temp it.<br>Love it.<br>Keep it.</h1>
     <p class="hd-sub hd-up" style="animation-delay:.45s">Cut with our music as your temp, fall in love with it, then keep it: budget-friendly and cleared before your deadline. A music supervisor's ear on every request, not library roulette.</p>
@@ -754,6 +900,45 @@ TEMPLATE = """<style>{css}</style>
     </div>
   </div>
 </section>
+
+<section class="hd-ethan" id="hd-ethan">
+  <div class="hd-eb-bg" style="background-image:url('{base}ethan-bloom-still.jpg')"></div>
+  <div class="hd-wrap hd-eb-grid">
+    <div class="hd-eb-poster hd-reveal">
+      <button type="button" class="hd-eb-play" data-hd-trailer aria-label="Play the Ethan Bloom trailer">
+        <img src="{base}ethan-bloom-key.jpg" alt="Ethan Bloom theatrical poster" loading="lazy" width="600" height="889">
+        <span class="hd-eb-playbtn">&#9654;</span>
+      </button>
+      <div class="hd-laurel"><span>Director&rsquo;s Choice Award</span><b>Best Feature &middot; Comedy</b><span>Sedona International Film Festival 2026</span></div>
+    </div>
+    <div class="hd-eb-copy hd-reveal" style="transition-delay:.15s">
+      <span class="hd-eb">Now in Theaters &middot; Award-Winning Comedy</span>
+      <h2 class="hd-h2 hd-grad">Ethan Bloom</h2>
+      <p class="hd-eb-role"><b>Producer</b> &amp; <b>Music Supervisor</b></p>
+      <p class="hd-eb-log">A 13-year-old who should be studying for his bar mitzvah secretly finds comfort in the Catholic church. A heartfelt coming-of-age comedy about grief, faith and first love, set in Miami&rsquo;s Coconut Grove.</p>
+      <p class="hd-eb-cred">Directed by Herschel Faber &middot; Written by Maylen Dominguez<br>Starring Joshua Malina, Rachelle Lefevre, Carlos Ponce, Mindy Sterling, Caroline Valencia and Hank Greenspan<br>Distributed in North America by Menemsha Films</p>
+      <div class="hd-eb-stats">
+        <div><b data-eb-week>28</b><span>Weeks &amp; counting in theaters</span></div>
+        <div><b>{eb_n}+</b><span>Festival selections</span></div>
+        <div><b>1</b><span>Award: Best Feature, Comedy</span></div>
+      </div>
+      <div class="hd-ctas" style="justify-content:flex-start">
+        <button type="button" class="hd-btn p" data-hd-trailer>&#9654; Watch the Trailer</button>
+        <a class="hd-btn o" href="{eb_showtimes}" target="_blank" rel="noopener">Showtimes &#8599;</a>
+      </div>
+      <div class="hd-eb-shows" id="hd-eb-shows" data-shows="{eb_shows}" data-open="{eb_open}">
+        <span class="hd-eb-la-k">Screenings &amp; Premieres</span>
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+  <div class="hd-wrap hd-eb-quotes">{eb_quotes}</div>
+  <div class="hd-ticker hd-eb-fest"><div class="hd-ticker-k">OFFICIAL SELECTION</div><div class="hd-marquee"><div class="hd-track">{eb_fest}</div></div></div>
+</section>
+<div class="hd-trailer" id="hd-trailer" role="dialog" aria-modal="true" aria-label="Ethan Bloom trailer" hidden>
+  <div class="hd-f-back" data-tclose></div>
+  <div class="hd-tr-box"><button type="button" class="hd-f-x" data-tclose aria-label="Close">&times;</button><div class="hd-tr-frame" data-yt="{eb_trailer}"></div></div>
+</div>
 
 <section class="hd-showing" id="hd-credits">
   <div class="hd-wrap hd-center hd-reveal">

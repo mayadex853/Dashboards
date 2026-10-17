@@ -193,7 +193,7 @@ T = {
         "find_brief": "Need something specific?", "find_brief_a": "Send us your brief &rarr;", "find_open": "Open album",
         "play": "Play", "versions": "versions", "more_info": "More info", "composer": "Composer", "publisher": "Publisher", "tempo": "Tempo", "key": "Key", "license": "License", "loading": "Loading tracks&hellip;",
         "no_audio": "Streaming for this album is coming soon. Get in touch and we will send you the tracks.",
-        "albums_count": "albums", "place_count": "placements",
+        "albums_count": "albums", "tracks_count": "licensable tracks &amp; growing", "tracks_stat": "Licensable tracks &amp; growing", "place_count": "placements",
         # about page
         "about_eb": "About Us", "about_h1": "Built by<br><span class=\"o-grad\">the culture.</span>",
         "about_story": "<b>Ocho Music Group LLC</b> brings you a boutique, premier Latin music catalog crafted by real artists using live instruments. Our collection provides authentic source music and geographically inspired underscore, delivering the true essence of each location. Featuring award-winning musicians and specialists from the U.S., the Caribbean, Central and South America, each regionally marked track is meticulously designed for authenticity. Whether you need vibrant rhythms, deep cultural textures or cinematic Latin scores, our catalog offers the perfect sound to elevate your project.",
@@ -296,7 +296,7 @@ T = {
         "find_brief": "¿Necesitas algo específico?", "find_brief_a": "Envíanos tu brief &rarr;", "find_open": "Ver álbum",
         "play": "Escuchar", "versions": "versiones", "more_info": "Más info", "composer": "Compositor", "publisher": "Editorial", "tempo": "Tempo", "key": "Tonalidad", "license": "Licenciar", "loading": "Cargando temas&hellip;",
         "no_audio": "El streaming de este álbum llegará pronto. Escríbanos y le enviaremos los temas.",
-        "albums_count": "álbumes", "place_count": "colocaciones",
+        "albums_count": "álbumes", "tracks_count": "temas licenciables y creciendo", "tracks_stat": "Temas licenciables y creciendo", "place_count": "colocaciones",
         "about_eb": "Sobre Nosotros", "about_h1": "Hecho por<br><span class=\"o-grad\">la cultura.</span>",
         "about_story": "<b>Ocho Music Group LLC</b> le brinda un catálogo boutique de música latina de primer nivel, elaborado por artistas reales con instrumentos en vivo. Nuestra colección ofrece música de origen auténtica y underscore de inspiración geográfica, capturando la verdadera esencia de cada lugar. Con músicos y especialistas galardonados de EE.UU., el Caribe, Centro y Sudamérica, cada tema marcado regionalmente está meticulosamente diseñado para ser auténtico. Ya sea que necesite ritmos vibrantes, texturas culturales profundas o partituras latinas cinematográficas, nuestro catálogo tiene el sonido perfecto para elevar su proyecto.",
         "about_tag": "Autenticidad. Pasión. Excelencia.",

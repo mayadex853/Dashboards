@@ -82,7 +82,7 @@ function wtrInit(root){
   /* ---- smooth in-page scroll ---- */
   function go(id){
     var t=document.getElementById(id);if(!t)return;
-    var hd=document.querySelector('#section-header header'),hh=hd?hd.getBoundingClientRect().height:0; // Kajabi's sticky header
+    var hd=document.querySelector('.wtr-hd')||document.querySelector('#section-header header'),hh=hd?hd.getBoundingClientRect().height:0; // the pinned site nav (or Kajabi's header)
     var y=t.getBoundingClientRect().top+window.pageYOffset-Math.max(40,Math.min(hh,160)+20);
     window.scrollTo({top:y,behavior:reduce?'auto':'smooth'});
   }

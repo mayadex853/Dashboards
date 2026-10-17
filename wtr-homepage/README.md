@@ -28,6 +28,15 @@ Custom homepage for wrecktheroom.com, embedded in Kajabi as a single Code block 
 
 The redesign is live as the homepage (Kajabi landing page `home`, theme 2163962849), in a section called `wtr_home` that holds one Custom Code block. The old sections are still saved in the theme, just not shown. To roll back, set the theme's `content_for_index` to the list in `data/old-homepage-layout.json`.
 
+## Framework scroll reveal
+
+On desktop the framework section stays pinned while the three moves (Wreck-ognize, Wreck, Wrock) appear one at a time; on mobile each move reveals as it scrolls into view. Kajabi's body and block wrappers clip overflow, which stops the pin from holding, so the homepage Code block also carries:
+
+```css
+body:not(.stop-scroll--body){overflow-x:clip !important;overflow-y:visible !important}
+#section-wtr_home .block{overflow:clip !important}
+```
+
 ## How the CTAs work
 
 - **Quiz:** every quiz button links to `https://quiz.wrecktheroom.com`, the same link as today.

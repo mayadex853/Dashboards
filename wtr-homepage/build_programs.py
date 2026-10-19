@@ -159,7 +159,7 @@ def render(key):
       <ul class="p-facts">
         <li><b>5 weeks</b><span>Guided</span></li>
         <li><b>Your pace</b><span>In your library</span></li>
-        <li><b>$997</b><span>One-time</span></li>
+        <li class="p-fact-price"><b>$997</b><span>One-time</span></li>
       </ul>
     </div>
   </div>
@@ -256,7 +256,8 @@ def render(key):
 BONUS_JS = ("if(/[?&]bonus=1(&|$)/.test(location.search)){r.classList.add('has-bonus');"
             "var b=r.querySelector('.p-bonus');if(b)b.hidden=false;"
             "r.querySelectorAll('a[href*=\"/checkout\"]').forEach(function(a){a.href+=(a.href.indexOf('?')<0?'?':'&')+'coupon_code=" + COUPON + "';"
-            "a.childNodes.forEach(function(n){if(n.nodeType===3)n.nodeValue=n.nodeValue.replace('$997','50% off');});});}")
+            "a.childNodes.forEach(function(n){if(n.nodeType===3)n.nodeValue=n.nodeValue.replace('$997','50% off');});});"
+            "var f=r.querySelector('.p-fact-price');if(f)f.innerHTML='<b>50% off</b><span>Code " + COUPON + "</span>';}")
 
 
 def main():

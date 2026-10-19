@@ -31,6 +31,7 @@ BONUS = "Join in the next 5 days and get a private 30&#8209;minute call with Jod
 PROGRAMS = {
     "drifting": {
         "name": "Drifting",
+        "cta": "Break Out of Drifting",
         "offer": "CfbMiu8q",
         "promise": "You’ve built a successful life that doesn’t quite feel like your own. "
                    "In five weeks, you’ll see the room you’ve been living in for what it is.",
@@ -45,6 +46,7 @@ PROGRAMS = {
     },
     "stalling": {
         "name": "Stalling",
+        "cta": "Break Out of Stalling",
         "offer": "UFGxioGz",
         "promise": "You can see exactly what needs to change, and you haven’t moved on it. "
                    "In five weeks, you’ll make the first real move.",
@@ -60,6 +62,7 @@ PROGRAMS = {
     },
     "renovating": {
         "name": "Renovating",
+        "cta": "Break Out of Renovating",
         "offer": "RujeXGKk",
         "promise": "You’ve done serious work on yourself and keep running into the same patterns. "
                    "This is what comes after it.",
@@ -74,6 +77,7 @@ PROGRAMS = {
     },
     "rebuilding": {
         "name": "Rebuilding",
+        "cta": "Take Your Rebuild Further",
         "offer": "CGtLAnun",
         "promise": "You’re operating at a high level, and something below the surface is still running the show. "
                    "Not from zero. From exactly where you are.",
@@ -130,7 +134,7 @@ def render(key):
       <h1><span class="ln"><span>Wreck the Room:</span></span><span class="ln"><span><em>{name}.</em></span></span></h1>
       <p class="w-hero-sub">{p["promise"]}</p>
       <div class="w-cta-row">
-        {btn(f"Start {name} · $997", buy)}
+        {btn(p["cta"] + " · $997", buy)}
         <a class="w-link" href="#p-weeks" data-w-scroll>What you’ll do ↓</a>
       </div>
       <ul class="p-facts">
@@ -190,7 +194,7 @@ def render(key):
       <div class="p-offer-r">
         <small>One-time</small>
         <span class="p-price">$997</span>
-        {btn(f"Start {name}", buy)}
+        {btn(p["cta"], buy)}
         <span class="p-bonus-note">Quiz bonus: {BONUS}</span>
         <span class="w-micro">Secure checkout. Instant access after payment.</span>
       </div>
@@ -216,7 +220,7 @@ def render(key):
   <div class="w-wrap">
     <p class="w-rv">You already know which room you’re in.</p>
     <h2 class="w-rv d1">Now <em>do something about it.</em></h2>
-    <div class="w-cta-row">{btn(f"Start {name} · $997", buy)}</div>
+    <div class="w-cta-row">{btn(p["cta"] + " · $997", buy)}</div>
   </div>
 </div>
 <div class="p-help"><p>Questions? Email <a href="mailto:{TEAM}">{TEAM}</a> and we’ll take care of you.</p></div>

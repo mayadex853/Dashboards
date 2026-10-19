@@ -5,7 +5,8 @@ One script serves all four; the Kajabi Code block picks the version with data-v:
   <script src="https://mayadex853.github.io/Dashboards/wtr-homepage/programs.js"></script>
 
 Versions: drifting, stalling, renovating, rebuilding (the four quiz results).
-Adding ?bonus=1 to the page URL shows the quiz-bonus banner; the quiz follow-up emails link with it.
+Adding ?bonus=1 to the page URL shows the quiz-offer banner and applies coupon QUIZ50 at checkout;
+the quiz follow-up emails link with it.
 
 Copy comes from each offer's Kajabi description and the existing WTR pages; the client stories are the
 same videos as the homepage and Work With Me page.
@@ -26,7 +27,8 @@ QUIZ = "https://quiz.wrecktheroom.com"
 WORK = "https://www.wrecktheroom.com/coaching"
 TEAM = "team@jodyfriedman.com"
 HERO_IMG = KAJABI + "themes/2164062548/settings_images/5c2ccb4-53e8-036b-1e5-e5337614e3_Jody_Horizontal_Sunset.jpg"
-BONUS = "Join in the next 5 days and get a private 30&#8209;minute call with Jody at week 3."
+COUPON = "QUIZ50"
+BONUS = f"Your quiz discount is applied: 50% off with code {COUPON} for the next 5 days."
 
 PROGRAMS = {
     "drifting": {
@@ -124,7 +126,7 @@ def render(key):
     ]
     qs = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in faq)
     return f"""<div class="wtr pg" id="wtr-prog" data-dir="brick">
-<div class="p-bonus" hidden><div class="w-wrap"><b>Quiz bonus</b><span>{BONUS}</span></div></div>
+<div class="p-bonus" hidden><div class="w-wrap"><b>Quiz offer</b><span>{BONUS}</span></div></div>
 
 <header class="w-hero">
   <div class="w-hero-img"><img src="{HERO_IMG}" alt="Jody looking out at the ocean at sunset" fetchpriority="high"></div>
@@ -195,7 +197,7 @@ def render(key):
         <small>One-time</small>
         <span class="p-price">$997</span>
         {btn(p["cta"], buy)}
-        <span class="p-bonus-note">Quiz bonus: {BONUS}</span>
+        <span class="p-bonus-note">{BONUS}</span>
         <span class="w-micro">Secure checkout. Instant access after payment.</span>
       </div>
     </div>
@@ -227,8 +229,10 @@ def render(key):
 </div>"""
 
 
+# With ?bonus=1 (the quiz follow-up emails), show the offer banner and apply the coupon at checkout.
 BONUS_JS = ("if(/[?&]bonus=1(&|$)/.test(location.search)){r.classList.add('has-bonus');"
-            "var b=r.querySelector('.p-bonus');if(b)b.hidden=false;}")
+            "var b=r.querySelector('.p-bonus');if(b)b.hidden=false;"
+            "r.querySelectorAll('a[href*=\"/checkout\"]').forEach(function(a){a.href+=(a.href.indexOf('?')<0?'?':'&')+'coupon_code=" + COUPON + "';});}")
 
 
 def main():

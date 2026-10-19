@@ -1,110 +1,108 @@
-# Outcome-first copy: DRAFT for Jody's review
+# Outcome-first copy: DRAFT v2 for Jody's review
 
-Nothing below is live yet. Mark changes inline or reply with notes. Once approved, the program pages, result pages and
-follow-up emails all get updated to match.
+Nothing below is live yet. Mark changes inline or reply with notes. Once approved, the program pages and the quiz
+follow-up emails get updated to match.
 
-**New page order:** the pain → who you'll be → the five weeks as the path → client stories → what's included and price → FAQ.
-Today the pages lead with what's included; that moves near the bottom.
+**The framework (from Jody):**
+
+| | Not taking action | Taking action |
+|---|---|---|
+| **Unaware** | **Drifting**: autopilot; life happens to them | **Renovating**: busy fixing the wrong things |
+| **Aware** | **Stalling**: knows, but finds excuses | **Rebuilding**: doing the work, hitting plateaus |
+
+**Page order:** the pain → who you'll be → the five weeks as the path → client stories → what's included → FAQ.
+**Emails:** no price anywhere. The offer is "50% off with code QUIZ50 for the next 5 days".
 
 ---
 
-## Drifting
+## Drifting: unaware, not taking action
 
-**Headline:** On paper, you made it. So why does it feel like someone else's life?
+**Headline:** Life is happening *to* you. When did you stop steering?
 
-**Sub:** Five weeks to stop living on cruise control and start steering again.
+**Sub:** Five weeks to wake up from autopilot and take back control.
 
 **Sound familiar?**
-- You hit the goals you set, and they felt smaller than you expected.
-- Your days run on autopilot: the calendar is full, and most of the choices were made before you woke up.
-- You can't remember the last big decision you made purely because *you* wanted it.
-- You're moving, just not in a direction you ever consciously chose.
-- Quietly, the years are adding up.
+- Your days run on autopilot: same routine, same pressures, same results.
+- It feels like the rat race. You keep running, but you never chose the track.
+- Decisions get made *for* you by your calendar, your obligations, other people's expectations.
+- You're not unhappy enough to change anything, and not fulfilled enough to feel good about it.
+- Years go by, and you can't point to when you last chose your direction on purpose.
 
 **Five weeks from now:**
-You're no longer drifting. You know exactly which room you've been living in, who built it, and what it's cost you.
-You stop living by default and start choosing on purpose: your calendar, your yeses, your next level.
-You're the one steering again.
-
-**Result page line (above the button):** Five weeks from now, you could be steering your life on purpose instead of on cruise control.
+You're awake. You can see the room you've been living in and who built it, so it stops running you.
+You're back in the driver's seat, making choices on purpose instead of letting life happen to you.
 
 ---
 
-## Stalling
+## Stalling: aware, not taking action
 
-**Headline:** You know exactly what needs to change. So why haven't you moved?
+**Headline:** You know exactly what needs to change. So why do you keep finding reasons not to?
 
-**Sub:** Five weeks to stop almost-doing it and finally move.
+**Sub:** Five weeks to stop thinking about it and start doing the work.
 
 **Sound familiar?**
-- You've rehearsed the decision a hundred times in your head.
-- You keep waiting to feel ready, and ready never comes.
-- "Almost" has become a way of life: almost started, almost said it, almost left.
+- You've analyzed it from every angle, and you're still in the same place.
+- There's always a reason it isn't the right time: too busy, need more info, after this next thing.
+- You stay busy with everything *except* the one thing that actually needs your attention.
+- Analysis paralysis feels productive. It isn't.
 - No one is harder on you about it than you are.
-- Every month you wait, the gap between who you are and who you know you could be gets wider.
 
 **Five weeks from now:**
-You're someone who moves. You've seen what the stall was protecting, so it stops running you.
-You've made the first real move (not a plan, a move), and you trust yourself to make the next one.
-
-**Result page line:** Five weeks from now, you could be the person who finally moved.
+You're someone who moves. You've seen what the excuses were protecting, so they lose their grip.
+You've done the real work instead of the busy work, and you've made the first real move. Not a plan. A move.
 
 ---
 
-## Renovating
+## Renovating: taking action, but on the wrong things
 
-**Headline:** You've done the work. So why do the same patterns keep coming back?
+**Headline:** New strategy. New hire. New city. Same results. What if the problem isn't out there?
 
-**Sub:** Five weeks to stop redecorating and fix the foundation.
+**Sub:** Five weeks to stop rearranging the furniture and work on the one thing that moves everything: who you are.
 
 **Sound familiar?**
-- Therapy, coaching, books, breakthroughs: you've invested real time and money in yourself.
-- You can explain your patterns better than anyone.
-- And they still show up in your relationships, your business, your decisions.
-- You're tired of insights that feel huge in the moment and fade by the following week.
-- Part of you has started to wonder if this is just who you are.
+- When something isn't working, you change something: the plan, the team, the business model, the location.
+- Each fix feels like *the* answer, for a while.
+- Then the same problems show up again in the new setup.
+- You're working hard, but the results don't match the effort.
+- Nobody has told you the truth: the strategy isn't the problem. The identity running the strategy is.
 
 **Five weeks from now:**
-You've stopped repainting the walls and started working on the foundation. You know where the patterns actually began,
-and the growth finally holds, because it's built on something solid.
-
-**Result page line:** Five weeks from now, the work could finally hold.
+You stop renovating the house and start working on the person living in it. You can see the identity that's been
+driving your decisions, so your effort finally goes to the thing that changes everything else.
 
 ---
 
-## Rebuilding
+## Rebuilding: aware and taking action, still hitting plateaus
 
-**Headline:** You're operating at a high level. Something underneath is still running the show.
+**Headline:** You're doing the work. So why do you keep hitting the same ceiling?
 
-**Sub:** Five weeks to take your rebuild further, from exactly where you are.
+**Sub:** Five weeks and a real framework to take your rebuild further.
 
 **Sound familiar?**
-- You've built a lot, consciously and on purpose.
-- But under pressure, you still react like an older version of yourself.
-- Some of your decisions don't feel fully yours.
-- You sense there are rooms within the room you haven't seen yet.
-- The higher you go, the more those blind spots cost.
+- You're self-aware, and you act on it.
+- You've grown a lot, and lately the growth has flattened out.
+- You can feel there's another level, but you don't have a clear way to dig into what's holding you there.
+- Insight on its own isn't getting you through anymore.
+- The higher you go, the more those last blind spots cost.
 
 **Five weeks from now:**
-You're operating fully on purpose. You know where you're activated and where you were still on autopilot.
-You've mapped the blind spots your conscious work hadn't reached, and your next level is designed, not inherited.
-
-**Result page line:** Five weeks from now, your next level could be fully on purpose.
+You have a framework for going deeper into your identity, not just more insight. You know where you're fully
+activated and where you're still running on old wiring, and you have a clear path through the plateau to your next level.
 
 ---
 
 ## Follow-up emails (all four rooms)
 
-- **E1 ("That's okay"):** Keep it. Swap the "Over five weeks you'll…" line (a feature list) for that room's
-  "Five weeks from now" paragraph above.
-- **E2:** Change the subject to "Who you'll be in five weeks", and replace the "What you'll walk away with" list with the
-  room's "Sound familiar?" bullets followed by the "Five weeks from now" paragraph. "How it works" shrinks to one line.
-- **E3 and E4:** No change; they already speak to the pain and the deadline.
+- **E1:** Open with their room's pain (2–3 lines from "Sound familiar?"), then the "Five weeks from now" paragraph,
+  then: "Because you took the quiz, use code **QUIZ50** for 50% off in the next 5 days." No dollar amounts.
+- **E2:** Subject "Who you'll be in five weeks": the after-state plus one line on how it works.
+- **E3:** The excuse that fits their room:
+  Drifting "Things are fine, really" · Stalling "Now isn't the right time" ·
+  Renovating "I just need the right strategy" · Rebuilding "I should be able to figure this out myself".
+- **E4:** "Last day for your 50% off" plus an invitation to reply.
 
 ## What I'd want you to check
 
-1. **Pain bullets:** do they match what you actually hear from clients in each room? Swap any that don't ring true.
-2. **The after-state:** is it a promise you're comfortable making for five weeks of self-guided work? I used "could"
-   on the result pages and plain "Five weeks from now" on the program pages.
-3. **Rebuilding:** you said people break out of the other rooms and into Rebuilding. Should the other three pages name
-   Rebuilding as the destination (e.g. "…and into Rebuilding")? I left it out so it doesn't sound like a second purchase.
+1. Do the "Sound familiar?" lines sound like what you hear on calls? Swap any that don't.
+2. Are you comfortable with the "Five weeks from now" promises for self-guided work?
+3. Should Drifting, Stalling and Renovating name Rebuilding as the destination ("…and into Rebuilding")?

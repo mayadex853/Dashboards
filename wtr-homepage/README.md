@@ -75,6 +75,7 @@ The Kajabi page is a landing page with the slug `credits`, holding one Custom Co
 - Each page's buttons go to that program's Kajabi checkout. Copy comes from the offer descriptions; the client stories are the same videos as the homepage.
 - Adding `?bonus=1` to the page URL shows the quiz-bonus banner (a private 30-minute call with Jody at week 3 for joining within 5 days). The quiz follow-up emails link with it; without it the banner is hidden.
 - `programs-preview.html?v=stalling&bonus=1` previews any version.
+- Live at `wrecktheroom.com/{drifting,stalling,renovating,rebuilding}-program`. Those Kajabi pages load the script from jsDelivr pinned to a commit (`https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@<commit>/wtr-homepage/programs.js`), so they work before this branch reaches `main`. After a rebuild, update the commit in all four Code blocks.
 
 ```bash
 python3 build_programs.py   # writes programs-preview.html, programs.js

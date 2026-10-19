@@ -5,40 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pricing | Elite Website Rentals</title>
 <meta name="description" content="Rent a custom-designed, fully hosted website for $147/month, or buy it outright for $2,500. No contract.">
+<meta name="theme-color" content="#070d18">
+<meta property="og:title" content="Pricing | Elite Website Rentals">
+<meta property="og:description" content="Rent a custom-designed, fully hosted website for $147/month, or buy it outright for $2,500. No contract.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23d9b56a'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='900' font-size='16' text-anchor='middle' fill='%23070d18'%3EE%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
+<header class="site">
   <div class="nav-wrap">
-    <a href="index.html" class="logo">Elite<span> Website</span> Rentals</a>
-    <nav>
+    <a href="index.html" class="logo"><span class="logo-mark">E</span>Elite<span class="w">Website</span>Rentals</a>
+    <nav class="main" aria-label="Main">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="how-it-works.html">How It Works</a></li>
         <li><a href="pricing.html" class="active">Pricing</a></li>
         <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
+      <a href="contact.html" class="btn btn-primary mobile-cta">Get Your Free Preview <span class="arrow">→</span></a>
     </nav>
-    <a href="contact.html" class="nav-cta">Get Started</a>
+    <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Get Started</a>
+    <button class="menu-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
-
-<section class="hero" style="padding-top:72px; padding-bottom:56px;">
+<main>
+<section class="page-hero">
+  <div class="fx"><div class="grid-bg"></div><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="spotlight"></div></div>
   <div class="container">
-    <span class="eyebrow">Pricing</span>
-    <h1 style="font-size:40px;">Simple, flat pricing. No surprises.</h1>
-    <p class="lead">Rent your site month-to-month, or buy it outright. Either way, it's custom-built for your business.</p>
+    <span class="pill reveal in"><span class="dot"></span>Pricing</span>
+    <h1 data-split>Premium website. <span class="serif grad-text">Simple pricing.</span></h1>
+    <p class="lead reveal" style="--d:400ms">Rent your site month-to-month with everything handled, or buy it outright. Either way, it's custom-built for your business.</p>
   </div>
 </section>
 
-<section>
+<section style="padding-top:30px;">
   <div class="container">
     <div class="price-grid">
-      <div class="price-card featured">
+      <div class="price-card featured reveal">
         <span class="badge">Founders rate</span>
         <h3>Website Rental</h3>
         <p class="sub">Everything handled, month-to-month.</p>
@@ -49,12 +57,12 @@
           <li>Secure hosting with uptime monitoring</li>
           <li>SSL certificate (https padlock)</li>
           <li>Reasonable ongoing content updates</li>
-          <li>Mobile-friendly on every device</li>
+          <li>Mobile-first, fast on every device</li>
           <li>No contract, cancel anytime</li>
         </ul>
-        <a href="contact.html" class="btn btn-primary">Get Started</a>
+        <a href="contact.html" class="btn btn-primary btn-block">Get Your Free Preview <span class="arrow">→</span></a>
       </div>
-      <div class="price-card">
+      <div class="price-card reveal" style="--d:120ms">
         <h3>Full Buyout</h3>
         <p class="sub">Own your site and code outright.</p>
         <div class="price">$2,500<small> one-time</small></div>
@@ -66,33 +74,72 @@
           <li>Edit it yourself or hire anyone</li>
           <li>Nothing to cancel</li>
         </ul>
-        <a href="contact.html" class="btn btn-dark">Ask About Buyout</a>
+        <a href="contact.html" class="btn btn-ghost btn-block">Ask About Buyout</a>
       </div>
     </div>
-    <p class="disclaimer" style="max-width:640px; margin-left:auto; margin-right:auto;">Not included: large-scale rebuilds (e.g. turning a brochure site into an online store), paid stock photo licensing, and SEO, ads, or lead-generation services. Questions? See the <a href="faq.html">FAQ</a>.</p>
   </div>
 </section>
 
-<section class="dark">
-  <div class="container cta-band">
-    <h2>Ready for a site that matches your business?</h2>
-    <p>Tell us a little about your business. We'll show you what your new site could look like, no obligation.</p>
-    <a href="contact.html" class="btn btn-primary">Get Started</a>
-  </div>
-</section>
-
-<footer>
+<section style="padding-top:0;">
   <div class="container">
-    <div>
-      <a href="index.html">Home</a>
-      <a href="how-it-works.html">How It Works</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
+    <div class="section-head center reveal" style="margin-bottom:40px;">
+      <h2 class="title" style="font-size:clamp(26px,3vw,36px);">Side by side</h2>
     </div>
-    <p style="margin-top:16px;">&copy; <span id="year"></span> Elite Website Rentals. All rights reserved.</p>
+    <div class="compare reveal">
+      <div class="compare-row head"><div></div><div>Rental</div><div>Buyout</div></div>
+      <div class="compare-row"><div>Fully custom design</div><div class="yes">✓</div><div class="yes">✓</div></div>
+      <div class="compare-row"><div>Mobile-first, works on every device</div><div class="yes">✓</div><div class="yes">✓</div></div>
+      <div class="compare-row"><div>Hosting, security &amp; SSL included</div><div class="yes">✓</div><div class="no">—</div></div>
+      <div class="compare-row"><div>Ongoing content updates</div><div class="yes">✓</div><div class="no">—</div></div>
+      <div class="compare-row"><div>You own the code</div><div class="no">—</div><div class="yes">✓</div></div>
+      <div class="compare-row"><div>Price</div><div>$147/mo</div><div>$2,500 one-time</div></div>
+    </div>
+    <p class="fine reveal">Not included: large-scale rebuilds (e.g. turning a brochure site into an online store), paid stock photo licensing, and SEO, ads, or lead-generation services. Questions? See the <a href="faq.html">FAQ</a>.</p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="cta reveal-scale">
+      <div class="fx"><div class="orb o1"></div><div class="orb o2"></div></div>
+      <span class="eyebrow">Ready when you are</span>
+      <h2 style="margin-top:18px;">Less than a dollar a day for a first impression that wins.</h2>
+      <p>See what your new website could look like before you spend a cent.</p>
+      <a href="contact.html" class="btn btn-primary">Get Your Free Preview <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="site">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a href="index.html" class="logo"><span class="logo-mark">E</span>Elite<span class="w" style="color:var(--gold)">Website</span>Rentals</a>
+        <p>Custom-designed, fully managed websites for local service businesses. One flat monthly fee, no contract.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="contact.html">Get Started</a></li>
+          <li><a href="mailto:team@elitewebsiterentals.com">team@elitewebsiterentals.com</a></li>
+          <li><a href="#" style="pointer-events:none">Orange County, CA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year"></span> Elite Website Rentals. All rights reserved.</span>
+      <span>Designed &amp; built in-house.</span>
+    </div>
   </div>
 </footer>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="main.js"></script>
 </body>
 </html>

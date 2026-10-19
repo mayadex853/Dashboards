@@ -35,62 +35,78 @@ PROGRAMS = {
         "name": "Drifting",
         "cta": "Break Out of Drifting",
         "offer": "CfbMiu8q",
-        "promise": "You’ve built a successful life that doesn’t quite feel like your own. "
-                   "In five weeks, you’ll see the room you’ve been living in for what it is.",
-        "fit": ["You’re a high achiever who has built a successful life.",
-                "That life doesn’t quite feel like your own.",
-                "You want to see clearly what the drift has cost you before you try to rebuild anything."],
-        "note": "This isn’t the rebuild. It’s the work that has to happen before any rebuild is real.",
+        "headline": ["Life is happening", "<em>to</em> you.", "When did you stop steering?"],
+        "sub": "Five weeks to wake up from autopilot and take back control.",
+        "pain": ["Your days run on autopilot: same routine, same pressures, same results.",
+                 "It feels like the rat race. You keep running, but you never chose the track.",
+                 "Decisions get made <em>for</em> you by your calendar, your obligations, other people’s expectations.",
+                 "You’re not unhappy enough to change anything, and not fulfilled enough to feel good about it.",
+                 "Years go by, and you can’t point to when you last chose your direction on purpose."],
+        "after": "You’re awake. You can see the room you’ve been living in and who built it, so it stops running you. "
+                 "You’re back in the driver’s seat, making choices on purpose instead of letting life happen to you.",
         "weeks": [("Identify the room", "Identify the room you’ve been operating from."),
                   ("Trace who built it", "Trace that room back to who built it."),
                   ("See the cost", "See clearly what the drift has actually cost you.")],
-        "who": "High achievers who’ve built a successful life that doesn’t quite feel like their own.",
+        "who": "High achievers who are running on autopilot: not yet aware of the room they’re in, and not taking "
+               "action to change it. Life is happening to them instead of being chosen by them.",
     },
     "stalling": {
         "name": "Stalling",
         "cta": "Break Out of Stalling",
         "offer": "UFGxioGz",
-        "promise": "You can see exactly what needs to change, and you haven’t moved on it. "
-                   "In five weeks, you’ll make the first real move.",
-        "fit": ["You’re a high achiever who can see exactly what needs to change.",
-                "You haven’t moved on it.",
-                "You’re done with “almost” and ready to actually move."],
-        "note": "Not a plan. A move.",
+        "headline": ["You know what", "needs to change.", "<em>So why do you keep finding reasons not to?</em>"],
+        "sub": "Five weeks to stop thinking about it and start doing the work.",
+        "pain": ["You’ve analyzed it from every angle, and you’re still in the same place.",
+                 "There’s always a reason it isn’t the right time: too busy, need more info, after this next thing.",
+                 "You stay busy with everything <em>except</em> the one thing that actually needs your attention.",
+                 "Analysis paralysis feels productive. It isn’t.",
+                 "No one is harder on you about it than you are."],
+        "after": "You’re someone who moves. You’ve seen what the excuses were protecting, so they lose their grip. "
+                 "You’ve done the real work instead of the busy work, and you’ve made the first real move. Not a plan. A move.",
         "weeks": [("Name the stalls", "Name the stalls you’ve been living with."),
                   ("Spot the Almost", "Identify the Almost behaviors keeping you comfortable."),
                   ("Find what it protects", "Find what the stall is actually protecting."),
                   ("Make the move", "Make the first real move.")],
-        "who": "High achievers who can see exactly what needs to change and haven’t moved on it.",
+        "who": "High achievers who are fully aware of what needs to change but aren’t taking action on it. "
+               "They find excuses, distractions and analysis instead of doing the real work.",
     },
     "renovating": {
         "name": "Renovating",
         "cta": "Break Out of Renovating",
         "offer": "RujeXGKk",
-        "promise": "You’ve done serious work on yourself and keep running into the same patterns. "
-                   "This is what comes after it.",
-        "fit": ["You’re a high achiever who has done serious work on yourself: therapy, coaching, breakthroughs.",
-                "You keep running into the same patterns anyway.",
-                "You’re ready for something other than more of the same."],
-        "note": "This isn’t more of the same. This is what comes after it.",
-        "weeks": [("Trace the patterns", "Trace your patterns back to their origin."),
-                  ("Audit the cost", "Audit what the work has actually cost you."),
-                  ("Find the foundation", "Find the foundation none of it has touched.")],
-        "who": "High achievers who’ve done serious work on themselves and keep running into the same patterns.",
+        "headline": ["New strategy. New hire.", "New city. Same results.", "<em>What if the problem isn’t out there?</em>"],
+        "sub": "Five weeks to stop rearranging the furniture and work on the one thing that moves everything: who you are.",
+        "pain": ["When something isn’t working, you change something: the plan, the team, the business model, the location.",
+                 "Each fix feels like <em>the</em> answer, for a while.",
+                 "Then the same problems show up again in the new setup.",
+                 "You’re working hard, but the results don’t match the effort.",
+                 "Nobody has told you the truth: the strategy isn’t the problem. The identity running the strategy is."],
+        "after": "You stop renovating the house and start working on the person living in it. You can see the identity "
+                 "that’s been driving your decisions, so your effort finally goes to the thing that changes everything else.",
+        "weeks": [("Trace the patterns", "Trace the patterns that keep repeating back to their origin."),
+                  ("Audit the cost", "Audit what all the fixing has actually cost you."),
+                  ("Find the foundation", "Find the identity underneath that none of the changes have touched.")],
+        "who": "High achievers who are taking plenty of action, but on the wrong things: a new strategy, a new hire, "
+               "a new location. They haven’t yet seen that what really needs work is who they are.",
     },
     "rebuilding": {
         "name": "Rebuilding",
         "cta": "Take Your Rebuild Further",
         "offer": "CGtLAnun",
-        "promise": "You’re operating at a high level, and something below the surface is still running the show. "
-                   "Not from zero. From exactly where you are.",
-        "fit": ["You’re a high achiever operating at a high level.",
-                "You sense something below the surface is still running the show.",
-                "You want a clear picture of what full activation looks like for you."],
-        "note": "Not from zero. From exactly where you are.",
+        "headline": ["You’re doing the work.", "<em>So why do you keep hitting the same ceiling?</em>"],
+        "sub": "Five weeks and a real framework to take your rebuild further.",
+        "pain": ["You’re self-aware, and you act on it.",
+                 "You’ve grown a lot, and lately the growth has flattened out.",
+                 "You can feel there’s another level, but you don’t have a clear way to dig into what’s holding you there.",
+                 "Insight on its own isn’t getting you through anymore.",
+                 "The higher you go, the more those last blind spots cost."],
+        "after": "You have a framework for going deeper into your identity, not just more insight. You know where you’re fully "
+                 "activated and where you’re still running on old wiring, and you have a clear path through the plateau to your next level.",
         "weeks": [("Audit your activation", "Audit where you’re genuinely activated and where you’re still on autopilot."),
                   ("Map the blind spots", "Map the blind spots your conscious work hasn’t reached."),
                   ("Picture full activation", "Build a clear picture of what full activation actually looks like for you.")],
-        "who": "High achievers operating at a high level who sense something below the surface is still running the show.",
+        "who": "High achievers who are aware and taking action, and still hitting plateaus, because they don’t yet have "
+               "a framework to dig into their identity at the next level.",
     },
 }
 
@@ -109,7 +125,8 @@ def btn(label, href, kind="p"):
 def render(key):
     p = PROGRAMS[key]
     name, buy = p["name"], CHECKOUT.format(p["offer"])
-    fit = "".join(f'<li class="w-rv d{min(i, 3)}">{t}</li>' for i, t in enumerate(p["fit"]))
+    pain = "".join(f'<li class="w-rv d{min(i, 3)}">{t}</li>' for i, t in enumerate(p["pain"]))
+    h1 = "".join(f'<span class="ln"><span>{t}</span></span>' for t in p["headline"])
     weeks = "".join(f'<div class="w-rv d{min(i, 3)}"><span class="w-num">0{i + 1}</span><h3>{t}</h3><p>{d}</p></div>'
                     for i, (t, d) in enumerate(p["weeks"]))
     faq = [
@@ -132,12 +149,12 @@ def render(key):
   <div class="w-hero-img"><img src="{HERO_IMG}" alt="Jody looking out at the ocean at sunset" fetchpriority="high"></div>
   <div class="w-wrap">
     <div class="w-hero-copy">
-      <span class="w-eb">A Guided Transformation · 5 weeks</span>
-      <h1><span class="ln"><span>Wreck the Room:</span></span><span class="ln"><span><em>{name}.</em></span></span></h1>
-      <p class="w-hero-sub">{p["promise"]}</p>
+      <span class="w-eb">Wreck the Room: {name} · A five-week guided transformation</span>
+      <h1 class="p-h1">{h1}</h1>
+      <p class="w-hero-sub">{p["sub"]}</p>
       <div class="w-cta-row">
         {btn(p["cta"] + " · $997", buy)}
-        <a class="w-link" href="#p-weeks" data-w-scroll>What you’ll do ↓</a>
+        <a class="w-link" href="#p-weeks" data-w-scroll>How you’ll get there ↓</a>
       </div>
       <ul class="p-facts">
         <li><b>5 weeks</b><span>Guided</span></li>
@@ -150,17 +167,23 @@ def render(key):
 
 <div class="w-sec w-diag p-fit">
   <div class="w-wrap p-fit-grid">
-    <div><span class="w-eb w-rv">Is this your room?</span><h2 class="w-rv d1">This is for you <em>if…</em></h2></div>
-    <div>
-      <ul class="p-list">{fit}</ul>
-      <p class="p-note w-rv">{p["note"]}</p>
-    </div>
+    <div><span class="w-eb w-rv">If you’re {name.lower()}</span><h2 class="w-rv d1">Sound <em>familiar?</em></h2></div>
+    <div><ul class="p-list">{pain}</ul></div>
+  </div>
+</div>
+
+<div class="w-sec p-after">
+  <div class="w-wrap">
+    <span class="w-eb c w-rv">Who you’ll be</span>
+    <h2 class="w-rv d1">Five weeks <em>from now.</em></h2>
+    <p class="p-after-t w-rv d2">{p["after"]}</p>
+    <div class="w-cta-row w-rv d3">{btn(p["cta"] + " · $997", buy)}</div>
   </div>
 </div>
 
 <div class="w-sec p-weeks" id="p-weeks">
   <div class="w-wrap">
-    <div class="p-weeks-head"><span class="w-eb c w-rv">Over five weeks</span><h2 class="w-rv d1">What you’ll <em>do.</em></h2></div>
+    <div class="p-weeks-head"><span class="w-eb c w-rv">The path</span><h2 class="w-rv d1">How you’ll <em>get there.</em></h2></div>
     <div class="p-wk">{weeks}</div>
   </div>
 </div>
@@ -195,7 +218,7 @@ def render(key):
       </div>
       <div class="p-offer-r">
         <small>One-time</small>
-        <span class="p-price">$997</span>
+        <span class="p-price"><s class="p-was">$997</s><span class="p-full">$997</span><span class="p-disc">50% off with {COUPON}</span></span>
         {btn(p["cta"], buy)}
         <span class="p-bonus-note">{BONUS}</span>
         <span class="w-micro">Secure checkout. Instant access after payment.</span>
@@ -232,7 +255,8 @@ def render(key):
 # With ?bonus=1 (the quiz follow-up emails), show the offer banner and apply the coupon at checkout.
 BONUS_JS = ("if(/[?&]bonus=1(&|$)/.test(location.search)){r.classList.add('has-bonus');"
             "var b=r.querySelector('.p-bonus');if(b)b.hidden=false;"
-            "r.querySelectorAll('a[href*=\"/checkout\"]').forEach(function(a){a.href+=(a.href.indexOf('?')<0?'?':'&')+'coupon_code=" + COUPON + "';});}")
+            "r.querySelectorAll('a[href*=\"/checkout\"]').forEach(function(a){a.href+=(a.href.indexOf('?')<0?'?':'&')+'coupon_code=" + COUPON + "';"
+            "a.childNodes.forEach(function(n){if(n.nodeType===3)n.nodeValue=n.nodeValue.replace('$997','50% off');});});}")
 
 
 def main():

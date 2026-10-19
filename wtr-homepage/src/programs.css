@@ -6,6 +6,11 @@
 .p-facts b{display:block;font:400 30px/1 var(--display);color:var(--gold2);text-transform:var(--d-case);margin-bottom:8px;}
 .p-facts span{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);}
 
+/* pain-led headline: longer than the brand h1, so it wraps */
+.wtr[data-dir="brick"] .w-hero h1.p-h1{white-space:normal;font-size:clamp(40px,4.3vw,70px);line-height:1.02;max-width:760px;}
+.w-hero h1.p-h1 .ln>span{display:inline;}
+.w-hero h1.p-h1 em{white-space:normal;}
+
 /* quiz bonus banner (only with ?bonus=1) */
 .p-bonus{position:relative;z-index:3;background:linear-gradient(135deg,var(--gold2),var(--gold) 55%,var(--gold3));color:#0b0a08;}
 .p-bonus[hidden]{display:none;}
@@ -15,14 +20,26 @@
 .p-bonus-note{display:none;margin-top:12px;font-size:14px;color:var(--gold2);}
 .pg.has-bonus .p-bonus-note{display:block;}
 
-/* for you if */
+/* price: full by default, struck through + discount in coupon mode */
+.p-was,.p-disc{display:none;}
+.pg.has-bonus .p-full{display:none;}
+.pg.has-bonus .p-was{display:inline;color:var(--dim);text-decoration-thickness:2px;margin-right:14px;}
+.pg.has-bonus .p-disc{display:block;margin-top:10px;font:600 16px/1.3 var(--body);color:var(--gold2);letter-spacing:.02em;}
+
+/* sound familiar? */
 .p-fit-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:90px;align-items:start;}
 .p-fit h2{font-size:clamp(38px,4.6vw,68px);}
 .p-list{list-style:none;margin:0;padding:0;}
 .p-list li{position:relative;padding:22px 0 22px 40px;border-top:1px solid var(--line2);font-size:18px;color:var(--ink);line-height:1.5;}
 .p-list li:last-child{border-bottom:1px solid var(--line2);}
 .p-list li::before{content:"";position:absolute;left:4px;top:31px;width:11px;height:11px;transform:rotate(45deg);border:1px solid var(--gold);}
-.p-note{margin-top:44px !important;padding-left:24px;border-left:1px solid var(--gold);font-family:var(--display);font-size:clamp(24px,2.3vw,32px) !important;line-height:1.25 !important;color:var(--ink) !important;text-transform:var(--d-case);}
+
+/* who you'll be */
+.p-after{background:var(--bg2);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);text-align:center;}
+.p-after .w-wrap{max-width:980px;}
+.p-after h2{font-size:clamp(42px,5vw,76px);}
+.wtr .p-after-t{margin:30px auto 40px !important;max-width:820px;font-family:var(--body);font-weight:500;font-size:clamp(20px,1.9vw,26px) !important;line-height:1.55 !important;color:var(--ink) !important;text-transform:none;}
+.p-after .w-cta-row{justify-content:center;}
 
 /* five weeks */
 .p-weeks{background:var(--bg);}
@@ -97,6 +114,8 @@
   .p-facts span{font-size:9.5px;letter-spacing:.16em;}
   .p-list li{font-size:16.5px;padding:18px 0 18px 32px;}
   .p-list li::before{top:26px;}
+  .wtr[data-dir="brick"] .w-hero h1.p-h1{font-size:clamp(32px,8.6vw,44px);}
+  .wtr .p-after-t{font-size:18.5px !important;margin:22px auto 28px !important;}
   .p-wk>div{padding:32px 24px;}
   .p-steps li{grid-template-columns:44px 1fr;gap:16px;padding:24px 0;}
   .p-n{width:40px;height:40px;font-size:19px;}

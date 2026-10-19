@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Elite Website Rentals</title>
+<meta name="description" content="Get in touch with Elite Website Rentals about a custom website for your business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <a href="index.html" class="logo">Elite<span> Website</span> Rentals</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="nav-cta">Get Started</a>
+  </div>
+</header>
+
+<section class="hero" style="padding-top:72px; padding-bottom:56px;">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1 style="font-size:40px;">Let's talk about your website.</h1>
+    <p class="lead">Tell us a bit about your business and we'll get back to you within one business day.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container contact-grid">
+    <form class="contact" id="contact-form" novalidate>
+      <div class="field-row">
+        <div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="business">Business name</label><input id="business" name="business" autocomplete="organization" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="phone">Phone <span class="opt">(optional)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+      </div>
+      <div class="field"><label for="website">Current website <span class="opt">(if you have one)</span></label><input id="website" name="website" placeholder="yourbusiness.com"></div>
+      <div class="field">
+        <label for="interest">I'm interested in</label>
+        <select id="interest" name="interest">
+          <option>Monthly rental ($147/mo)</option>
+          <option>Full buyout ($2,500)</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field"><label for="message">Anything else we should know? <span class="opt">(optional)</span></label><textarea id="message" name="message"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="company_url">Leave this empty</label><input id="company_url" name="company_url" tabindex="-1" autocomplete="off"></div>
+      <div class="form-status" id="form-status" role="status"></div>
+      <button type="submit" class="btn btn-primary" id="submit-btn">Send Message</button>
+    </form>
+
+    <aside class="side-card">
+      <h3>What happens next</h3>
+      <ul>
+        <li>We review your current site (if you have one)</li>
+        <li>We reach out within one business day</li>
+        <li>Quick conversation about what you need</li>
+        <li>You see a real draft within days</li>
+      </ul>
+      <p>Prefer email? Reach us directly at <a href="mailto:team@elitewebsiterentals.com">team@elitewebsiterentals.com</a>.</p>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p style="margin-top:16px;">&copy; <span id="year"></span> Elite Website Rentals. All rights reserved.</p>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+  var btn = document.getElementById('submit-btn');
+
+  function show(kind, html) { status.className = 'form-status ' + kind; status.innerHTML = html; }
+
+  function mailtoFallback(d) {
+    var body = 'Name: ' + d.name + '\nBusiness: ' + d.business + '\nEmail: ' + d.email +
+      '\nPhone: ' + (d.phone || '') + '\nCurrent website: ' + (d.website || '') +
+      '\nInterested in: ' + d.interest + '\n\n' + (d.message || '');
+    return 'mailto:team@elitewebsiterentals.com?subject=' + encodeURIComponent('Website inquiry: ' + d.business) +
+      '&body=' + encodeURIComponent(body);
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = Object.fromEntries(new FormData(form).entries());
+    if (!d.name || !d.business || !d.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) {
+      show('err', 'Please fill in your name, business name, and a valid email.');
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Sending...';
+    fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function () {
+        form.reset();
+        show('ok', "Thanks! We got your message and will be in touch within one business day.");
+        btn.textContent = 'Sent';
+      })
+      .catch(function () {
+        show('err', 'Sorry, something went wrong sending your message. <a href="' + mailtoFallback(d) +
+          '">Click here to send it by email instead</a>, or write to team@elitewebsiterentals.com.');
+        btn.disabled = false; btn.textContent = 'Send Message';
+      });
+  });
+})();
+</script>
+</body>
+</html>

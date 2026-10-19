@@ -62,3 +62,20 @@ The Kajabi page is a landing page with the slug `credits`, holding one Custom Co
 <div id="wtr-credits-mount"></div>
 <script src="https://mayadex853.github.io/Dashboards/wtr-homepage/credits.js"></script>
 ```
+
+## Guided Transformation pages (Drifting, Stalling, Renovating, Rebuilding)
+
+`build_programs.py` builds one offer page per $997 program from a single script; the Code block picks the program with `data-v` (`drifting`, `stalling`, `renovating` or `rebuilding`):
+
+```html
+<div id="wtr-prog-mount" data-v="drifting"></div>
+<script src="https://mayadex853.github.io/Dashboards/wtr-homepage/programs.js"></script>
+```
+
+- Each page's buttons go to that program's Kajabi checkout. Copy comes from the offer descriptions; the client stories are the same videos as the homepage.
+- Adding `?bonus=1` to the page URL shows the quiz-bonus banner (a private 30-minute call with Jody at week 3 for joining within 5 days). The quiz follow-up emails link with it; without it the banner is hidden.
+- `programs-preview.html?v=stalling&bonus=1` previews any version.
+
+```bash
+python3 build_programs.py   # writes programs-preview.html, programs.js
+```

@@ -9,14 +9,14 @@ PDF_ES = "https://drive.google.com/file/d/1G8NyOS-2SSjSBmfpzLtDjfQC3v6ceszw/view
 
 # Kajabi page paths for each page/language.
 PATHS = {
-    "en": {"home": "/", "about": "/about", "albums": "/albums", "placements": "/placements", "learn": "/production-music"},
-    "es": {"home": "/es", "about": "/about_es", "albums": "/albums_es", "placements": "/placements_es", "learn": "/production-music_es"},
+    "en": {"home": "/", "about": "/about", "albums": "/albums", "placements": "/placements", "learn": "/production-music", "thanks": "/thankyou"},
+    "es": {"home": "/es", "about": "/about_es", "albums": "/albums_es", "placements": "/placements_es", "learn": "/production-music_es", "thanks": "/gracias"},
 }
 
 # Test pages (published alongside the live site for review; mount with data-test="1").
 TEST_PATHS = {
-    "en": {"home": "/new-home", "about": "/new-about", "albums": "/new-albums", "placements": "/new-placements", "learn": "/new-learn"},
-    "es": {"home": "/new-home-es", "about": "/new-about-es", "albums": "/new-albums-es", "placements": "/new-placements-es", "learn": "/new-learn-es"},
+    "en": {"home": "/new-home", "about": "/new-about", "albums": "/new-albums", "placements": "/new-placements", "learn": "/new-learn", "thanks": "/thankyou"},
+    "es": {"home": "/new-home-es", "about": "/new-about-es", "albums": "/new-albums-es", "placements": "/new-placements-es", "learn": "/new-learn-es", "thanks": "/gracias"},
 }
 
 # Category names are the English keys used in the Google Sheet; CATS maps them to Spanish.
@@ -179,6 +179,12 @@ T = {
         "form_stub": "The Kajabi contact form appears here on the live site.",
         "footer_tag": "Authentic Latin music for film, TV &amp; ads.",
         # albums / placements pages
+        "thx_eb": "Message Received", "thx_h1": "Thank <span class=\"o-grad\">You</span>",
+        "thx_p": "Your message is on its way to Jody and Michael. We read every note personally and will be in touch.",
+        "thx_next": "While You Wait",
+        "thx_cards": [("albums", "Stream the catalog", "{n} licensable tracks across {a} albums, playable right here."),
+                      ("placements", "See where we've landed", "Our music on Apple TV+, NBC, Telemundo, Hulu, UFC and more."),
+                      ("learn", "How production music works", "Licensing, PROs and who pays whom, explained simply.")],
         "albums_page_eb": "The Catalog", "albums_page_h1": "The <span class=\"o-grad\">Albums</span>",
         "albums_page_p": "Every Ocho release, recorded with live players across the Americas. Tap a cover for details and licensing.",
         "place_page_eb": "Recent Placements", "place_page_h1": "Heard <span class=\"o-grad\">On</span>",
@@ -282,6 +288,12 @@ T = {
         "contact_email": "Escríbanos",
         "form_stub": "Aquí aparece el formulario de contacto de Kajabi en el sitio en vivo.",
         "footer_tag": "Música latina auténtica para cine, TV y publicidad.",
+        "thx_eb": "Mensaje Recibido", "thx_h1": "Muchas <span class=\"o-grad\">Gracias</span>",
+        "thx_p": "Su mensaje ya va en camino a Jody y Michael. Leemos cada mensaje personalmente y nos pondremos en contacto.",
+        "thx_next": "Mientras Tanto",
+        "thx_cards": [("albums", "Escuche el catálogo", "{n} temas licenciables en {a} álbumes, para escuchar aquí mismo."),
+                      ("placements", "Vea dónde ha sonado", "Nuestra música en Apple TV+, NBC, Telemundo, Hulu, UFC y más."),
+                      ("learn", "Cómo funciona la música de producción", "Licencias, sociedades de gestión y quién le paga a quién, explicado de forma sencilla.")],
         "albums_page_eb": "El Catálogo", "albums_page_h1": "Los <span class=\"o-grad\">Álbumes</span>",
         "albums_page_p": "Todos los lanzamientos de Ocho, grabados con músicos en vivo de todas las Américas. Toque una portada para ver detalles y licencias.",
         "place_page_eb": "Colocaciones Recientes", "place_page_h1": "Escuchado <span class=\"o-grad\">En</span>",

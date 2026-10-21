@@ -67,7 +67,7 @@ LABELS = [
 # "Search Catalog" opens a short finder; each answer routes to the right catalog (new tab) or to the brief form.
 SOURCEAUDIO_URL = "https://hdmusicnow.sourceaudio.com/"
 FINDER = [
-    ("One-Stop Music", "Browse 50K+ one-stops on SourceAudio", CATALOG_URL),
+    ("One-Stop Music", "Browse 50K+ one-stops on SourceAudio", SOURCEAUDIO_URL),
     ("Latin Music", "Ocho Music Group", "https://www.ochomusicgroup.com"),
     ("Trailer Music", "Collaborate Music", "https://www.collaboratemusic.com"),
     ("Vintage and/or Ethnic Music", "Stacks to Tracks on APM", "https://www.apmmusic.com/libraries/stacks-to-tracks-(strx)"),

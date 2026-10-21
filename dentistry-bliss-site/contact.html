@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact &amp; Appointments | Dentistry Bliss — Irvine, CA</title>
+<meta name="description" content="Call, email, or request an appointment at Dentistry Bliss, 6332 Irvine Blvd, Irvine, CA 92620.">
+<link rel="icon" href="https://irp.cdn-website.com/88d03d84/DESKTOP/png/1449611634.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="site-header">
+  <div class="nav-wrap">
+    <a href="index.html" class="brand">
+      <img src="https://irp.cdn-website.com/88d03d84/DESKTOP/png/1449611634.png" alt="Dentistry Bliss logo">
+      <div class="brand-name">Dentistry Bliss<span>Irvine, California</span></div>
+    </a>
+    <nav class="main-nav">
+      <a class="nav-link" href="services.html">Services</a>
+      <a class="nav-link" href="index.html#about">About</a>
+      <a class="nav-link" href="technology.html">Technology</a>
+      <a class="nav-link" href="initial-visit.html">Initial Visit</a>
+      <a class="nav-link" href="reviews.html">Reviews</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-phone">
+      <a class="phone-link" href="tel:+19496541668">(949) 654-1668</a>
+      <a class="btn btn-primary" href="#appointment" style="padding:11px 22px;">Book a Visit</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu">
+    <a href="services.html">Services</a>
+    <a href="index.html#about">About</a>
+    <a href="technology.html">Technology</a>
+    <a href="initial-visit.html">Initial Visit</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a class="phone-link" href="tel:+19496541668">(949) 654-1668</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- CONTACT -->
+  <section id="appointment" class="contact" style="padding-top:150px;">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Get In Touch</span>
+        <h2>Let's find a time that feels easy</h2>
+        <p>Reach out below, call, or stop by — whichever feels most comfortable.</p>
+      </div>
+      <div class="contact-grid">
+
+        <div class="reveal">
+          <div class="contact-info-card">
+            <h3>Visit or Call Us</h3>
+            <div class="info-row">
+              <div>
+                <div class="label">Address</div>
+                <div class="value">6332 Irvine Blvd<br>Irvine, CA 92620</div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div>
+                <div class="label">Phone</div>
+                <div class="value"><a href="tel:+19496541668">(949) 654-1668</a></div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div>
+                <div class="label">Fax</div>
+                <div class="value">(949) 654-1669</div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div>
+                <div class="label">Email</div>
+                <div class="value"><a href="mailto:dentistrybliss6332@outlook.com">dentistrybliss6332@outlook.com</a></div>
+              </div>
+            </div>
+            <table class="hours-table">
+              <tbody><tr><td>Monday</td><td>8:00 AM – 5:00 PM</td></tr>
+              <tr><td>Tuesday</td><td>10:00 AM – 7:00 PM</td></tr>
+              <tr><td>Wednesday</td><td>8:00 AM – 5:00 PM</td></tr>
+              <tr><td>Thursday</td><td>8:00 AM – 5:00 PM</td></tr>
+              <tr><td>Friday</td><td>8:00 AM – 2:00 PM</td></tr>
+              <tr><td>Saturday</td><td>Closed</td></tr>
+              <tr><td>Sunday</td><td>Closed</td></tr>
+            </tbody></table>
+            <div class="map-embed">
+              <iframe src="https://maps.google.com/maps?q=6332%20Irvine%20Blvd%2C%20Irvine%2C%20CA%2092620&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Dentistry Bliss location map"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="contact-form-card">
+            <h3>Request an Appointment</h3>
+            <p class="form-sub">Send us a note and our front desk will follow up to find a time that works for you.</p>
+
+            <form id="contact-form">
+              <div class="form-row">
+                <div>
+                  <label for="fname">First Name</label>
+                  <input type="text" id="fname" name="fname" placeholder="First Name" required>
+                </div>
+                <div>
+                  <label for="lname">Last Name</label>
+                  <input type="text" id="lname" name="lname" placeholder="Last Name" required>
+                </div>
+              </div>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required>
+              <label for="message">How can we help you?</label>
+              <textarea id="message" name="message" placeholder="Tell us a bit about what you need, or your preferred days/times." required></textarea>
+
+              <button type="submit" class="btn btn-primary">Send Request</button>
+            </form>
+            <p class="form-note">Prefer to talk it through first? Call us directly at (949) 654-1668.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="https://irp.cdn-website.com/88d03d84/DESKTOP/png/1449611634.png" alt="Dentistry Bliss logo">
+        <span>Dentistry Bliss</span>
+      </div>
+      <p>A blissful dentist visit, every time.<br>Woodbury Town Center · Irvine, CA</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:+19496541668">(949) 654-1668</a>
+      <a href="mailto:dentistrybliss6332@outlook.com">dentistrybliss6332@outlook.com</a>
+      <p>6332 Irvine Blvd, Irvine, CA 92620</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="services.html">Services</a>
+      <a href="technology.html">Technology</a>
+      <a href="initial-visit.html">Initial Visit</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Dentistry Bliss. All rights reserved.</span>
+    <span>Website design &amp; hosting by EliteWebsiteRentals.com</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -76,10 +76,13 @@ def build_content():
     # of its own, so drop both classes before anything renders. The theme also centres <main>, boxes every <article>
     # in #222 with a black border (dark text on dark cards) and colours headings silver; these resets sit after the
     # theme but before the page's own CSS, so they win over the theme and lose to any rule the design sets.
+    # On the front page the theme adds `.home article { width: 33% }`, which shrank the cast and story cards to a
+    # third of their column; the design sets no article widths, so that one reset is made strong enough to beat it.
     fix = ("<script>[...document.body.classList].filter(c => /^(elementor-kit-|custom-background$)/.test(c))"
            ".forEach(c => document.body.classList.remove(c));</script>\n"
            "<style>main{text-align:start;margin:0}"
-           " main :where(article){display:block;width:auto;padding:0;border:0;background:none;text-align:inherit}"
+           " main :where(article){display:block;padding:0;border:0;background:none;text-align:inherit}"
+           " :is(.home, body) main article{width:auto}"
            " main :where(h1,h2,h3,h4,h5,h6){color:inherit}</style>\n")
     return "<!-- wp:html -->\n" + fix + html + "\n<!-- /wp:html -->"
 

@@ -504,7 +504,6 @@ footer small { color: #8b97ab; }
 
   // Screenings: built-in list, replaced by the "Screenings" tab of the HD Music Now sheet when it loads.
   // Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note. "{week}" in a note becomes the current run week.
-  const RUN_OPENED = new Date("2026-04-03T00:00:00");
   const SHEET = "https://docs.google.com/spreadsheets/d/1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ/gviz/tq?headers=1&sheet=Screenings&tqx=out:json;responseHandler:";
   let shows = [
     ["Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week"],
@@ -516,7 +515,10 @@ footer small { color: #8b97ab; }
     ["More big cities", "", "", "Coming Soon", "Dates to be announced"]
   ];
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  const week = Math.max(1, Math.floor((today - RUN_OPENED) / 6048e5));
+  // Week of the Movies of Delray run, by the calendar date in Florida: opening Friday Apr 3 starts week 1,
+  // and each following Friday starts the next week. Every visitor sees the same number, whatever their time zone.
+  const flToday = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(new Date());
+  const week = Math.max(1, Math.floor((Date.parse(flToday) - Date.parse("2026-04-03")) / 6048e5) + 1);
   document.querySelectorAll("[data-weeks]").forEach(el => el.textContent = week);
 
   // Count-up: numbers rest at their final value and roll up from zero the first time they scroll into view.

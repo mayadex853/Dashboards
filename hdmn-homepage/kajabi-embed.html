@@ -260,7 +260,7 @@
   /* Ethan Bloom screenings: built-in list, replaced by the sheet's "Screenings" tab when it loads */
   var shows=document.getElementById('hd-eb-shows');
   if(shows){
-    var DAY=864e5,open=Date.parse(shows.getAttribute('data-open')+'T00:00:00Z'),week=Math.max(1,Math.floor((Date.now()-open)/(7*DAY)));
+    var DAY=864e5,open=Date.parse(shows.getAttribute('data-open')),flToday=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date()),week=Math.max(1,Math.floor((Date.parse(flToday)-open)/(7*DAY))+1);
     [].forEach.call(document.querySelectorAll('[data-eb-week]'),function(el){el.textContent=week;});
     var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
     var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];

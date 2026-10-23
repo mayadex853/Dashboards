@@ -71,7 +71,12 @@ def build_content():
     html = html.replace('src="trailer.mp4" type="video/mp4"', f'src="{trailer}"' + (' type="video/mp4"' if trailer.endswith(".mp4") else ""))
     # Same-site links: the page now lives on ethanbloomthefilm.com itself.
     html = html.replace(f'href="{SITE}/becomeafan/"', 'href="/becomeafan/"')
-    return "<!-- wp:html -->\n" + html + "\n<!-- /wp:html -->"
+    # The 10Web/Elementor site kit styles h1/button/a through `.elementor-kit-183 …` on <body>, which outranks
+    # the page's own classes, so drop that class before anything renders. The theme also centres <main>.
+    fix = ("<script>[...document.body.classList].filter(c => /^elementor-kit-/.test(c))"
+           ".forEach(c => document.body.classList.remove(c));</script>\n"
+           "<style>main{text-align:start;margin:0}</style>\n")
+    return "<!-- wp:html -->\n" + fix + html + "\n<!-- /wp:html -->"
 
 
 def stage():

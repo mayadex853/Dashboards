@@ -84,6 +84,12 @@ p { margin: 0; }
 .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
 .btn.primary { background: var(--title); }
 .btn.butter { background: var(--butter); }
+.run { display: inline-flex; align-items: stretch; text-decoration: none; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; background: var(--paper); box-shadow: 4px 4px 0 var(--ink); font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; transition: transform .12s, box-shadow .12s; }
+.run:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.run-k { background: var(--ink); color: var(--butter); padding: 10px 16px; display: flex; align-items: center; }
+.run-n { padding: 6px 18px 6px 14px; display: flex; align-items: center; gap: 8px; }
+.run-n b { font-family: var(--display); font-weight: 400; font-size: 1.7rem; letter-spacing: 0; color: var(--title); -webkit-text-stroke: 1.2px var(--ink); paint-order: stroke fill; text-shadow: 2px 2px 0 var(--ink); line-height: 1; font-variant-numeric: tabular-nums; min-width: 1.4ch; text-align: right; }
+@media (max-width: 420px) { .run { flex-direction: column; border-radius: 14px; } .run-k { justify-content: center; } .run-n { justify-content: center; } }
 .award { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; text-align: center; font-family: var(--billing); text-transform: uppercase; line-height: 1.15; }
 .award .leaf { width: 26px; height: 50px; flex: none; }
 .award .flip { transform: scaleX(-1); }
@@ -255,7 +261,8 @@ footer small { color: #8b97ab; }
       <div class="hero-copy">
         <span class="tagline">HEAVEN HELP HIM</span>
         <h1 class="display">Ethan Bloom</h1>
-        <p class="sub">Our heartfelt indie film. Now in theaters.</p>
+        <p class="sub">Our heartfelt indie film.</p>
+        <a class="run" href="#screenings"><span class="run-k">★ Now in theaters</span><span class="run-n"><b data-weeks data-count>29</b> weeks &amp; counting</span></a>
         <div class="billing" aria-label="Starring">
           <span>Joshua<br>Malina</span><span>Rachelle<br>Lefevre</span><span>Carlos<br>Ponce</span><span>Mindy<br>Sterling</span><span>Caroline<br>Valencia</span><span><small>and introducing</small>Hank<br>Greenspan</span>
         </div>
@@ -284,9 +291,9 @@ footer small { color: #8b97ab; }
         <p class="lede">From its world premiere at the Miami Film Festival to a Best Feature win in Sedona and a theatrical run that keeps getting extended, audiences across the country are finding Ethan.</p>
       </div>
       <div class="stats">
-        <div class="stat"><b data-weeks>29</b><span>Weeks &amp; counting in theaters</span></div>
-        <div class="stat"><b>26+</b><span>Festival selections</span></div>
-        <div class="stat"><b>1</b><span>Award: Best Feature, Comedy</span></div>
+        <div class="stat"><b data-weeks data-count>29</b><span>Weeks &amp; counting in theaters</span></div>
+        <div class="stat"><b data-count data-suffix="+">26+</b><span>Festival selections</span></div>
+        <div class="stat"><b data-count>1</b><span>Award: Best Feature, Comedy</span></div>
       </div>
       <div class="quotes">
         <figure class="quote"><blockquote>“Paints a raw and authentic portrait of adolescence.”</blockquote><figcaption>The Austin Chronicle</figcaption></figure>
@@ -517,6 +524,25 @@ footer small { color: #8b97ab; }
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const week = Math.max(1, Math.floor((today - RUN_OPENED) / 6048e5));
   document.querySelectorAll("[data-weeks]").forEach(el => el.textContent = week);
+
+  // Count-up: numbers rest at their final value and roll up from zero the first time they scroll into view.
+  if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const el = e.target, end = parseInt(el.textContent, 10), suf = el.dataset.suffix || "";
+      if (!(end > 1)) return;
+      let t0 = null;
+      const step = t => {
+        t0 ??= t;
+        const p = Math.min(1, (t - t0) / 1400);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + (p < 1 ? "" : suf);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }), { threshold: 0.6 });
+    document.querySelectorAll("[data-count]").forEach(el => io.observe(el));
+  }
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function renderShows() {
     const rows = shows.filter(r => r[0] || r[1]).map(([city, venue, date, label, note]) => {

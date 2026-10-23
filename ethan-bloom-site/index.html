@@ -118,7 +118,7 @@ p { margin: 0; }
 
 /* screenings */
 .shows { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--paper); }
-.show { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; gap: 6px 28px; align-items: center; padding-block: 22px; border-bottom: 1px solid #3a4558; }
+.show { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto auto; gap: 6px 28px; align-items: center; padding-block: 22px; border-bottom: 1px solid #3a4558; }
 .show .when { font-family: var(--display); font-size: 1.5rem; line-height: 1; color: var(--title); font-variant-numeric: tabular-nums; }
 .show .when small { display: block; font-family: var(--billing); font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #c4cddb; margin-top: 6px; }
 .show .where { display: grid; gap: 4px; min-width: 0; }
@@ -126,9 +126,10 @@ p { margin: 0; }
 .show .where span { color: #c4cddb; font-size: .95rem; }
 .show .tag { justify-self: end; font: 700 .72rem var(--billing); letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: var(--butter); color: var(--ink); white-space: nowrap; }
 .show.now .tag { background: var(--title); }
+.show .tix { justify-self: end; padding: 9px 16px; font-size: .78rem; box-shadow: 3px 3px 0 var(--ink); white-space: nowrap; }
 .show.past { opacity: .45; }
 .show.past .tag { background: transparent; color: var(--paper); border: 1px solid #c4cddb; }
-@media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show .tag { justify-self: start; grid-row: 1; } }
+@media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show .tag { justify-self: start; grid-row: 1; } .show .tix { justify-self: start; } }
 .credits-line { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; color: var(--ink-soft); line-height: 1.7; }
 .poster { position: relative; justify-self: center; width: min(100%, 420px); }
 .poster img { width: 100%; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 12px 12px 0 var(--ink); rotate: 2deg; }
@@ -490,17 +491,19 @@ footer small { color: #8b97ab; }
 
 
   // Screenings: built-in list, replaced by the "Screenings" tab of the HD Music Now sheet when it loads.
-  // Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note. "{week}" in a note becomes the current run week.
+  // Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note, Tickets. "{week}" in a note becomes the current run week.
+  // Upcoming rows without a Tickets link point to Menemsha's showtimes page; past rows get no button.
   const SHEET = "https://docs.google.com/spreadsheets/d/1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ/gviz/tq?headers=1&sheet=Screenings&tqx=out:json;responseHandler:";
   let shows = [
-    ["Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week"],
-    ["Los Angeles, CA", "Laemmle's Royal", "2026-10-21", "LA Premiere", "Q&A with Joshua Malina, Hank Greenspan & Mindy Sterling"],
-    ["Encino, CA", "Laemmle Town Center 5", "2026-10-22", "LA Premiere", "Q&A with Joshua Malina & Hank Greenspan"],
-    ["Somerville, MA", "Somerville Theatre", "2026-11-15", "Boston Jewish Film Festival", "Conversation with director Herschel Faber & star Hank Greenspan"],
-    ["Boston, MA", "West Newton Cinema", "2026-12-04", "Boston Opening", ""],
-    ["New York, NY", "New Plaza Cinema", "", "Coming Soon", ""],
+    ["Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week", "https://www.moviesofdelray.com/movies/1000035876-ethan-bloom/"],
+    ["Los Angeles, CA", "Laemmle's Royal", "2026-10-21", "LA Premiere", "Q&A with Joshua Malina, Hank Greenspan & Mindy Sterling", "https://www.laemmle.com/film/ethan-bloom"],
+    ["Encino, CA", "Laemmle Town Center 5", "2026-10-22", "LA Premiere", "Q&A with Joshua Malina & Hank Greenspan", "https://www.laemmle.com/film/ethan-bloom"],
+    ["Somerville, MA", "Somerville Theatre", "2026-11-15", "Boston Jewish Film Festival", "Conversation with director Herschel Faber & star Hank Greenspan", "https://www.bostonjcc.org/program/boston-jewish-film-festival/"],
+    ["Boston, MA", "West Newton Cinema", "2026-12-04", "Boston Opening", "", "https://www.westnewtoncinema.com/"],
+    ["New York, NY", "New Plaza Cinema", "", "Coming Soon", "", "https://newplazacinema.org/showtimes/"],
     ["More big cities", "", "", "Coming Soon", "Dates to be announced"]
   ];
+  const MENEMSHA = "https://www.menemshafilms.com/ethan-bloom";
   const today = new Date(); today.setHours(0, 0, 0, 0);
   // Week of the Movies of Delray run, by the calendar date in Florida: opening Friday Apr 3 starts week 1,
   // and each following Friday starts the next week. Every visitor sees the same number, whatever their time zone.
@@ -528,10 +531,10 @@ footer small { color: #8b97ab; }
   }
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function renderShows() {
-    const rows = shows.filter(r => r[0] || r[1]).map(([city, venue, date, label, note]) => {
+    const rows = shows.filter(r => r[0] || r[1]).map(([city, venue, date, label, note, tickets]) => {
       const d = date ? new Date(date + "T00:00:00") : null;
       const kind = !d ? (/now/i.test(label) ? 0 : 2) : (d >= today ? 1 : 3);
-      return { city, venue, d, label, note: (note || "").replace("{week}", week), kind };
+      return { city, venue, d, label, note: (note || "").replace("{week}", week), kind, tickets: /^https?:\/\//i.test(tickets || "") ? tickets.trim() : "" };
     });
     rows.sort((a, b) => a.kind - b.kind || (a.kind === 3 ? b.d - a.d : (a.d || 0) - (b.d || 0)));
     const fmt = { month: "short", day: "numeric" };
@@ -540,7 +543,8 @@ footer small { color: #8b97ab; }
                        : (r.kind === 0 ? "Now<small>Playing</small>" : "Soon<small>Dates TBA</small>");
       const cls = r.kind === 0 ? "now" : r.kind === 3 ? "past" : "";
       return '<li class="show ' + cls + '"><div class="when">' + when + '</div><div class="where"><b>' + esc(r.city) + '</b><span>' +
-        esc([r.venue, r.note].filter(Boolean).join(" · ")) + '</span></div><span class="tag">' + esc(r.kind === 3 ? "Played" : r.label) + '</span></li>';
+        esc([r.venue, r.note].filter(Boolean).join(" · ")) + '</span></div><span class="tag">' + esc(r.kind === 3 ? "Played" : r.label) + '</span>' +
+        (r.kind === 3 ? "" : '<a class="btn butter tix" href="' + esc(r.tickets || MENEMSHA) + '" target="_blank" rel="noopener">' + (r.tickets ? "Tickets" : "Showtimes") + '</a>') + '</li>';
     }).join("");
   }
   renderShows();

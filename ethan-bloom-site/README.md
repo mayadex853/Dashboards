@@ -22,3 +22,5 @@ python3 deploy_wp.py revert   # puts the original homepage (page 162) back
 
 The "Upcoming Screenings" list reads the same Google Sheet tab ("Screenings") as hdmusicnow.com,
 so one edit updates both sites. If the sheet can't be reached, the built-in list in the page script is shown.
+Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note, Tickets. A Tickets link adds a "Tickets" button to
+that screening; upcoming rows without one get a "Showtimes" button to Menemsha Films, and past dates get no button.

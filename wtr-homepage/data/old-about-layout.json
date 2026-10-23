@@ -1,0 +1,13 @@
+{
+ "theme_id": "2159583678",
+ "page": "About (website page 2155602100, site theme Encore)",
+ "content_for_about": [
+  "1643055162852",
+  "1643055314871",
+  "1751761379862",
+  "1765437838044",
+  "1643055927428",
+  "1643055386141"
+ ],
+ "note": "Rendered section order of the old About page, captured before switching to the redesign. The sections are still saved in the theme. To roll back, set content_for_about to this list with update_theme_content."
+}

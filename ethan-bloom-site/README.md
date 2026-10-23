@@ -6,8 +6,17 @@ Static, single-page redesign of ethanbloomthefilm.com.
 - `page.html` — same page as an artifact fragment (no doctype wrapper)
 - `img/` — poster, stills and headshots (web-sized); `trailer.mp4` — trailer re-encoded to H.264 MP4
 
-Before going live, set `FORM_ENDPOINT` in the script at the bottom of `index.html`
-to your email-list provider so the "Become a Fan" form actually collects sign-ups.
+"Become a Fan" links to the existing WordPress page and form at /becomeafan/.
+
+## Publishing to ethanbloomthefilm.com (WordPress on 10Web)
+
+Needs `WP_USER` and `WP_APP_PASSWORD` (a WordPress Application Password) in the environment.
+
+```bash
+python3 deploy_wp.py stage    # uploads media, publishes the page at /new-home for review
+python3 deploy_wp.py live     # makes it the homepage
+python3 deploy_wp.py revert   # puts the original homepage (page 162) back
+```
 
 ## Screenings
 

@@ -484,10 +484,10 @@ footer small { color: #8b97ab; }
   }));
 
 
-  // Screenings: built-in list, replaced by the "Screenings" tab of the HD Music Now sheet when it loads.
+  // Screenings: built-in list, replaced by the "Screenings" tab of the Ethan Bloom Screenings sheet when it loads.
   // Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note, Tickets. "{week}" in a note becomes the current run week.
   // Upcoming rows without a Tickets link point to Menemsha's showtimes page; past rows get no button.
-  const SHEET = "https://docs.google.com/spreadsheets/d/1CBPFj3m63C8k471r3ONv7FZtacY-HdBJon5hwO40bjQ/gviz/tq?headers=1&sheet=Screenings&tqx=out:json;responseHandler:";
+  const SHEET = "https://docs.google.com/spreadsheets/d/17LFDMVQwn0nRBs7uM53KXpaaNsJfCcPwk5UVypogzmc/gviz/tq?headers=1&sheet=Screenings&tqx=out:json;responseHandler:";
   let shows = [
     ["Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week", "https://www.moviesofdelray.com/movies/1000035876-ethan-bloom/"],
     ["Los Angeles, CA", "Laemmle's Royal", "2026-10-21", "LA Premiere", "Q&A with Joshua Malina, Hank Greenspan & Mindy Sterling", "https://www.laemmle.com/film/ethan-bloom"],

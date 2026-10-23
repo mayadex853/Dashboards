@@ -1,0 +1,69 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@500;600;700;800&display=swap');
+.wb-ps,.wb-ps *{box-sizing:border-box;}
+.wb-ps{position:relative;max-width:900px;margin:10px auto 26px;padding:16px 22px 16px 16px;border:1px solid #c9a84c;border-radius:6px;overflow:hidden;
+  background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,.28),transparent 60%),#0d0b08;color:#f3ede2;text-align:left;
+  font:500 16px/1.45 Manrope,system-ui,sans-serif;box-shadow:0 14px 34px rgba(0,0,0,.25),0 0 0 4px rgba(201,168,76,.12);animation:wb-glow 3.2s ease-in-out infinite;}
+.wb-ps::after{content:"";position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,236,170,.16),transparent);transform:skewX(-18deg);animation:wb-shine 4.5s ease-in-out infinite;pointer-events:none;}
+@keyframes wb-glow{50%{box-shadow:0 14px 34px rgba(0,0,0,.25),0 0 0 6px rgba(201,168,76,.22),0 0 30px rgba(201,168,76,.25)}}
+@keyframes wb-shine{0%,55%{left:-40%}100%{left:130%}}
+.wb-row{display:flex;align-items:center;gap:18px;}
+.wb-cover{flex:0 0 auto;width:62px;height:auto;display:block;filter:drop-shadow(0 8px 14px rgba(0,0,0,.6));transform:rotate(-4deg);}
+.wb-txt{flex:1;min-width:0;}
+.wb-tag{display:inline-block;margin-bottom:6px;padding:4px 8px;background:#d8483b;color:#fff;font:800 10.5px/1 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase;border-radius:2px;}
+.wb-ps p{margin:0 !important;color:#f3ede2 !important;}
+.wb-ps .wb-line{font-size:17px;line-height:1.35;}
+.wb-ps .wb-line b{font:400 22px/1 Anton,Impact,sans-serif;letter-spacing:.02em;color:#ecd69b;margin-right:4px;}
+.wb-ps .wb-perks{margin-top:4px !important;font-size:13.5px;color:#d2cbbe !important;}
+.wb-cta{flex:0 0 auto;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:3px;background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#a5862f);
+  color:#0b0a08 !important;font:800 13px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none !important;white-space:nowrap;cursor:pointer;
+  box-shadow:0 8px 20px rgba(201,168,76,.35);transition:transform .2s;}
+.wb-cta:hover{transform:translateY(-2px);}
+.wb-cta span{transition:transform .2s;}.wb-cta:hover span{transform:translateX(3px);}
+.wb-ps form{display:none;gap:10px;margin:14px 0 0;}
+.wb-ps.wb-open form{display:flex;}
+.wb-ps.wb-open .wb-cta{display:none;}
+.wb-ps input{flex:1 1 0;min-width:0;height:48px;padding:0 14px;border:1px solid rgba(201,168,76,.5);border-radius:3px;background:rgba(255,255,255,.06);font:inherit;font-size:16px;color:#f3ede2;}
+.wb-ps input::placeholder{color:#9b9384;}
+.wb-ps input:focus{outline:none;border-color:#ecd69b;box-shadow:0 0 0 3px rgba(201,168,76,.25);}
+.wb-ps button{flex:0 0 auto;height:48px;padding:0 22px;border:0;border-radius:3px;background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#a5862f);color:#0b0a08;font:800 13px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;}
+.wb-ps button:disabled{opacity:.6;cursor:wait;}
+.wb-ps .wb-msg{margin-top:8px;font-size:14px;}
+.wb-ps .wb-msg:empty{display:none;}
+.wb-ps .wb-msg.err{color:#ff8a7e;}
+.wb-ps .wb-msg a{color:#ecd69b;}
+.wb-ps .wb-ok{display:none;margin-top:12px !important;font-size:16px;}
+.wb-ps .wb-ok b{color:#ecd69b;}
+.wb-ps.wb-done form,.wb-ps.wb-done .wb-msg,.wb-ps.wb-done .wb-cta{display:none !important;}
+.wb-ps.wb-done .wb-ok{display:block;}
+@media (max-width:640px){
+  .wb-ps{margin:6px 0 18px;padding:14px;}
+  .wb-row{flex-wrap:wrap;gap:12px;}
+  .wb-cover{width:48px;}
+  .wb-txt{flex:1 1 calc(100% - 64px);}
+  .wb-ps .wb-line{font-size:16px;}
+  .wb-ps .wb-line b{font-size:19px;}
+  .wb-cta{width:100%;justify-content:center;}
+  .wb-ps.wb-open form{flex-direction:column;}
+  .wb-ps button{width:100%;}
+}
+@media (prefers-reduced-motion:reduce){.wb-ps,.wb-ps::after{animation:none;}}
+</style>
+<div class="wb-ps" data-wb>
+  <div class="wb-row">
+    <img class="wb-cover" src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2165351859/settings_images/f8fa56-baaa-d285-555-25a261501e20_Book.png" alt="">
+    <div class="wb-txt">
+      <span class="wb-tag">New book · 2027</span>
+      <p class="wb-line"><b>P.S.</b> The new book behind this framework drops in 2027.</p>
+      <p class="wb-perks">Up to 40% off, early chapters &amp; bonuses for the waitlist.</p>
+    </div>
+    <a class="wb-cta" href="https://www.wrecktheroom.com/book" data-wb-open>Get early access here <span>→</span></a>
+  </div>
+  <form novalidate>
+    <input name="name" type="text" placeholder="First name" autocomplete="given-name" aria-label="First name">
+    <input name="email" type="email" placeholder="Email" autocomplete="email" aria-label="Email">
+    <button type="submit">Get early access</button>
+  </form>
+  <div class="wb-msg" role="status"></div>
+  <p class="wb-ok"><b>You're on the list.</b> We'll email you your launch discount and early chapters as they're ready. Keep watching 👇</p>
+</div>

@@ -1,0 +1,69 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700&display=swap');
+html,body{background:#0a0908 !important;margin:0;}
+.wbk{min-height:100vh;box-sizing:border-box;display:flex;align-items:center;padding:60px 24px;color:#d2cbbe;font:400 17px/1.7 Manrope,system-ui,sans-serif;
+  background:radial-gradient(ellipse at 30% 40%,rgba(201,168,76,.16),transparent 55%),#0a0908;}
+.wbk *{box-sizing:border-box;}
+.wbk-in{width:100%;max-width:1080px;margin:0 auto;display:grid;grid-template-columns:.9fr 1fr;gap:70px;align-items:center;}
+.wbk-cover{position:relative;display:flex;justify-content:center;}
+.wbk-cover::before{content:"";position:absolute;left:12%;right:12%;bottom:-20px;height:40px;background:radial-gradient(ellipse,rgba(0,0,0,.7),transparent 70%);filter:blur(6px);}
+.wbk-cover img{position:relative;width:100%;max-width:400px;height:auto;display:block;filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:wbk-float 7s ease-in-out infinite;}
+@keyframes wbk-float{50%{transform:translateY(-10px)}}
+.wbk-eb{display:inline-flex;align-items:center;gap:14px;font:600 11.5px/1 Manrope,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#c9a84c;margin-bottom:24px;}
+.wbk-eb::before{content:"";width:34px;height:1px;background:#c9a84c;}
+.wbk h1{margin:0 0 22px;font:400 clamp(46px,5.4vw,82px)/.98 Anton,Impact,sans-serif;text-transform:uppercase;letter-spacing:.005em;color:#f3ede2;}
+.wbk h1 em{font-style:normal;color:#d8483b;}
+.wbk-lead{margin:0 0 26px;font-size:19px;color:#f3ede2;}
+.wbk ul{list-style:none;margin:0 0 30px;padding:0;}
+.wbk li{position:relative;padding:12px 0 12px 34px;border-top:1px solid rgba(243,237,226,.08);}
+.wbk li:last-child{border-bottom:1px solid rgba(243,237,226,.08);}
+.wbk li::before{content:"✓";position:absolute;left:0;top:13px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#8c7231);color:#0b0a08;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.wbk li b{color:#f3ede2;font-weight:600;}
+.wbk form{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.wbk input{height:54px;padding:0 16px;border:1px solid rgba(201,168,76,.4);border-radius:3px;background:rgba(255,255,255,.04);color:#f3ede2;font:inherit;font-size:16px;}
+.wbk input::placeholder{color:#8f887b;}
+.wbk input:focus{outline:none;border-color:#ecd69b;box-shadow:0 0 0 3px rgba(201,168,76,.2);}
+.wbk button{grid-column:1/-1;height:58px;border:0;border-radius:3px;cursor:pointer;background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#a5862f);color:#0b0a08;font:700 14px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 10px 26px rgba(201,168,76,.3);transition:transform .2s;}
+.wbk button:hover{transform:translateY(-1px);}
+.wbk button:disabled{opacity:.6;cursor:wait;transform:none;}
+.wbk-fine{margin:12px 0 0;font-size:13px;color:#8f887b;}
+.wbk .wb-msg{margin-top:10px;font-size:14px;}
+.wbk .wb-msg:empty{display:none;}
+.wbk .wb-msg.err{color:#ff7a6e;}
+.wbk .wb-msg a{color:#ecd69b;}
+.wbk-ok{display:none;padding:26px 24px;border:1px solid #c9a84c;border-radius:3px;background:linear-gradient(160deg,rgba(201,168,76,.14),rgba(201,168,76,.03));}
+.wbk-ok strong{display:block;margin-bottom:6px;font:400 30px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;color:#f3ede2;}
+.wbk-box.wb-done form,.wbk-box.wb-done .wb-msg,.wbk-box.wb-done .wbk-fine{display:none !important;}
+.wbk-box.wb-done .wbk-ok{display:block;}
+@media (max-width:860px){
+  .wbk{padding:40px 18px 60px;align-items:flex-start;}
+  .wbk-in{grid-template-columns:1fr;gap:36px;}
+  .wbk-cover img{max-width:240px;}
+  .wbk-eb{font-size:10px;letter-spacing:.2em;gap:10px;}
+  .wbk-eb::before{width:22px;}
+  .wbk form{grid-template-columns:1fr;}
+}
+</style>
+<div class="wbk">
+  <div class="wbk-in">
+    <div class="wbk-cover"><img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2165351859/settings_images/f8fa56-baaa-d285-555-25a261501e20_Book.png" alt="The new book by Jody Friedman, coming 2027"></div>
+    <div class="wbk-box" data-wb data-lp="{{LP}}">
+      <span class="wbk-eb">A new book by Jody Friedman · 2027</span>
+      <h1>The book behind <em>Wreck the Room.</em></h1>
+      <p class="wbk-lead">The identity that built your success won't build what comes next.</p>
+      <ul>
+        <li><b>Up to 40% off</b> at launch</li>
+        <li><b>Pre-release early access</b> to chapters</li>
+        <li><b>Other exclusive bonuses</b> for the waitlist</li>
+      </ul>
+      <form novalidate>
+        <input name="name" type="text" placeholder="First name" autocomplete="given-name" aria-label="First name">
+        <input name="email" type="email" placeholder="Email" autocomplete="email" aria-label="Email">
+        <button type="submit">Join the waitlist</button>
+      </form>
+      <div class="wb-msg" role="status"></div>
+      <p class="wbk-fine">No spam. Just the book, when it's ready.</p>
+      <div class="wbk-ok"><strong>You're on the list.</strong>Watch your inbox. You'll get your launch discount, early chapters and bonuses as they're ready.</div>
+    </div>
+  </div>
+</div>

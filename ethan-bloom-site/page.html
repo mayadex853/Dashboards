@@ -104,12 +104,17 @@ p { margin: 0; }
 .quote .stars { color: var(--ink); letter-spacing: .1em; }
 .fests-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin: 64px 0 20px; }
 .fests-head h3 { font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
-.fests { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
-.fests li { display: grid; gap: 2px; padding: 12px 16px; border: 2px solid var(--ink); border-radius: 6px; background: var(--paper); font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: .9rem; line-height: 1.2; }
-.fests li em { font-style: normal; font-size: .7rem; letter-spacing: .14em; color: var(--ink-soft); }
-.fests li.hi { background: var(--title); grid-column: span 2; }
-.fests li.hi em { color: var(--ink); }
-@media (max-width: 760px) { .stats, .quotes { grid-template-columns: 1fr; } .stat + .stat { border-left: 0; border-top: 2px solid var(--ink); } .fests li.hi { grid-column: auto; } }
+.fests { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 10px; }
+.fests li { display: grid; grid-template-columns: 22px minmax(0, 1fr) 22px; align-items: center; gap: 8px; padding: 14px 12px; border: 2px solid var(--ink); border-radius: 6px; background: var(--paper); text-align: center; font-family: var(--billing); text-transform: uppercase; line-height: 1.15; }
+.fests .leaf { width: 22px; height: 42px; color: var(--ink-soft); }
+.fests .flip { transform: scaleX(-1); }
+.fests small, .fests em { display: block; font-style: normal; font-weight: 700; font-size: .62rem; letter-spacing: .14em; color: var(--ink-soft); }
+.fests b { display: block; font-weight: 700; font-size: .9rem; letter-spacing: .04em; margin-block: 4px; }
+.fests li.hi { background: var(--title); }
+.fests li.hi small { font-size: .66rem; color: var(--ink); }
+.fests li.hi em, .fests li.hi .leaf { color: var(--ink); }
+@media (max-width: 560px) { .fests { grid-template-columns: 1fr 1fr; gap: 8px; } .fests li { grid-template-columns: 12px minmax(0, 1fr) 12px; gap: 4px; padding: 10px 6px; } .fests .leaf { width: 12px; height: 26px; } .fests b { font-size: .74rem; letter-spacing: .02em; } .fests small, .fests em, .fests li.hi small { font-size: .52rem; letter-spacing: .08em; } }
+@media (max-width: 760px) { .stats, .quotes { grid-template-columns: 1fr; } .stat + .stat { border-left: 0; border-top: 2px solid var(--ink); } }
 
 /* screenings */
 .shows { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--paper); }
@@ -279,8 +284,8 @@ footer small { color: #8b97ab; }
       </div>
       <div class="stats">
         <div class="stat"><b data-weeks data-count>29</b><span>Weeks &amp; counting in theaters</span></div>
-        <div class="stat"><b data-count data-suffix="+">26+</b><span>Festival selections</span></div>
-        <div class="stat"><b data-count>1</b><span>Award: Best Feature, Comedy</span></div>
+        <div class="stat"><b data-count>40</b><span>Festival selections</span></div>
+        <div class="stat"><b data-count>15</b><span>Awards &amp; kudos</span></div>
       </div>
       <div class="quotes">
         <figure class="quote"><blockquote>“Paints a raw and authentic portrait of adolescence.”</blockquote><figcaption>The Austin Chronicle</figcaption></figure>
@@ -289,35 +294,50 @@ footer small { color: #8b97ab; }
       </div>
       <div class="fests-head">
         <h3>Official selections</h3>
-        <span class="label">World premiere · Miami Film Festival</span>
+        <span class="label">7 opening nights · 4 closing nights · 2 jury awards</span>
       </div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="leaf" viewBox="0 0 30 56" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 54C8 46 3 28 10 3"/><path d="M9 10c-4 0-6-2-7-5 4 0 6 2 7 5zM7 19c-4 1-6-1-7-4 4-1 6 1 7 4zM7 28c-3 2-6 1-7-2 3-2 6-1 7 2zM10 37c-2 3-5 3-8 2 2-3 5-3 8-2zM15 45c-1 3-4 4-7 3 1-3 4-4 7-3z"/></symbol></svg>
       <ul class="fests">
-        <li class="hi">Sedona International Film Festival<em>Director’s Choice Award · Best Feature, Comedy</em></li>
-        <li class="hi">Miami Film Festival<em>World premiere</em></li>
-        <li>Austin Film Festival</li>
-        <li>Boston Jewish Film Festival</li>
-        <li>San Diego Jewish Film Festival</li>
-        <li>Santa Barbara Jewish Film Festival</li>
-        <li>Key Biscayne Film Festival</li>
-        <li>Palm Springs Jewish Film Festival</li>
-        <li>East Bay International Jewish Film Festival</li>
-        <li>New Jersey Jewish Film Festival</li>
-        <li>Jewish Film Festival of Dallas</li>
-        <li>JFilm Festival Pittsburgh</li>
-        <li>St. Louis Jewish Film Festival</li>
-        <li>Lenore Marwil Jewish Film Festival<em>Detroit</em></li>
-        <li>Boca Raton Jewish Film Festival</li>
-        <li>Dayton Jewish International Film Festival</li>
-        <li>Charlotte Jewish Film Festival</li>
-        <li>Cincinnati Jewish &amp; Israeli Film Festival</li>
-        <li>Nashville Jewish Film Festival</li>
-        <li>New Hampshire Jewish Film Festival</li>
-        <li>Rehoboth Beach Jewish Film Festival</li>
-        <li>Stowe Jewish Film Festival</li>
-        <li>Wilmington Jewish Film Festival</li>
-        <li>Michiana Jewish Film Festival</li>
-        <li>Fresno Jewish Film Series</li>
-        <li>Jewish International Film Festival<em>Australia</em></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>World Premiere · Gala Film</small><b>Miami Film Festival</b><em>Miami, FL · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Directors’ Choice Award · Best Feature, Comedy</small><b>Sedona International Film Festival</b><em>Sedona, AZ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Special Jury Award</small><b>Orlando Film Festival</b><em>Orlando, FL · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Sun &amp; Stars International Film Festival</b><em>West Palm Beach, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Cincinnati Jewish &amp; Israeli Film Festival</b><em>Cincinnati, OH · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Palm Springs Jewish Film Festival</b><em>Palm Springs, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>JFilm Pittsburgh Jewish Film Festival</b><em>Pittsburgh, PA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Dayton Jewish International Film Festival</b><em>Dayton, OH · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Central Massachusetts International Jewish Film Festival</b><em>Worcester, MA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Jewish Nevada International Film Festival</b><em>Las Vegas, NV · 2027</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>San Diego Jewish Film Festival</b><em>San Diego, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>Key Biscayne Film Festival</b><em>Key Biscayne, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>Charlotte Jewish Film Festival</b><em>Charlotte, NC · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>Boston Jewish Film Festival</b><em>Boston, MA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Film of the Month</small><b>Austin Jewish Film Festival</b><em>Austin, TX · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Austin Film Festival</b><em>Austin, TX · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Santa Barbara Jewish Film Festival</b><em>Santa Barbara, CA · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Boca Raton Jewish Film Festival</b><em>Boca Raton, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>New Jersey Jewish Film Festival</b><em>West Orange, NJ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>East Bay International Jewish Film Festival</b><em>East Bay, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>St. Louis Jewish Film Festival</b><em>St. Louis, MO · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>New Hampshire Jewish Film Festival</b><em>New Hampshire · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Rehoboth Beach Jewish Film Festival</b><em>Lewes, DE · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>JCC Rockland International Jewish Film Festival</b><em>West Nyack, NY · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Wilmington Jewish Film Festival</b><em>Wilmington, DE · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Lenore Marwil Detroit Jewish Film Festival</b><em>West Bloomfield, MI · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Michiana Jewish Film Festival</b><em>South Bend, IN · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Prescott Film Festival</b><em>Prescott, AZ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Vermont Jewish Film Festival</b><em>Stowe, VT · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Nashville Jewish Film Festival</b><em>Nashville, TN · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Jewish Film Festival of Dallas</b><em>Dallas, TX · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Cleveland Jewish Film Festival</b><em>Cleveland, OH · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Jewish International Film Festival</b><em>Australia · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Silicon Valley Jewish Film Festival</b><em>Silicon Valley, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Orange County Jewish Film Festival</b><em>Orange County, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Cherry Hill Jewish Film Festival</b><em>Cherry Hill, NJ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Sidney R. Hoffman Film Festival</b><em>Marco Island, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Virginia Peninsula Jewish Film Festival</b><em>Williamsburg, VA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Palm Beach Jewish Film Festival</b><em>Palm Beach, FL · 2027</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Fresno Jewish Film Festival</b><em>Fresno, CA · 2027</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
       </ul>
     </div>
   </section>

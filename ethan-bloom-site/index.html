@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ethan Bloom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ethan Bloom — a heartfelt indie dramedy starring Joshua Malina, Rachelle Lefevre, Carlos Ponce, Mindy Sterling, Caroline Valencia and Hank Greenspan. Heaven help him.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Archivo+Narrow:wght@500;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: the poster's sunburst. Sky-blue rays radiate behind the hero, then the page settles into
+   calm sky/butter bands with a night-ink band for the trailer. One committed light look, set explicitly. */
+:root {
+  --sky: #a9d8f6;
+  --sky-pale: #e4f3fd;
+  --butter: #fbf2bf;
+  --title: #6cb6ee;
+  --ink: #141a26;
+  --ink-soft: #3a4558;
+  --paper: #fffdf6;
+  --line: #c9e2f3;
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --billing: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --wrap: 1180px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--title); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* type scale */
+.display { font-family: var(--display); font-weight: 400; color: var(--title); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--ink); line-height: .95; letter-spacing: .5px; }
+.h2 { font-size: clamp(2.4rem, 6vw, 4rem); }
+.label { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; }
+.lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 58ch; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 2px solid var(--ink); }
+.nav .wrap { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
+.brand { font-family: var(--display); font-size: 1.6rem; color: var(--title); -webkit-text-stroke: 1.2px var(--ink); paint-order: stroke fill; text-shadow: 2px 2px 0 var(--ink); text-decoration: none; white-space: nowrap; }
+.nav ul { list-style: none; display: flex; gap: 22px; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; text-decoration: none; padding-block: 6px; border-bottom: 2px solid transparent; }
+.nav ul a:hover { border-color: var(--ink); }
+.socials { display: flex; gap: 6px; }
+.socials a { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 2px solid var(--ink); background: var(--paper); transition: background .15s, transform .15s; }
+.socials a:hover { background: var(--butter); transform: translateY(-2px); }
+.socials svg { width: 16px; height: 16px; }
+.menu-btn { display: none; margin-left: auto; font: 700 .85rem var(--billing); letter-spacing: .1em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer; }
+@media (max-width: 900px) {
+  .menu-btn { display: block; }
+  .nav .socials { display: none; }
+  .nav ul { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--paper); border-bottom: 2px solid var(--ink); padding: 8px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); }
+  .nav ul a { display: block; padding-block: 12px; border-bottom: 1px solid var(--line); }
+  .nav:not(.open) ul { display: none; }
+}
+
+/* hero */
+.hero { position: relative; overflow: hidden; background: var(--sky); border-bottom: 2px solid var(--ink); isolation: isolate; }
+.rays { position: absolute; z-index: -1; left: 72%; top: 46%; width: 260vmax; height: 260vmax; translate: -50% -50%;
+  background: repeating-conic-gradient(from 0deg, var(--sky-pale) 0deg 7deg, var(--butter) 7deg 8.5deg, var(--sky) 8.5deg 15deg); }
+@media (prefers-reduced-motion: no-preference) { .rays { animation: spin 180s linear infinite; } }
+@keyframes spin { to { rotate: 360deg; } }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 64px 72px; }
+.hero-copy { display: grid; gap: 22px; justify-items: start; min-width: 0; }
+.tagline { font-family: var(--billing); font-weight: 700; font-size: clamp(1rem, 2vw, 1.25rem); letter-spacing: .3em; background: var(--ink); color: var(--paper); padding: 8px 14px 7px; }
+.hero h1 { font-size: clamp(4.2rem, 11vw, 8.5rem); -webkit-text-stroke: 3px var(--ink); text-shadow: 7px 7px 0 var(--ink); margin-block: 4px 6px; }
+.hero .sub { font-family: var(--body); font-style: italic; font-size: 1.3rem; }
+.billing { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--billing); font-weight: 700; text-transform: uppercase; line-height: 1.05; font-size: .95rem; letter-spacing: .04em; }
+.billing span small { display: block; font-size: .55rem; letter-spacing: .12em; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 700 .95rem var(--billing); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding: 14px 22px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); transition: transform .12s, box-shadow .12s; cursor: pointer; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.btn.primary { background: var(--title); }
+.btn.butter { background: var(--butter); }
+.laurel { display: inline-flex; align-items: center; gap: 10px; font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; line-height: 1.2; }
+.laurel svg { width: 30px; height: 44px; flex: none; }
+.poster { position: relative; justify-self: center; width: min(100%, 420px); }
+.poster img { width: 100%; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 12px 12px 0 var(--ink); rotate: 2deg; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; padding-block: 40px 56px; gap: 40px; }
+  .rays { left: 50%; top: 70%; }
+  .poster { width: min(86%, 380px); }
+}
+
+/* sections */
+section { scroll-margin-top: 70px; }
+.band { padding-block: clamp(64px, 9vw, 112px); }
+.band.sky { background: var(--sky-pale); border-block: 2px solid var(--ink); }
+.band.butter { background: var(--butter); border-block: 2px solid var(--ink); }
+.band.ink { background: var(--ink); color: var(--paper); }
+.band.ink .lede { color: #c4cddb; }
+.head { display: grid; gap: 14px; margin-bottom: 44px; }
+
+/* trailer */
+.trailer-frame { position: relative; border: 3px solid var(--paper); border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 16 / 9; max-width: 100%; box-shadow: 10px 10px 0 var(--title); }
+.trailer-frame video { width: 100%; height: 100%; display: block; object-fit: contain; background: #000; }
+.trailer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 28px; }
+.trailer-meta a { color: var(--butter); }
+
+/* synopsis */
+.synopsis { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+.synopsis figure { margin: 0; }
+.synopsis figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 48% 30%; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 10px 10px 0 var(--title); }
+.synopsis blockquote { margin: 0; font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.55; max-width: 60ch; }
+.synopsis blockquote::first-letter { font-family: var(--display); font-size: 3.4em; float: left; line-height: .85; padding: 6px 10px 0 0; color: var(--title); -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke fill; }
+@media (max-width: 860px) { .synopsis { grid-template-columns: 1fr; gap: 36px; } .synopsis figure img { aspect-ratio: 16 / 10; } }
+
+/* themes */
+.themes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.theme { background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.theme img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-bottom: 2px solid var(--ink); }
+.theme div { padding: 22px 24px 26px; display: grid; gap: 8px; align-content: start; }
+.theme h3 { font-family: var(--display); font-weight: 400; font-size: 1.7rem; line-height: 1.1; }
+.theme h3 em { font-style: normal; color: var(--title); -webkit-text-stroke: 1.2px var(--ink); paint-order: stroke fill; }
+.theme p { color: var(--ink-soft); }
+@media (max-width: 720px) { .themes { grid-template-columns: 1fr; } }
+
+/* cast */
+.cast { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+.member { display: grid; gap: 14px; align-content: start; }
+.member .photo { position: relative; aspect-ratio: 4 / 5; max-width: 100%; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--sky); box-shadow: 6px 6px 0 var(--ink); }
+.member .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; transition: transform .5s; }
+.member:hover .photo img { transform: scale(1.04); }
+.member .as { position: absolute; left: 10px; bottom: 10px; background: var(--butter); border: 2px solid var(--ink); padding: 4px 10px; font: 700 .72rem var(--billing); letter-spacing: .12em; text-transform: uppercase; }
+.member h3 { font-family: var(--billing); font-weight: 700; text-transform: uppercase; font-size: 1.5rem; letter-spacing: .03em; line-height: 1; }
+.member p { color: var(--ink-soft); font-size: .97rem; }
+@media (max-width: 980px) { .cast { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .cast { grid-template-columns: 1fr; } }
+
+/* team */
+.team { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; border-top: 2px solid var(--ink); }
+.crew { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding-block: 28px; border-bottom: 1px solid var(--ink); align-items: start; }
+.crew img { width: 120px; height: 140px; object-fit: cover; object-position: 50% 25%; border: 2px solid var(--ink); border-radius: 4px; background: var(--sky); }
+.crew .who { display: grid; gap: 6px; }
+.crew h3 { font-family: var(--billing); font-weight: 700; text-transform: uppercase; font-size: 1.3rem; line-height: 1; }
+.crew .label { color: var(--ink-soft); font-size: .72rem; }
+.crew p { font-size: .95rem; color: var(--ink-soft); }
+.crew i { color: var(--ink); }
+.crew.wide { grid-column: 1 / -1; }
+@media (max-width: 860px) { .team { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .crew { grid-template-columns: 84px minmax(0, 1fr); gap: 16px; } .crew img { width: 84px; height: 100px; } }
+
+/* behind the scenes */
+.reel { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.reel figure { margin: 0; position: relative; overflow: hidden; border: 2px solid var(--paper); border-radius: 6px; }
+.reel img { width: 100%; height: 100%; object-fit: cover; }
+.reel .a { grid-column: span 7; aspect-ratio: 16 / 9; }
+.reel .b { grid-column: span 5; aspect-ratio: auto; }
+.reel .c { grid-column: span 5; aspect-ratio: auto; }
+.reel .d { grid-column: span 7; aspect-ratio: 16 / 9; }
+@media (max-width: 720px) { .reel .a, .reel .b, .reel .c, .reel .d { grid-column: 1 / -1; aspect-ratio: 16 / 9; } }
+
+/* screenings + fan */
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.panel { border: 2px solid var(--ink); border-radius: 10px; padding: clamp(24px, 4vw, 40px); background: var(--paper); box-shadow: 8px 8px 0 var(--ink); display: grid; gap: 16px; align-content: start; min-width: 0; }
+.panel.sky { background: var(--sky); }
+.panel h2 { font-size: clamp(2rem, 4.5vw, 2.9rem); }
+form { display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field label { font: 700 .75rem var(--billing); letter-spacing: .14em; text-transform: uppercase; }
+.field input, .field textarea { font: 400 1rem var(--body); color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 6px; padding: 12px 14px; width: 100%; }
+.field textarea { min-height: 96px; resize: vertical; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-note { font-size: .92rem; background: var(--butter); border: 2px solid var(--ink); border-radius: 6px; padding: 10px 14px; }
+@media (max-width: 820px) { .cta-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+/* footer */
+footer { background: var(--ink); color: var(--paper); padding-block: 56px 40px; }
+footer .wrap { display: grid; gap: 28px; }
+footer .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+footer .brand { font-size: 2.6rem; text-shadow: 3px 3px 0 #000; -webkit-text-stroke: 1.5px #000; }
+footer .socials a { background: transparent; border-color: var(--paper); color: var(--paper); }
+footer .socials a:hover { background: var(--title); color: var(--ink); }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+footer nav a { font: 700 .82rem var(--billing); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: #c4cddb; }
+footer nav a:hover { color: var(--paper); }
+footer small { color: #8b97ab; }
+</style>
+</head>
+<body>
+<header class="nav" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Ethan Bloom</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navList">Menu</button>
+    <ul id="navList">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#fan">Become a Fan</a></li>
+      <li><a href="https://ethanbloomthefilm.com/category/uncategorized/" target="_blank" rel="noopener">Festivals &amp; Awards</a></li>
+      <li><a href="#screenings">Upcoming Screenings</a></li>
+    </ul>
+    <div class="socials" aria-label="Ethan Bloom on social media">
+      <a href="https://www.facebook.com/profile.php?id=61551241183804" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3z"/></svg></a>
+      <a href="https://x.com/ethanbloommovie" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg></a>
+      <a href="https://www.instagram.com/ethanbloommovie/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.tiktok.com/@ethanbloomthemovie?lang=en" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.3 6.3 0 1 0 5.3 6.2V8.8a8 8 0 0 0 4.7 1.5V7a4.7 4.7 0 0 1-4.7-5z"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="rays" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="tagline">HEAVEN HELP HIM</span>
+        <h1 class="display">Ethan Bloom</h1>
+        <p class="sub">Our heartfelt indie film.</p>
+        <div class="billing" aria-label="Starring">
+          <span>Joshua<br>Malina</span><span>Rachelle<br>Lefevre</span><span>Carlos<br>Ponce</span><span>Mindy<br>Sterling</span><span>Caroline<br>Valencia</span><span><small>and introducing</small>Hank<br>Greenspan</span>
+        </div>
+        <div class="ctas">
+          <a class="btn primary" href="#trailer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg>Watch the trailer</a>
+          <a class="btn butter" href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">Find a screening</a>
+          <a class="btn" href="#fan">Become a fan</a>
+        </div>
+        <div class="laurel">
+          <svg viewBox="0 0 30 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 42C8 36 4 22 10 4"/><path d="M9 10c-4 0-6-2-7-5 4 0 6 2 7 5zM7 18c-4 1-6-1-7-4 4-1 6 1 7 4zM8 26c-3 2-6 1-8-1 3-2 6-1 8 1zM12 33c-2 3-5 3-8 2 2-3 5-3 8-2z"/></svg>
+          <span>Official selection<br>Austin Film Festival</span>
+        </div>
+      </div>
+      <div class="poster">
+        <img src="img/poster.jpg" alt="Ethan Bloom theatrical poster: Ethan in a white robe and tallit, holding a rosary and a Star of David, surrounded by the cast against sky-blue sunburst rays" width="1600" height="2370">
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink" id="trailer">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" style="color: var(--butter)">Official trailer</span>
+        <h2 class="display h2">Meet Ethan.</h2>
+      </div>
+      <div class="trailer-frame">
+        <video controls preload="metadata" playsinline poster="img/trailer-poster.jpg">
+          <source src="trailer.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="trailer-meta">
+        <span class="label">A heartfelt indie dramedy</span>
+        <span class="label">Distributed by <a href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">Menemsha Films</a></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="story">
+    <div class="wrap synopsis">
+      <figure><img src="img/still-13.jpg" alt="Ethan, in a tallit and kippah, stands at the bimah in front of stained-glass windows" loading="lazy"></figure>
+      <div style="display: grid; gap: 24px; min-width: 0;">
+        <span class="label">The story</span>
+        <blockquote>After losing his mother, thirteen-year-old Ethan finds solace in the Catholic church, a refuge that feels like home, even though he was born into a Jewish family. When his father insists on a bar mitzvah and Ethan’s secret unravels at his girlfriend’s confirmation party, the young seeker must confront the lies he’s told and the grief he’s been running from. Through the wisdom of an unconventional rabbi, the love of his complicated family, and his first romance with a cowboy-boot-wearing girl who can put him in a headlock, Ethan discovers that faith isn’t about choosing sides. It’s about honoring all the messy, beautiful pieces of who we are.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="band sky" id="themes">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">What it’s about</span>
+        <h2 class="display h2">Four things Ethan learns</h2>
+      </div>
+      <div class="themes">
+        <article class="theme"><img src="img/still-069.jpg" alt="Still from Ethan Bloom" loading="lazy"><div><h3>The Essence of <em>Faith</em></h3><p>Faith is a guiding light in Ethan's journey, offering solace and strength amidst life's trials and tribulations. It is a core theme.</p></div></article>
+        <article class="theme"><img src="img/still-065.jpg" alt="Still from Ethan Bloom" loading="lazy"><div><h3>The Bonds of <em>Family</em></h3><p>Family provides Ethan with unwavering support and love, shaping his values and influencing his decisions throughout the film's narrative.</p></div></article>
+        <article class="theme"><img src="img/still-07.jpg" alt="Still from Ethan Bloom" loading="lazy"><div><h3>Navigating <em>Loss</em> and Grief</h3><p>The film explores the profound impact of loss on Ethan's life, highlighting his resilience and ability to find hope amidst sorrow.</p></div></article>
+        <article class="theme"><img src="img/still-13.jpg" alt="Still from Ethan Bloom" loading="lazy" style="object-position: 50% 30%"><div><h3>The Sweetness of <em>First Love</em></h3><p>First love blossoms in Ethan's life, bringing joy and challenges as he navigates the complexities of relationships and self-discovery.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="cast">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">Meet the cast</span>
+        <h2 class="display h2">The Bloomfields &amp; company</h2>
+        <p class="lede">Discover the talented actors who brought the characters of Ethan Bloom to life.</p>
+      </div>
+      <div class="cast">
+        <article class="member"><div class="photo"><img src="img/joshua-malina.jpg" alt="Joshua Malina" loading="lazy"><span class="as">as Gary Bloomfield</span></div><h3>Joshua Malina</h3><p>Joshua Malina is a celebrated actor known for his iconic roles in “The West Wing” and “Scandal.” His extensive television credits include “The Big Bang Theory,” “Sports Night,” “Inventing Anna,” and “American Horror Story.” On stage, he’s appeared on Broadway in “Leopoldstadt” and “A Few Good Men,” and in films including “The American President” and “A Few Good Men.”</p></article>
+        <article class="member"><div class="photo"><img src="img/rachelle-lefevre.jpg" alt="Rachelle Lefevre" loading="lazy"><span class="as">as Rabbi Dani</span></div><h3>Rachelle Lefevre</h3><p>Rachelle Lefevre rose to fame playing the villainous vampire Victoria in the Twilight film saga and starred as Julia Shumway in CBS’s hit series “Under the Dome.” In “Ethan Bloom,” she plays Rabbi Dani, an intelligent and soulful spiritual mentor with a disarmingly goofy side. She’s worked alongside prestigious actors including Paul Giamatti, Channing Tatum, and John Cusack throughout her 25+ year career.</p></article>
+        <article class="member"><div class="photo"><img src="img/carlos-ponce.jpg" alt="Carlos Ponce" loading="lazy"><span class="as">as Father Diaz</span></div><h3>Carlos Ponce</h3><p>Carlos Ponce is a multi-award-winning actor, singer, and songwriter from Puerto Rico who achieved Double Platinum status with his 1998 debut album. He’s showcased his versatility in projects ranging from “Murder Mystery 2” with Adam Sandler and Jennifer Aniston to “Julie &amp; The Phantoms” and “Couples Retreat.” He holds a Guinness World Record for voicing every character in the Spanish-language Harry Potter Audible saga on Amazon Prime.</p></article>
+        <article class="member"><div class="photo"><img src="img/mindy-sterling.jpg" alt="Mindy Sterling" loading="lazy"><span class="as">as Elaine Bloomfield</span></div><h3>Mindy Sterling</h3><p>Mindy Sterling is best known for her iconic portrayal of Frau Farbissina, Dr. Evil’s German henchwoman, in all three Austin Powers films. She’s a two-time Emmy nominee (2017) for Best Actress in Short Form Comedy or Drama for her work on “Con Man” and “Secs and Execs.” Her extensive voice-over career includes “Legend of Korra,” “The Great North,” “American Dad,” and “Family Guy.”</p></article>
+        <article class="member"><div class="photo"><img src="img/hank-greenspan.jpg" alt="Hank Greenspan" loading="lazy"><span class="as">as Ethan Bloomfield</span></div><h3>Hank Greenspan</h3><p>Hank Greenspan stars as the title character Ethan Bloomfield in this coming-of-age comedy marking his first film role. He’s best known for playing Grover on CBS’s primetime sitcom “The Neighborhood” for eight seasons alongside Cedric the Entertainer, Max Greenfield, and Beth Behrs. He also had a recurring role on Netflix’s “13 Reasons Why” as the young version of Justin Foley.</p></article>
+        <article class="member"><div class="photo"><img src="img/caroline-valencia.jpg" alt="Caroline Valencia" loading="lazy"><span class="as">as Camille Garcia</span></div><h3>Caroline Valencia</h3><p>Caroline Valencia is best known for her role as Young Mabel (young Selena Gomez) in season 2 of the hit Hulu series “Only Murders in the Building.” She landed her first lead role as Elena in the award-winning film “Land of Gold” which premiered at Tribeca Film Festival 2022. She can also be seen in Disney’s “The Slumber Party” and as a guest star on “Wizards Beyond Waverly Place.”</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band butter" id="team">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">Behind the camera</span>
+        <h2 class="display h2">Filmmaking Team</h2>
+      </div>
+      <div class="team">
+        <article class="crew"><img src="img/herschel-faber.jpg" alt="Herschel Faber" loading="lazy"><div class="who"><span class="label">Director &amp; Producer</span><h3>Herschel Faber</h3><p>Herschel wrote, directed, and produced <i>Cavemen</i>, a feature-length romantic comedy starring Skylar Astin (<i>Pitch Perfect</i>), Camilla Belle, Chad Michael Murray, and Jason Patric, which was released theatrically by Well Go USA in partnership with Warner Brothers. As a screenwriter, he wrote the cult hit <i>Mac and Devin Go to High School</i> starring Snoop Dogg and Wiz Khalifa, and has placed in the semi-finals of the prestigious Nicholl Fellowship and Austin Film Festival.</p></div></article>
+        <article class="crew"><img src="img/maylen-dominguez.jpg" alt="Maylen Dominguez" loading="lazy"><div class="who"><span class="label">Writer &amp; Producer</span><h3>Maylen Dominguez</h3><p>Maylen previously worked in development with Minnie Driver at Two Drivers Productions and helped produce content for Latin American television and films at Galan Entertainment, including <i>The ALMA Awards</i>, <i>Los Beltran</i>, and <i>Padre Alberto</i>. As a screenwriter, she won the prestigious Zaki Gordon Award for Screenwriting and an NBC/Universal award for TV writing.</p></div></article>
+        <article class="crew"><img src="img/darmon-moore.jpg" alt="Darmon Moore" loading="lazy"><div class="who"><span class="label">Director of Photography</span><h3>Darmon Moore</h3><p>Darmon began his cinematography career in Australia, shooting commercials for major brands like Visa, Emirates, Oreo, and BMX across Australia and Dubai before joining the Australian Cinematographers Society. After relocating to Los Angeles and then Florida, he shot music videos, award-winning short films, the Netflix series <i>The Ultimatum</i>, and the feature film <i>Ethan Bloom</i>.</p></div></article>
+        <article class="crew"><img src="img/robert-schafer.jpg" alt="Robert Schafer" loading="lazy"><div class="who"><span class="label">Editor</span><h3>Robert Schafer</h3><p>Robert began his career at American Zoetrope editing featurettes for Francis Ford Coppola films and working for industry legends like Coppola and Walter Murch. As senior editor at Zoetrope, he has edited feature films including Coppola’s <i>Megalopolis</i>, Roman Coppola’s <i>A Glimpse Inside the Mind of Charles Swan III</i>, and Herschel Faber’s award-winning <i>Cavemen</i>.</p></div></article>
+        <article class="crew"><img src="img/joseph-fogel.jpg" alt="Joseph Fogel" loading="lazy"><div class="who"><span class="label">Producer</span><h3>Joseph Fogel</h3><p>Joseph Fogel is a graduate of the University of Chicago and UC Hastings College of Law with extensive experience in independent film and entertainment law, having produced <i>Cavemen</i> and <i>Ethan Bloom</i>. He has been actively involved with “The Filmmakers Alliance” and possesses a deep understanding of copyright law and entertainment representation.</p></div></article>
+        <article class="crew"><img src="img/jody-friedman.jpg" alt="Jody Friedman" loading="lazy" style="object-position: 50% 35%"><div class="who"><span class="label">Producer / Music Supervisor</span><h3>Jody Friedman</h3><p>Jody is an accomplished producer whose debut feature <i>Ethan Bloom</i> was recently accepted into the Austin Film Festival and is set for theatrical release. He has supervised and produced music for major studios with credits including <i>Won’t You Be My Neighbor</i> (Focus Features) and television projects for Netflix, Hulu, HBO, and ABC, and currently serves as Music Supervisor for <i>The Bachelor</i> franchise.</p></div></article>
+        <article class="crew wide"><img src="img/michael-elsner.jpg" alt="Michael Elsner" loading="lazy"><div class="who"><span class="label">Producer</span><h3>Michael Elsner</h3><p>Michael Elsner brings over 25 years of entertainment industry experience to <i>Ethan Bloom</i>. His work has been featured in Disney’s <i>Cinderella</i>, <i>Star Wars: The Mandalorian</i>, <i>American Idol</i>, and ad campaigns for Audi and Verizon. With over 3,000 placements of original music across tv and film, he possesses a deep understanding of commercial viability in the entertainment marketplace.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink" id="bts">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" style="color: var(--butter)">Behind the Scenes</span>
+        <h2 class="display h2">From the set</h2>
+        <p class="lede">Explore the making of Ethan Bloom with exclusive photos and stories from the set.</p>
+      </div>
+      <div class="reel">
+        <figure class="a"><img src="img/still-07.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+        <figure class="b"><img src="img/still-069.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+        <figure class="c"><img src="img/still-065.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+        <figure class="d"><img src="img/still-13.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band sky">
+    <div class="wrap cta-grid">
+      <div class="panel sky" id="screenings">
+        <span class="label">In theaters</span>
+        <h2 class="display">Upcoming Screenings</h2>
+        <p>Find showtimes, festival dates and theatrical bookings near you through our distributor, Menemsha Films.</p>
+        <div><a class="btn butter" href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">See screenings</a></div>
+        <p style="font-size: .95rem">Want <i>Ethan Bloom</i> at your synagogue, church, school or film society? Send us a note through the fan form and mention “community screening.”</p>
+      </div>
+      <div class="panel" id="fan">
+        <span class="label">Become a fan</span>
+        <h2 class="display">Join the Bloomfields</h2>
+        <p>We’re thrilled you’re interested in Ethan Bloom! Leave your details and look out for our updates by email. We look forward to sharing the journey of this heartfelt indie dramedy with you.</p>
+        <form id="fanForm" novalidate>
+          <div class="row2">
+            <div class="field"><label for="fan-name">Name</label><input id="fan-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="fan-email">Email</label><input id="fan-email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="field"><label for="fan-msg">Message</label><textarea id="fan-msg" name="message"></textarea></div>
+          <div><button class="btn primary" type="submit">Connect</button></div>
+          <p class="form-note" id="formNote" hidden></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="#top">Ethan Bloom</a>
+      <div class="socials" aria-label="Ethan Bloom on social media">
+        <a href="https://www.facebook.com/profile.php?id=61551241183804" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3z"/></svg></a>
+        <a href="https://x.com/ethanbloommovie" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg></a>
+        <a href="https://www.instagram.com/ethanbloommovie/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@ethanbloomthemovie?lang=en" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.3 6.3 0 1 0 5.3 6.2V8.8a8 8 0 0 0 4.7 1.5V7a4.7 4.7 0 0 1-4.7-5z"/></svg></a>
+      </div>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#top">Home</a>
+      <a href="#fan">Become a Fan</a>
+      <a href="https://ethanbloomthefilm.com/category/uncategorized/" target="_blank" rel="noopener">Festivals &amp; Awards</a>
+      <a href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">Upcoming Screenings</a>
+      <a href="#cast">Cast</a>
+      <a href="#team">Filmmakers</a>
+    </nav>
+    <small>© Ethan Bloom. All rights reserved. Distributed by Menemsha Films.</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Set this to your email-list endpoint (Mailchimp, ConvertKit, Formspree…) when the site goes live.
+  const FORM_ENDPOINT = "";
+
+  const nav = document.querySelector(".nav");
+  const btn = document.getElementById("menuBtn");
+  btn.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open);
+  });
+  nav.querySelectorAll("ul a").forEach(a => a.addEventListener("click", () => {
+    nav.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+  }));
+
+  const form = document.getElementById("fanForm");
+  const note = document.getElementById("formNote");
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    note.hidden = false;
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      note.textContent = "Add your name and a valid email address so we can send you updates.";
+      return;
+    }
+    if (!FORM_ENDPOINT) {
+      note.textContent = "Sign-ups aren’t connected on this preview yet. Your details were not sent.";
+      return;
+    }
+    try {
+      const res = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify({ name, email, message: form.message.value.trim() }) });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      note.textContent = "Thanks, " + name + "! You’re on the list. Watch your inbox for Ethan Bloom news.";
+    } catch {
+      note.textContent = "We couldn’t send that just now. Check your connection and try again.";
+    }
+  });
+})();
+</script>
+</body>
+</html>

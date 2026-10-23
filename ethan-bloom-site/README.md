@@ -24,4 +24,4 @@ The "Upcoming Screenings" list reads the "Screenings" tab of its own Google Shee
 (https://docs.google.com/spreadsheets/d/17LFDMVQwn0nRBs7uM53KXpaaNsJfCcPwk5UVypogzmc/edit), separate from the
 HD Music Now sheet. The sheet must be viewable by anyone with the link; a "How to update" tab explains the columns. If the sheet can't be reached, the built-in list in the page script is shown.
 Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note, Tickets. A Tickets link adds a "Tickets" button to
-that screening; upcoming rows without one get a "Showtimes" button to Menemsha Films, and past dates get no button.
+that screening; rows without one, and past dates, get no button.

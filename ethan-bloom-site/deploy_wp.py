@@ -72,10 +72,15 @@ def build_content():
     # Same-site links: the page now lives on ethanbloomthefilm.com itself.
     html = html.replace(f'href="{SITE}/becomeafan/"', 'href="/becomeafan/"')
     # The 10Web/Elementor site kit styles h1/button/a through `.elementor-kit-183 …` on <body>, which outranks
-    # the page's own classes, so drop that class before anything renders. The theme also centres <main>.
-    fix = ("<script>[...document.body.classList].filter(c => /^elementor-kit-/.test(c))"
+    # the page's own classes, and body.custom-background tiles a dark texture behind every band that has no colour
+    # of its own, so drop both classes before anything renders. The theme also centres <main>, boxes every <article>
+    # in #222 with a black border (dark text on dark cards) and colours headings silver; these resets sit after the
+    # theme but before the page's own CSS, so they win over the theme and lose to any rule the design sets.
+    fix = ("<script>[...document.body.classList].filter(c => /^(elementor-kit-|custom-background$)/.test(c))"
            ".forEach(c => document.body.classList.remove(c));</script>\n"
-           "<style>main{text-align:start;margin:0}</style>\n")
+           "<style>main{text-align:start;margin:0}"
+           " main :where(article){display:block;width:auto;padding:0;border:0;background:none;text-align:inherit}"
+           " main :where(h1,h2,h3,h4,h5,h6){color:inherit}</style>\n")
     return "<!-- wp:html -->\n" + fix + html + "\n<!-- /wp:html -->"
 
 

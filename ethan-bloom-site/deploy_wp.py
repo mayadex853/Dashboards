@@ -92,6 +92,12 @@ def stage():
     print("Staged:", res["link"], f"(page id {res['id']})")
 
 
+def purge_cache(page_id):
+    """10Web's server cache keeps serving the old homepage after a switch; re-saving the page clears it."""
+    status = call("GET", f"/pages/{page_id}?context=edit")["status"]
+    call("POST", f"/pages/{page_id}", data={"status": status})
+
+
 def live():
     page = call("GET", f"/pages?slug={SLUG}")
     if not page:
@@ -99,6 +105,7 @@ def live():
     settings = call("GET", "/settings")
     (HERE / ".wp_previous_home").write_text(json.dumps({"show_on_front": settings["show_on_front"], "page_on_front": settings["page_on_front"]}))
     call("POST", "/settings", data={"show_on_front": "page", "page_on_front": page[0]["id"]})
+    purge_cache(page[0]["id"])
     print("Live: homepage is now page", page[0]["id"], "- previous setting saved to .wp_previous_home")
 
 
@@ -107,6 +114,8 @@ def revert():
     f = HERE / ".wp_previous_home"
     prev = json.loads(f.read_text()) if f.exists() else {"show_on_front": "page", "page_on_front": 162}
     call("POST", "/settings", data=prev)
+    if prev.get("page_on_front"):
+        purge_cache(prev["page_on_front"])
     print("Reverted homepage to", prev)
 
 

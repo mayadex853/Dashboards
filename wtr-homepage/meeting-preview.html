@@ -232,6 +232,11 @@
   [].forEach.call(root.querySelectorAll('a[href="#wtr-speaking"]'),function(a){a.setAttribute('data-w-scroll','');});
 }
 
+/* keep visitors at the top on arrival: the autoplaying video frame can grab focus and pull the page down */
+(function(){if(location.hash)return;var t0=Date.now(),user=false;
+['wheel','touchstart','keydown','mousedown'].forEach(function(e){window.addEventListener(e,function(){user=true;},{passive:true,once:true});});
+function back(){if(!user&&Date.now()-t0<6000&&window.pageYOffset>0)window.scrollTo(0,0);}
+window.addEventListener('scroll',back,{passive:true});window.addEventListener('load',function(){setTimeout(back,50);});})();
 (function(){var K='wtr-mc-rate',S={};try{S=JSON.parse(localStorage.getItem(K)||'{}')||{};}catch(e){}
 function paint(){[].forEach.call(document.querySelectorAll('.mc-area'),function(a){var n=a.getAttribute('data-area'),v=S[n]||'';
   if(v)a.setAttribute('data-v',v);else a.removeAttribute('data-v');

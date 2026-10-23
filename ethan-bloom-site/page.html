@@ -118,7 +118,7 @@ p { margin: 0; }
 
 /* screenings */
 .shows { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--paper); }
-.show { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto auto; gap: 6px 28px; align-items: center; padding-block: 22px; border-bottom: 1px solid #3a4558; }
+.show { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto 96px; gap: 6px 28px; align-items: center; padding-block: 22px; border-bottom: 1px solid #3a4558; }
 .show .when { font-family: var(--display); font-size: 1.5rem; line-height: 1; color: var(--title); font-variant-numeric: tabular-nums; }
 .show .when small { display: block; font-family: var(--billing); font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #c4cddb; margin-top: 6px; }
 .show .where { display: grid; gap: 4px; min-width: 0; }
@@ -126,10 +126,10 @@ p { margin: 0; }
 .show .where span { color: #c4cddb; font-size: .95rem; }
 .show .tag { justify-self: end; font: 700 .72rem var(--billing); letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: var(--butter); color: var(--ink); white-space: nowrap; }
 .show.now .tag { background: var(--title); }
-.show .tix { justify-self: end; padding: 9px 16px; font-size: .78rem; box-shadow: 3px 3px 0 var(--ink); white-space: nowrap; }
+.show .tix { grid-column: 4; justify-self: end; padding: 9px 16px; font-size: .78rem; box-shadow: 3px 3px 0 var(--ink); white-space: nowrap; }
 .show.past { opacity: .45; }
 .show.past .tag { background: transparent; color: var(--paper); border: 1px solid #c4cddb; }
-@media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show .tag { justify-self: start; grid-row: 1; } .show .tix { justify-self: start; } }
+@media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show .tag { justify-self: start; grid-row: 1; } .show .tix { grid-column: auto; justify-self: start; } }
 .credits-line { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; color: var(--ink-soft); line-height: 1.7; }
 .poster { position: relative; justify-self: center; width: min(100%, 420px); }
 .poster img { width: 100%; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 12px 12px 0 var(--ink); rotate: 2deg; }
@@ -512,10 +512,24 @@ footer small { color: #8b97ab; }
     ["Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week", "https://www.moviesofdelray.com/movies/1000035876-ethan-bloom/"],
     ["Los Angeles, CA", "Laemmle's Royal", "2026-10-21", "LA Premiere", "Q&A with Joshua Malina, Hank Greenspan & Mindy Sterling", "https://www.laemmle.com/film/ethan-bloom"],
     ["Encino, CA", "Laemmle Town Center 5", "2026-10-22", "LA Premiere", "Q&A with Joshua Malina & Hank Greenspan", "https://www.laemmle.com/film/ethan-bloom"],
-    ["Somerville, MA", "Somerville Theatre", "2026-11-15", "Boston Jewish Film Festival", "Conversation with director Herschel Faber & star Hank Greenspan", "https://www.bostonjcc.org/program/boston-jewish-film-festival/"],
-    ["Boston, MA", "West Newton Cinema", "2026-12-04", "Boston Opening", "", "https://www.westnewtoncinema.com/"],
-    ["New York, NY", "New Plaza Cinema", "", "Coming Soon", "", "https://newplazacinema.org/showtimes/"],
-    ["More big cities", "", "", "Coming Soon", "Dates to be announced", "https://www.menemshafilms.com/ethan-bloom"]
+    ["Somerville, MA", "Somerville Theatre", "2026-11-15", "Closing Night Film", "Boston Jewish Film Festival · Conversation with director Herschel Faber & star Hank Greenspan", "https://ticketing.bostonjfilm.org/websales/pages/info.aspx?evtinfo=580334~3a1dbf00-5ad7-4f53-af12-28ba7bfe20f4&epguid=5857d36a-fd4b-4e6b-ac74-c26da8205f7a&mdy=11/15/2026&"],
+    ["Newton, MA", "West Newton Cinema", "", "Coming Soon"],
+    ["New York, NY", "New Plaza Cinema", "", "Coming Soon"],
+    ["More big cities", "", "", "Coming Soon", "Dates to be announced", "https://www.menemshafilms.com/ethan-bloom"],
+    ["Melbourne, Sydney & Perth", "Jewish International Film Festival (Australia)", "", "Now Playing", "Australian premiere · 17 sessions through Nov 26", "https://www.jiff.com.au/films/ethan-bloom"],
+    ["Shrewsbury, MA", "Central Massachusetts International Jewish Film Festival", "2026-10-24", "Opening Night Film", "7:30 PM · discussion & dessert reception", "https://www.worcesterjcc.org/events/2026/10/24/jewish-film-festival/opening-night-film-ethan-bloom/"],
+    ["Toms River, NJ", "Jewish Federation of Ocean County · Marquee Cinemas", "2026-10-25", "Special Screening", "Cultural Festival", "https://www.jewishoceancounty.org/culturalfestival"],
+    ["Cherry Hill, NJ", "Katz JCC Festival of Arts, Books & Culture", "2026-11-13", "Film Festival", "1 PM · Lahn Social Hall", "https://jewishfederationofsouthernnewj.ticketspice.com/jcc-abc-festival-2026-fy27"],
+    ["Marco Island, FL", "Sidney R. Hoffman Film Festival", "2026-11-15", "Film Festival", "1 PM · Jewish Congregation of Marco Island", "https://www.jewishnaples.org/calendar/jcmi-film-nov-15-1787338372"],
+    ["Williamsburg, VA", "Virginia Peninsula Jewish Film Festival", "2026-11-15", "Film Festival", "2 PM · Williamsburg Library Theatre · free", "https://libcal.wrl.org/event/16621434"],
+    ["South Orange, NJ", "Temple Sharey Tefilo-Israel", "2026-11-22", "Special Screening", "Film & dinner, 6–9 PM", "https://tsti.org/event/film-and-dinner/"],
+    ["Denver, CO", "Hebrew Educational Alliance", "2026-12-01", "Special Screening", "Jewish Film Series · 6:30 PM", "https://www.headenver.org/events/jewish-film-series-ethan-bloom/"],
+    ["Highland Park, IL", "North Suburban Synagogue Beth El", "2026-12-20", "Special Screening"],
+    ["Las Vegas, NV", "Jewish Nevada International Film Festival", "2027-01-16", "Opening Night Film", "6:30 PM · AMC Rainbow Promenade", "https://www.jewishnevada.org/filmfestival"],
+    ["Mount Kisco, NY", "Bet Torah", "2027-01-17", "Special Screening", "Jan 17–21"],
+    ["Palm Beach, FL", "Palm Beach Jewish Film Festival", "2027-01-24", "Film Festival", "2 screenings", "https://pbjff2027.eventive.org/films/6ad25a1b8884eddbcb72b39e"],
+    ["Fresno, CA", "Fresno Jewish Film Festival", "2027-03-06", "Film Festival"],
+    ["Orange County, CA", "Orange County Jewish Film Festival", "", "Coming Soon", "Date to be announced"]
   ];
   const today = new Date(); today.setHours(0, 0, 0, 0);
   // Week of the Movies of Delray run, by the calendar date in Florida: opening Friday Apr 3 starts week 1,

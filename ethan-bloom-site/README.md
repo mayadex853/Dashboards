@@ -8,3 +8,8 @@ Static, single-page redesign of ethanbloomthefilm.com.
 
 Before going live, set `FORM_ENDPOINT` in the script at the bottom of `index.html`
 to your email-list provider so the "Become a Fan" form actually collects sign-ups.
+
+## Screenings
+
+The "Upcoming Screenings" list reads the same Google Sheet tab ("Screenings") as hdmusicnow.com,
+so one edit updates both sites. If the sheet can't be reached, the built-in list in the page script is shown.

@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ethan Bloom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ethan Bloom — a heartfelt indie dramedy starring Joshua Malina, Rachelle Lefevre, Carlos Ponce, Mindy Sterling, Caroline Valencia and Hank Greenspan. Heaven help him.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Archivo+Narrow:wght@500;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: the poster's sunburst. Sky-blue rays radiate behind the hero, then the page settles into
+   calm sky/butter bands with a night-ink band for the trailer. One committed light look, set explicitly. */
+:root {
+  --sky: #a9d8f6;
+  --sky-pale: #e4f3fd;
+  --butter: #fbf2bf;
+  --title: #6cb6ee;
+  --ink: #141a26;
+  --ink-soft: #3a4558;
+  --paper: #fffdf6;
+  --line: #c9e2f3;
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --billing: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --wrap: 1180px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--title); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* type scale */
+.display { font-family: var(--display); font-weight: 400; color: var(--title); line-height: .95; letter-spacing: .5px; text-shadow: 2px 0 0 var(--ink), 1.85px 0.77px 0 var(--ink), 1.41px 1.41px 0 var(--ink), 0.77px 1.85px 0 var(--ink), 0 2px 0 var(--ink), -0.77px 1.85px 0 var(--ink), -1.41px 1.41px 0 var(--ink), -1.85px 0.77px 0 var(--ink), -2px 0 0 var(--ink), -1.85px -0.77px 0 var(--ink), -1.41px -1.41px 0 var(--ink), -0.77px -1.85px 0 var(--ink), 0 -2px 0 var(--ink), 0.77px -1.85px 0 var(--ink), 1.41px -1.41px 0 var(--ink), 1.85px -0.77px 0 var(--ink), 0.75px 0.75px 0 var(--ink), 1.5px 1.5px 0 var(--ink), 2.25px 2.25px 0 var(--ink), 3px 3px 0 var(--ink), 3.75px 3.75px 0 var(--ink), 4.5px 4.5px 0 var(--ink), 5.25px 5.25px 0 var(--ink); }
+.h2 { font-size: clamp(2.4rem, 6vw, 4rem); }
+.label { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; }
+.lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 58ch; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 2px solid var(--ink); }
+.nav .wrap { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
+.brand { font-family: var(--display); font-size: 1.6rem; color: var(--title); text-decoration: none; white-space: nowrap; text-shadow: 1.2px 0 0 var(--ink), 0.85px 0.85px 0 var(--ink), 0 1.2px 0 var(--ink), -0.85px 0.85px 0 var(--ink), -1.2px 0 0 var(--ink), -0.85px -0.85px 0 var(--ink), 0 -1.2px 0 var(--ink), 0.85px -0.85px 0 var(--ink), 0.75px 0.75px 0 var(--ink), 1.5px 1.5px 0 var(--ink), 2.25px 2.25px 0 var(--ink); }
+.nav ul { list-style: none; display: flex; gap: 22px; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; text-decoration: none; padding-block: 6px; border-bottom: 2px solid transparent; }
+.nav ul a:hover { border-color: var(--ink); }
+.socials { display: flex; gap: 6px; }
+.socials a { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 2px solid var(--ink); background: var(--paper); transition: background .15s, transform .15s; }
+.socials a:hover { background: var(--butter); transform: translateY(-2px); }
+.socials svg { width: 16px; height: 16px; }
+.menu-btn { display: none; margin-left: auto; font: 700 .85rem var(--billing); letter-spacing: .1em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer; }
+@media (max-width: 900px) {
+  .menu-btn { display: block; }
+  .nav .socials { display: none; }
+  .nav ul { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--paper); border-bottom: 2px solid var(--ink); padding: 8px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); }
+  .nav ul a { display: block; padding-block: 12px; border-bottom: 1px solid var(--line); }
+  .nav:not(.open) ul { display: none; }
+}
+
+/* hero */
+.hero { position: relative; overflow: hidden; background: var(--sky); border-bottom: 2px solid var(--ink); isolation: isolate; }
+.rays { position: absolute; z-index: -1; left: 72%; top: 46%; width: 260vmax; height: 260vmax; translate: -50% -50%;
+  background: repeating-conic-gradient(from 0deg, var(--sky-pale) 0deg 7deg, var(--butter) 7deg 8.5deg, var(--sky) 8.5deg 15deg); }
+@media (prefers-reduced-motion: no-preference) { .rays { animation: spin 180s linear infinite; } }
+@keyframes spin { to { rotate: 360deg; } }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 64px 72px; }
+.hero-copy { display: grid; gap: 22px; justify-items: start; min-width: 0; }
+.tagline { font-family: var(--billing); font-weight: 700; font-size: clamp(1rem, 2vw, 1.25rem); letter-spacing: .3em; background: var(--ink); color: var(--paper); padding: 8px 14px 7px; }
+.hero h1 { font-size: clamp(4.2rem, 11vw, 8.5rem); margin-block: 4px 6px; text-shadow: 3px 0 0 var(--ink), 2.77px 1.15px 0 var(--ink), 2.12px 2.12px 0 var(--ink), 1.15px 2.77px 0 var(--ink), 0 3px 0 var(--ink), -1.15px 2.77px 0 var(--ink), -2.12px 2.12px 0 var(--ink), -2.77px 1.15px 0 var(--ink), -3px 0 0 var(--ink), -2.77px -1.15px 0 var(--ink), -2.12px -2.12px 0 var(--ink), -1.15px -2.77px 0 var(--ink), 0 -3px 0 var(--ink), 1.15px -2.77px 0 var(--ink), 2.12px -2.12px 0 var(--ink), 2.77px -1.15px 0 var(--ink), 0.75px 0.75px 0 var(--ink), 1.5px 1.5px 0 var(--ink), 2.25px 2.25px 0 var(--ink), 3px 3px 0 var(--ink), 3.75px 3.75px 0 var(--ink), 4.5px 4.5px 0 var(--ink), 5.25px 5.25px 0 var(--ink), 6px 6px 0 var(--ink), 6.75px 6.75px 0 var(--ink), 7.5px 7.5px 0 var(--ink), 8.25px 8.25px 0 var(--ink), 9px 9px 0 var(--ink); }
+.hero .sub { font-family: var(--body); font-style: italic; font-size: 1.3rem; }
+.billing { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--billing); font-weight: 700; text-transform: uppercase; line-height: 1.05; font-size: .95rem; letter-spacing: .04em; }
+.billing span small { display: block; font-size: .55rem; letter-spacing: .12em; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 700 .95rem var(--billing); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding: 14px 22px; border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); transition: transform .12s, box-shadow .12s; cursor: pointer; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.btn.primary { background: var(--title); }
+.btn.butter { background: var(--butter); }
+.run { display: inline-flex; align-items: stretch; text-decoration: none; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; background: var(--paper); box-shadow: 4px 4px 0 var(--ink); font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; transition: transform .12s, box-shadow .12s; }
+.run:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.run-k { background: var(--ink); color: var(--butter); padding: 10px 16px; display: flex; align-items: center; }
+.run-n { padding: 6px 18px 6px 14px; display: flex; align-items: center; gap: 8px; }
+.run-n b { font-family: var(--display); font-weight: 400; font-size: 1.7rem; letter-spacing: 0; color: var(--title); line-height: 1; font-variant-numeric: tabular-nums; min-width: 1.4ch; text-align: right; text-shadow: 1.2px 0 0 var(--ink), 0.85px 0.85px 0 var(--ink), 0 1.2px 0 var(--ink), -0.85px 0.85px 0 var(--ink), -1.2px 0 0 var(--ink), -0.85px -0.85px 0 var(--ink), 0 -1.2px 0 var(--ink), 0.85px -0.85px 0 var(--ink), 0.75px 0.75px 0 var(--ink), 1.5px 1.5px 0 var(--ink), 2.25px 2.25px 0 var(--ink); }
+@media (max-width: 420px) { .run { flex-direction: column; border-radius: 14px; } .run-k { justify-content: center; } .run-n { justify-content: center; } }
+.award { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; text-align: center; font-family: var(--billing); text-transform: uppercase; line-height: 1.15; }
+.award .leaf { width: 26px; height: 50px; flex: none; }
+.award .flip { transform: scaleX(-1); }
+.award small { display: block; font-weight: 700; font-size: .68rem; letter-spacing: .14em; }
+.award b { display: block; font-family: var(--display); font-weight: 400; text-transform: none; font-size: 1.35rem; letter-spacing: 0; margin-block: 2px; }
+
+/* success */
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 2px solid var(--ink); border-radius: 10px; background: var(--paper); box-shadow: 8px 8px 0 var(--ink); overflow: hidden; }
+.stat { padding: 26px 24px; display: grid; gap: 6px; align-content: start; }
+.stat + .stat { border-left: 2px solid var(--ink); }
+.stat b { font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 6vw, 3.8rem); line-height: 1; color: var(--title); font-variant-numeric: tabular-nums; text-shadow: 1.5px 0 0 var(--ink), 1.06px 1.06px 0 var(--ink), 0 1.5px 0 var(--ink), -1.06px 1.06px 0 var(--ink), -1.5px 0 0 var(--ink), -1.06px -1.06px 0 var(--ink), 0 -1.5px 0 var(--ink), 1.06px -1.06px 0 var(--ink), 0.75px 0.75px 0 var(--ink), 1.5px 1.5px 0 var(--ink), 2.25px 2.25px 0 var(--ink), 3px 3px 0 var(--ink), 3.75px 3.75px 0 var(--ink); }
+.stat span { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; }
+.quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+.quote { margin: 0; display: grid; gap: 14px; align-content: space-between; padding: 26px 24px; border-top: 3px solid var(--ink); }
+.quote blockquote { margin: 0; font-family: var(--display); font-size: clamp(1.3rem, 2.2vw, 1.6rem); line-height: 1.2; }
+.quote figcaption { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; }
+.quote .stars { color: var(--ink); letter-spacing: .1em; }
+.fests-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin: 64px 0 20px; }
+.fests-head h3 { font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+.fests { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 10px; }
+.fests li { display: grid; grid-template-columns: 22px minmax(0, 1fr) 22px; align-items: center; gap: 8px; padding: 14px 12px; border: 2px solid var(--ink); border-radius: 6px; background: var(--paper); text-align: center; font-family: var(--billing); text-transform: uppercase; line-height: 1.15; }
+.fests .leaf { width: 22px; height: 42px; color: var(--ink-soft); }
+.fests .flip { transform: scaleX(-1); }
+.fests small, .fests em { display: block; font-style: normal; font-weight: 700; font-size: .62rem; letter-spacing: .14em; color: var(--ink-soft); }
+.fests b { display: block; font-weight: 700; font-size: .9rem; letter-spacing: .04em; margin-block: 4px; }
+.fests li.hi { background: var(--title); }
+.fests li.hi small { font-size: .66rem; color: var(--ink); }
+.fests li.hi em, .fests li.hi .leaf { color: var(--ink); }
+@media (max-width: 560px) { .fests { grid-template-columns: 1fr 1fr; gap: 8px; } .fests li { grid-template-columns: 12px minmax(0, 1fr) 12px; gap: 4px; padding: 10px 6px; } .fests .leaf { width: 12px; height: 26px; } .fests b { font-size: .74rem; letter-spacing: .02em; } .fests small, .fests em, .fests li.hi small { font-size: .52rem; letter-spacing: .08em; } }
+@media (max-width: 760px) { .stats, .quotes { grid-template-columns: 1fr; } .stat + .stat { border-left: 0; border-top: 2px solid var(--ink); } }
+
+/* screenings */
+.shows { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--paper); }
+.show { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto 96px; gap: 6px 28px; align-items: center; padding-block: 22px; border-bottom: 1px solid #3a4558; }
+.show .when { font-family: var(--display); font-size: 1.5rem; line-height: 1; color: var(--title); font-variant-numeric: tabular-nums; }
+.show .when small { display: block; font-family: var(--billing); font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #c4cddb; margin-top: 6px; }
+.show .where { display: grid; gap: 4px; min-width: 0; }
+.show .where b { font-family: var(--billing); font-weight: 700; text-transform: uppercase; font-size: 1.2rem; letter-spacing: .03em; }
+.show .where span { color: #c4cddb; font-size: .95rem; }
+.show .tag { justify-self: end; font: 700 .72rem var(--billing); letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: var(--butter); color: var(--ink); white-space: nowrap; }
+.show.now .tag { background: var(--title); }
+.show .tix { grid-column: 4; justify-self: end; padding: 9px 16px; font-size: .78rem; box-shadow: 3px 3px 0 var(--ink); white-space: nowrap; }
+.show.past { opacity: .45; }
+.show.past .tag { background: transparent; color: var(--paper); border: 1px solid #c4cddb; }
+@media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show .tag { justify-self: start; grid-row: 1; } .show .tix { grid-column: auto; justify-self: start; } }
+.credits-line { font-family: var(--billing); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; color: var(--ink-soft); line-height: 1.7; }
+.poster { position: relative; justify-self: center; width: min(100%, 420px); }
+.poster img { width: 100%; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 12px 12px 0 var(--ink); rotate: 2deg; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; padding-block: 40px 56px; gap: 40px; }
+  .rays { left: 50%; top: 70%; }
+  .poster { width: min(86%, 380px); }
+}
+
+/* sections */
+section { scroll-margin-top: 70px; }
+.band { padding-block: clamp(64px, 9vw, 112px); }
+.band.sky { background: var(--sky-pale); border-block: 2px solid var(--ink); }
+.band.butter { background: var(--butter); border-block: 2px solid var(--ink); }
+.band.ink { background: var(--ink); color: var(--paper); }
+.band.ink .lede { color: #c4cddb; }
+.head { display: grid; gap: 14px; margin-bottom: 44px; }
+
+/* trailer */
+.trailer-frame { position: relative; border: 3px solid var(--paper); border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 16 / 9; max-width: 100%; box-shadow: 10px 10px 0 var(--title); }
+.trailer-frame video { width: 100%; height: 100%; display: block; object-fit: contain; background: #000; }
+.trailer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 28px; }
+.trailer-meta a { color: var(--butter); }
+
+/* synopsis */
+.synopsis { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+.synopsis figure { margin: 0; }
+.synopsis figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 48% 30%; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 10px 10px 0 var(--title); }
+.synopsis blockquote { margin: 0; font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.55; max-width: 60ch; }
+.synopsis blockquote::first-letter { font-family: var(--display); font-size: 3.4em; float: left; line-height: .85; padding: 6px 10px 0 0; color: var(--title); text-shadow: 1.5px 0 0 var(--ink), 1.06px 1.06px 0 var(--ink), 0 1.5px 0 var(--ink), -1.06px 1.06px 0 var(--ink), -1.5px 0 0 var(--ink), -1.06px -1.06px 0 var(--ink), 0 -1.5px 0 var(--ink), 1.06px -1.06px 0 var(--ink); }
+@media (max-width: 860px) { .synopsis { grid-template-columns: 1fr; gap: 36px; } .synopsis figure img { aspect-ratio: 16 / 10; } }
+
+/* themes */
+.themes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.theme { background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.theme img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-bottom: 2px solid var(--ink); }
+.theme div { padding: 22px 24px 26px; display: grid; gap: 8px; align-content: start; }
+.theme h3 { font-family: var(--display); font-weight: 400; font-size: 1.7rem; line-height: 1.1; }
+.theme h3 em { font-style: normal; color: var(--title); text-shadow: 1.2px 0 0 var(--ink), 0.85px 0.85px 0 var(--ink), 0 1.2px 0 var(--ink), -0.85px 0.85px 0 var(--ink), -1.2px 0 0 var(--ink), -0.85px -0.85px 0 var(--ink), 0 -1.2px 0 var(--ink), 0.85px -0.85px 0 var(--ink); }
+.theme p { color: var(--ink-soft); }
+@media (max-width: 720px) { .themes { grid-template-columns: 1fr; } }
+
+/* cast */
+.cast { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+.member { display: grid; gap: 14px; align-content: start; }
+.member .photo { position: relative; aspect-ratio: 4 / 5; max-width: 100%; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--sky); box-shadow: 6px 6px 0 var(--ink); }
+.member .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; transition: transform .5s; }
+.member:hover .photo img { transform: scale(1.04); }
+.member .as { position: absolute; left: 10px; bottom: 10px; background: var(--butter); border: 2px solid var(--ink); padding: 4px 10px; font: 700 .72rem var(--billing); letter-spacing: .12em; text-transform: uppercase; }
+.member h3 { font-family: var(--billing); font-weight: 700; text-transform: uppercase; font-size: 1.5rem; letter-spacing: .03em; line-height: 1; }
+.member p { color: var(--ink-soft); font-size: .97rem; }
+@media (max-width: 980px) { .cast { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .cast { grid-template-columns: 1fr; } }
+
+/* team */
+.team { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; border-top: 2px solid var(--ink); }
+.crew { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding-block: 28px; border-bottom: 1px solid var(--ink); align-items: start; }
+.crew img { width: 120px; height: 140px; object-fit: cover; object-position: 50% 25%; border: 2px solid var(--ink); border-radius: 4px; background: var(--sky); }
+.crew .who { display: grid; gap: 6px; }
+.crew h3 { font-family: var(--billing); font-weight: 700; text-transform: uppercase; font-size: 1.3rem; line-height: 1; }
+.crew .label { color: var(--ink-soft); font-size: .72rem; }
+.crew p { font-size: .95rem; color: var(--ink-soft); }
+.crew i { color: var(--ink); }
+.crew.wide { grid-column: 1 / -1; }
+@media (max-width: 860px) { .team { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .crew { grid-template-columns: 84px minmax(0, 1fr); gap: 16px; } .crew img { width: 84px; height: 100px; } }
+
+/* behind the scenes */
+.reel { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.reel figure { margin: 0; position: relative; overflow: hidden; border: 2px solid var(--paper); border-radius: 6px; }
+.reel img { width: 100%; height: 100%; object-fit: cover; }
+.reel .a { grid-column: span 7; aspect-ratio: 16 / 9; }
+.reel .b { grid-column: span 5; aspect-ratio: auto; }
+.reel .c { grid-column: span 5; aspect-ratio: auto; }
+.reel .d { grid-column: span 7; aspect-ratio: 16 / 9; }
+@media (max-width: 720px) { .reel .a, .reel .b, .reel .c, .reel .d { grid-column: 1 / -1; aspect-ratio: 16 / 9; } }
+
+/* screenings + fan */
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.panel { border: 2px solid var(--ink); border-radius: 10px; padding: clamp(24px, 4vw, 40px); background: var(--paper); box-shadow: 8px 8px 0 var(--ink); display: grid; gap: 16px; align-content: start; min-width: 0; }
+.panel.sky { background: var(--sky); }
+.panel h2 { font-size: clamp(2rem, 4.5vw, 2.9rem); }
+@media (max-width: 820px) { .cta-grid { grid-template-columns: 1fr; } }
+
+/* footer */
+footer { background: var(--ink); color: var(--paper); padding-block: 56px 40px; }
+footer .wrap { display: grid; gap: 28px; }
+footer .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+footer .brand { font-size: 2.6rem; text-shadow: 1.5px 0 0 #000, 1.06px 1.06px 0 #000, 0 1.5px 0 #000, -1.06px 1.06px 0 #000, -1.5px 0 0 #000, -1.06px -1.06px 0 #000, 0 -1.5px 0 #000, 1.06px -1.06px 0 #000, 0.75px 0.75px 0 #000, 1.5px 1.5px 0 #000, 2.25px 2.25px 0 #000, 3px 3px 0 #000, 3.75px 3.75px 0 #000; }
+footer .socials a { background: transparent; border-color: var(--paper); color: var(--paper); }
+footer .socials a:hover { background: var(--title); color: var(--ink); }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+footer nav a { font: 700 .82rem var(--billing); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: #c4cddb; }
+footer nav a:hover { color: var(--paper); }
+footer small { color: #8b97ab; }
+</style>
+</head>
+<body>
+<header class="nav" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Ethan Bloom</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navList">Menu</button>
+    <ul id="navList">
+      <li><a href="#top">Home</a></li>
+      <li><a href="https://ethanbloomthefilm.com/becomeafan/">Become a Fan</a></li>
+      <li><a href="#success">Festivals &amp; Awards</a></li>
+      <li><a href="#screenings">Upcoming Screenings</a></li>
+    </ul>
+    <div class="socials" aria-label="Ethan Bloom on social media">
+      <a href="https://www.facebook.com/profile.php?id=61551241183804" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3z"/></svg></a>
+      <a href="https://x.com/ethanbloommovie" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg></a>
+      <a href="https://www.instagram.com/ethanbloommovie/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.tiktok.com/@ethanbloomthemovie?lang=en" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.3 6.3 0 1 0 5.3 6.2V8.8a8 8 0 0 0 4.7 1.5V7a4.7 4.7 0 0 1-4.7-5z"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="rays" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="tagline">HEAVEN HELP HIM</span>
+        <h1 class="display">Ethan Bloom</h1>
+        <p class="sub">Our heartfelt indie film.</p>
+        <a class="run" href="#screenings"><span class="run-k">★ Now in theaters</span><span class="run-n"><b data-weeks data-count>29</b> weeks &amp; counting</span></a>
+        <div class="billing" aria-label="Starring">
+          <span>Joshua<br>Malina</span><span>Rachelle<br>Lefevre</span><span>Carlos<br>Ponce</span><span>Mindy<br>Sterling</span><span>Caroline<br>Valencia</span><span><small>and introducing</small>Hank<br>Greenspan</span>
+        </div>
+        <div class="ctas">
+          <a class="btn primary" href="#trailer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg>Watch the trailer</a>
+          <a class="btn butter" href="#screenings">Find a screening</a>
+          <a class="btn" href="https://ethanbloomthefilm.com/becomeafan/">Become a fan</a>
+        </div>
+        <a class="award" href="#success">
+          <svg class="leaf" viewBox="0 0 30 56" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 54C8 46 3 28 10 3"/><path d="M9 10c-4 0-6-2-7-5 4 0 6 2 7 5zM7 19c-4 1-6-1-7-4 4-1 6 1 7 4zM7 28c-3 2-6 1-7-2 3-2 6-1 7 2zM10 37c-2 3-5 3-8 2 2-3 5-3 8-2zM15 45c-1 3-4 4-7 3 1-3 4-4 7-3z"/></svg>
+          <span><small>Director’s Choice Award</small><b>Best Feature · Comedy</b><small>Sedona International Film Festival 2026</small></span>
+          <svg class="leaf flip" viewBox="0 0 30 56" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 54C8 46 3 28 10 3"/><path d="M9 10c-4 0-6-2-7-5 4 0 6 2 7 5zM7 19c-4 1-6-1-7-4 4-1 6 1 7 4zM7 28c-3 2-6 1-7-2 3-2 6-1 7 2zM10 37c-2 3-5 3-8 2 2-3 5-3 8-2zM15 45c-1 3-4 4-7 3 1-3 4-4 7-3z"/></svg>
+        </a>
+      </div>
+      <div class="poster">
+        <img src="img/poster.jpg" alt="Ethan Bloom theatrical poster: Ethan in a white robe and tallit, holding a rosary and a Star of David, surrounded by the cast against sky-blue sunburst rays" width="1600" height="2370">
+      </div>
+    </div>
+  </section>
+
+  <section class="band butter" id="success">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">Festivals &amp; awards</span>
+        <h2 class="display h2">An award-winning run</h2>
+        <p class="lede">From its world premiere at the Miami Film Festival to a Best Feature win in Sedona and a theatrical run that keeps getting extended, audiences across the country are finding Ethan.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b data-weeks data-count>29</b><span>Weeks &amp; counting in theaters</span></div>
+        <div class="stat"><b data-count>40</b><span>Festival selections</span></div>
+        <div class="stat"><b data-count>15</b><span>Awards &amp; kudos</span></div>
+      </div>
+      <div class="quotes">
+        <figure class="quote"><blockquote>“Paints a raw and authentic portrait of adolescence.”</blockquote><figcaption>The Austin Chronicle</figcaption></figure>
+        <figure class="quote"><blockquote>“A simple story, big heart, and a lasting impression.”</blockquote><figcaption>True View Reviews</figcaption></figure>
+        <figure class="quote"><blockquote>“5 stars for tweens and teens to Grandma and Grandpa.”</blockquote><figcaption><span class="stars" aria-hidden="true">★★★★★</span> ACED Magazine</figcaption></figure>
+      </div>
+      <div class="fests-head">
+        <h3>Official selections</h3>
+        <span class="label">7 opening nights · 4 closing nights · 2 jury awards</span>
+      </div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="leaf" viewBox="0 0 30 56" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 54C8 46 3 28 10 3"/><path d="M9 10c-4 0-6-2-7-5 4 0 6 2 7 5zM7 19c-4 1-6-1-7-4 4-1 6 1 7 4zM7 28c-3 2-6 1-7-2 3-2 6-1 7 2zM10 37c-2 3-5 3-8 2 2-3 5-3 8-2zM15 45c-1 3-4 4-7 3 1-3 4-4 7-3z"/></symbol></svg>
+      <ul class="fests">
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>World Premiere · Gala Film</small><b>Miami Film Festival</b><em>Miami, FL · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Directors’ Choice Award · Best Feature, Comedy</small><b>Sedona International Film Festival</b><em>Sedona, AZ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Special Jury Award</small><b>Orlando Film Festival</b><em>Orlando, FL · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Sun &amp; Stars International Film Festival</b><em>West Palm Beach, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Cincinnati Jewish &amp; Israeli Film Festival</b><em>Cincinnati, OH · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Palm Springs Jewish Film Festival</b><em>Palm Springs, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>JFilm Pittsburgh Jewish Film Festival</b><em>Pittsburgh, PA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Dayton Jewish International Film Festival</b><em>Dayton, OH · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Central Massachusetts International Jewish Film Festival</b><em>Worcester, MA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Opening Night Film</small><b>Jewish Nevada International Film Festival</b><em>Las Vegas, NV · 2027</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>San Diego Jewish Film Festival</b><em>San Diego, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>Key Biscayne Film Festival</b><em>Key Biscayne, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>Charlotte Jewish Film Festival</b><em>Charlotte, NC · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Closing Night Film</small><b>Boston Jewish Film Festival</b><em>Boston, MA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li class="hi"><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Film of the Month</small><b>Austin Jewish Film Festival</b><em>Austin, TX · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Austin Film Festival</b><em>Austin, TX · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Santa Barbara Jewish Film Festival</b><em>Santa Barbara, CA · 2025</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Boca Raton Jewish Film Festival</b><em>Boca Raton, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>New Jersey Jewish Film Festival</b><em>West Orange, NJ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>East Bay International Jewish Film Festival</b><em>East Bay, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>St. Louis Jewish Film Festival</b><em>St. Louis, MO · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>New Hampshire Jewish Film Festival</b><em>New Hampshire · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Rehoboth Beach Jewish Film Festival</b><em>Lewes, DE · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>JCC Rockland International Jewish Film Festival</b><em>West Nyack, NY · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Wilmington Jewish Film Festival</b><em>Wilmington, DE · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Lenore Marwil Detroit Jewish Film Festival</b><em>West Bloomfield, MI · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Michiana Jewish Film Festival</b><em>South Bend, IN · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Prescott Film Festival</b><em>Prescott, AZ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Vermont Jewish Film Festival</b><em>Stowe, VT · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Nashville Jewish Film Festival</b><em>Nashville, TN · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Jewish Film Festival of Dallas</b><em>Dallas, TX · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Cleveland Jewish Film Festival</b><em>Cleveland, OH · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Jewish International Film Festival</b><em>Australia · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Silicon Valley Jewish Film Festival</b><em>Silicon Valley, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Orange County Jewish Film Festival</b><em>Orange County, CA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Cherry Hill Jewish Film Festival</b><em>Cherry Hill, NJ · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Sidney R. Hoffman Film Festival</b><em>Marco Island, FL · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Virginia Peninsula Jewish Film Festival</b><em>Williamsburg, VA · 2026</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Palm Beach Jewish Film Festival</b><em>Palm Beach, FL · 2027</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+        <li><svg class="leaf" aria-hidden="true"><use href="#leaf"/></svg><span><small>Official Selection</small><b>Fresno Jewish Film Festival</b><em>Fresno, CA · 2027</em></span><svg class="leaf flip" aria-hidden="true"><use href="#leaf"/></svg></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band ink" id="trailer">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" style="color: var(--butter)">Official trailer</span>
+        <h2 class="display h2">Meet Ethan.</h2>
+      </div>
+      <div class="trailer-frame">
+        <video controls preload="metadata" playsinline poster="img/trailer-poster.jpg">
+          <source src="trailer.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="trailer-meta">
+        <span class="label">A heartfelt indie dramedy</span>
+        <span class="label">Distributed by <a href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">Menemsha Films</a></span>
+      </div>
+
+      <div class="head" id="screenings" style="margin-top: 96px">
+        <span class="label" style="color: var(--butter)">In theaters now</span>
+        <h2 class="display h2">Upcoming Screenings</h2>
+        <p class="lede">Premieres, festival dates and theatrical runs, many with cast and filmmaker Q&amp;As.</p>
+      </div>
+      <ul class="shows" id="shows"></ul>
+      <div class="ctas" style="margin-top: 32px">
+        <a class="btn butter" href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">All showtimes at Menemsha Films</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="story">
+    <div class="wrap synopsis">
+      <figure><img src="img/still-13.jpg" alt="Ethan, in a tallit and kippah, stands at the bimah in front of stained-glass windows" loading="lazy"></figure>
+      <div style="display: grid; gap: 24px; min-width: 0;">
+        <span class="label">The story</span>
+        <blockquote>After losing his mother, thirteen-year-old Ethan finds solace in the Catholic church, a refuge that feels like home, even though he was born into a Jewish family. When his father insists on a bar mitzvah and Ethan’s secret unravels at his girlfriend’s confirmation party, the young seeker must confront the lies he’s told and the grief he’s been running from. Through the wisdom of an unconventional rabbi, the love of his complicated family, and his first romance with a cowboy-boot-wearing girl who can put him in a headlock, Ethan discovers that faith isn’t about choosing sides. It’s about honoring all the messy, beautiful pieces of who we are.</blockquote>
+        <p class="credits-line">Directed by Herschel Faber · Written by Maylen Dominguez<br>Set in Miami’s Coconut Grove · Distributed in North America by Menemsha Films</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band sky" id="themes">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">What it’s about</span>
+        <h2 class="display h2">Four things Ethan learns</h2>
+      </div>
+      <div class="themes">
+        <article class="theme"><img src="img/still-069.jpg" alt="Still from Ethan Bloom" loading="lazy"><div><h3>The Essence of <em>Faith</em></h3><p>Faith is a guiding light in Ethan's journey, offering solace and strength amidst life's trials and tribulations. It is a core theme.</p></div></article>
+        <article class="theme"><img src="img/still-065.jpg" alt="Still from Ethan Bloom" loading="lazy"><div><h3>The Bonds of <em>Family</em></h3><p>Family provides Ethan with unwavering support and love, shaping his values and influencing his decisions throughout the film's narrative.</p></div></article>
+        <article class="theme"><img src="img/still-07.jpg" alt="Still from Ethan Bloom" loading="lazy"><div><h3>Navigating <em>Loss</em> and Grief</h3><p>The film explores the profound impact of loss on Ethan's life, highlighting his resilience and ability to find hope amidst sorrow.</p></div></article>
+        <article class="theme"><img src="img/still-13.jpg" alt="Still from Ethan Bloom" loading="lazy" style="object-position: 50% 30%"><div><h3>The Sweetness of <em>First Love</em></h3><p>First love blossoms in Ethan's life, bringing joy and challenges as he navigates the complexities of relationships and self-discovery.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="cast">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">Meet the cast</span>
+        <h2 class="display h2">The Bloomfields &amp; company</h2>
+        <p class="lede">Discover the talented actors who brought the characters of Ethan Bloom to life.</p>
+      </div>
+      <div class="cast">
+        <article class="member"><div class="photo"><img src="img/joshua-malina.jpg" alt="Joshua Malina" loading="lazy"><span class="as">as Gary Bloomfield</span></div><h3>Joshua Malina</h3><p>Joshua Malina is a celebrated actor known for his iconic roles in “The West Wing” and “Scandal.” His extensive television credits include “The Big Bang Theory,” “Sports Night,” “Inventing Anna,” and “American Horror Story.” On stage, he’s appeared on Broadway in “Leopoldstadt” and “A Few Good Men,” and in films including “The American President” and “A Few Good Men.”</p></article>
+        <article class="member"><div class="photo"><img src="img/rachelle-lefevre.jpg" alt="Rachelle Lefevre" loading="lazy"><span class="as">as Rabbi Dani</span></div><h3>Rachelle Lefevre</h3><p>Rachelle Lefevre rose to fame playing the villainous vampire Victoria in the Twilight film saga and starred as Julia Shumway in CBS’s hit series “Under the Dome.” In “Ethan Bloom,” she plays Rabbi Dani, an intelligent and soulful spiritual mentor with a disarmingly goofy side. She’s worked alongside prestigious actors including Paul Giamatti, Channing Tatum, and John Cusack throughout her 25+ year career.</p></article>
+        <article class="member"><div class="photo"><img src="img/carlos-ponce.jpg" alt="Carlos Ponce" loading="lazy"><span class="as">as Father Diaz</span></div><h3>Carlos Ponce</h3><p>Carlos Ponce is a multi-award-winning actor, singer, and songwriter from Puerto Rico who achieved Double Platinum status with his 1998 debut album. He’s showcased his versatility in projects ranging from “Murder Mystery 2” with Adam Sandler and Jennifer Aniston to “Julie &amp; The Phantoms” and “Couples Retreat.” He holds a Guinness World Record for voicing every character in the Spanish-language Harry Potter Audible saga on Amazon Prime.</p></article>
+        <article class="member"><div class="photo"><img src="img/mindy-sterling.jpg" alt="Mindy Sterling" loading="lazy"><span class="as">as Elaine Bloomfield</span></div><h3>Mindy Sterling</h3><p>Mindy Sterling is best known for her iconic portrayal of Frau Farbissina, Dr. Evil’s German henchwoman, in all three Austin Powers films. She’s a two-time Emmy nominee (2017) for Best Actress in Short Form Comedy or Drama for her work on “Con Man” and “Secs and Execs.” Her extensive voice-over career includes “Legend of Korra,” “The Great North,” “American Dad,” and “Family Guy.”</p></article>
+        <article class="member"><div class="photo"><img src="img/hank-greenspan.jpg" alt="Hank Greenspan" loading="lazy"><span class="as">as Ethan Bloomfield</span></div><h3>Hank Greenspan</h3><p>Hank Greenspan stars as the title character Ethan Bloomfield in this coming-of-age comedy marking his first film role. He’s best known for playing Grover on CBS’s primetime sitcom “The Neighborhood” for eight seasons alongside Cedric the Entertainer, Max Greenfield, and Beth Behrs. He also had a recurring role on Netflix’s “13 Reasons Why” as the young version of Justin Foley.</p></article>
+        <article class="member"><div class="photo"><img src="img/caroline-valencia.jpg" alt="Caroline Valencia" loading="lazy"><span class="as">as Camille Garcia</span></div><h3>Caroline Valencia</h3><p>Caroline Valencia is best known for her role as Young Mabel (young Selena Gomez) in season 2 of the hit Hulu series “Only Murders in the Building.” She landed her first lead role as Elena in the award-winning film “Land of Gold” which premiered at Tribeca Film Festival 2022. She can also be seen in Disney’s “The Slumber Party” and as a guest star on “Wizards Beyond Waverly Place.”</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band butter" id="team">
+    <div class="wrap">
+      <div class="head">
+        <span class="label">Behind the camera</span>
+        <h2 class="display h2">Filmmaking Team</h2>
+      </div>
+      <div class="team">
+        <article class="crew"><img src="img/herschel-faber.jpg" alt="Herschel Faber" loading="lazy"><div class="who"><span class="label">Director &amp; Producer</span><h3>Herschel Faber</h3><p>Herschel wrote, directed, and produced <i>Cavemen</i>, a feature-length romantic comedy starring Skylar Astin (<i>Pitch Perfect</i>), Camilla Belle, Chad Michael Murray, and Jason Patric, which was released theatrically by Well Go USA in partnership with Warner Brothers. As a screenwriter, he wrote the cult hit <i>Mac and Devin Go to High School</i> starring Snoop Dogg and Wiz Khalifa, and has placed in the semi-finals of the prestigious Nicholl Fellowship and Austin Film Festival.</p></div></article>
+        <article class="crew"><img src="img/maylen-dominguez.jpg" alt="Maylen Dominguez" loading="lazy"><div class="who"><span class="label">Writer &amp; Producer</span><h3>Maylen Dominguez</h3><p>Maylen previously worked in development with Minnie Driver at Two Drivers Productions and helped produce content for Latin American television and films at Galan Entertainment, including <i>The ALMA Awards</i>, <i>Los Beltran</i>, and <i>Padre Alberto</i>. As a screenwriter, she won the prestigious Zaki Gordon Award for Screenwriting and an NBC/Universal award for TV writing.</p></div></article>
+        <article class="crew"><img src="img/darmon-moore.jpg" alt="Darmon Moore" loading="lazy"><div class="who"><span class="label">Director of Photography</span><h3>Darmon Moore</h3><p>Darmon began his cinematography career in Australia, shooting commercials for major brands like Visa, Emirates, Oreo, and BMX across Australia and Dubai before joining the Australian Cinematographers Society. After relocating to Los Angeles and then Florida, he shot music videos, award-winning short films, the Netflix series <i>The Ultimatum</i>, and the feature film <i>Ethan Bloom</i>.</p></div></article>
+        <article class="crew"><img src="img/robert-schafer.jpg" alt="Robert Schafer" loading="lazy"><div class="who"><span class="label">Editor</span><h3>Robert Schafer</h3><p>Robert began his career at American Zoetrope editing featurettes for Francis Ford Coppola films and working for industry legends like Coppola and Walter Murch. As senior editor at Zoetrope, he has edited feature films including Coppola’s <i>Megalopolis</i>, Roman Coppola’s <i>A Glimpse Inside the Mind of Charles Swan III</i>, and Herschel Faber’s award-winning <i>Cavemen</i>.</p></div></article>
+        <article class="crew"><img src="img/joseph-fogel.jpg" alt="Joseph Fogel" loading="lazy"><div class="who"><span class="label">Producer</span><h3>Joseph Fogel</h3><p>Joseph Fogel is a graduate of the University of Chicago and UC Hastings College of Law with extensive experience in independent film and entertainment law, having produced <i>Cavemen</i> and <i>Ethan Bloom</i>. He has been actively involved with “The Filmmakers Alliance” and possesses a deep understanding of copyright law and entertainment representation.</p></div></article>
+        <article class="crew"><img src="img/jody-friedman.jpg" alt="Jody Friedman" loading="lazy" style="object-position: 50% 35%"><div class="who"><span class="label">Producer / Music Supervisor</span><h3>Jody Friedman</h3><p>Jody brings 25 years in the entertainment business and 53 film and television credits to every film he produces. His first feature as producer, <i>Ethan Bloom</i>, won Best Feature (Comedy) at Sedona, screened at 26+ festivals and opened theatrically through Menemsha Films. He is Music Supervisor for ABC’s <i>The Bachelor</i> franchise and has worked on projects such as <i>Won’t You Be My Neighbor?</i> (Focus Features), <i>Barry</i>, <i>Griselda</i> and <i>Outer Banks</i>.</p></div></article>
+        <article class="crew wide"><img src="img/michael-elsner.jpg" alt="Michael Elsner" loading="lazy"><div class="who"><span class="label">Producer</span><h3>Michael Elsner</h3><p>Michael Elsner brings over 25 years of entertainment industry experience to <i>Ethan Bloom</i>. His work has been featured in Disney’s <i>Cinderella</i>, <i>Star Wars: The Mandalorian</i>, <i>American Idol</i>, and ad campaigns for Audi and Verizon. With over 3,000 placements of original music across tv and film, he possesses a deep understanding of commercial viability in the entertainment marketplace.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink" id="bts">
+    <div class="wrap">
+      <div class="head">
+        <span class="label" style="color: var(--butter)">Behind the Scenes</span>
+        <h2 class="display h2">From the set</h2>
+        <p class="lede">Explore the making of Ethan Bloom with exclusive photos and stories from the set.</p>
+      </div>
+      <div class="reel">
+        <figure class="a"><img src="img/still-07.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+        <figure class="b"><img src="img/still-069.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+        <figure class="c"><img src="img/still-065.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+        <figure class="d"><img src="img/still-13.jpg" alt="Still from Ethan Bloom" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band sky">
+    <div class="wrap cta-grid">
+      <div class="panel sky" id="host">
+        <span class="label">Bring it to your town</span>
+        <h2 class="display">Host a Screening</h2>
+        <p>Synagogues, churches, schools, film societies and festivals have made <i>Ethan Bloom</i> a community event. It plays from tweens to grandparents, and it sparks the best conversations afterward.</p>
+        <p>Send us a note through the fan form and mention “community screening,” or book through our distributor.</p>
+        <div><a class="btn butter" href="https://www.menemshafilms.com/ethan-bloom" target="_blank" rel="noopener">Book with Menemsha Films</a></div>
+      </div>
+      <div class="panel" id="fan">
+        <span class="label">Become a fan</span>
+        <h2 class="display">Join the Bloomfields</h2>
+        <p>We’re thrilled you’re interested in Ethan Bloom! Sign up for updates by email. We look forward to sharing the journey of this heartfelt indie dramedy with you.</p>
+        <div><a class="btn primary" href="https://ethanbloomthefilm.com/becomeafan/">Become a fan</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="#top">Ethan Bloom</a>
+      <div class="socials" aria-label="Ethan Bloom on social media">
+        <a href="https://www.facebook.com/profile.php?id=61551241183804" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3z"/></svg></a>
+        <a href="https://x.com/ethanbloommovie" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg></a>
+        <a href="https://www.instagram.com/ethanbloommovie/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@ethanbloomthemovie?lang=en" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.3 6.3 0 1 0 5.3 6.2V8.8a8 8 0 0 0 4.7 1.5V7a4.7 4.7 0 0 1-4.7-5z"/></svg></a>
+      </div>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#top">Home</a>
+      <a href="https://ethanbloomthefilm.com/becomeafan/">Become a Fan</a>
+      <a href="#success">Festivals &amp; Awards</a>
+      <a href="#screenings">Upcoming Screenings</a>
+      <a href="#cast">Cast</a>
+      <a href="#team">Filmmakers</a>
+    </nav>
+    <small>© Ethan Bloom. All rights reserved. Distributed by Menemsha Films.</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const nav = document.querySelector(".nav");
+  const btn = document.getElementById("menuBtn");
+  btn.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open);
+  });
+  nav.querySelectorAll("ul a").forEach(a => a.addEventListener("click", () => {
+    nav.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+  }));
+
+
+  // Screenings: built-in list, replaced by the "Screenings" tab of the Ethan Bloom Screenings sheet when it loads.
+  // Columns: City, Venue, Date (YYYY-MM-DD or blank), Label, Note, Tickets. "{week}" in a note becomes the current run week.
+  // Upcoming rows with a Tickets link get a Tickets button; past rows and rows without a link get none.
+  const SHEET = "https://docs.google.com/spreadsheets/d/17LFDMVQwn0nRBs7uM53KXpaaNsJfCcPwk5UVypogzmc/gviz/tq?headers=1&sheet=Screenings&tqx=out:json;responseHandler:";
+  let shows = [
+    ["Delray Beach, FL", "Movies of Delray", "", "Now Playing", "Smash hit, {week}th week", "https://www.moviesofdelray.com/movies/1000035876-ethan-bloom/"],
+    ["Los Angeles, CA", "Laemmle's Royal", "2026-10-21", "LA Premiere", "Q&A with Joshua Malina, Hank Greenspan & Mindy Sterling", "https://www.laemmle.com/film/ethan-bloom"],
+    ["Encino, CA", "Laemmle Town Center 5", "2026-10-22", "LA Premiere", "Q&A with Joshua Malina & Hank Greenspan", "https://www.laemmle.com/film/ethan-bloom"],
+    ["Somerville, MA", "Somerville Theatre", "2026-11-15", "Closing Night Film", "Boston Jewish Film Festival · Conversation with director Herschel Faber & star Hank Greenspan", "https://ticketing.bostonjfilm.org/websales/pages/info.aspx?evtinfo=580334~3a1dbf00-5ad7-4f53-af12-28ba7bfe20f4&epguid=5857d36a-fd4b-4e6b-ac74-c26da8205f7a&mdy=11/15/2026&"],
+    ["Newton, MA", "West Newton Cinema", "", "Coming Soon"],
+    ["New York, NY", "New Plaza Cinema", "", "Coming Soon"],
+    ["More big cities", "", "", "Coming Soon", "Dates to be announced", "https://www.menemshafilms.com/ethan-bloom"],
+    ["Melbourne, Sydney & Perth", "Jewish International Film Festival (Australia)", "", "Now Playing", "Australian premiere · 17 sessions through Nov 26", "https://www.jiff.com.au/films/ethan-bloom"],
+    ["Shrewsbury, MA", "Central Massachusetts International Jewish Film Festival", "2026-10-24", "Opening Night Film", "7:30 PM · discussion & dessert reception", "https://www.worcesterjcc.org/events/2026/10/24/jewish-film-festival/opening-night-film-ethan-bloom/"],
+    ["Toms River, NJ", "Jewish Federation of Ocean County · Marquee Cinemas", "2026-10-25", "Special Screening", "Cultural Festival", "https://www.jewishoceancounty.org/culturalfestival"],
+    ["Cherry Hill, NJ", "Katz JCC Festival of Arts, Books & Culture", "2026-11-13", "Film Festival", "1 PM · Lahn Social Hall", "https://jewishfederationofsouthernnewj.ticketspice.com/jcc-abc-festival-2026-fy27"],
+    ["Marco Island, FL", "Sidney R. Hoffman Film Festival", "2026-11-15", "Film Festival", "1 PM · Jewish Congregation of Marco Island", "https://www.jewishnaples.org/calendar/jcmi-film-nov-15-1787338372"],
+    ["Williamsburg, VA", "Virginia Peninsula Jewish Film Festival", "2026-11-15", "Film Festival", "2 PM · Williamsburg Library Theatre · free", "https://libcal.wrl.org/event/16621434"],
+    ["South Orange, NJ", "Temple Sharey Tefilo-Israel", "2026-11-22", "Special Screening", "Film & dinner, 6–9 PM", "https://tsti.org/event/film-and-dinner/"],
+    ["Denver, CO", "Hebrew Educational Alliance", "2026-12-01", "Special Screening", "Jewish Film Series · 6:30 PM", "https://www.headenver.org/events/jewish-film-series-ethan-bloom/"],
+    ["Highland Park, IL", "North Suburban Synagogue Beth El", "2026-12-20", "Special Screening"],
+    ["Las Vegas, NV", "Jewish Nevada International Film Festival", "2027-01-16", "Opening Night Film", "6:30 PM · AMC Rainbow Promenade", "https://www.jewishnevada.org/filmfestival"],
+    ["Mount Kisco, NY", "Bet Torah", "2027-01-17", "Special Screening", "Jan 17–21"],
+    ["Palm Beach, FL", "Palm Beach Jewish Film Festival", "2027-01-24", "Film Festival", "2 screenings", "https://pbjff2027.eventive.org/films/6ad25a1b8884eddbcb72b39e"],
+    ["Fresno, CA", "Fresno Jewish Film Festival", "2027-03-06", "Film Festival"],
+    ["Orange County, CA", "Orange County Jewish Film Festival", "", "Coming Soon", "Date to be announced"]
+  ];
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  // Week of the Movies of Delray run, by the calendar date in Florida: opening Friday Apr 3 starts week 1,
+  // and each following Friday starts the next week. Every visitor sees the same number, whatever their time zone.
+  const flToday = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(new Date());
+  const week = Math.max(1, Math.floor((Date.parse(flToday) - Date.parse("2026-04-03")) / 6048e5) + 1);
+  document.querySelectorAll("[data-weeks]").forEach(el => el.textContent = week);
+
+  // Count-up: numbers rest at their final value and roll up from zero the first time they scroll into view.
+  if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const el = e.target, end = parseInt(el.textContent, 10), suf = el.dataset.suffix || "";
+      if (!(end > 1)) return;
+      let t0 = null;
+      const step = t => {
+        t0 ??= t;
+        const p = Math.min(1, (t - t0) / 1400);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + (p < 1 ? "" : suf);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }), { threshold: 0.6 });
+    document.querySelectorAll("[data-count]").forEach(el => io.observe(el));
+  }
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function renderShows() {
+    const rows = shows.filter(r => r[0] || r[1]).map(([city, venue, date, label, note, tickets]) => {
+      const d = date ? new Date(date + "T00:00:00") : null;
+      const kind = !d ? (/now/i.test(label) ? 0 : 2) : (d >= today ? 1 : 3);
+      return { city, venue, d, label, note: (note || "").replace("{week}", week), kind, tickets: /^https?:\/\//i.test(tickets || "") ? tickets.trim() : "" };
+    });
+    rows.sort((a, b) => a.kind - b.kind || (a.kind === 3 ? b.d - a.d : (a.d || 0) - (b.d || 0)));
+    const fmt = { month: "short", day: "numeric" };
+    document.getElementById("shows").innerHTML = rows.map(r => {
+      const when = r.d ? r.d.toLocaleDateString("en-US", fmt) + "<small>" + r.d.toLocaleDateString("en-US", { weekday: "long" }) + "</small>"
+                       : (r.kind === 0 ? "Now<small>Playing</small>" : "Soon<small>Dates TBA</small>");
+      const cls = r.kind === 0 ? "now" : r.kind === 3 ? "past" : "";
+      return '<li class="show ' + cls + '"><div class="when">' + when + '</div><div class="where"><b>' + esc(r.city) + '</b><span>' +
+        esc([r.venue, r.note].filter(Boolean).join(" · ")) + '</span></div><span class="tag">' + esc(r.kind === 3 ? "Played" : r.label) + '</span>' +
+        (r.kind !== 3 && r.tickets ? '<a class="btn butter tix" href="' + esc(r.tickets) + '" target="_blank" rel="noopener">Tickets</a>' : "") + '</li>';
+    }).join("");
+  }
+  renderShows();
+  window.__ebShows = res => {
+    try {
+      const rows = res.table.rows.map(r => r.c.map(c => (c && (c.f || c.v)) || ""));
+      const iso = v => { const m = /Date\((\d+),(\d+),(\d+)\)/.exec(v); return m ? m[1] + "-" + String(+m[2] + 1).padStart(2, "0") + "-" + m[3].padStart(2, "0") : v; };
+      res.table.rows.forEach((r, i) => { const c = r.c[2]; if (c && typeof c.v === "string") rows[i][2] = iso(c.v); });
+      if (rows.length) { shows = rows; renderShows(); }
+    } catch {}
+  };
+  const tag = document.createElement("script");
+  tag.src = SHEET + "__ebShows";
+  tag.onerror = () => tag.remove();
+  document.head.appendChild(tag);
+})();
+</script>
+</body>
+</html>

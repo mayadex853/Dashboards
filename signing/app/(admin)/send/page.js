@@ -116,6 +116,12 @@ function Send() {
     if (!signerOnly.length) return setErr("Add at least one person who needs to sign");
     const bad = signers.find((s) => !s.name.trim() || !/^\S+@\S+\.\S+$/.test(s.email));
     if (bad) return setErr("Every recipient needs a name and a valid email");
+    // Fields point at signers by position: drop any that now point past the last signer
+    const stale = fields.filter((f) => f.role >= signerOnly.length);
+    if (!template && stale.length) {
+      setFields(fields.filter((f) => f.role < signerOnly.length));
+      toast(`${stale.length} field(s) belonged to a removed signer and were deleted.`, true);
+    }
     setStep(2);
   };
 

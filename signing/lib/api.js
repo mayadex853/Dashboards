@@ -6,6 +6,7 @@ export async function api(path, { method = "GET", body, form } = {}) {
     body: form || (body ? JSON.stringify(body) : undefined),
   });
   const json = await res.json().catch(() => ({}));
+  if (res.status === 413) throw new Error("That file is too large to upload (limit about 4 MB). Try compressing the PDF.");
   if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
   return json;
 }

@@ -1,6 +1,6 @@
 import * as db from "@/lib/db";
 import { route, httpError } from "@/lib/http";
-import { sendEnvelope, notifyRecipient, recipientsFor, logEvent, newToken, hashToken, appUrl, notifyStopped } from "@/lib/envelopes";
+import { sendEnvelope, notifyRecipient, recipientsFor, logEvent, signTokenFor, hashToken, appUrl, notifyStopped, releaseIntake } from "@/lib/envelopes";
 
 // POST { action: "send" | "remind" | "link" | "void", recipient_id? }
 export const POST = route(async (req, { id }) => {
@@ -22,14 +22,16 @@ export const POST = route(async (req, { id }) => {
     // Fresh signing link without emailing (for signing yourself, or texting a link)
     if (!r || r.status === "signed") throw httpError("No link available");
     if (env.status !== "sent") throw httpError("Send the envelope first");
-    const token = newToken();
+    const token = signTokenFor(r.id);
     await db.update("recipients", r.id, { token_hash: hashToken(token) });
     await logEvent(id, "link_generated", { recipient_id: r.id });
     return { link: `${appUrl()}/s/${token}` };
   }
   if (action === "void") {
+    const won = await db.updateWhere("envelopes", id, { status: env.status }, { status: "voided", voided_at: new Date().toISOString() });
+    if (!won) throw httpError("The envelope changed. Refresh and try again.", 409);
     for (const x of await recipientsFor(id)) await db.update("recipients", x.id, { token_hash: null });
-    await db.update("envelopes", id, { status: "voided", voided_at: new Date().toISOString() });
+    await releaseIntake(env);
     await logEvent(id, "voided");
     await notifyStopped(env, { reason: "voided" });
     return { ok: true };

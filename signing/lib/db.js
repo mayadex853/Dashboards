@@ -51,6 +51,19 @@ export async function health() {
 
 // ---------- local JSON store ----------
 const DATA_DIR = path.join(process.cwd(), ".data");
+// Local mode runs every operation one at a time (like a database would), so concurrent
+// requests can't overwrite each other. LOCAL_DB_LATENCY_MS simulates network latency for tests.
+let _chain = Promise.resolve();
+function serialized(fn) {
+  const run = async () => {
+    const ms = Number(process.env.LOCAL_DB_LATENCY_MS || 0);
+    if (ms) await new Promise((r) => setTimeout(r, ms));
+    return fn();
+  };
+  const p = _chain.then(run, run);
+  _chain = p.catch(() => {});
+  return p;
+}
 async function readTable(table) {
   try {
     return JSON.parse(await fs.readFile(path.join(DATA_DIR, `${table}.json`), "utf8"));
@@ -62,75 +75,118 @@ async function writeTable(table, rows) {
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.writeFile(path.join(DATA_DIR, `${table}.json`), JSON.stringify(rows, null, 2));
 }
-const matches = (row, filter) => Object.entries(filter).every(([k, v]) => row[k] === v);
+const matches = (row, filter) => Object.entries(filter).every(([k, v]) => (row[k] ?? null) === v);
 
 // ---------- generic table API ----------
 export async function insert(table, row) {
   const rec = { id: row.id ?? crypto.randomUUID(), created_at: new Date().toISOString(), ...row };
-  if (isLocalMode) {
-    const rows = await readTable(table);
-    rows.push(rec);
-    await writeTable(table, rows);
-    return rec;
-  }
+  if (isLocalMode)
+    return serialized(async () => {
+      const rows = await readTable(table);
+      rows.push(rec);
+      await writeTable(table, rows);
+      return rec;
+    });
   const { data, error } = await sb().from(table).insert(rec).select().single();
   if (error) throw new Error(`${table} insert: ${error.message}`);
   return data;
 }
 
 export async function update(table, id, patch) {
-  if (isLocalMode) {
-    const rows = await readTable(table);
-    const i = rows.findIndex((r) => r.id === id);
-    if (i < 0) return null;
-    rows[i] = { ...rows[i], ...patch };
-    await writeTable(table, rows);
-    return rows[i];
-  }
-  const { data, error } = await sb().from(table).update(patch).eq("id", id).select().single();
+  if (isLocalMode)
+    return serialized(async () => {
+      const rows = await readTable(table);
+      const i = rows.findIndex((r) => r.id === id);
+      if (i < 0) return null;
+      rows[i] = { ...rows[i], ...patch };
+      await writeTable(table, rows);
+      return rows[i];
+    });
+  const { data, error } = await sb().from(table).update(patch).eq("id", id).select().maybeSingle();
   if (error) throw new Error(`${table} update: ${error.message}`);
   return data;
 }
 
+/**
+ * Compare-and-set: apply `patch` only if the row still matches `where` (use null for "is empty").
+ * Returns the updated row, or null if someone else changed it first. This is what stops two
+ * simultaneous requests from both "winning" (double sign, double complete, lost updates).
+ */
+export async function updateWhere(table, id, where, patch) {
+  if (isLocalMode)
+    return serialized(async () => {
+      const rows = await readTable(table);
+      const i = rows.findIndex((r) => r.id === id && matches(r, where));
+      if (i < 0) return null;
+      rows[i] = { ...rows[i], ...patch };
+      await writeTable(table, rows);
+      return rows[i];
+    });
+  let q = sb().from(table).update(patch).eq("id", id);
+  for (const [k, v] of Object.entries(where)) q = v === null ? q.is(k, null) : q.eq(k, v);
+  const { data, error } = await q.select();
+  if (error) throw new Error(`${table} updateWhere: ${error.message}`);
+  return data?.[0] ?? null;
+}
+
 export async function upsert(table, row) {
-  if (isLocalMode) {
-    const rows = await readTable(table);
-    const i = rows.findIndex((r) => r.id === row.id);
-    if (i < 0) rows.push(row);
-    else rows[i] = { ...rows[i], ...row };
-    await writeTable(table, rows);
-    return row;
-  }
+  if (isLocalMode)
+    return serialized(async () => {
+      const rows = await readTable(table);
+      const i = rows.findIndex((r) => r.id === row.id);
+      if (i < 0) rows.push(row);
+      else rows[i] = { ...rows[i], ...row };
+      await writeTable(table, rows);
+      return row;
+    });
   const { data, error } = await sb().from(table).upsert(row).select().single();
   if (error) throw new Error(`${table} upsert: ${error.message}`);
   return data;
 }
 
 export async function remove(table, id) {
-  if (isLocalMode) {
-    const rows = await readTable(table);
-    await writeTable(table, rows.filter((r) => r.id !== id));
-    return;
-  }
+  if (isLocalMode)
+    return serialized(async () => {
+      const rows = await readTable(table);
+      await writeTable(table, rows.filter((r) => r.id !== id));
+    });
   const { error } = await sb().from(table).delete().eq("id", id);
   if (error) throw new Error(`${table} delete: ${error.message}`);
 }
 
 export async function list(table, filter = {}, { order = "created_at", asc = false } = {}) {
-  if (isLocalMode) {
-    const rows = (await readTable(table)).filter((r) => matches(r, filter));
-    rows.sort((a, b) => (a[order] > b[order] ? 1 : a[order] < b[order] ? -1 : 0) * (asc ? 1 : -1));
-    return rows;
+  if (isLocalMode)
+    return serialized(async () => {
+      const rows = (await readTable(table)).filter((r) => matches(r, filter));
+      rows.sort((a, b) => (a[order] > b[order] ? 1 : a[order] < b[order] ? -1 : 0) * (asc ? 1 : -1));
+      return rows;
+    });
+  // Supabase returns at most 1000 rows per request, so page through everything.
+  const PAGE = 1000;
+  const all = [];
+  for (let from = 0; ; from += PAGE) {
+    let q = sb().from(table).select("*");
+    for (const [k, v] of Object.entries(filter)) q = q.eq(k, v);
+    const { data, error } = await q.order(order, { ascending: asc }).order("id").range(from, from + PAGE - 1);
+    if (error) throw new Error(`${table} list: ${error.message}`);
+    all.push(...data);
+    if (data.length < PAGE) return all;
   }
-  let q = sb().from(table).select("*");
+}
+
+/** How many rows match `filter` and were created since `sinceISO`. */
+export async function countSince(table, filter, sinceISO) {
+  if (isLocalMode)
+    return serialized(async () => (await readTable(table)).filter((r) => matches(r, filter) && r.created_at >= sinceISO).length);
+  let q = sb().from(table).select("id", { count: "exact", head: true }).gte("created_at", sinceISO);
   for (const [k, v] of Object.entries(filter)) q = q.eq(k, v);
-  const { data, error } = await q.order(order, { ascending: asc });
-  if (error) throw new Error(`${table} list: ${error.message}`);
-  return data;
+  const { count, error } = await q;
+  if (error) throw new Error(`${table} count: ${error.message}`);
+  return count ?? 0;
 }
 
 export async function findOne(table, filter) {
-  if (isLocalMode) return (await readTable(table)).find((r) => matches(r, filter)) ?? null;
+  if (isLocalMode) return serialized(async () => (await readTable(table)).find((r) => matches(r, filter)) ?? null);
   let q = sb().from(table).select("*");
   for (const [k, v] of Object.entries(filter)) q = q.eq(k, v);
   const { data, error } = await q.limit(1).maybeSingle();
@@ -158,4 +214,18 @@ export async function getFile(key) {
   const { data, error } = await sb().storage.from(BUCKET).download(key);
   if (error) throw new Error(`download: ${error.message}`);
   return new Uint8Array(await data.arrayBuffer());
+}
+
+/** Delete every stored file under a folder prefix (e.g. "envelopes/<id>"). */
+export async function removeFiles(prefix) {
+  if (isLocalMode) {
+    await fs.rm(path.join(DATA_DIR, "files", prefix), { recursive: true, force: true });
+    return;
+  }
+  const { data, error } = await sb().storage.from(BUCKET).list(prefix.replace(/\/$/, ""), { limit: 1000 });
+  if (error) throw new Error(`list files: ${error.message}`);
+  if (data?.length) {
+    const { error: rmErr } = await sb().storage.from(BUCKET).remove(data.map((f) => `${prefix.replace(/\/$/, "")}/${f.name}`));
+    if (rmErr) throw new Error(`remove files: ${rmErr.message}`);
+  }
 }

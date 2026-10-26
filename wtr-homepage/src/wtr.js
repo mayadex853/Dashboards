@@ -86,7 +86,7 @@ function wtrInit(root){
       });
       var btn=form.querySelector('button[type=submit]');
       if(btn)btn.innerHTML='Check Jody’s availability &nbsp;→';
-      var note=document.createElement('p');note.className='w-fnote';note.textContent='Not sure of a date or budget yet? Send what you have — approximate is fine.';
+      var note=document.createElement('p');note.className='w-fnote';note.textContent='Not sure of a date or budget yet? Send what you have. Approximate is fine.';
       form.appendChild(note);
       document.addEventListener('click',function(e){
         var t=e.target.closest&&e.target.closest('[data-target="#two-step"],a[href="#two-step"]');

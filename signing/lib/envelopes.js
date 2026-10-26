@@ -4,12 +4,34 @@ import crypto from "node:crypto";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import * as db from "@/lib/db";
 import { stampPdf } from "@/lib/stamp";
-import { sendEmail, emailLayout } from "@/lib/email";
-import { resolveKey, today } from "@/lib/fields";
+import { sendEmail, emailLayout, MAX_ATTACH_BYTES } from "@/lib/email";
+import { httpError } from "@/lib/http";
+import { resolveKey } from "@/lib/fields";
 
 export const sha256 = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
 export const newToken = () => crypto.randomBytes(24).toString("base64url");
 export const hashToken = (t) => crypto.createHash("sha256").update(String(t)).digest("hex");
+
+/**
+ * A recipient's signing link is derived from the server secret, so it is always the same link.
+ * That way "Resend" or "Copy signing link" never breaks a link that was already emailed.
+ * (Only a hash is stored; voiding clears it, which kills the link.)
+ */
+export function signTokenFor(recipientId) {
+  const secret = process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD;
+  if (!secret) throw new Error("SESSION_SECRET is not set on the server.");
+  return crypto.createHmac("sha256", secret).update(`sign:${recipientId}`).digest("base64url");
+}
+
+/** Today's date as the signer sees it, computed on the server so it can't be backdated or spoofed. */
+export function dateIn(tz) {
+  const opts = { year: "numeric", month: "long", day: "numeric" };
+  try {
+    return new Date().toLocaleDateString("en-US", { ...opts, timeZone: tz || "UTC" });
+  } catch {
+    return new Date().toLocaleDateString("en-US", { ...opts, timeZone: "UTC" });
+  }
+}
 export const appUrl = () => (process.env.APP_URL || "http://localhost:3000").replace(/\/$/, "");
 
 export async function logEvent(envelope_id, type, { recipient_id = null, detail = null, ip = null, user_agent = null } = {}) {
@@ -103,7 +125,7 @@ export async function advance(envelopeId) {
 
 /** Issue a fresh signing link for a recipient and email it. Returns the link. */
 export async function notifyRecipient(env, r, { reminder = false } = {}) {
-  const token = newToken();
+  const token = signTokenFor(r.id);
   await db.update("recipients", r.id, {
     token_hash: hashToken(token),
     status: r.status === "pending" ? "sent" : r.status,
@@ -130,7 +152,8 @@ export async function notifyRecipient(env, r, { reminder = false } = {}) {
 }
 
 export async function sendEnvelope(envelopeId) {
-  await db.update("envelopes", envelopeId, { status: "sent", sent_at: new Date().toISOString() });
+  const won = await db.updateWhere("envelopes", envelopeId, { status: "draft" }, { status: "sent", sent_at: new Date().toISOString() });
+  if (!won) throw httpError("This envelope was already sent.");
   return advance(envelopeId);
 }
 
@@ -149,39 +172,89 @@ export async function isTurn(env, r) {
   return recs.filter((x) => x.kind !== "cc" && x.routing_order < r.routing_order).every((x) => x.status === "signed");
 }
 
-/**
- * Apply a signer's values to the working PDF and advance the envelope.
- * @param values Record<fieldId, value>
- */
-export async function submitSignature(env, r, values, { ip, user_agent, localDate }) {
-  const mine = env.fields.filter((f) => Number(f.role) === r.role_index && !f.stamped);
-  // Use the signer's local date if it's plausible (avoids UTC rollover in the evening)
-  const ld = Date.parse(localDate);
-  const signDate = ld && Math.abs(ld - Date.now()) < 36 * 3600 * 1000 ? String(localDate).slice(0, 40) : today();
-  const fallback = (f) => (f.type === "name" ? r.name : f.type === "email" ? r.email : undefined);
-  const filled = mine.map((f) => ({
-    ...f,
-    value: f.type === "date" ? signDate : values[f.id] ?? f.value ?? fallback(f),
-  }));
-  const missing = filled.filter((f) => f.required !== false && f.type !== "checkbox" && !f.value);
-  if (missing.length) throw new Error(`Please complete: ${missing.map((f) => f.label || f.type).join(", ")}`);
+const PNG_DATA_URL = /^data:image\/png;base64,[A-Za-z0-9+/]+=*$/;
+const MAX_SIGNATURE_CHARS = 600_000;
 
-  const current = await db.getFile(env.current_pdf_path);
-  const stamped = await stampPdf(current, filled);
-  const path = `envelopes/${env.id}/after-${r.id}.pdf`;
-  await db.putFile(path, stamped);
-  // Keep signed values (minus signature images) on the envelope for the record
-  const filledById = Object.fromEntries(filled.map((f) => [f.id, f]));
-  const fields = env.fields.map((f) =>
-    filledById[f.id] ? { ...f, value: f.type === "signature" || f.type === "initials" ? "[signed]" : filledById[f.id].value, stamped: true } : f
-  );
-  await db.update("envelopes", env.id, { current_pdf_path: path, fields });
+/** Keep only values for this signer's fields, with sane types and sizes (the signer's browser is untrusted). */
+function sanitizeValues(fieldsForSigner, raw) {
+  const out = {};
+  for (const f of fieldsForSigner) {
+    const v = raw?.[f.id];
+    if (v === undefined || v === null) continue;
+    if (f.type === "signature" || f.type === "initials") {
+      if (typeof v !== "string" || v.length > MAX_SIGNATURE_CHARS || !PNG_DATA_URL.test(v))
+        throw httpError("That signature image isn't valid. Please redraw it and try again.");
+      out[f.id] = v;
+    } else if (f.type === "checkbox") {
+      out[f.id] = v === true;
+    } else {
+      out[f.id] = String(v).replace(/[\u0000-\u001f\u007f]/g, " ").slice(0, 500);
+    }
+  }
+  return out;
+}
+
+/**
+ * Apply a signer's values to the working PDF, then move the envelope along.
+ *
+ * Safe against simultaneous requests:
+ *  - the recipient is "claimed" first, so a double-click or replay can only sign once;
+ *  - the PDF is saved with a compare-and-set on the version it started from. If a parallel
+ *    signer saved first, we re-stamp on top of their version, so nobody's signature is lost.
+ */
+export async function submitSignature(envelopeId, recipientId, rawValues, { ip, user_agent, tz } = {}) {
+  const r0 = await db.get("recipients", recipientId);
+  if (!r0 || r0.kind === "cc") throw httpError("This signing link is invalid.", 404);
+  if (r0.status === "signed" || r0.status === "signing") throw httpError("You've already signed this document.");
+  const claimed = await db.updateWhere("recipients", r0.id, { status: r0.status }, { status: "signing" });
+  if (!claimed) throw httpError("You've already signed this document.");
+
+  let saved = false;
+  try {
+    for (let attempt = 0; attempt < 8 && !saved; attempt++) {
+      const env = await db.get("envelopes", envelopeId);
+      if (!env || env.status !== "sent") throw httpError("This document isn't open for signing.");
+
+      const mine = env.fields.filter((f) => Number(f.role) === r0.role_index && !f.stamped);
+      const values = sanitizeValues(mine, rawValues);
+      const signDate = dateIn(tz);
+      const fallback = (f) => (f.type === "name" ? r0.name : f.type === "email" ? r0.email : undefined);
+      const filled = mine.map((f) => ({ ...f, value: f.type === "date" ? signDate : values[f.id] ?? f.value ?? fallback(f) }));
+      const missing = filled.filter((f) => f.required !== false && !(f.type === "checkbox" ? f.value === true : f.value));
+      if (missing.length) throw httpError(`Please complete: ${missing.map((f) => f.label || f.type).join(", ")}`);
+
+      const current = await db.getFile(env.current_pdf_path);
+      let stamped;
+      try {
+        stamped = await stampPdf(current, filled);
+      } catch (e) {
+        console.error("stamp failed", e);
+        throw httpError("We couldn't apply your signature to this document. Please try again.", 500);
+      }
+      const path = `envelopes/${env.id}/after-${r0.id}.pdf`;
+      await db.putFile(path, stamped);
+
+      // Keep signed values (minus signature images) on the envelope for the record
+      const byId = Object.fromEntries(filled.map((f) => [f.id, f]));
+      const fields = env.fields.map((f) =>
+        byId[f.id] ? { ...f, value: f.type === "signature" || f.type === "initials" ? "[signed]" : byId[f.id].value, stamped: true } : f
+      );
+      const won = await db.updateWhere("envelopes", env.id, { current_pdf_path: env.current_pdf_path, status: "sent" }, { current_pdf_path: path, fields });
+      saved = !!won; // not won = a parallel signer saved first: loop and stamp on top of their version
+    }
+    if (!saved) throw httpError("Several people are signing at the same moment. Please try again.", 409);
+  } catch (e) {
+    await db.updateWhere("recipients", r0.id, { status: "signing" }, { status: r0.status }).catch(() => {});
+    throw e;
+  }
+
   const now = new Date().toISOString();
-  // Keep the link valid so the signer can view/download their copy (signing again is blocked by status)
-  await db.update("recipients", r.id, { status: "signed", signed_at: now, ip, user_agent });
-  await logEvent(env.id, "signed", { recipient_id: r.id, ip, user_agent, detail: { name: r.name, email: r.email } });
-  await advance(env.id);
-  await notifyProgress(env.id, r);
+  // The link stays valid so the signer can download their copy later (signing again is blocked by status)
+  await db.update("recipients", r0.id, { status: "signed", signed_at: now, consent_at: now, ip, user_agent });
+  await logEvent(envelopeId, "consented", { recipient_id: r0.id, ip, user_agent });
+  await logEvent(envelopeId, "signed", { recipient_id: r0.id, ip, user_agent, detail: { name: r0.name, email: r0.email } });
+  await advance(envelopeId);
+  await notifyProgress(envelopeId, r0);
 }
 
 /**
@@ -241,36 +314,59 @@ export async function notifyStopped(env, { reason, by }) {
 }
 
 export async function completeEnvelope(envelopeId) {
-  const env = await db.get("envelopes", envelopeId);
-  if (env.status === "completed") return [];
-  const recs = await recipientsFor(envelopeId);
-  const events = await db.list("events", { envelope_id: envelopeId }, { order: "created_at", asc: true });
-  const signed = await stampPdf(await db.getFile(env.current_pdf_path), [], { flattenForm: true });
-  const finalBytes = await appendCertificate(signed, env, recs, events);
-  const final_sha256 = sha256(finalBytes);
-  const final_pdf_path = `envelopes/${env.id}/completed.pdf`;
-  await db.putFile(final_pdf_path, finalBytes);
-  await db.update("envelopes", env.id, { status: "completed", completed_at: new Date().toISOString(), final_pdf_path, final_sha256 });
+  // Only one request gets to complete an envelope (two parallel last-signers would otherwise both email everyone)
+  const env = await db.updateWhere("envelopes", envelopeId, { status: "sent" }, { status: "completing" });
+  if (!env) return [];
+
+  let finalBytes, final_sha256, recs;
+  try {
+    recs = await recipientsFor(envelopeId);
+    const events = await db.list("events", { envelope_id: envelopeId }, { order: "created_at", asc: true });
+    const flattened = await stampPdf(await db.getFile(env.current_pdf_path), [], { flattenForm: true });
+    finalBytes = await appendCertificate(flattened, env, recs, events);
+    final_sha256 = sha256(finalBytes);
+    const final_pdf_path = `envelopes/${env.id}/completed.pdf`;
+    await db.putFile(final_pdf_path, finalBytes);
+    await db.update("envelopes", env.id, { status: "completed", completed_at: new Date().toISOString(), final_pdf_path, final_sha256 });
+  } catch (e) {
+    await db.updateWhere("envelopes", env.id, { status: "completing" }, { status: "sent" }).catch(() => {});
+    throw e;
+  }
   await logEvent(env.id, "completed", { detail: { final_sha256 } });
 
+  // Everyone gets the signed copy. If the PDF is too big to attach, signers get a link to download it.
   const name = `${env.title.replace(/[^\w\- ]+/g, "").trim() || "document"} - signed.pdf`;
-  const emails = [...new Set(recs.map((r) => r.email.toLowerCase()))];
-  if (process.env.MAIL_FROM && !emails.includes(process.env.MAIL_FROM.toLowerCase())) emails.push(process.env.MAIL_FROM);
-  for (const to of emails) {
-    await sendEmail({
-      to,
-      subject: `Completed: ${env.title}`,
-      html: emailLayout({
-        heading: "All parties have signed",
-        intro: `"${env.title}" is fully executed. The signed copy with its certificate of completion is attached.`,
-        note: finalBytes.length > 2.8 * 1024 * 1024 ? "The file was too large to attach. Reply to this email to request a copy." : `Document fingerprint (SHA-256): ${final_sha256}`,
-      }),
-      attachments: [{ name, bytes: finalBytes }],
-    });
-  }
-  // Mark linked intake as contracted
-  if (env.intake_id) await db.update("intakes", env.intake_id, { status: "contracted" });
+  const attach = finalBytes.length <= MAX_ATTACH_BYTES;
+  const byEmail = new Map();
+  for (const r of recs) if (!byEmail.has(r.email.toLowerCase())) byEmail.set(r.email.toLowerCase(), r);
+  if (process.env.MAIL_FROM && !byEmail.has(process.env.MAIL_FROM.toLowerCase())) byEmail.set(process.env.MAIL_FROM.toLowerCase(), { is_me: true });
+  await Promise.allSettled(
+    [...byEmail].map(([to, r]) => {
+      const downloadUrl = attach ? undefined : r.is_me ? `${appUrl()}/envelopes/${env.id}` : r.kind === "cc" ? undefined : `${appUrl()}/s/${signTokenFor(r.id)}`;
+      return sendEmail({
+        to,
+        subject: `Completed: ${env.title}`,
+        html: emailLayout({
+          heading: "All parties have signed",
+          intro: `"${env.title}" is fully executed. ${attach ? "The signed copy with its certificate of completion is attached." : "The signed copy is too large to attach."}`,
+          buttonText: downloadUrl ? "Download signed document" : undefined,
+          buttonUrl: downloadUrl,
+          note: attach ? `Document fingerprint (SHA-256): ${final_sha256}` : downloadUrl ? undefined : "The file was too large to attach. Reply to this email to request a copy.",
+        }),
+        attachments: attach ? [{ name, bytes: finalBytes }] : [],
+      });
+    })
+  );
   return [];
+}
+
+/** If a contract created from an intake is voided, declined or deleted, let that intake be contracted again. */
+export async function releaseIntake(env) {
+  if (!env?.intake_id) return;
+  const intake = await db.get("intakes", env.intake_id);
+  if (intake && intake.envelope_id === env.id) {
+    await db.update("intakes", intake.id, { envelope_id: null, status: intake.answers ? "submitted" : "sent" });
+  }
 }
 
 /** Adds a "Certificate of Completion" page with the full audit trail. */

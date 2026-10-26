@@ -70,7 +70,7 @@ export default function SignerPage({ params }) {
       const r = await fetch(`/api/public/sign/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, consent: agree, values, reason, localDate: today() }),
+        body: JSON.stringify({ action, consent: agree, values, reason, tz: Intl.DateTimeFormat().resolvedOptions().timeZone }),
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error);

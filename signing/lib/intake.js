@@ -1,6 +1,7 @@
 import "server-only";
 import * as db from "@/lib/db";
-import { createEnvelope, sendEnvelope, getProfile } from "@/lib/envelopes";
+import { createEnvelope, sendEnvelope, getProfile, releaseIntake } from "@/lib/envelopes";
+import { httpError } from "@/lib/http";
 
 /** Default signer list for a template: signee signs first, you countersign. */
 export async function defaultRecipients(template, intake) {
@@ -16,12 +17,13 @@ export async function defaultRecipients(template, intake) {
 }
 
 export async function contractFromIntake(intake, { recipients, values, send = true, message } = {}) {
-  if (!intake.template_id) throw new Error("This intake has no contract template attached");
+  if (!intake.template_id) throw httpError("This intake has no contract template attached");
   const template = await db.get("templates", intake.template_id);
-  if (!template) throw new Error("Template not found");
+  if (!template) throw httpError("Template not found", 404);
   const recs = recipients || (await defaultRecipients(template, intake));
   const missing = recs.find((r) => !r.name || !r.email);
-  if (missing) throw new Error("Every signer needs a name and email");
+  if (missing) throw httpError("Every signer needs a name and email");
+  if (intake.envelope_id) throw httpError("A contract was already created from this intake.");
   const env = await createEnvelope({
     title: `${template.name} - ${intake.answers?.professional_name || intake.answers?.legal_name || intake.signee_name}`,
     templateId: template.id,
@@ -31,7 +33,12 @@ export async function contractFromIntake(intake, { recipients, values, send = tr
     values,
     message: message || intake.message,
   });
-  await db.update("intakes", intake.id, { envelope_id: env.id });
+  // claim the intake so two clicks can't create two contracts
+  const claimed = await db.updateWhere("intakes", intake.id, { envelope_id: null }, { envelope_id: env.id });
+  if (!claimed) {
+    await db.remove("envelopes", env.id);
+    throw httpError("A contract was already created from this intake.");
+  }
   const links = send ? await sendEnvelope(env.id) : [];
   return { envelope: env, links };
 }

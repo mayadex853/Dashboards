@@ -13,6 +13,7 @@ export default function Profile() {
   const [status, setStatus] = useState({ state: "idle" });
   const timer = useRef(null);
   const latest = useRef(null);
+  const dirty = useRef(false);
 
   useEffect(() => {
     api("/api/profile")
@@ -46,14 +47,23 @@ export default function Profile() {
   // Debounced autosave for typed details
   const queue = (prof, rows) => {
     latest.current = { prof, rows };
+    dirty.current = true;
     setStatus({ state: "pending" });
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       const { prof: pp, rows: rr } = latest.current;
+      dirty.current = false;
       save({ data: buildData(pp, rr) }).catch(() => {});
     }, 700);
   };
-  useEffect(() => () => clearTimeout(timer.current), []);
+  // Leaving the page within the debounce window must not lose the last edit
+  useEffect(() => () => {
+    clearTimeout(timer.current);
+    if (dirty.current && latest.current) {
+      const { prof: pp, rows: rr } = latest.current;
+      fetch("/api/profile", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ data: buildData(pp, rr) }), keepalive: true }).catch(() => {});
+    }
+  }, []);
 
   if (!p) return <div className="muted">Loading…</div>;
 

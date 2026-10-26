@@ -7,7 +7,7 @@ const INK = rgb(0.07, 0.1, 0.25);
 
 /** Convert a point given as fractions of the displayed (rotated) page to PDF user space. */
 export function viewToPdf(page, fx, fy) {
-  const { x: x0, y: y0, width: W, height: H } = page.getMediaBox();
+  const { x: x0, y: y0, width: W, height: H } = page.getCropBox();
   const r = ((page.getRotation().angle % 360) + 360) % 360;
   const viewW = r % 180 === 0 ? W : H;
   const viewH = r % 180 === 0 ? H : W;

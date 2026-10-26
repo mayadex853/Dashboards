@@ -20,19 +20,20 @@ export const GET = route(async (_req, { token }) => {
     prefill: { legal_name: i.signee_name, email: i.signee_email, ...(i.answers || {}) },
     sender: process.env.MAIL_FROM_NAME || "TakaSign",
   };
-});
+}, { expose: false });
 
 export const POST = route(async (req, { token }) => {
   const intake = await load(token);
   if (intake.status !== "sent") throw httpError("This form was already submitted. Contact us to make changes.");
-  const { answers = {} } = await req.json();
+  const { answers = {} } = await req.json().catch(() => ({}));
   const qs = intakeQuestions(intake.category).filter((q) => q.key);
   const clean = {};
   for (const q of qs) if (answers[q.key] !== undefined) clean[q.key] = String(answers[q.key]).slice(0, 2000).trim();
   const missing = qs.filter((q) => q.required && !clean[q.key]);
   if (missing.length) throw httpError(`Please fill in: ${missing.map((q) => q.label).join(", ")}`);
 
-  const updated = await db.update("intakes", intake.id, { answers: clean, status: "submitted", submitted_at: new Date().toISOString() });
+  const updated = await db.updateWhere("intakes", intake.id, { status: "sent" }, { answers: clean, status: "submitted", submitted_at: new Date().toISOString() });
+  if (!updated) throw httpError("This form was already submitted. Contact us to make changes.");
   let autoSent = false;
   if (intake.auto_send && intake.template_id) {
     try {
@@ -54,4 +55,4 @@ export const POST = route(async (req, { token }) => {
       }),
     });
   return { ok: true, autoSent };
-});
+}, { expose: false });

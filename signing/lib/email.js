@@ -34,7 +34,8 @@ export async function emailAuthProblem() {
   }
 }
 
-const MAX_ATTACH_BYTES = 2.8 * 1024 * 1024; // Graph sendMail limit is ~3MB per request
+// Microsoft Graph's simple sendMail rejects attachments over ~3 MB *after* base64 encoding (+33%).
+export const MAX_ATTACH_BYTES = 2.2 * 1024 * 1024;
 
 /**
  * @param {{to: string|string[], subject: string, html: string, attachments?: {name: string, bytes: Uint8Array}[]}} msg
@@ -46,38 +47,44 @@ export async function sendEmail({ to, subject, html, attachments = [] }) {
     console.log(`[email skipped: Microsoft 365 not configured] to=${recipients.join(",")} subject="${subject}"`);
     return { sent: false, reason: "Email not configured" };
   }
-  const fit = attachments.filter((a) => a.bytes.length <= MAX_ATTACH_BYTES);
-  const body = {
-    message: {
-      subject,
-      body: { contentType: "HTML", content: html },
-      from: { emailAddress: { address: process.env.MAIL_FROM, name: process.env.MAIL_FROM_NAME || undefined } },
-      toRecipients: recipients.map((address) => ({ emailAddress: { address } })),
-      attachments: fit.map((a) => ({
-        "@odata.type": "#microsoft.graph.fileAttachment",
-        name: a.name,
-        contentType: "application/pdf",
-        contentBytes: Buffer.from(a.bytes).toString("base64"),
-      })),
-    },
-    saveToSentItems: true,
-  };
-  const res = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(process.env.MAIL_FROM)}/sendMail`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${await graphToken()}`, "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    console.error("Graph sendMail failed", res.status, text);
-    let detail = "";
-    try {
-      detail = JSON.parse(text).error?.message || "";
-    } catch {}
-    const hint = res.status === 403 ? " (check that Mail.Send has admin consent in Azure)" : "";
-    return { sent: false, reason: `Microsoft Graph error ${res.status}: ${detail}${hint}` };
+  // Never throw: a failed email must not abort sending, signing or completing a document.
+  try {
+    const fit = attachments.filter((a) => a.bytes.length <= MAX_ATTACH_BYTES);
+    const body = {
+      message: {
+        subject,
+        body: { contentType: "HTML", content: html },
+        from: { emailAddress: { address: process.env.MAIL_FROM, name: process.env.MAIL_FROM_NAME || undefined } },
+        toRecipients: recipients.map((address) => ({ emailAddress: { address } })),
+        attachments: fit.map((a) => ({
+          "@odata.type": "#microsoft.graph.fileAttachment",
+          name: a.name,
+          contentType: "application/pdf",
+          contentBytes: Buffer.from(a.bytes).toString("base64"),
+        })),
+      },
+      saveToSentItems: true,
+    };
+    const res = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(process.env.MAIL_FROM)}/sendMail`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${await graphToken()}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("Graph sendMail failed", res.status, text);
+      let detail = "";
+      try {
+        detail = JSON.parse(text).error?.message || "";
+      } catch {}
+      const hint = res.status === 403 ? " (check that Mail.Send has admin consent in Azure)" : "";
+      return { sent: false, reason: `Microsoft Graph error ${res.status}: ${detail}${hint}` };
+    }
+    return { sent: true };
+  } catch (e) {
+    console.error("sendEmail failed", e);
+    return { sent: false, reason: e.message || "Email could not be sent" };
   }
-  return { sent: true };
 }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);

@@ -4,3 +4,7 @@
 pinned site nav), with one change: the hero line reads "Keynote speaker for founders, leaders & teams".
 It is served from here so the live page keeps that branch's nav work. Once both branches merge, rebuild from
 `build_speaker.py` and point the Kajabi Code block back at `wtr-homepage/speaker.js`.
+
+`wtr.js`: the homepage as built from commit 993104c (same branch, for its nav), with the hero headline scaled to fit
+(`clamp(46px,4.6vw,84px)`, so "old identity." no longer clips into the photo) and the micro line reading
+"See which room is running your life." The same two edits are in `src/` on this branch.

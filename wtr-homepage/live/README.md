@@ -8,3 +8,4 @@ It is served from here so the live page keeps that branch's nav work. Once both 
 `wtr.js`: the homepage as built from commit 993104c (same branch, for its nav), with the hero headline scaled to fit
 (`clamp(46px,4.6vw,84px)`, so "old identity." no longer clips into the photo) and the micro line reading
 "See which room is running your life." The same two edits are in `src/` on this branch.
+Reds now match /rebuild: `--em:#d72626; --accent:#c21f1f`, brick wall tint `rgba(215,38,38,…)`, form errors `#ef5b5b` / `#d72626`.

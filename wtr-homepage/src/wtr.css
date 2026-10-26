@@ -14,7 +14,7 @@
 }
 /* ---------- direction B "Demolition" ---------- */
 .wtr[data-dir="brick"]{
-  --em:#d8483b; --accent:#b8322a;
+  --em:#d72626; --accent:#c21f1f;
   --display:'Anton',Impact,'Arial Narrow',sans-serif;
   --d-weight:400; --d-case:uppercase; --d-track:.01em; --d-lh:.94;
   --d-style-em:normal;
@@ -152,7 +152,7 @@
 .w-wall{position:relative;aspect-ratio:1/1;max-width:520px;width:100%;}
 .w-wall i{position:absolute;display:block;height:calc(100%/9 - 6px);border:1px solid rgba(201,168,76,.32);background:linear-gradient(180deg,rgba(201,168,76,.10),rgba(201,168,76,.02));
   transition:transform 1.6s cubic-bezier(.3,.6,.2,1),opacity 1.6s ease;}
-.wtr[data-dir="brick"] .w-wall i{border-color:rgba(184,50,42,.45);background:linear-gradient(180deg,rgba(184,50,42,.16),rgba(184,50,42,.03));}
+.wtr[data-dir="brick"] .w-wall i{border-color:rgba(215,38,38,.45);background:linear-gradient(180deg,rgba(215,38,38,.16),rgba(215,38,38,.03));}
 .w-wall .w-door{position:absolute;left:34%;right:34%;bottom:0;height:46%;border:1px solid var(--gold);border-bottom:0;opacity:0;transition:opacity 1.4s 1.2s;
   background:radial-gradient(ellipse at 50% 100%,rgba(236,214,155,.35),transparent 70%);}
 .w-wall.go .w-door{opacity:1;}
@@ -324,8 +324,8 @@
 .wtr .w-fslot button[type=submit],.wtr .w-fslot .form-btn{width:100% !important;margin-top:10px !important;padding:22px !important;border:0 !important;border-radius:1px !important;cursor:pointer;
   background:linear-gradient(135deg,var(--gold2),var(--gold) 55%,var(--gold3)) !important;color:#0b0a08 !important;font:700 13px/1 var(--body) !important;letter-spacing:.24em !important;text-transform:uppercase;transition:box-shadow .3s,transform .3s;}
 .wtr .w-fslot button[type=submit]:hover{transform:translateY(-1px);box-shadow:0 14px 40px -14px rgba(201,168,76,.6);}
-.wtr .w-fslot .parsley-errors-list{list-style:none;margin:6px 0 0;padding:0;font-size:12.5px;color:#e08b7e;}
-.wtr .w-fslot .parsley-error{border-color:#c4675a !important;}
+.wtr .w-fslot .parsley-errors-list{list-style:none;margin:6px 0 0;padding:0;font-size:12.5px;color:#ef5b5b;}
+.wtr .w-fslot .parsley-error{border-color:#d72626 !important;}
 .wtr .w-fnote{margin-top:16px;font-size:12.5px;color:var(--dim);text-align:center;}
 .w-fallback{text-align:center;padding:40px 0;}
 

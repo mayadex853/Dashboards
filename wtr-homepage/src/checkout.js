@@ -1,4 +1,4 @@
-/* Wreck the Room checkout: brand bar, headline and three steps above Kajabi's checkout; terms box opens on click. */
+/* Wreck The Room™ checkout: brand bar, headline and three steps above Kajabi's checkout; terms box opens on click. */
 (function(){
   function top(){
     var co=document.querySelector('.kjb-embedded-checkout');
@@ -6,7 +6,7 @@
     var d=document.createElement('div');d.className='wtr-co-top';
     d.innerHTML='<div class="wtr-co-bar"><a href="https://www.wrecktheroom.com/"><img src="{{LOGO}}" alt="Jody Friedman"></a>'
       +'<span class="wtr-co-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secure checkout</span></div>'
-      +'<div class="wtr-co-head"><small>Wreck the Room</small><h1>You’re one step <em>away.</em></h1></div>'
+      +'<div class="wtr-co-head"><small>Wreck The Room™</small><h1>You’re one step <em>away.</em></h1></div>'
       +'<ol class="wtr-co-steps"><li><b>1</b>Enter your email &amp; name</li><li><b>2</b>Choose how to pay</li><li><b>3</b>{{STEP3}}</li></ol>';
     co.parentNode.insertBefore(d,co);
   }

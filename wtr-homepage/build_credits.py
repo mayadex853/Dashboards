@@ -1,4 +1,4 @@
-"""Build the Wreck the Room credits page (wrecktheroom.com/credits).
+"""Build the Wreck The Room™ credits page (wrecktheroom.com/credits).
 
 Credits come from the same Google Sheet that feeds hdmusicnow.com. The page reads the sheet live; this build also
 saves a snapshot (data/credits.json) that renders instantly and is used if the sheet can't be reached.

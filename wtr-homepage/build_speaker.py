@@ -1,4 +1,4 @@
-"""Build the Wreck the Room speaker page (wrecktheroom.com/speaker2).
+"""Build the Wreck The Room™ speaker page (wrecktheroom.com/speaker2).
 
 The page keeps Kajabi's own Keynote Topics section untouched and wraps it with two Custom Code sections:
   top     hero, speaker reel, About Jody, the identity-problem statement

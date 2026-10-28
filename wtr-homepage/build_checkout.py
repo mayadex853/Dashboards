@@ -1,4 +1,4 @@
-"""Build the Wreck the Room checkout styling (Kajabi offer checkout pages).
+"""Build the Wreck The Room™ checkout styling (Kajabi offer checkout pages).
 
 Kajabi gives every offer's checkout page its own theme. This writes the two theme settings we change on each:
   css  src/checkout.css (dark page, light card, gold pay button, short terms box)

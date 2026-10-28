@@ -10,3 +10,5 @@ python3 /tmp/claude-0/scratch/voice.py . >/dev/null
 cp /home/user/Dashboards/wtr-homepage/src/getstarted.html /home/user/Dashboards/wtr-homepage/src/getstarted.css src/
 cp /home/user/Dashboards/wtr-homepage/build_getstarted.py .
 python3 /tmp/claude-0/scratch/hero.py .
+python3 /tmp/claude-0/scratch/brand.py . >/dev/null
+bash /tmp/claude-0/scratch/herocss.sh

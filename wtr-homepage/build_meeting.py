@@ -1,4 +1,4 @@
-"""Build the Wreck the Room "meeting confirmed" page (wrecktheroom.com/meeting-confirmed), shown after a strategy call is booked.
+"""Build the Wreck The Room™ "meeting confirmed" page (wrecktheroom.com/meeting-confirmed), shown after a strategy call is booked.
 
 Outputs:
   meeting-preview.html  standalone review page with a stand-in header

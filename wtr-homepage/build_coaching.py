@@ -1,4 +1,4 @@
-"""Build the Wreck the Room "Work With Me" page (wrecktheroom.com/coaching).
+"""Build the Wreck The Room™ "Work With Me" page (wrecktheroom.com/coaching).
 
 Outputs:
   coaching-preview.html  standalone review page with a stand-in header

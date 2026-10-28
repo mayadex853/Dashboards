@@ -1,4 +1,4 @@
-"""Build the Wreck the Room homepage embed.
+"""Build the Wreck The Room™ homepage embed.
 
 Sources live in src/ (wtr.css, wtr.html, wtr.js). Outputs:
   preview.html       standalone page for review, including a stand-in Kajabi header and booking pop-up
@@ -90,7 +90,7 @@ def preview(css, body, js):
         badges[n] = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wreck the Room · Home (preview)</title>
+<title>Wreck The Room™ · Home (preview)</title>
 <style>
 html,body{{margin:0;background:#0a0908;}}
 .pv-head{{position:absolute;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:22px 32px;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;}}
@@ -119,7 +119,7 @@ html,body{{margin:0;background:#0a0908;}}
 <button data-d="noir" aria-pressed="false">A · Gold Noir</button><button data-d="brick" aria-pressed="true">B · Demolition</button><span>Logo</span><button data-l="jf" aria-pressed="true">JF</button><button data-l="wtr" aria-pressed="false">Full</button><button data-l="b2" aria-pressed="false">Badge 2</button><button data-l="ng" aria-pressed="false">No gold ring</button><button data-l="hm" aria-pressed="false">Hammer only</button></div>
 <script>{js}
 wtrInit(document.getElementById('wtr'));
-function setLogo(k){{var i=document.querySelector('#pv-logo img');i.src=i.dataset[k];i.className=k==='wtr'?'wtr-logo':(k==='jf'?'':'badge');i.alt=k==='jf'?'Jody Friedman':'Wreck the Room';
+function setLogo(k){{var i=document.querySelector('#pv-logo img');i.src=i.dataset[k];i.className=k==='wtr'?'wtr-logo':(k==='jf'?'':'badge');i.alt=k==='jf'?'Jody Friedman':'Wreck The Room™';
 [].forEach.call(document.querySelectorAll('.pv-dir [data-l]'),function(x){{x.setAttribute('aria-pressed',x.dataset.l===k);}});}}
 setLogo('jf');
 document.querySelector('.pv-dir').addEventListener('click',function(e){{var b=e.target.closest('button');if(!b)return;

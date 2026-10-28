@@ -1,4 +1,4 @@
-"""Build the Wreck the Room thank-you pages (where each offer sends buyers after checkout).
+"""Build the Wreck The Room™ thank-you pages (where each offer sends buyers after checkout).
 
 One script serves every page; the Kajabi Code block picks the version with data-v:
   <div id="wtr-ty-mount" data-v="blueprint"></div>
@@ -45,7 +45,7 @@ def link(label, href):
 
 VERSIONS = {
     "blueprint": {
-        "lead": "Welcome to <b>Wreck the Room: Blueprint</b>. Here's exactly what to do next.",
+        "lead": "Welcome to <b>Wreck The Room™: Blueprint</b>. Here's exactly what to do next.",
         "steps": [
             EMAIL_STEP,
             ("Open your workbook",
@@ -63,7 +63,7 @@ VERSIONS = {
         "upsell": True,
     },
     "inner": {
-        "lead": "Welcome to <b>Wreck the Room: Inner Circle</b>. Here's exactly what to do next.",
+        "lead": "Welcome to <b>Wreck The Room™: Inner Circle</b>. Here's exactly what to do next.",
         "steps": [
             EMAIL_STEP,
             ("Start Lesson 1: Welcome & Orientation",
@@ -79,7 +79,7 @@ VERSIONS = {
         ],
     },
     "council": {
-        "lead": "Welcome to <b>Wreck the Room: Council</b>. Here's exactly what to do next.",
+        "lead": "Welcome to <b>Wreck The Room™: Council</b>. Here's exactly what to do next.",
         "steps": [
             EMAIL_STEP,
             ("Start Lesson 1: Welcome & Orientation",
@@ -94,7 +94,7 @@ VERSIONS = {
         ],
     },
     "guided": {
-        "lead": "Welcome to your <b>Wreck the Room Guided Transformation</b>. Here's exactly what to do next.",
+        "lead": "Welcome to your <b>Wreck The Room™ Guided Transformation</b>. Here's exactly what to do next.",
         "steps": [
             EMAIL_STEP,
             ("Open your program",

@@ -1,4 +1,4 @@
-"""Build the Wreck the Room VIP Retreat page (wrecktheroom.com/vip-retreat).
+"""Build the Wreck The Room™ VIP Retreat page (wrecktheroom.com/vip-retreat).
 
 Outputs:
   vip-preview.html  standalone review page with a stand-in header

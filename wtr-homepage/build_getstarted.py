@@ -1,4 +1,4 @@
-"""Build the Wreck the Room "Get Started" page (wrecktheroom.com/getstarted).
+"""Build the Wreck The Room™ "Get Started" page (wrecktheroom.com/getstarted).
 
 Outputs:
   getstarted-preview.html  standalone review page with a stand-in header

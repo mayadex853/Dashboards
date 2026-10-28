@@ -384,3 +384,6 @@
   .w-hero h1 .ln>span{transform:none;}
   .w-hero-sub,.w-hero .w-cta-row{opacity:1;}
 }
+
+/* hero-1line */
+@media (max-width:760px){.wtr .w-hero h1,.wtr[data-dir="brick"] .w-hero h1{white-space:nowrap;font-size:clamp(32px,11vw,52px);}.w-hero .w-eb{letter-spacing:.16em;}}

@@ -105,3 +105,35 @@ function wtrInit(root){
   // Every in-page "Book Jody" link inside this embed goes to the form.
   [].forEach.call(root.querySelectorAll('a[href="#wtr-speaking"]'),function(a){a.setAttribute('data-w-scroll','');});
 }
+
+/* Quiz pop-up: open quiz.wrecktheroom.com links in an on-page overlay so visitors never leave the site. */
+(function(){
+  if(window.__wq)return;window.__wq=1;
+  var Q=/^https?:\/\/quiz\.wrecktheroom\.com/i,m,f;
+  function build(){
+    m=document.createElement('div');m.className='wq';
+    m.innerHTML='<div class="wq-bg" data-wq-x></div><div class="wq-box" role="dialog" aria-modal="true" aria-label="Wreck The Room™ assessment">'
+      +'<button class="wq-x" type="button" data-wq-x aria-label="Close the assessment">×</button><div class="wq-load">Loading your assessment…</div>'
+      +'<iframe title="Wreck The Room™ assessment" allow="clipboard-write"></iframe></div>';
+    document.body.appendChild(m);f=m.querySelector('iframe');
+    m.addEventListener('click',function(e){if(e.target.closest('[data-wq-x]'))close();});
+    f.addEventListener('load',function(){
+      m.classList.add('ready');
+      // If the quiz sends people on to a page on this site (results, booking), open it as the full page.
+      try{var h=f.contentWindow.location.href;if(h&&h.indexOf(location.origin)===0)window.location.href=h;}catch(x){}
+    });
+  }
+  function open(u){
+    if(!m)build();
+    if(f.getAttribute('src')!==u){m.classList.remove('ready');f.setAttribute('src',u);}
+    m.classList.add('on');document.documentElement.style.overflow='hidden';
+    setTimeout(function(){m.querySelector('.wq-x').focus({preventScroll:true});},50);
+  }
+  function close(){m.classList.remove('on');document.documentElement.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');
+    if(!a||!Q.test(a.href)||e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+    e.preventDefault();e.stopPropagation();open(a.href);
+  },true);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m&&m.classList.contains('on'))close();});
+})();

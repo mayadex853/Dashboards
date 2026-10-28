@@ -12,3 +12,5 @@ cp /home/user/Dashboards/wtr-homepage/build_getstarted.py .
 python3 /tmp/claude-0/scratch/hero.py .
 python3 /tmp/claude-0/scratch/brand.py . >/dev/null
 bash /tmp/claude-0/scratch/herocss.sh
+python3 /tmp/claude-0/scratch/copy.py .
+bash /tmp/claude-0/scratch/quizmodal.sh

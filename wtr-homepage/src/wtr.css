@@ -387,3 +387,20 @@
 
 /* hero-1line */
 @media (max-width:760px){.wtr .w-hero h1,.wtr[data-dir="brick"] .w-hero h1{white-space:nowrap;font-size:clamp(32px,11vw,52px);}.w-hero .w-eb{letter-spacing:.16em;}}
+
+/* quiz pop-up */
+.wq{position:fixed;inset:0;z-index:100000;display:none;}
+.wq.on{display:block;}
+.wq-bg{position:absolute;inset:0;background:rgba(5,4,3,.84);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.wq-box{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:min(980px,94vw);height:min(860px,86vh);background:#0a0908;border:1px solid #c9a84c;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 6px rgba(201,168,76,.08);}
+.wq iframe{position:relative;width:100%;height:100%;border:0;display:block;opacity:0;transition:opacity .35s;}
+.wq.ready iframe{opacity:1;}
+.wq-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c9a84c;font:600 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.26em;text-transform:uppercase;}
+.wq.ready .wq-load{display:none;}
+.wq-x{position:absolute;top:-50px;right:0;width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:rgba(10,9,8,.6);border:1px solid rgba(201,168,76,.55);color:#ecd69b;font:300 28px/1 Manrope,system-ui,sans-serif;cursor:pointer;}
+.wq-x:hover{border-color:#ecd69b;}
+@media (max-width:760px){
+  .wq-box{left:0;top:0;transform:none;width:100%;height:100%;border:0;padding-top:56px;}
+  .wq-x{top:8px;right:10px;}
+  .wq-box::before{content:"Wreck The Room™ assessment";position:absolute;top:0;left:0;right:0;height:56px;display:flex;align-items:center;padding:0 18px;color:#c9a84c;font:600 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid rgba(201,168,76,.25);}
+}

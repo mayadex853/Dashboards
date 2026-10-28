@@ -137,3 +137,19 @@ function wtrInit(root){
   },true);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m&&m.classList.contains('on'))close();});
 })();
+
+/* Phone quiz bar: appears once the hero button scrolls away, hides while another quiz button is on screen. */
+(function(){
+  if(window.__wstick)return;window.__wstick=1;
+  function init(){
+    var bar=document.querySelector('.w-stick');if(!bar)return;
+    var hero=document.querySelector('.w-hero');
+    function tick(){
+      var past=hero?hero.getBoundingClientRect().bottom<80:window.pageYOffset>600;
+      var other=[].some.call(document.querySelectorAll('.wtr a.w-btn[href*="quiz.wrecktheroom.com"]'),function(b){var r=b.getBoundingClientRect();return r.top<innerHeight&&r.bottom>0;});
+      bar.classList.toggle('on',past&&!other);
+    }
+    window.addEventListener('scroll',tick,{passive:true});tick();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else setTimeout(init,0);
+})();

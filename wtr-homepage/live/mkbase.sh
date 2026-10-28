@@ -14,3 +14,4 @@ python3 /tmp/claude-0/scratch/brand.py . >/dev/null
 bash /tmp/claude-0/scratch/herocss.sh
 python3 /tmp/claude-0/scratch/copy.py .
 bash /tmp/claude-0/scratch/quizmodal.sh
+python3 /tmp/claude-0/scratch/simplify.py .

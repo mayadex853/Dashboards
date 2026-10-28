@@ -404,3 +404,13 @@
   .wq-x{top:8px;right:10px;}
   .wq-box::before{content:"Wreck The Room™ assessment";position:absolute;top:0;left:0;right:0;height:56px;display:flex;align-items:center;padding:0 18px;color:#c9a84c;font:600 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid rgba(201,168,76,.25);}
 }
+
+/* phone: quiz button pinned to the bottom of the screen */
+.w-stick{display:none;}
+@media (max-width:760px){
+  .w-stick{position:fixed;left:12px;right:12px;bottom:12px;z-index:800;display:flex;align-items:center;justify-content:center;gap:10px;height:56px;
+    background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#a5862f);color:#0b0a08 !important;text-decoration:none !important;
+    font:800 12.5px/1 Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 14px 34px rgba(0,0,0,.55);
+    transform:translateY(160%);transition:transform .35s cubic-bezier(.2,.8,.2,1);}
+  .w-stick.on{transform:none;}
+}

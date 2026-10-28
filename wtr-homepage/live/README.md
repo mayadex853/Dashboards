@@ -12,3 +12,6 @@ Reds now match /rebuild: `--em:#d72626; --accent:#c21f1f`, brick wall tint `rgba
 
 Voice pass (brand board: no em dashes, no formulaic triads): `wtr.js`, `speaker.js` and `coaching.js` here are rebuilt
 from 993104c with the copy edits in `src/` plus the hero fix and the /rebuild reds. Live pins point at these files.
+
+`getstarted.js`: the new /getstarted page (src/getstarted.html + getstarted.css, build_getstarted.py), built on the
+993104c base with the patches above. It reuses the homepage's wall + framework section. Old layout: data/old-getstarted-theme.json.

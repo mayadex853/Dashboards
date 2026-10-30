@@ -22,7 +22,7 @@ SRC = HERE / "src"
 
 CHECKOUT = "https://www.wrecktheroom.com/offers/{}/checkout"
 QUIZ = "https://quiz.wrecktheroom.com"
-WORK = "https://www.wrecktheroom.com/coaching"
+WORK = "https://www.wrecktheroom.com/rebuild"
 TEAM = "team@jodyfriedman.com"
 HERO_IMG = KAJABI + "themes/2164062548/settings_images/5c2ccb4-53e8-036b-1e5-e5337614e3_Jody_Horizontal_Sunset.jpg"
 WAS = 997  # regular price, shown struck through
@@ -145,7 +145,7 @@ def render(key):
          "stalling, renovating, or rebuilding, and what’s actually creating the friction."),
         ("What if I want more support?",
          "Blueprint is the full Wreck The Room™ curriculum, self-guided. Council adds bi-weekly group coaching and "
-         f'three private milestone calls with Jody. <a href="{WORK}">See all the ways to work with Jody</a>.'),
+         f'three private milestone calls with Jody. <a href="{WORK}">Compare Blueprint, Council and Inner Circle</a>.'),
     ]
     qs = "".join(f"<details><summary>{q}</summary><p>{a.replace('{PRICE}', price)}</p></details>" for q, a in faq)
     return f"""<div class="wtr pg" id="wtr-prog" data-dir="brick">

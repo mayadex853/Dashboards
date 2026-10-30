@@ -15,3 +15,7 @@ from 993104c with the copy edits in `src/` plus the hero fix and the /rebuild re
 
 `getstarted.js`: the new /getstarted page (src/getstarted.html + getstarted.css, build_getstarted.py), built on the
 993104c base with the patches above. It reuses the homepage's wall + framework section. Old layout: data/old-getstarted-theme.json.
+
+`programs.js`: the four Guided Transformation sales pages (/drifting-program etc.), built from 3b52cb1
+(branch claude/email-fixes-welcome-drafts-v0xm2g) with the own-pace copy and new prices
+($27 / $47 / $67 / $97 against a struck-through $997). Edited sources are in `programs-src/`.

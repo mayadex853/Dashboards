@@ -102,7 +102,7 @@ VERSIONS = {
              btn("Go to my library", LIBRARY)),
             ("Do the exercise after every lesson",
              "Watch the lesson, then do the exercise, in that order. "
-             "The work happens in the exercise, not the video. Give it five weeks.", None),
+             "The work happens in the exercise, not the video. Go at your own pace: one sitting, five days or five weeks.", None),
         ],
     },
     "session": {

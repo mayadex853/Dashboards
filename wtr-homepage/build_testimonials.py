@@ -41,8 +41,8 @@ CSS = """
 .wtt .tabs button[aria-pressed=true]{background:var(--em);border-color:var(--em);color:#fff}
 .wtt .sec{padding:80px 0}
 .wtt .sec h2{font-size:clamp(34px,4vw,58px);margin-bottom:40px}
-.wtt .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;align-items:start}
-.wtt .card{border:1px solid var(--line2);background:var(--bg3);display:flex;flex-direction:column}
+.wtt .grid{columns:3 300px;column-gap:22px}
+.wtt .card{border:1px solid var(--line2);background:var(--bg3);display:flex;flex-direction:column;break-inside:avoid;margin:0 0 22px !important}
 .wtt .card[hidden]{display:none}
 .wtt .vid{position:relative;display:block;width:100%;padding:0;border:0;border-bottom:1px solid var(--line2);background:#000;cursor:pointer;
  overflow:hidden;aspect-ratio:9/16;font:inherit;color:inherit}
@@ -70,7 +70,7 @@ CSS = """
 .wtt .ft a{color:var(--dim) !important;text-decoration:none !important;margin-left:24px}
 .wtt .ft a:first-child{margin-left:0}
 @media(max-width:760px){.wtt .in{padding:0 20px}.wtt .hero{padding:140px 0 50px}.wtt .sec{padding:56px 0}
- .wtt .grid{grid-template-columns:1fr}.wtt blockquote{font-size:21px;padding:26px 24px 16px}.wtt cite{padding:0 24px 24px}
+ .wtt .grid{columns:1}.wtt blockquote{font-size:21px;padding:26px 24px 16px}.wtt cite{padding:0 24px 24px}
  .wtt .ft .in{flex-direction:column}.wtt .ft a{margin:0 18px 0 0}}
 """
 
@@ -106,16 +106,16 @@ def card(t):
         shape = " wide" if v.get("shape") == "wide" else ""
         vid = (f'<button class="vid{shape}" data-host="{v["host"]}" data-id="{esc(v["id"])}" '
                f'aria-label="Play {esc(t["name"])}\'s testimonial">'
-               + (f'<img src="{esc(img)}" alt="" loading="lazy">' if img else "")
+               + (f'<img src="{esc(img)}" alt="">' if img else "")
                + '<span class="pl"></span></button>')
     quote = f'<blockquote>{esc(t["quote"])}</blockquote>' if t.get("quote") else ""
     role = f'<span>{esc(t["role"])}</span>' if t.get("role") else ""
-    return f'<figure class="card" data-g="{t["group"]}" style="margin:0">{vid}{quote}<cite>{esc(t["name"])}{role}</cite></figure>'
+    return f'<figure class="card" data-g="{t["group"]}">{vid}{quote}<cite>{esc(t["name"])}{role}</cite></figure>'
 
 
 def body(items):
-    # Video stories first, then written quotes, so the strongest proof leads.
-    items = sorted(items, key=lambda t: (0 if t.get("video") else 1))
+    # Client stories lead (that's who the page sells to), videos before written quotes.
+    items = sorted(items, key=lambda t: (t["group"] != "client", not t.get("video")))
     cards = "".join(card(t) for t in items)
     return f"""<div class="wtt" id="wtr-tm">
 <section class="hero"><div class="in">

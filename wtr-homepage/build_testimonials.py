@@ -3,7 +3,7 @@
 Every testimonial lives in data/testimonials.json. To add a new one, append an entry and rebuild:
   {"name": "...", "role": "...", "group": "client" | "speaker",
    "quote": "...",                                  (optional when there is a video)
-   "video": {"host": "vimeo" | "wistia", "id": "...", "shape": "tall" | "wide"},   (optional)
+   "video": {"host": "vimeo" | "wistia" | "file", "id": "... (for file: the mp4 URL)", "shape": "tall" | "wide"},   (optional)
    "image": "https://..."}                          (video poster, optional for Vimeo)
 
 Outputs:
@@ -53,7 +53,7 @@ CSS = """
  border:1px solid rgba(236,214,155,.85);display:grid;place-items:center;background:rgba(10,9,8,.35);transition:transform .3s,background .3s}
 .wtt .vid .pl::before{content:"";border-left:15px solid var(--gold2);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
 .wtt .vid:hover .pl{transform:scale(1.08);background:rgba(215,38,38,.35)}
-.wtt .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
+.wtt .vid video{object-fit:cover}.wtt .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
 .wtt blockquote{margin:0;padding:30px 30px 20px;font-family:'Cormorant Garamond',Georgia,serif;font-size:23px;line-height:1.4;color:var(--ink);flex:1}
 .wtt blockquote::before{content:"\\201C";display:block;font-family:Anton,Impact,sans-serif;font-size:54px;line-height:.8;color:var(--em);margin-bottom:6px}
 .wtt cite{display:block;font-style:normal;padding:0 30px 28px;font-weight:600;color:var(--ink);font-size:15px}
@@ -84,6 +84,8 @@ function wtrTestimonials(root){
   });});
   root.querySelectorAll('.vid').forEach(function(v){v.addEventListener('click',function(){
     if(v.querySelector('iframe'))return;
+    if(v.dataset.host==='file'){var e=document.createElement('video');e.src=v.dataset.id;e.controls=true;e.autoplay=true;e.playsInline=true;
+      e.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:3;background:#000';v.appendChild(e);e.play();return;}
     var f=document.createElement('iframe');
     f.allow='autoplay; fullscreen; picture-in-picture';f.allowFullscreen=true;f.title=v.getAttribute('aria-label');
     f.src=v.dataset.host==='wistia'?'https://fast.wistia.net/embed/iframe/'+v.dataset.id+'?autoPlay=true&playerColor=d72626'

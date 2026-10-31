@@ -1,5 +1,17 @@
 [
  {
+  "name": "Shar'n Clark",
+  "role": "Client",
+  "group": "client",
+  "quote": "I feel that Wreck the Room is more beneficial, and I got more out of it… I made major decisions, where when I did the other programs, I didn't. Six months ago, I would still be… saying yes to everything that came in the door and just overwork myself and still fall farther and farther behind. I have a glimpse of happy right now… It's worth more than what we paid.",
+  "video": {
+   "host": "file",
+   "id": "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@e0253179f8d3b318762b7f51d270a164a09fa63b/wtr-homepage/media/sharn-clark-testimonial.mp4",
+   "shape": "tall"
+  },
+  "image": "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@e0253179f8d3b318762b7f51d270a164a09fa63b/wtr-homepage/media/sharn-clark-poster.jpg"
+ },
+ {
   "name": "Dr. Desiree King",
   "role": "Author & Keynote Speaker",
   "group": "speaker",

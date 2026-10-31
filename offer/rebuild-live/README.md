@@ -7,5 +7,5 @@ To change the page: edit the block file, then send that block's full `code` with
 (always include `content_for_index: ["wtr-page"]`). Only resend the block you changed.
 
 2026-10-31 (wtr-end): removed the sledgehammer logo above the closing headline; the hero question sits on its own line;
-the "In their words" section gets a row of five client videos (Shar'n Clark, Amara P., Christy B., Jeremy D., Laurie G.)
+the "In their words" section gets a row of five client videos (Shar'n Clark, Amara P., Christy B., Jeremy D.)
 and a Shar'n Clark quote card, injected from wtr-end.

@@ -18,4 +18,4 @@
 })();
 
 /* launch pricing sticker + strikethrough prices */
-window.WTR_WAS={"3,500": "5,000", "1,877": "2,650"};(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@__SHA__/wtr-homepage/checkout-launch/launch.js';document.head.appendChild(s);})();
+window.WTR_WAS={"3,500": "5,000", "1,877": "2,650"};(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@9eebd550ffa51390e030fc9d4168244041416238/wtr-homepage/checkout-launch/launch.js';document.head.appendChild(s);})();

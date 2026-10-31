@@ -2,6 +2,7 @@
    Include it where the header should sit:
      <script src=".../wtr-homepage/live/header.js" data-btn="Take the quiz" data-href="https://quiz.wrecktheroom.com"></script>
    data-kbook on the script adds data-k-book to the button (pages that open the Kajabi booking popup).
+   data-solid keeps the dark bar on from the top (pages with a light or plain first section).
    Desktop shows the main links plus a "More" dropdown; below 1200px everything moves into the hamburger menu. */
 (function(){
   var s=document.currentScript||{dataset:{}};
@@ -49,7 +50,8 @@
   var hs=document.querySelectorAll('.wtr-hd'),h=hs[hs.length-1];
   if(!h||h.__w)return;h.__w=1;
   var mb=h.querySelector('.mb'),mo=h.querySelector('.mo'),mt=mo.querySelector('button');
-  function sc(){h.classList.toggle('sc',window.pageYOffset>40);}
+  var solid=d.solid!==undefined;
+  function sc(){h.classList.toggle('sc',solid||window.pageYOffset>40);}
   window.addEventListener('scroll',sc,{passive:true});sc();
   mb.addEventListener('click',function(){var o=h.classList.toggle('open');mb.setAttribute('aria-expanded',o);});
   mt.addEventListener('click',function(e){e.stopPropagation();var o=mo.classList.toggle('open');mt.setAttribute('aria-expanded',o);});

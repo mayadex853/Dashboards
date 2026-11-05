@@ -1,0 +1,21 @@
+{
+ "theme_id": "2163962849",
+ "landing_page": "home (2151722834)",
+ "content_for_index": [
+  "1766096100787",
+  "1766435860678",
+  "1766941177744",
+  "1752688862008",
+  "1766943301838",
+  "1781056812529",
+  "1781056729795",
+  "1752688862009",
+  "1785013171588",
+  "1759512379056",
+  "1752688862011",
+  "1752688862014",
+  "1782341485880",
+  "1752688862012"
+ ],
+ "note": "Rendered section order of the old homepage, captured before switching to the redesign. To roll back, set content_for_index to this list with update_theme_content."
+}

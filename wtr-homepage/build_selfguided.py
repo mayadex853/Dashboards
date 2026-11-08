@@ -32,6 +32,7 @@ PROGRAMS = [
 
 VIDEOS = [
     ("mp4", MEDIA + "sharn-clark-testimonial.mp4", MEDIA + "sharn-clark-poster.jpg", "Shar'n Clark"),
+    ("mp4", "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@0ad285eb6938e057ff6214c65d1eb13c413cbd2d/wtr-homepage/media/chelsea-n-testimonial.mp4", "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@0ad285eb6938e057ff6214c65d1eb13c413cbd2d/wtr-homepage/media/chelsea-n-poster.jpg", "Chelsea N."),
     ("vimeo", "1212945373", "https://i.vimeocdn.com/video/2183502542-6dbdb5864e6b6d6e359c5610e8183b21375b41e76a0f4a63e0ed0be5c774e93d-d_640", "Amara P."),
     ("vimeo", "1183442453", "https://i.vimeocdn.com/video/2146308089-b43c720e144a206be4a8cafcec94672b0e0c9628a5dd43cce7b0c2b373d60259-d_640", "Christy B."),
     ("vimeo", "1183442331", "https://i.vimeocdn.com/video/2146307512-9e5b02f9328fd95dc5d80a9dc62f277ee32edd65b3f8e85d807281ddafd24df0-d_640", "Jeremy D."),
@@ -84,7 +85,7 @@ CSS = """
 .wsg .step b{display:block;font-family:Anton,Impact,sans-serif;font-weight:400;font-size:58px;line-height:1;color:var(--em);margin-bottom:14px}
 .wsg .step h3{font-size:26px;margin-bottom:12px}
 .wsg .step p{font-size:16px}
-.wsg .vids{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px}
+.wsg .vids{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:26px}
 .wsg .vid{position:relative;display:block;width:100%;aspect-ratio:9/16;padding:0;border:1px solid var(--line2);background:#000;cursor:pointer;overflow:hidden;font:inherit}
 .wsg .vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.88;transition:transform 1s,opacity .4s}
 .wsg .vid:hover img{transform:scale(1.04);opacity:1}
@@ -111,7 +112,7 @@ CSS = """
 @media(max-width:1100px){.wsg .grid{grid-template-columns:repeat(2,1fr)}.wsg .deeper{grid-template-columns:1fr;padding:40px}}
 @media(max-width:760px){.wsg .in{padding:0 20px}.wsg .hero{padding:130px 0 60px}.wsg .sec{padding:64px 0}
  .wsg .grid,.wsg .steps,.wsg .quotes{grid-template-columns:1fr}
- .wsg .vids{grid-template-columns:repeat(4,64%);overflow-x:auto;scroll-snap-type:x mandatory;margin-right:-20px;padding-right:20px}.wsg .vid{scroll-snap-align:start}
+ .wsg .vids{grid-template-columns:repeat(5,64%);overflow-x:auto;scroll-snap-type:x mandatory;margin-right:-20px;padding-right:20px}.wsg .vid{scroll-snap-align:start}
  .wsg .deeper{padding:30px 24px}.wsg .ft .in{flex-direction:column}.wsg .ft a{margin:0 18px 0 0}}
 """
 

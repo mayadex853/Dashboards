@@ -1,0 +1,362 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+html,body{background:#0d0d0f !important}
+#section-wtr_rebuild_results .container,#section-wtr_rebuild_results .row,#section-wtr_rebuild_results [class*=col-],#section-wtr_rebuild_results .block{padding:0 !important;margin:0 !important;max-width:none !important;width:100% !important;flex:0 0 100% !important}
+#section-wtr_rebuild_results .sizer{padding:0 !important}
+
+.rr-root{
+  --bp-paper:url('https://raw.githubusercontent.com/mayadex853/Dashboards/0d5fcabb6e63eccab9300613af510942bcd31e21/offer/blueprint/assets/blueprint-paper.jpg');
+  --wtr-black:#0d0d0f;
+  --wtr-red:#d72626;
+  --wtr-blue-cta:#4aa7ff;
+  --bp-blue:#1f4a71;
+  --bp-line:rgba(244,244,244,.78);
+  --bp-line-soft:rgba(244,244,244,.22);
+  background:var(--wtr-black);
+  color:#f4f4f4;
+  font-family:'Inter',system-ui,sans-serif;
+  overflow:hidden;
+}
+.rr-wrap{max-width:1040px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+.rr-root p{line-height:1.7;font-size:18px;color:#c7c9cc;margin:0 0 20px;font-family:'Inter',sans-serif}
+.rr-red{color:var(--wtr-red)}
+
+.rr-hero-zone{
+  position:relative;
+  background:
+    linear-gradient(100deg,rgba(13,13,15,.92) 0%,rgba(13,13,15,.75) 38%,rgba(13,13,15,.3) 100%),
+    url('https://raw.githubusercontent.com/mayadex853/Dashboards/0d5fcabb6e63eccab9300613af510942bcd31e21/offer/blueprint/assets/hero-wreck-room.jpg') center right / cover no-repeat;
+  padding:84px 0 110px;
+}
+.rr-badge{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border:1px solid var(--wtr-red);background:rgba(215,38,38,.12);color:var(--wtr-red);font-family:'Oswald',sans-serif;font-weight:600;font-size:12px;letter-spacing:2.4px;text-transform:uppercase;margin-bottom:28px}
+.rr-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--wtr-red)}
+.rr-hero-zone h1{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:58px;line-height:1.08;text-transform:uppercase;margin:0 0 30px;color:#f4f4f4;max-width:760px;letter-spacing:.3px}
+.rr-hero-zone h2{font-family:'Oswald',sans-serif;font-weight:500;font-size:19px;letter-spacing:1px;text-transform:uppercase;color:var(--wtr-red);margin:0 0 18px}
+.rr-hero-zone p{font-size:18px;max-width:640px}
+@media (max-width:760px){.rr-hero-zone h1{font-size:36px}.rr-hero-zone{padding:64px 0 90px;background:linear-gradient(180deg,rgba(13,13,15,.88),rgba(13,13,15,.94)),url('https://raw.githubusercontent.com/mayadex853/Dashboards/0d5fcabb6e63eccab9300613af510942bcd31e21/offer/blueprint/assets/hero-wreck-room.jpg') center/cover}}
+
+.rr-torn{position:relative;height:64px;background:var(--wtr-black);
+  clip-path:polygon(0 0,100% 0,100% 40%,90% 72%,80% 36%,70% 68%,60% 32%,50% 72%,40% 36%,30% 68%,20% 32%,10% 72%,0 40%);
+  margin-bottom:-1px;z-index:3;position:relative}
+
+.rr-blue-zone{
+  position:relative;
+  background:
+    linear-gradient(180deg,rgba(11,31,48,.9),rgba(11,31,48,.95)),
+    var(--bp-paper);
+  background-size:auto,760px 760px;
+  padding:10px 0 90px;
+  overflow:hidden;
+}
+.rr-grid-overlay{position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(244,244,244,.045) 0 1px,transparent 1px 64px),
+    repeating-linear-gradient(90deg,rgba(244,244,244,.045) 0 1px,transparent 1px 64px);
+}
+.rr-compass{position:absolute;top:36px;right:36px;width:52px;height:52px;z-index:1;opacity:.75}
+.rr-compass svg{width:100%;height:100%;stroke:var(--bp-line);fill:none;stroke-width:1.2}
+.rr-frame{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:60px 32px 10px;border:1px solid var(--bp-line-soft)}
+.rr-frame::before,.rr-frame::after{content:'';position:absolute;width:20px;height:20px;pointer-events:none}
+.rr-frame::before{top:-1px;left:-1px;border-top:1.5px solid var(--bp-line);border-left:1.5px solid var(--bp-line)}
+.rr-frame::after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--bp-line);border-right:1.5px solid var(--bp-line)}
+
+.rr-kicker-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.rr-kicker-row .rr-dash{width:28px;height:1px;background:var(--wtr-red)}
+.rr-kicker-row span{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:2px;text-transform:lowercase;color:#a9bccb;font-style:italic}
+.rr-blue-zone h2.rr-h2big{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:40px;line-height:1.15;text-transform:uppercase;color:#f0f3f6;margin:0 0 20px;letter-spacing:.3px}
+.rr-section{margin:0 0 76px}
+.rr-section:last-child{margin-bottom:0}
+
+.bp-sheet{position:relative;border:1.5px solid var(--bp-line-soft);box-shadow:rgba(0,0,0,.5) 0 24px 50px -24px;background:linear-gradient(180deg,rgba(31,74,113,.75),rgba(15,42,66,.85))}
+.bp-cap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 20px;border-bottom:1px solid var(--bp-line-soft);font-family:'Oswald',sans-serif}
+.bp-cap span{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--bp-line)}
+.bp-inner{padding:28px 24px 32px}
+
+.rr-kicker{display:block;color:#a9bccb;font-size:13px;margin-bottom:28px;font-family:'Oswald',sans-serif;letter-spacing:1.5px;text-transform:uppercase}
+.rr-grid{display:grid;grid-template-columns:110px 1fr 1fr;gap:10px}
+.rr-cell{padding:20px 18px;border:1px solid var(--bp-line-soft);background:repeating-linear-gradient(0deg,rgba(244,244,244,.035) 0 1px,transparent 1px 28px),repeating-linear-gradient(90deg,rgba(244,244,244,.035) 0 1px,transparent 1px 28px),rgba(11,31,48,.5);transition:transform .2s ease,border-color .2s ease}
+.rr-cell:not(.rr-head):not(.rr-label):hover{transform:translateY(-3px);border-color:var(--bp-line)}
+.rr-cell.rr-head{background:transparent;border:none;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:500;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#a9bccb;text-align:center;padding:6px}
+.rr-cell.rr-label{background:transparent;border:none;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:500;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#a9bccb;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center}
+.rr-icon{width:32px;height:32px;border:1px solid var(--bp-line);background:transparent;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.rr-icon svg{width:16px;height:16px;stroke:var(--bp-line);fill:none;stroke-width:1.5}
+.rr-cell.rr-here .rr-icon{border-color:var(--wtr-red);background:rgba(215,38,38,.15)}
+.rr-cell.rr-here .rr-icon svg{stroke:var(--wtr-red)}
+.rr-cell .rr-title{display:flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;font-size:15px;color:#f5f7f8;margin-bottom:8px;font-weight:500;text-transform:uppercase;letter-spacing:.3px}
+.rr-cell p{font-size:13.5px;line-height:1.55;margin:0;color:#aebfcc;font-family:'Inter',sans-serif}
+.rr-cell.rr-here{border-color:var(--wtr-red);box-shadow:0 0 0 1px var(--wtr-red) inset,0 12px 30px -10px rgba(215,38,38,.35)}
+.rr-cell.rr-here .rr-title{color:var(--wtr-red)}
+.rr-here-tag{display:inline-flex;align-items:center;gap:5px;margin-left:2px;font-size:9.5px;letter-spacing:1.2px;color:#0d0d0f;background:var(--wtr-red);padding:3px 9px;font-family:'Oswald',sans-serif;font-weight:600;vertical-align:middle;text-transform:uppercase}
+@media (max-width:620px){
+  .rr-grid{grid-template-columns:60px 1fr 1fr;gap:6px}
+  .rr-cell{padding:13px}
+  .rr-cell .rr-title{font-size:12px;flex-wrap:wrap}
+  .rr-cell p{font-size:11.5px}
+  .rr-icon{width:24px;height:24px;margin-bottom:8px}
+  .rr-icon svg{width:12px;height:12px}
+  .rr-here-tag{display:block;margin:6px 0 0;width:fit-content}
+}
+
+.rr-segue-grid{display:grid;grid-template-columns:1fr 400px;gap:44px;align-items:center}
+.rr-segue p{font-size:18px}
+.rr-emphasis{font-family:'Oswald',sans-serif;font-size:21px;color:#f5f7f8;border-left:3px solid var(--wtr-red);padding-left:18px;margin-top:8px;margin-bottom:0;text-transform:uppercase;letter-spacing:.3px;line-height:1.4}
+@media (max-width:900px){.rr-segue-grid{grid-template-columns:1fr;gap:28px}}
+
+.wtr-rb-box{position:relative;width:100%;max-width:400px;margin:0;border:1px solid var(--bp-line-soft);overflow:hidden;background:rgba(5,16,27,.55);aspect-ratio:16/10}
+.wtr-rb-wall{position:absolute;inset:8%;border:1.5px dashed var(--bp-line-soft)}
+.wtr-rb-ground{position:absolute;left:0;right:0;bottom:16%;height:1px;background:var(--bp-line);z-index:1}
+.wtr-rb-windows{position:absolute;top:20%;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:2}
+.wtr-rb-win{width:26px;height:34px;border:1px solid var(--bp-line);background:transparent;transition:background-color 1.2s ease,box-shadow 1.2s ease,border-color 1.2s ease}
+.wtr-rb-win.lit{background:rgba(215,38,38,.45);box-shadow:0 0 14px 2px rgba(215,38,38,.45);border-color:var(--wtr-red)}
+.wtr-rb-figure{position:absolute;bottom:16%;left:4%;width:34px;height:60px;z-index:5;transition:left 2.2s ease-in-out}
+.wtr-rb-figure.no-transition{transition:none !important}
+.wtr-rb-head{position:absolute;top:0;left:50%;width:13px;height:13px;border-radius:50%;border:1.5px solid var(--bp-line);background:transparent;transform:translateX(-50%)}
+.wtr-rb-body{position:absolute;top:13px;left:50%;width:2px;height:21px;background:var(--bp-line);transform:translateX(-50%)}
+.wtr-rb-arm{position:absolute;top:15px;left:50%;width:2px;height:15px;background:var(--bp-line);transform-origin:top center;transform:rotate(8deg);transition:transform .6s ease}
+.wtr-rb-figure.reaching .wtr-rb-arm{transform:rotate(-150deg)}
+.wtr-rb-leg{position:absolute;top:34px;width:2px;height:21px;background:var(--bp-line);transform-origin:top center}
+.wtr-rb-leg.l{left:calc(50% - 3px)}
+.wtr-rb-leg.r{left:calc(50% + 3px)}
+@keyframes wtr-rb-walk-l{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}}
+@keyframes wtr-rb-walk-r{0%,100%{transform:rotate(-22deg)}50%{transform:rotate(22deg)}}
+.wtr-rb-figure.walking .wtr-rb-leg.l{animation:wtr-rb-walk-l .42s linear infinite}
+.wtr-rb-figure.walking .wtr-rb-leg.r{animation:wtr-rb-walk-r .42s linear infinite}
+.wtr-rb-label{position:absolute;top:12px;right:14px;display:flex;align-items:center;gap:8px;color:#eef2f5;font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;z-index:6;text-align:right;max-width:72%}
+.wtr-rb-dot{width:7px;height:7px;border-radius:50%;background:var(--wtr-red);flex-shrink:0}
+@media (prefers-reduced-motion: reduce){.wtr-rb-figure,.wtr-rb-leg,.wtr-rb-arm,.wtr-rb-win{transition:none !important;animation:none !important}}
+@media (max-width:900px){.wtr-rb-box{max-width:100%}}
+
+.rr-pitch .rr-sub{font-size:18px;max-width:640px;margin:0 0 34px}
+.rr-btn{display:inline-block;background:var(--wtr-blue-cta);color:#0d0d0f !important;font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;letter-spacing:.5px;padding:17px 36px;border:none;border-radius:4px;text-decoration:none !important;text-transform:uppercase;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.rr-btn:hover{transform:translateY(-2px);background:#69b8ff;box-shadow:0 14px 32px -10px rgba(74,167,255,.5)}
+.rr-curriculum{max-width:760px;margin:46px 0 0;display:flex;flex-direction:column}
+.rr-lesson{display:flex;gap:18px;align-items:flex-start;padding:20px 4px;border-bottom:1px dashed var(--bp-line-soft)}
+.rr-lesson:last-child{border-bottom:none}
+.rr-lesson-num{flex-shrink:0;width:30px;height:30px;border:1px solid var(--wtr-red);color:var(--wtr-red);font-family:'Oswald',sans-serif;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:13px}
+.rr-lesson-text b{display:block;font-family:'Oswald',sans-serif;font-weight:500;font-size:16px;color:#f5f7f8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.2px}
+.rr-lesson-text span{font-size:14.5px;color:#aebfcc;line-height:1.5;font-family:'Inter',sans-serif}
+
+.rr-ascension p{max-width:680px}
+.rr-ascension .rr-final-line{font-family:'Oswald',sans-serif;color:var(--wtr-red);font-size:17px;margin-bottom:30px;text-transform:uppercase;letter-spacing:1px}
+
+@media (max-width:620px){
+  .rr-blue-zone h2.rr-h2big{font-size:26px}
+  .rr-frame{padding:40px 18px 10px}
+  .rr-section{margin-bottom:56px}
+}
+
+.rr-proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}@media (max-width:1100px){.rr-proof-grid{grid-template-columns:repeat(2,1fr)}}
+.rr-tm-card{position:relative;border:1px solid var(--bp-line-soft);background:rgba(11,31,48,.5);cursor:pointer;overflow:hidden;transition:transform .2s ease,border-color .2s ease}
+.rr-tm-card:hover{transform:translateY(-3px);border-color:var(--bp-line)}
+.rr-tm-media{position:relative;aspect-ratio:16/10;background:#000;overflow:hidden}
+.rr-tm-media img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85}
+.rr-tm-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(215,38,38,.92);display:flex;align-items:center;justify-content:center}
+.rr-tm-play svg{width:16px;height:16px;fill:#f4f4f4;margin-left:2px}
+.rr-tm-body{padding:18px 18px 20px}
+.rr-tm-quote{font-size:14px;color:#dfe6ea;font-family:'Inter',sans-serif;line-height:1.55;margin:0 0 12px;font-style:italic}
+.rr-tm-name{font-family:'Oswald',sans-serif;font-size:13px;color:#f5f7f8;text-transform:uppercase;letter-spacing:.6px;margin:0}
+.rr-tm-role{font-family:'Inter',sans-serif;font-size:12px;color:#8fa3b3;margin:2px 0 0}
+@media (max-width:760px){.rr-proof-grid{grid-template-columns:1fr}}
+.rr-tm-modal{position:fixed;inset:0;background:rgba(5,8,11,.92);z-index:9999;display:none;align-items:center;justify-content:center;padding:24px}
+.rr-tm-modal.open{display:flex}
+.rr-tm-modal-inner{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;background:#000}
+.rr-tm-modal-inner video,.rr-tm-modal-inner iframe{width:100%;height:100%;border:none;display:block}
+.rr-tm-close{position:absolute;top:-40px;right:0;color:#f4f4f4;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;background:none;border:1px solid var(--bp-line-soft);padding:8px 14px}
+</style>
+
+<div class="rr-root">
+
+  <div class="rr-hero-zone">
+    <div class="rr-wrap">
+      <div class="rr-badge">Your Quiz Results Are In</div>
+      <h1>You Are in the <span class="rr-red">Rebuilding Room.</span></h1>
+      <h2>What This Means For You Right Now:</h2>
+      <p>You are the hardest person to reach, because you&rsquo;ve already done enough work that you know the language, you&rsquo;ve had the breakthroughs, and you&rsquo;ve built a life that genuinely reflects real intention.</p>
+      <p>You already know about identity. You landed in the Rebuilding Room, and you probably weren&rsquo;t surprised.</p>
+      <p>But here is the hidden danger of this space: you&rsquo;ve been rebuilding the living room while the foundation under the bedroom has never been looked at. There are still rooms within the room, specific areas where your old psychological architecture is quietly running in the background while the rest of you is busy being evolved.</p>
+    </div>
+  </div>
+
+  <div class="rr-torn"></div>
+
+  <div class="rr-blue-zone">
+    <div class="rr-grid-overlay"></div>
+    <div class="rr-compass"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6"/><path d="M24 14l4 10-4 10-4-10z"/><text x="24" y="12" font-size="7" fill="currentColor" stroke="none" text-anchor="middle">N</text></svg></div>
+
+    <div class="rr-frame">
+
+      <div class="rr-section">
+        <div class="rr-kicker-row"><span class="rr-dash"></span><span>01 &middot; the floor plan</span></div>
+        <h2 class="rr-h2big">The Four Identity Rooms</h2>
+        <span class="rr-kicker">Where awareness meets action</span>
+        <div class="rr-grid">
+          <div class="rr-cell rr-head"></div>
+          <div class="rr-cell rr-head">No Action</div>
+          <div class="rr-cell rr-head">Taking Action</div>
+
+          <div class="rr-cell rr-label">Aware</div>
+          <div class="rr-cell">
+            <div class="rr-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12M6 22h12M7 2c0 5 10 5 10 10s-10 5-10 10M17 2c0 5-10 5-10 10s10 5 10 10"/></svg></div>
+            <span class="rr-title">The Stalling Room</span>
+            <p>Paralyzed by analysis. You know your toxic loops inside out, but you are frozen and taking zero risks.</p>
+          </div>
+          <div class="rr-cell rr-here">
+            <div class="rr-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h6l-5 4 2 7-6-4-6 4 2-7-5-4h6z"/></svg></div>
+            <span class="rr-title">The Rebuilding Room <span class="rr-here-tag">You Are Here</span></span>
+            <p>Deep self-awareness paired with intentional action. However, your old architecture is still operating just below your radar.</p>
+          </div>
+
+          <div class="rr-cell rr-label">Unaware</div>
+          <div class="rr-cell">
+            <div class="rr-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <span class="rr-title">The Drifting Room</span>
+            <p>Operating on autopilot. You are feeling numb or coasting, totally blind to why your growth has stalled.</p>
+          </div>
+          <div class="rr-cell">
+            <div class="rr-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M15 3v5h5M9 21v-5H4"/></svg></div>
+            <span class="rr-title">The Renovating Room</span>
+            <p>Working 80 hours a week rearranging furniture in a space that actually needs to be demolished.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rr-section">
+        <div class="rr-kicker-row"><span class="rr-dash"></span><span>02 &middot; load&ndash;bearing walls</span></div>
+        <h2 class="rr-h2big">Where The Gap Hides</h2>
+        <div class="rr-segue-grid">
+          <div>
+            <p>The gap between where you are and where you could be is completely invisible from inside the room you&rsquo;re currently in.</p>
+            <p>Your progress is real, but as long as that original subconscious belief is still intact, your patterns will keep requiring constant management. You will keep having to catch yourself, police your behavior, or borrow against your health and closest relationships just to fund your professional success.</p>
+            <p class="rr-emphasis">You cannot wreck a room until you know exactly where the load-bearing walls are.</p>
+          </div>
+          <div class="bp-sheet">
+            <div class="bp-cap"><span>Section B&ndash;B</span><span>The Rebuild</span></div>
+            <div class="bp-inner">
+              <div id="rr-anim-slot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rr-section rr-pitch">
+        <div class="rr-kicker-row"><span class="rr-dash"></span><span>03 &middot; the blueprint</span></div>
+        <h2 class="rr-h2big">Stop Trying To Solve An Identity Problem With <span class="rr-red">Business Strategy.</span></h2>
+        <p class="rr-sub">A raw, 5-part intensive for hyper-conscious high-achievers to map their blind spots and locate the &ldquo;Last Layer&rdquo; running quietly in the background.</p>
+        <a class="rr-btn" href="https://www.wrecktheroom.com/offers/CGtLAnun/checkout">Unlock the Rebuilding Architecture Intensive &ndash; Just $97</a>
+
+        <div class="rr-curriculum">
+          <div class="rr-lesson">
+            <div class="rr-lesson-num">1</div>
+            <div class="rr-lesson-text"><b>You&rsquo;re Not Done Yet</b><span>The Activation Audit shows you exactly which of the 6 dimensions (relationships, health, finances, purpose, leadership, inner life) are still being run by the old architecture.</span></div>
+          </div>
+          <div class="rr-lesson">
+            <div class="rr-lesson-num">2</div>
+            <div class="rr-lesson-text"><b>The Rooms Within the Room</b><span>The Blind Spot Map shows you the specific areas where your old psychological architecture is still quietly running, even while the rest of you has evolved.</span></div>
+          </div>
+          <div class="rr-lesson">
+            <div class="rr-lesson-num">3</div>
+            <div class="rr-lesson-text"><b>The Last Layer</b><span>You&rsquo;ll name the original decision sitting underneath the pattern you&rsquo;ve been managing for years.</span></div>
+          </div>
+          <div class="rr-lesson">
+            <div class="rr-lesson-num">4</div>
+            <div class="rr-lesson-text"><b>Full Activation Framework</b><span>You stop operating your life and start architecting it, on purpose, every day.</span></div>
+          </div>
+          <div class="rr-lesson">
+            <div class="rr-lesson-num">5</div>
+            <div class="rr-lesson-text"><b>The Next Level Room</b><span>Your bottlenecks dissolve once you can finally see the data of where you actually stand.</span></div>
+          </div>
+        </div>
+      </div>
+
+            <div class="rr-section rr-proof">
+        <div class="rr-kicker-row"><span class="rr-dash"></span><span>04 &middot; the proof</span></div>
+        <h2 class="rr-h2big">Real Architects. Real Rebuilds.</h2>
+        <span class="rr-kicker">People who stopped renovating and started wrecking</span>
+        <div class="rr-proof-grid">
+          <div class="rr-tm-card" data-video-type="mp4" data-video-src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@e0253179f8d3b318762b7f51d270a164a09fa63b/wtr-homepage/media/sharn-clark-testimonial.mp4">
+            <div class="rr-tm-media"><img src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@29498cc27c2ee8d517e81e35e46071434b208343/wtr-homepage/media/sharn-clark-poster.jpg" alt="Shar'n C."><div class="rr-tm-play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></div></div>
+            <div class="rr-tm-body"><p class="rr-tm-quote">&ldquo;I&rsquo;ve done programs with Mel Robbins&hellip; and I feel that Wreck the Room is more beneficial.&rdquo;</p><p class="rr-tm-name">Shar&rsquo;n C.</p><p class="rr-tm-role">Small Business Owner</p></div>
+          </div>
+          <div class="rr-tm-card" data-video-type="mp4" data-video-src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@0ad285eb6938e057ff6214c65d1eb13c413cbd2d/wtr-homepage/media/chelsea-n-testimonial.mp4">
+            <div class="rr-tm-media"><img src="https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@0ad285eb6938e057ff6214c65d1eb13c413cbd2d/wtr-homepage/media/chelsea-n-poster.jpg" alt="Chelsea N."><div class="rr-tm-play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></div></div>
+            <div class="rr-tm-body"><p class="rr-tm-quote">&ldquo;This has been life-changing for me. It feels like the final piece that was missing.&rdquo;</p><p class="rr-tm-name">Chelsea N.</p><p class="rr-tm-role">Screenwriter, Entrepreneur</p></div>
+          </div>
+          <div class="rr-tm-card" data-video-type="vimeo" data-video-src="https://player.vimeo.com/video/1183442453?autoplay=1">
+            <div class="rr-tm-media"><img src="https://i.vimeocdn.com/video/2146308089-b43c720e144a206be4a8cafcec94672b0e0c9628a5dd43cce7b0c2b373d60259-d_640" alt="Christy B."><div class="rr-tm-play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></div></div>
+            <div class="rr-tm-body"><p class="rr-tm-quote">&ldquo;Jody&rsquo;s authenticity reflected back to me exactly where I want to be.&rdquo;</p><p class="rr-tm-name">Christy B.</p><p class="rr-tm-role">Realtor &amp; Business Owner</p></div>
+          </div>
+          <div class="rr-tm-card" data-video-type="vimeo" data-video-src="https://player.vimeo.com/video/1183442331?autoplay=1">
+            <div class="rr-tm-media"><img src="https://i.vimeocdn.com/video/2146307512-9e5b02f9328fd95dc5d80a9dc62f277ee32edd65b3f8e85d807281ddafd24df0-d_640" alt="Jeremy D."><div class="rr-tm-play"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></div></div>
+            <div class="rr-tm-body"><p class="rr-tm-quote">&ldquo;Jody&rsquo;s framework really helped me name where I&rsquo;m at in that process.&rdquo;</p><p class="rr-tm-name">Jeremy D.</p><p class="rr-tm-role">Small Business Owner</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="rr-section rr-ascension" style="margin-bottom:10px">
+        <div class="rr-kicker-row"><span class="rr-dash"></span><span>05 &middot; the demolition permit</span></div>
+        <h2 class="rr-h2big">The Blueprint Is Just $97. The Demolition Happens Next.</h2>
+        <p>This program is not an all-in-one fix. It is a precise blueprinting experience.</p>
+        <p>Once you complete these 5 lessons and map out your Last Layer, you will have undeniable clarity on exactly what is holding you back. For those who complete the 5 days, do the workbook exercises, and are ready to actively Wreck the Old Architecture and Wrock the New Room, you will have the exclusive opportunity to apply for a private 1-on-1 strategy call with me to look over your map and map out your execution plan.</p>
+        <p class="rr-final-line">But first, let&rsquo;s find the walls.</p>
+        <a class="rr-btn" href="https://www.wrecktheroom.com/offers/CGtLAnun/checkout">Get Instant Access to the Intensive ($97)</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>(function(){
+function initScene(box){
+  box.innerHTML='<div class="wtr-rb-wall"></div><div class="wtr-rb-ground"></div><div class="wtr-rb-windows"><div class="wtr-rb-win lit"></div><div class="wtr-rb-win lit"></div><div class="wtr-rb-win dark" id="wtr-rb-target"></div><div class="wtr-rb-win lit"></div></div><div class="wtr-rb-figure"><div class="wtr-rb-head"></div><div class="wtr-rb-body"></div><div class="wtr-rb-arm"></div><div class="wtr-rb-leg l"></div><div class="wtr-rb-leg r"></div></div><div class="wtr-rb-label"><span class="wtr-rb-dot"></span><span class="wtr-rb-label-text">You&#39;ve Lit Up Every Room You Can See</span></div>';
+  var target=box.querySelector('#wtr-rb-target');
+  var figure=box.querySelector('.wtr-rb-figure');
+  var labelText=box.querySelector('.wtr-rb-label-text');
+  function runCycle(){
+    figure.classList.add('no-transition');
+    figure.classList.remove('walking','reaching');
+    target.classList.remove('lit');
+    target.classList.add('dark');
+    figure.style.left='4%';
+    void figure.offsetWidth;
+    figure.classList.remove('no-transition');
+    labelText.textContent="You've Lit Up Every Room You Can See";
+    setTimeout(function(){figure.classList.add('walking');figure.style.left='48%';},300);
+    setTimeout(function(){figure.classList.remove('walking');labelText.textContent='Except One';},2600);
+    setTimeout(function(){figure.classList.add('reaching');labelText.textContent="The Room Your Awareness Hasn't Reached";},3400);
+    setTimeout(function(){target.classList.remove('dark');target.classList.add('lit');labelText.textContent="That's The One We're Going Into";},5000);
+    setTimeout(function(){labelText.textContent='Full Activation Looks Like This';},7000);
+    setTimeout(function(){runCycle();},9000);
+  }
+  runCycle();
+}
+var slot=document.getElementById('rr-anim-slot');
+if(slot && !document.getElementById('wtr-rb-box')){
+  var box=document.createElement('div');
+  box.id='wtr-rb-box';
+  box.className='wtr-rb-box';
+  slot.appendChild(box);
+  initScene(box);
+}
+})();</script>
+<div class="rr-tm-modal" id="rr-tm-modal"><div class="rr-tm-modal-inner" id="rr-tm-modal-inner"></div><button class="rr-tm-close" id="rr-tm-close">Close &times;</button></div>
+<script>(function(){
+  var modal=document.getElementById('rr-tm-modal');
+  var inner=document.getElementById('rr-tm-modal-inner');
+  var closeBtn=document.getElementById('rr-tm-close');
+  if(!modal) return;
+  document.querySelectorAll('.rr-tm-card').forEach(function(card){
+    card.addEventListener('click',function(){
+      var type=card.getAttribute('data-video-type');
+      var src=card.getAttribute('data-video-src');
+      if(type==='mp4'){
+        inner.innerHTML='<video src="'+src+'" controls autoplay playsinline></video>';
+      } else {
+        inner.innerHTML='<iframe src="'+src+'" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+      }
+      modal.classList.add('open');
+    });
+  });
+  function closeModal(){modal.classList.remove('open');inner.innerHTML='';}
+  if(closeBtn) closeBtn.addEventListener('click',closeModal);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+})();</script>

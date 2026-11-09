@@ -1,0 +1,22 @@
+{
+ "theme_id": "2162751237",
+ "landing_page": "speaker2 (2151556391)",
+ "content_for_index": [
+  "1752688862006",
+  "1762237285266",
+  "1752688862007",
+  "1752688862008",
+  "1759514490583",
+  "1752688862011",
+  "1778109289847",
+  "1752688862012",
+  "1778109604561",
+  "1752688862013",
+  "1752688862009",
+  "1752688862014",
+  "1781059820616",
+  "1752688862015",
+  "1782342385903"
+ ],
+ "note": "Rendered section order of the old speaker page, captured before the redesign. To roll back, set content_for_index to this list."
+}

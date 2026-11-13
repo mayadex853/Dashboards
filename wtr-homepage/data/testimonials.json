@@ -24,6 +24,18 @@
     "image": "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@0ad285eb6938e057ff6214c65d1eb13c413cbd2d/wtr-homepage/media/chelsea-n-poster.jpg"
   },
   {
+    "name": "Christy B.",
+    "role": "Realtor and business owner",
+    "group": "client",
+    "quote": "I live a lot of the life that I've wanted to live, but this helped me to know I do deserve it, and that I'm good here. I don't have to carry all that other stuff. All the work I had been doing is great, but this took it in a different direction with the same concepts. It really does get down to the core, the root of what's going on, pretty fast.",
+    "video": {
+      "host": "file",
+      "id": "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@6eb42dc81042d97d570f1824b312b2df7e1ca335/wtr-homepage/media/christy-b-graduation.mp4",
+      "shape": "tall"
+    },
+    "image": "https://cdn.jsdelivr.net/gh/mayadex853/Dashboards@6eb42dc81042d97d570f1824b312b2df7e1ca335/wtr-homepage/media/christy-b-graduation-poster.jpg"
+  },
+  {
     "name": "Dr. Desiree King",
     "role": "Author & Keynote Speaker",
     "group": "speaker",

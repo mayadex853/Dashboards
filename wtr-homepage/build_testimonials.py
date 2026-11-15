@@ -148,7 +148,7 @@ def minify(css):
 
 
 def main():
-    items = json.loads(DATA.read_text())
+    items = [t for t in json.loads(DATA.read_text()) if not t.get("hidden")]  # "hidden": true keeps an entry out without deleting it
     css, page = minify(CSS), body(items)
     loader = ("(function(){var m=document.getElementById('wtr-tm-mount');"
               "if(!m){m=document.createElement('div');m.id='wtr-tm-mount';var s=document.currentScript;s.parentNode.insertBefore(m,s);}"

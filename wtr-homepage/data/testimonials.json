@@ -105,13 +105,15 @@
       "id": "1183442453",
       "shape": "tall"
     },
-    "image": "https://i.vimeocdn.com/video/2146308089-b43c720e144a206be4a8cafcec94672b0e0c9628a5dd43cce7b0c2b373d60259-d_640"
+    "image": "https://i.vimeocdn.com/video/2146308089-b43c720e144a206be4a8cafcec94672b0e0c9628a5dd43cce7b0c2b373d60259-d_640",
+    "hidden": true
   },
   {
     "name": "Christy B.",
     "role": "Realtor and business owner",
     "group": "client",
-    "quote": "Re-examining my personal values has been a game changer. It’s helped me say no more easily, say yes when it’s right for me, and my life has really blossomed."
+    "quote": "Re-examining my personal values has been a game changer. It’s helped me say no more easily, say yes when it’s right for me, and my life has really blossomed.",
+    "hidden": true
   },
   {
     "name": "Jeremy D.",

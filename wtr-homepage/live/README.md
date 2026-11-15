@@ -19,3 +19,13 @@ from 993104c with the copy edits in `src/` plus the hero fix and the /rebuild re
 `programs.js`: the four Guided Transformation sales pages (/drifting-program etc.), built from 3b52cb1
 (branch claude/email-fixes-welcome-drafts-v0xm2g) with the own-pace copy and new prices
 ($27 / $47 / $67 / $97 against a struck-through $997). Edited sources are in `programs-src/`.
+
+`vip.js`, `meeting.js` (here, in live/): the /vip-retreat and /meeting-confirmed pages as pinned at 104658b, with
+Christy B.'s graduation video in place of her original Vimeo video (kept as an HTML comment) and mp4 playback added.
+The copies in `wtr-homepage/` carry later, unpublished edits.
+
+Christy B. cleanup (Nov 15): one Christy testimonial per page, the graduation video. Her original Vimeo video and the
+"Re-examining" quote are hidden, not deleted: HTML comments marked `hidden (Christy B. original)` in the built files,
+and `"hidden": true` in data/testimonials.json (build_testimonials.py skips hidden entries). Note: coaching.js, wtr.js,
+selfguided.js, testimonials.js and the /rebuild loaders include the copy rewrite from f5dc9ed, which was made in the
+built files only; rebuilding them from src/ or the build scripts would drop that copy.

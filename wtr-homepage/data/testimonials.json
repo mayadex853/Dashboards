@@ -143,18 +143,21 @@
     "name": "Sergey R.",
     "role": "Client",
     "group": "client",
-    "quote": "Thank you very much! You inspire me to continue to work on my craft. And you continue to do it...Thank you very much! God bless you!!!!"
+    "quote": "Thank you very much! You inspire me to continue to work on my craft. And you continue to do it...Thank you very much! God bless you!!!!",
+    "hidden": true
   },
   {
     "name": "Ian C.",
     "role": "Client",
     "group": "client",
-    "quote": "Jody goes above and I always recommend him as my mentor and highly recommended to anyone who wants to learn to grow their business"
+    "quote": "Jody goes above and I always recommend him as my mentor and highly recommended to anyone who wants to learn to grow their business",
+    "hidden": true
   },
   {
     "name": "Clarence T.",
     "role": "Client",
     "group": "client",
-    "quote": "I am loving all the information! Very professional and well organized.  Thanks so much for this opportunity!"
+    "quote": "I am loving all the information! Very professional and well organized.  Thanks so much for this opportunity!",
+    "hidden": true
   }
 ]

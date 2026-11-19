@@ -1,0 +1,82 @@
+/* Wreck the Room – ScoreApp quiz landing page (quiz.wrecktheroom.com)
+   Paste into ScoreApp > landing page > Settings > Custom CSS. Matches wrecktheroom.com (black + gold). */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+html,body{background:#0a0908 !important;}
+body,#root{color:#d2cbbe !important;font-family:Manrope,system-ui,sans-serif !important;}
+#root{background:radial-gradient(ellipse at 22% 38%,rgba(201,168,76,.16),transparent 55%),#0a0908 !important;}
+
+/* header */
+.header.section{background:#0a0908 !important;border-bottom:1px solid rgba(201,168,76,.22);}
+.header .section-container{padding:14px 0 10px !important;}
+
+/* hero copy */
+.form .section-container{padding:clamp(48px,9vh,110px) 0 clamp(60px,10vh,120px) !important;}
+.form2-text-block{color:#d2cbbe !important;font:400 18px/1.7 Manrope,system-ui,sans-serif !important;}
+.form2-text-block p:first-child::before{content:"Free assessment · 3 minutes";display:flex;align-items:center;gap:14px;margin-bottom:22px;
+  font:600 11.5px/1 Manrope,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#c9a84c;}
+.form2-text-block p:first-child strong{display:block;margin:0 0 22px;font:400 clamp(44px,4.8vw,76px)/.98 Anton,Impact,sans-serif !important;
+  text-transform:uppercase;letter-spacing:.005em;color:#f3ede2 !important;}
+.form2-text-block p{color:#f3ede2 !important;font-size:19px !important;margin:0 0 26px !important;}
+.form2-text-block ul{list-style:none !important;margin:0 !important;padding:0 !important;}
+.form2-text-block li{position:relative;list-style:none !important;padding:13px 0 13px 36px !important;margin:0 !important;
+  border-top:1px solid rgba(243,237,226,.08);color:#d2cbbe !important;font-size:16.5px !important;background:none !important;}
+.form2-text-block li:last-child{border-bottom:1px solid rgba(243,237,226,.08);}
+.form2-text-block ul li::before{content:"✓" !important;font-family:Manrope,sans-serif !important;color:#0b0a08 !important;margin:0 !important;position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#8c7231) !important;
+  color:#0b0a08;font-size:12px;font-weight:800;border:0 !important;transform:none !important;box-sizing:border-box;}
+.form2-text-block li svg{display:none !important;}
+.form2-text-block strong{color:#f3ede2 !important;font-weight:700;}
+
+/* form card */
+.form2-form-card{background:linear-gradient(160deg,rgba(201,168,76,.13),rgba(201,168,76,.03)) ,#12100c !important;
+  border:1px solid #c9a84c !important;border-radius:4px !important;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 6px rgba(201,168,76,.08) !important;}
+.form2-form-card h6,.form2-form-card .form-text-block-title{color:#f3ede2 !important;font:400 30px/1.05 Anton,Impact,sans-serif !important;
+  text-transform:uppercase;letter-spacing:.01em;}
+.form2-form-card h6::after{content:"Takes 3 minutes. Your results appear instantly.";display:block;margin-top:8px;
+  font:500 14px/1.4 Manrope,sans-serif;text-transform:none;letter-spacing:0;color:#9b9384;}
+
+/* inputs */
+.form2-form-card .MuiInputBase-root{background:rgba(255,255,255,.05) !important;color:#f3ede2 !important;border-radius:3px !important;
+  font:500 16px Manrope,sans-serif !important;}
+.form2-form-card .MuiInputBase-input{color:#f3ede2 !important;background:transparent !important;border:0 !important;box-shadow:none !important;}
+.form2-form-card .MuiOutlinedInput-notchedOutline,.form2-form-card .Mui-focused .MuiOutlinedInput-notchedOutline{border-color:rgba(201,168,76,.4) !important;background:transparent !important;}
+.form2-form-card .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline{border-color:rgba(236,214,155,.7) !important;}
+.form2-form-card .form-input .MuiInputBase-root.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline{background:transparent !important;border-color:#ecd69b !important;border-width:1px !important;box-shadow:0 0 0 3px rgba(201,168,76,.2);}
+.form2-form-card .MuiInputLabel-root{color:#8f887b !important;font-family:Manrope,sans-serif !important;background:transparent !important;}
+.form2-form-card .MuiInputLabel-shrink{background:transparent !important;}
+.form2-form-card .MuiInputLabel-root.Mui-focused,.form2-form-card .MuiInputLabel-shrink{color:#ecd69b !important;}
+.form2-form-card .MuiInputLabel-shrink + .MuiInputBase-root .MuiOutlinedInput-notchedOutline legend{max-width:100% !important;}
+.form2-form-card .Mui-error .MuiOutlinedInput-notchedOutline{border-color:#d8483b !important;}
+.form2-form-card .MuiFormHelperText-root{color:#ff8a7e !important;}
+.form2-form-card .form-input .MuiInputBase-root input:-webkit-autofill,.form2-form-card .form-input .MuiInputBase-root input:-webkit-autofill:hover,.form2-form-card .form-input .MuiInputBase-root input:-webkit-autofill:focus{-webkit-text-fill-color:#f3ede2 !important;-webkit-box-shadow:0 0 0 100px #1d1913 inset !important;caret-color:#f3ede2;}
+
+/* button */
+.form-button,.MuiButton-containedPrimary{background:linear-gradient(135deg,#ecd69b,#c9a84c 55%,#a5862f) !important;color:#0b0a08 !important;
+  min-height:58px !important;border-radius:3px !important;box-shadow:0 10px 26px rgba(201,168,76,.3) !important;transition:transform .2s,filter .2s !important;}
+.form-button:hover,.MuiButton-containedPrimary:hover{transform:translateY(-1px);filter:brightness(1.05);}
+.form-button .text-block,.MuiButton-containedPrimary .text-block{color:#0b0a08 !important;font:800 14px/1 Manrope,sans-serif !important;
+  letter-spacing:.18em !important;text-transform:uppercase !important;}
+.form-button .text-block::after{content:" →";}
+.MuiCheckbox-root{color:#c9a84c !important;}
+
+/* footer */
+.footer.section{background:#0a0908 !important;border-top:1px solid rgba(243,237,226,.08);}
+.footer1-text-block,.footer1-text-block p{color:#8f887b !important;font:500 13px Manrope,sans-serif !important;}
+.footer1-image{opacity:.6;max-width:110px;}
+.footer1-text-container{padding-right:200px;}
+.powered-wrap a{background:rgba(18,16,12,.9) !important;border-color:rgba(201,168,76,.25) !important;}
+.powered-wrap span{color:#8f887b !important;}
+
+/* mobile */
+@media (max-width:899px){
+  .form .section-container{padding:36px 0 60px !important;}
+  .form2-text-block p:first-child::before{font-size:10px;letter-spacing:.2em;margin-bottom:16px;}
+  .form2-text-block p:first-child strong{font-size:clamp(40px,11vw,56px) !important;}
+  .form2-text-block,.form2-text-block p,.form2-text-block li,.form2-text-block strong{text-align:left !important;}
+  .form2-text-block p{font-size:17px !important;}
+  .footer1-text-container{padding-right:0;}
+  .powered-wrap{position:static !important;display:flex;justify-content:center;padding:0 0 18px;background:#0a0908;}
+  .form2-form-card{margin-top:28px;}
+  .form2-form-card h6,.form2-form-card .form-text-block-title{font-size:26px !important;}
+}

@@ -2,7 +2,7 @@
 
 Kajabi offer 2151535588, checkout theme 2168411581, https://www.wrecktheroom.com/offers/2mMEXAu9/checkout
 
-"Studio at night" design. Published as:
+"Studio at night" design in violet/cyan with Bricolage Grotesque, kept visually distinct from synctitan.ai (black, amber, Space Grotesk). Order: hero, kit + bonus + price, checkout, what changes + FAQ + terms of purchase (non-refundable). Published as:
 - theme CSS = page.css, theme JS = page.js
 - section 1764000000001 (Hero): code block atp_hero = hero.html
 - section 1764000000007 (Tracklist, new): code block atp_tracks = tracks.html

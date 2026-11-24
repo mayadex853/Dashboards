@@ -10,7 +10,7 @@
 (function(){
   var T='Mobile number is optional. If you add it, you agree to get texts from Wreck the Room about your purchase and Jody’s work. Msg frequency varies. Msg & data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.';
   function add(){
-    var p=document.getElementById('phone');
+    var p=document.getElementById('custom_35')||document.getElementById('phone');
     if(!p||document.querySelector('.wtr-sms-note'))return;
     p.setAttribute('placeholder','Mobile number (optional)');
     if(p.labels&&p.labels[0])p.labels[0].textContent='Mobile number (optional)';

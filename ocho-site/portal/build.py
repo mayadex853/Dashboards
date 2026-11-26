@@ -19,7 +19,7 @@ def catalog():
         d = json.loads(f.read_text())
         tracks = [{"t": t["t"], "bpm": t.get("bpm") or "", "key": t.get("key") or "", "desc": t.get("desc") or "",
                    "tags": t.get("tags") or [], "comp": t.get("comp") or "", "pub": t.get("pub") or "",
-                   "v": [{"l": v["l"], "f": v["f"], "d": v["d"]} for v in t["v"]]} for t in d["tracks"]]
+                   "v": [{"l": v["l"], "f": v["f"], "d": v["d"], "voc": v.get("voc", 0)} for v in t["v"]]} for t in d["tracks"]]
         albums.append({"id": aid, "t": title, "a": artist, "c": cat, "img": img, "desc": d.get("desc") or "", "tracks": tracks})
     return {"base": site.CDN_BASE, "audio": site.AUDIO_BASE, "albums": albums, "cats": data.ALBUM_CATS,
             "moods": data.MOODS, "syn": data.SYNONYMS, "stop": data.FIND_STOP,

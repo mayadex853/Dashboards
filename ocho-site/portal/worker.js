@@ -355,7 +355,11 @@ export default {
       if (url.pathname.startsWith('/api/')) return await api(req, env, ctx, url, u);
       if (url.pathname === '/dl' || url.pathname === '/zip') return await download(req, env, ctx, url, u);
       if (req.method !== 'GET') return err(405, 'Method not allowed');
-      return new Response(HTML, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-frame-options': 'DENY',
+      let title = 'Ocho Music Group | Client Portal', desc = 'Authentic Latin music for film, TV & ads. Stream, build playlists and download.';
+      const sm = url.pathname.match(/^\/s\/([\w-]+)/);
+      if (sm) { const s = await getShare(env, sm[1]); if (s) { title = s.title + ' | Ocho Music Group'; desc = (s.recipient ? 'Selected for ' + s.recipient + '. ' : '') + 'Stream it now. Authentic Latin music for film, TV & ads.'; } }
+      const at = x => x.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      return new Response(HTML.split('__OG_TITLE__').join(at(title)).split('__OG_DESC__').join(at(desc)), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-frame-options': 'DENY',
         'referrer-policy': 'same-origin', 'x-robots-tag': 'noindex' } });
     } catch (e) {
       console.log(e && e.stack || e);

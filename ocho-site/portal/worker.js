@@ -3,11 +3,15 @@
 const HTML = __HTML__;
 const CATALOG = __CATALOG__;
 
+const BRAND_HOST = 'portal.ochomusicgroup.com'; // served through proxy-worker.js in the ochomusicgroup.com account
 const DAY = 86400, LEVEL = { none: 0, mp3: 1, wav: 2 }, COOKIE = 'ocho_s';
 const FILES = {}; // file key (no extension) -> { album, track, version }
 CATALOG.albums.forEach(a => a.tracks.forEach(t => t.v.forEach(v => { FILES[v.f.replace(/\.mp3$/, '')] = { a, t, v }; })));
 
 const now = () => Math.floor(Date.now() / 1000);
+const viaBrand = req => req.headers.get('x-ocho-host') === BRAND_HOST;
+const publicOrigin = (req, url) => viaBrand(req) ? 'https://' + BRAND_HOST : url.origin;
+const country = req => (viaBrand(req) ? req.headers.get('x-ocho-country') : req.cf && req.cf.country) || null;
 const json = (d, s = 200, h = {}) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...h } });
 const err = (s, m) => json({ error: m }, s);
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
@@ -36,7 +40,7 @@ const userLevel = u => !u ? 0 : isAdmin(u) ? 2 : LEVEL[u.download] || 0;
 
 async function logEvent(env, req, e) {
   await env.DB.prepare('INSERT INTO events (ts, kind, user_id, share, file, fmt, n, country) VALUES (?,?,?,?,?,?,?,?)')
-    .bind(now(), e.kind, e.user_id || null, e.share || null, e.file || null, e.fmt || null, e.n || null, (req.cf && req.cf.country) || null).run();
+    .bind(now(), e.kind, e.user_id || null, e.share || null, e.file || null, e.fmt || null, e.n || null, country(req)).run();
 }
 
 async function getShare(env, token) {
@@ -224,12 +228,12 @@ async function api(req, env, ctx, url, u) {
     const role = b.role === 'admin' ? 'admin' : 'client', dl = LEVEL[b.download] != null ? b.download : 'mp3';
     await env.DB.prepare('INSERT INTO users (email, name, company, role, download, created_at) VALUES (?,?,?,?,?,?) ON CONFLICT(email) DO UPDATE SET name = excluded.name, company = excluded.company, role = excluded.role, download = excluded.download, disabled = 0')
       .bind(email, String(b.name || '').slice(0, 80), String(b.company || '').slice(0, 80), role, dl, now()).run();
-    return json({ url: await makeInvite(env, url, email, 'invite', u.id) });
+    return json({ url: await makeInvite(env, publicOrigin(req, url), email, 'invite', u.id) });
   }
   mm = p.match(/^\/api\/users\/(\d+)(\/reset)?$/);
   if (mm && m === 'POST') {
     const t = await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(+mm[1]).first(); if (!t) return err(404, 'No such user.');
-    if (mm[2]) return json({ url: await makeInvite(env, url, t.email, t.pw_hash ? 'reset' : 'invite', u.id) });
+    if (mm[2]) return json({ url: await makeInvite(env, publicOrigin(req, url), t.email, t.pw_hash ? 'reset' : 'invite', u.id) });
     const b = await body(req);
     if (t.id === u.id && (b.role === 'client' || b.disabled)) return err(400, "You can't remove your own admin access.");
     await env.DB.prepare('UPDATE users SET download = COALESCE(?, download), role = COALESCE(?, role), disabled = COALESCE(?, disabled), name = COALESCE(?, name), company = COALESCE(?, company) WHERE id = ?')
@@ -254,7 +258,7 @@ async function api(req, env, ctx, url, u) {
     await env.DB.prepare('INSERT INTO shares (token, kind, ref, title, recipient, download, created_by, created_at, expires_at) VALUES (?,?,?,?,?,?,?,?,?)')
       .bind(token, kind, String(b.ref), String(b.title || '').slice(0, 120) || 'Ocho Music Group', String(b.recipient || '').slice(0, 120),
         LEVEL[b.download] != null ? b.download : 'none', u.id, now(), days ? now() + days * DAY : null).run();
-    return json({ token, url: url.origin + '/s/' + token });
+    return json({ token, url: publicOrigin(req, url) + '/s/' + token });
   }
   mm = p.match(/^\/api\/shares\/([\w-]+)$/);
   if (mm && m === 'POST') {
@@ -267,11 +271,11 @@ async function api(req, env, ctx, url, u) {
   return err(404, 'Not found.');
 }
 
-async function makeInvite(env, url, email, kind, by) {
+async function makeInvite(env, origin, email, kind, by) {
   const token = rand(24);
   await env.DB.prepare('INSERT INTO invites (token_hash, email, kind, created_by, created_at, expires_at) VALUES (?,?,?,?,?,?)')
     .bind(await sha(token), email, kind, by, now(), now() + (kind === 'reset' ? 3 : 14) * DAY).run();
-  return url.origin + '/' + (kind === 'reset' ? 'reset' : 'invite') + '/' + token;
+  return origin + '/' + (kind === 'reset' ? 'reset' : 'invite') + '/' + token;
 }
 
 async function startSession(env, req, user) {
@@ -281,7 +285,7 @@ async function startSession(env, req, user) {
     env.DB.prepare('UPDATE users SET last_login = ? WHERE id = ?').bind(now(), user.id),
     env.DB.prepare('DELETE FROM sessions WHERE expires_at < ?').bind(now()),
     env.DB.prepare('DELETE FROM login_fails WHERE ts < ?').bind(now() - 3600),
-    env.DB.prepare("INSERT INTO events (ts, kind, user_id, country) VALUES (?, 'login', ?, ?)").bind(now(), user.id, (req.cf && req.cf.country) || null),
+    env.DB.prepare("INSERT INTO events (ts, kind, user_id, country) VALUES (?, 'login', ?, ?)").bind(now(), user.id, country(req)),
   ]);
   return json({ ok: true }, 200, { 'set-cookie': `${COOKIE}=${token}; Path=/; Max-Age=${30 * DAY}; HttpOnly; Secure; SameSite=Lax` });
 }

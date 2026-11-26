@@ -83,3 +83,6 @@ Live pages omit `data-test` (links use PATHS); a test copy can add `data-test="1
 The pre-redesign pages are kept as unpublished drafts: `es-legacy`, `about-legacy`, `about_es-legacy`
 (to roll back: rename and republish them, and point the homepage setting back to the Kajabi site home page).
 After a page edit in Kajabi, republish it (publish_at = now); the bare homepage URL can stay cached for a few minutes.
+
+## Client portal
+https://portal.ochoaudio.com (linked as "Client Login" in the site nav). Code, deploy steps and costs: `portal/README.md`.

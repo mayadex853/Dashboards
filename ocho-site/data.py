@@ -127,7 +127,7 @@ T = {
     "en": {
         "lang_label": "ES", "lang_name": "Español",
         "nav_about": "About", "nav_albums": "Albums", "nav_placements": "Placements", "nav_faq": "FAQ",
-        "nav_contact": "Contact", "nav_cta": "&#9654; Explore Albums",
+        "nav_contact": "Contact", "nav_login": "Client Login", "nav_cta": "&#9654; Explore Albums",
         "banner": "Artists, composers &amp; producers: learn how the production music business works",
         "hero_lines": ["Salsa &middot; Cumbia &middot; Tejano &middot; Timba", "From San Juan to Patagonia",
                        "Real players. Live instruments. Zero AI.", "Source cues &amp; cinematic Latin underscore"],
@@ -237,7 +237,7 @@ T = {
     "es": {
         "lang_label": "EN", "lang_name": "English",
         "nav_about": "Nosotros", "nav_albums": "Álbumes", "nav_placements": "Colocaciones", "nav_faq": "FAQ",
-        "nav_contact": "Contacto", "nav_cta": "&#9654; Explorar Álbumes",
+        "nav_contact": "Contacto", "nav_login": "Acceso Clientes", "nav_cta": "&#9654; Explorar Álbumes",
         "banner": "Artistas, compositores y productores: aprendan cómo funciona el negocio de la música de producción",
         "hero_lines": ["Salsa &middot; Cumbia &middot; Tejano &middot; Timba", "De San Juan a la Patagonia",
                        "Músicos reales. Instrumentos en vivo. Cero IA.", "Música de origen y underscore latino cinemático"],
@@ -417,6 +417,8 @@ LEARN = {
     },
 }
 
+
+PORTAL_URL = "https://portal.ochoaudio.com/"
 
 # ---------- mood / keyword finder ----------
 # (key, EN label, ES label, search terms). Terms are matched as word prefixes against the APM

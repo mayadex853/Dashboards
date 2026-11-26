@@ -84,7 +84,7 @@ def site_data(base, fallback, preview, audio="", tracks=""):
         "albumCats": data.ALBUM_CATS, "placeCats": data.PLACEMENT_CATS, "catsEs": data.CATS_ES,
         "networks": data.NETWORKS, "genres": data.GENRES,
         "pos": data.PHOTO_POS, "base": base, "fallback": fallback, "sheet": SHEET_ID, "preview": preview, "audio": audio, "tracksBase": tracks, "tracksFallback": TRACKS_FALLBACK,
-        "email": ["music", "ochomusicgroup.com"], "find": find_index(), "trackCount": track_count(),
+        "email": ["music", "ochomusicgroup.com"], "find": find_index(), "portal": data.PORTAL_URL, "trackCount": track_count(),
     }
 
 
@@ -134,6 +134,8 @@ CSS = r"""
 .o-logo img{height:66px;width:auto;display:block;filter:drop-shadow(0 0 14px rgba(255,46,154,.45));transition:height .35s;}
 .o-top.solid .o-logo img{height:50px;}
 .o-links{display:flex;align-items:center;gap:30px;}
+.o-links a{white-space:nowrap;}
+@media(max-width:1300px){.o-links{gap:20px;}.o-links a:not(.o-btn){letter-spacing:.16em;}}
 .o-links a:not(.o-btn){font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#e3dceb !important;transition:color .2s;position:relative;}
 .o-links a:not(.o-btn):hover,.o-links a.on{color:var(--pink) !important;}
 .o-links a.on::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--grad);box-shadow:0 0 10px var(--mag);}
@@ -548,6 +550,13 @@ CSS = r"""
 .o-find-none{font-size:18px;color:#efe8f5;max-width:640px;}
 .o-find-cta{margin:26px 0 0;font-size:15px;}
 .o-find-cta a{color:var(--pink) !important;font-weight:700;}
+@media(max-width:1180px){
+  .o-links{position:fixed;top:0;left:0;right:0;bottom:0;flex-direction:column;justify-content:center;gap:26px;background:rgba(7,5,10,.97);
+    opacity:0;pointer-events:none;transition:opacity .3s;z-index:-1;}
+  .o-top.open .o-links{opacity:1;pointer-events:auto;}
+  .o-links a:not(.o-btn){font-size:18px;}
+  .o-burger{display:block;}
+}
 @media(max-width:900px){.o-fgrid2{grid-template-columns:1fr;}}
 @media(max-width:640px){
   .o-find-bar{flex-direction:column;}
@@ -582,11 +591,6 @@ CSS = r"""
   .o-stat:last-child:nth-child(odd){grid-column:span 2;}
 }
 @media(max-width:900px){
-  .o-links{position:fixed;top:0;left:0;right:0;bottom:0;flex-direction:column;justify-content:center;gap:26px;background:rgba(7,5,10,.97);
-    opacity:0;pointer-events:none;transition:opacity .3s;z-index:-1;}
-  .o-top.open .o-links{opacity:1;pointer-events:auto;}
-  .o-links a:not(.o-btn){font-size:18px;}
-  .o-burger{display:block;}
   .o-one,.o-fgrid,.o-agrid,.o-faq-grid,.o-cgrid,.o-about-grid,.o-pgrid2,.o-person.r .o-pgrid2,.o-panel-card{grid-template-columns:1fr;}
   .o-person.r .o-ptext{order:0;}
   .o-photos{position:relative;top:0;}
@@ -810,6 +814,7 @@ function nav(){
     '<nav class="o-nav"><a class="o-logo" href="'+href('home')+'"><img src="'+D.base+'logo.png" alt="Ocho Music Group"></a>'+
     '<div class="o-links">'+L('about',t.nav_about)+L('albums',t.nav_albums)+L('placements',t.nav_placements)+
     '<a href="#o-faq" data-go="faq">'+t.nav_faq+'</a><a href="#o-contact" data-go="contact">'+t.nav_contact+'</a>'+
+    '<a href="'+D.portal+'" rel="nofollow">'+t.nav_login+'</a>'+
     '<a class="o-lang" href="'+href(page,lang==='en'?'es':'en')+'" title="'+t.lang_name+'">'+t.lang_label+'</a>'+
     '<a class="o-btn p" href="'+href('albums')+'">'+t.nav_cta+'</a></div>'+
     '<button class="o-burger" aria-label="'+t.a_menu+'"><i></i><i></i><i></i></button></nav></div>';
@@ -838,7 +843,7 @@ function contact(){
 }
 function footer(){
   return '<footer class="o-foot"><div class="o-wrap"><div class="o-foot-grid"><a href="'+href('home')+'"><img src="'+D.base+'logo.png" alt="Ocho Music Group"></a>'+
-  '<nav><a href="'+href('about')+'">'+t.nav_about+'</a><a href="'+href('albums')+'">'+t.nav_albums+'</a><a href="'+href('placements')+'">'+t.nav_placements+'</a><a href="'+href(page,lang==='en'?'es':'en')+'">'+t.lang_name+'</a></nav></div>'+
+  '<nav><a href="'+href('about')+'">'+t.nav_about+'</a><a href="'+href('albums')+'">'+t.nav_albums+'</a><a href="'+href('placements')+'">'+t.nav_placements+'</a><a href="'+href(page,lang==='en'?'es':'en')+'">'+t.lang_name+'</a><a href="'+D.portal+'" rel="nofollow">'+t.nav_login+'</a></nav></div>'+
   '<small>&copy; '+new Date().getFullYear()+' Ocho Music Group LLC &middot; '+t.footer_tag+'</small></div></footer>';
 }
 function lightbox(){return '<div class="o-lb" role="dialog" aria-modal="true"><button class="o-lb-x" aria-label="'+t.a_close+'">&times;</button><button class="o-lb-arrow o-lb-l" aria-label="'+t.a_prev+'">&#8249;</button><button class="o-lb-arrow o-lb-r" aria-label="'+t.a_next+'">&#8250;</button><div class="o-lb-box"></div></div>';}

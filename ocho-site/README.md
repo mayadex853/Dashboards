@@ -77,7 +77,15 @@ given ref, with jsDelivr as an automatic fallback. Open `preview.html` locally t
 The new site is live on ochomusicgroup.com. Kajabi landing pages (Encore theme, Code block + native contact form):
 `/` (homepage = landing page "new-home", set as the site homepage in Kajabi), `/es`, `/about`, `/about_es`,
 `/albums`, `/albums_es`, `/placements`, `/placements_es`, `/production-music`, `/production-music_es`.
+Form thank-you pages (no form section, `data-page="thanks"`): `/thankyou` (EN) and `/gracias` (ES). Every EN form
+section's thank-you URL is `/resource_redirect/landing_pages/2150704344`, every ES one `.../2150704348`.
 Live pages omit `data-test` (links use PATHS); a test copy can add `data-test="1"` to link to TEST_PATHS instead.
 The pre-redesign pages are kept as unpublished drafts: `es-legacy`, `about-legacy`, `about_es-legacy`
 (to roll back: rename and republish them, and point the homepage setting back to the Kajabi site home page).
 After a page edit in Kajabi, republish it (publish_at = now); the bare homepage URL can stay cached for a few minutes.
+
+## Client portal
+https://portal.ochomusicgroup.com (linked as "Client Login" in the site nav). Code, deploy steps and costs: `portal/README.md`.
+
+## Social preview image
+`social/og.jpg` (1200×630, black, logo centered) and `social/og-square.jpg` are served at https://ochoaudio.com/site/social/. The portal uses them as its link preview. Kajabi pages need it set by hand: Landing Page → Settings → SEO → Social image.

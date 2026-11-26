@@ -85,7 +85,7 @@ The pre-redesign pages are kept as unpublished drafts: `es-legacy`, `about-legac
 After a page edit in Kajabi, republish it (publish_at = now); the bare homepage URL can stay cached for a few minutes.
 
 ## Client portal
-https://portal.ochoaudio.com (linked as "Client Login" in the site nav). Code, deploy steps and costs: `portal/README.md`.
+https://portal.ochomusicgroup.com (linked as "Client Login" in the site nav). Code, deploy steps and costs: `portal/README.md`.
 
 ## Social preview image
 `social/og.jpg` (1200×630, black, logo centered) and `social/og-square.jpg` are served at https://ochoaudio.com/site/social/. The portal uses them as its link preview. Kajabi pages need it set by hand: Landing Page → Settings → SEO → Social image.

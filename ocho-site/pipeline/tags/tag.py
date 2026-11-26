@@ -62,43 +62,47 @@ def http(url, data=None, method="GET", ctype=None):
     raise err
 
 
-def isrc_map(plan, csv_path):
-    rows = list(csv.DictReader(open(csv_path, encoding="utf-8-sig")))
-    by_alb = {}
-    for r in rows:
-        by_alb.setdefault(r["OCHO ALBUM ID#"].replace("_", "-").strip(), {})[tracks.norm(r["TRACK TITLE"])] = r["ISRC CODE"].strip()
-    rows_by_alb = {}
-    for r in rows:
-        rows_by_alb.setdefault(r["OCHO ALBUM ID#"].replace("_", "-").strip(), []).append((r["TRACK TITLE"], r["ISRC CODE"].strip()))
+def match_titles(plan, rows_by_alb, unique=True):
+    """Map each planned file (mp3 key without extension) to a value from rows_by_alb {album: [(track title, value)]},
+    matching the file's source name to the sheet's track title (exact, then same version label + near-identical title)."""
+    exact = {alb: {tracks.norm(t): v for t, v in rows} for alb, rows in rows_by_alb.items()}
+    lab = lambda x: tracks.norm(re.sub(r"(?i)mix|version", "", x)).replace(" ", "")
     out, fuzzy = {}, set()
     for p in plan:
         alb, src = p["key"].split("/")[0], os.path.splitext(p["path"].split("/")[-1])[0]
         base, label = tracks.split_version(src)
-        t = by_alb.get(alb, {})
+        t = exact.get(alb, {})
         hit = t.get(tracks.norm(src)) or t.get(tracks.norm(base + (f" ({label})" if label else "")))
-        if not hit:  # naming drift: same version label, near-identical title ("enseñaste"/"enseñastes", "(Acapella)"/"(Acapella Mix)")
-            lab = lambda x: tracks.norm(re.sub(r"(?i)mix|version", "", x)).replace(" ", "")
+        if hit is None:  # naming drift: "enseñaste"/"enseñastes", "(Acapella)"/"(Acapella Mix)"
             mb, ml = tracks.norm(base), lab(label)
-            for title, code in rows_by_alb.get(alb, []):
+            for title, val in rows_by_alb.get(alb, []):
                 rb, rl = tracks.split_version(title)
                 rl_, rb_ = lab(rl), tracks.norm(rb)
                 same_label = rl_ == ml or (ml and rl_ and (rl_.startswith(ml) or ml.startswith(rl_)))
                 same_base = rb_ == mb or rb_.startswith(mb) or mb.startswith(rb_) or difflib.SequenceMatcher(None, rb_, mb).ratio() >= 0.88
                 if same_label and same_base:
-                    hit = code
+                    hit = val
                     fuzzy.add(p["mp3"][:-4])
                     break
-        out[p["mp3"][:-4]] = hit or ""
-    seen = {}
-    for k, v in out.items():
-        if v:
-            seen.setdefault(v, []).append(k)
-    for v, ks in seen.items():  # an ISRC belongs to one recording: drop fuzzy guesses that collide
-        if len(ks) > 1:
-            for k in ks:
-                if k in fuzzy:
-                    out[k] = ""
+        out[p["mp3"][:-4]] = hit
+    if unique:  # e.g. an ISRC belongs to one recording: drop fuzzy guesses that collide
+        seen = {}
+        for k, v in out.items():
+            if v:
+                seen.setdefault(v, []).append(k)
+        for v, ks in seen.items():
+            if len(ks) > 1:
+                for k in ks:
+                    if k in fuzzy:
+                        out[k] = None
     return out
+
+
+def isrc_map(plan, csv_path):
+    rows_by_alb = {}
+    for r in csv.DictReader(open(csv_path, encoding="utf-8-sig")):
+        rows_by_alb.setdefault(r["OCHO ALBUM ID#"].replace("_", "-").strip(), []).append((r["TRACK TITLE"], r["ISRC CODE"].strip()))
+    return {k: v or "" for k, v in match_titles(plan, rows_by_alb).items()}
 
 
 def main():

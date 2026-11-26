@@ -1,4 +1,4 @@
-# Ocho client portal — https://portal.ochoaudio.com
+# Ocho client portal — https://portal.ochomusicgroup.com
 
 Private catalog for Ocho admins and invited clients: browse/search the catalog, stream, build playlists,
 download MP3/WAV (single files or ZIPs), share playlists/albums by link, and see who listened and downloaded.
@@ -6,7 +6,7 @@ download MP3/WAV (single files or ZIPs), share playlists/albums by link, and see
 ## How it runs (all Cloudflare, free tiers)
 | Piece | Where |
 |---|---|
-| App (server + page) | Worker `ocho-portal`, custom domain `portal.ochoaudio.com` (zone ochoaudio.com) |
+| App (server + page) | Worker `ocho-portal`. Public address `portal.ochomusicgroup.com` = Cloudflare for SaaS custom hostname on the ochoaudio.com zone (fallback origin `saas.ochoaudio.com` AAAA 100::, Worker route `*/*` with `ochoaudio.com/*` and `*.ochoaudio.com/*` excluded). In Kajabi DNS: CNAME `portal` → `saas.ochoaudio.com` + TXT `_cf-custom-hostname.portal`. `portal.ochoaudio.com` (Worker custom domain) redirects pages to the public address. |
 | Database | D1 `ocho-portal` (users, invites, sessions, playlists, shares, files, events) — `schema.sql` |
 | Streaming MP3s | public R2 bucket `ocho-audio` via https://ochoaudio.com/ (same files as the website) |
 | WAV masters | **private** R2 bucket `ocho-masters` (`OCHO-00NN/<name>.wav`, same names as the MP3s) — only the Worker can read it |

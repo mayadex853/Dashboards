@@ -3,15 +3,14 @@
 const HTML = __HTML__;
 const CATALOG = __CATALOG__;
 
-const BRAND_HOST = 'portal.ochomusicgroup.com'; // served through proxy-worker.js in the ochomusicgroup.com account
+const BRAND_HOST = 'portal.ochomusicgroup.com'; // Cloudflare for SaaS custom hostname on the ochoaudio.com zone
 const DAY = 86400, LEVEL = { none: 0, mp3: 1, wav: 2 }, COOKIE = 'ocho_s';
 const FILES = {}; // file key (no extension) -> { album, track, version }
 CATALOG.albums.forEach(a => a.tracks.forEach(t => t.v.forEach(v => { FILES[v.f.replace(/\.mp3$/, '')] = { a, t, v }; })));
 
 const now = () => Math.floor(Date.now() / 1000);
-const viaBrand = req => req.headers.get('x-ocho-host') === BRAND_HOST;
-const publicOrigin = (req, url) => viaBrand(req) ? 'https://' + BRAND_HOST : url.origin;
-const country = req => (viaBrand(req) ? req.headers.get('x-ocho-country') : req.cf && req.cf.country) || null;
+const publicOrigin = (req, url) => 'https://' + BRAND_HOST;
+const country = req => (req.cf && req.cf.country) || null;
 const json = (d, s = 200, h = {}) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...h } });
 const err = (s, m) => json({ error: m }, s);
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
@@ -359,6 +358,7 @@ export default {
       if (url.pathname.startsWith('/api/')) return await api(req, env, ctx, url, u);
       if (url.pathname === '/dl' || url.pathname === '/zip') return await download(req, env, ctx, url, u);
       if (req.method !== 'GET') return err(405, 'Method not allowed');
+      if (url.hostname !== BRAND_HOST) return Response.redirect('https://' + BRAND_HOST + url.pathname + url.search, 301);
       let title = 'Ocho Music Group | Client Portal', desc = 'Authentic Latin music for film, TV & ads. Stream, build playlists and download.';
       const sm = url.pathname.match(/^\/s\/([\w-]+)/);
       if (sm) { const s = await getShare(env, sm[1]); if (s) { title = s.title + ' | Ocho Music Group'; desc = (s.recipient ? 'Selected for ' + s.recipient + '. ' : '') + 'Stream it now. Authentic Latin music for film, TV & ads.'; } }

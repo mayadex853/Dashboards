@@ -418,7 +418,7 @@ LEARN = {
 }
 
 
-PORTAL_URL = "https://portal.ochoaudio.com/"
+PORTAL_URL = "https://portal.ochomusicgroup.com/"
 
 # ---------- mood / keyword finder ----------
 # (key, EN label, ES label, search terms). Terms are matched as word prefixes against the APM

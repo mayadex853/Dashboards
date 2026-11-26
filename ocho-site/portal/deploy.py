@@ -6,6 +6,7 @@
   python3 deploy.py domain                 attach portal.ochoaudio.com to the worker
   python3 deploy.py invite EMAIL "NAME" [admin|client] [none|mp3|wav]   create/refresh a user and print a set-password link
 """
+import functools
 import hashlib
 import json
 import os
@@ -21,6 +22,7 @@ HERE = Path(__file__).parent
 ACC, TOK = os.environ["CLOUDFLARE_ACCOUNT_ID"], os.environ["CLOUDFLARE_API_TOKEN"]
 API = f"https://api.cloudflare.com/client/v4/accounts/{ACC}"
 DB_NAME, SCRIPT, HOST, ZONE = "ocho-portal", "ocho-portal", "portal.ochoaudio.com", "ochoaudio.com"
+PUBLIC_HOST = "portal.ochomusicgroup.com"  # what people use (custom hostname, see README)
 
 
 def call(method, url, body=None, ctype="application/json"):
@@ -33,6 +35,7 @@ def call(method, url, body=None, ctype="application/json"):
         sys.exit(f"{method} {url}: {e.code} {e.read()[:500].decode(errors='replace')}")
 
 
+@functools.lru_cache(maxsize=None)
 def db_id():
     return next(d["uuid"] for d in call("GET", "/d1/database")["result"] if d["name"] == DB_NAME)
 
@@ -90,7 +93,7 @@ def invite(email, name="", role="client", download="mp3"):
     kind = "reset" if has_pw else "invite"
     sql("INSERT INTO invites (token_hash, email, kind, created_at, expires_at) VALUES (?,?,?,?,?)",
         [hashlib.sha256(token.encode()).hexdigest(), email, kind, now, now + 14 * 86400])
-    print(f"https://{HOST}/{kind}/{token}")
+    print(f"https://{PUBLIC_HOST}/{kind}/{token}")
 
 
 if __name__ == "__main__":
